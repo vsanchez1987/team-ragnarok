@@ -4,8 +4,6 @@ using System;
 using FightGame;
 using FSM;
 
-//tybtugbfvgvdfhchyd
-
 namespace FightGame{
 	public class GameManager {
 		private static GameManager instance = new GameManager();
