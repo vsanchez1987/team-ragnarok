@@ -16,6 +16,8 @@ namespace FightGame
 		protected GameObject gobj;
 		protected A_Status status;
 		protected FSMContext moveGraph;
+		public string attack_name;	//hieu add
+		
 		public float lastAttackTimer = 0;
 		public List<HitBox> hitBoxes;	
 		
@@ -70,6 +72,11 @@ namespace FightGame
 			initForwardVector(_playerNumber);
 			hitBoxes = new List<HitBox>();
 			InitHitBoxes(gobj);
+		}
+		
+		public void GetAttackName(string attackname)		//hieu add
+		{
+			this.attack_name = attackname;
 		}
 		
 		public void Update(){
@@ -168,6 +175,11 @@ namespace FightGame
 		public void switchForwardVector()
 		{
 			forwardVector.x *= -1;
+		}
+		
+		public GameObject GetGOB()
+		{
+			return this.gobj;
 		}
 		
 	}

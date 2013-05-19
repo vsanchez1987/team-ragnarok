@@ -41,7 +41,16 @@ namespace FightGame{
 		
 		public static void CreateFighter(string fighter){ // let's use delegates 
 			GameObject player1 = GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/Prefabs/" + fighter + ".prefab", typeof(GameObject)) ) as GameObject;
-			instance.p1 = new Fighter_Basic(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
+			switch (fighter)
+			{
+				case("Fighter_Basic"):
+					instance.p1 = new Fighter_Basic(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
+					break;
+				case("Fighter_Odin"):
+					instance.p1 = new Fighter_Odin(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
+					break;
+			}
+			
 		}
 	}
 }

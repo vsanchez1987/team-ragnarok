@@ -9,16 +9,16 @@ public class UI_Script : MonoBehaviour
     void OnGUI() {
 		if (!created){
 	        if (GUI.Button(new Rect(Screen.width/2, Screen.height/2, 50, 30), "Click")){
-				GameManager.CreateFighter("Fighter_Basic");
+				GameManager.CreateFighter("Fighter_Odin");
 	            created = true;
 			}
 		}
 		else{
 			if (GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2, 100, 30), "Idle")){
-				GameManager.P1.Dispatch("idle");
+				//GameManager.P1.Dispatch("idle");
 			}
 			if (GUI.Button(new Rect(Screen.width/2 + 100, Screen.height/2, 100, 30), "Walk Forward")){
-				GameManager.P1.Dispatch("walkForward");
+				//GameManager.P1.Dispatch("walkForward");
 			}
 		}
     }
