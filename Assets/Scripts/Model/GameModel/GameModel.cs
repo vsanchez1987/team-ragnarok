@@ -12,6 +12,7 @@ namespace FightGame{
 		private A_Fighter p2;
 		private Dictionary<string, A_Effect> Effects;
 		private Dictionary<string, A_Attack> Attacks;
+		//private Dictionary<string, A_Fighter> fighterlist;
 		
 	    // make sure the constructor is private, so it can only be instantiated here
 	    private GameModel() {
@@ -19,6 +20,8 @@ namespace FightGame{
 			p2 = null;
 			Effects = new Dictionary<string, A_Effect>();
 			Attacks = new Dictionary<string, A_Attack>();
+			//fighterlist.Add("Odin",Fighter_Odin);
+			//fighterlist.Add("Basic",Fighter_Basic);
 	    }
 		
 		public static A_Fighter P1{
@@ -41,6 +44,8 @@ namespace FightGame{
 		
 		public static void CreateFighter(string fighter){ // let's use delegates 
 			GameObject player1 = GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/Prefabs/" + fighter + ".prefab", typeof(GameObject)) ) as GameObject;
+			//instance.p1 = instance.fighterlist[fighter];
+			
 			switch (fighter)
 			{
 				case("Fighter_Basic"):
@@ -48,6 +53,9 @@ namespace FightGame{
 					break;
 				case("Fighter_Odin"):
 					instance.p1 = new Fighter_Odin(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
+					break;
+				case("Fighter_Heacy"):
+					instance.p1 = new Fighter_Heacy(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
 					break;
 			}
 			

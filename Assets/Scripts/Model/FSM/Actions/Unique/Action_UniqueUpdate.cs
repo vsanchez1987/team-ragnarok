@@ -5,12 +5,12 @@ using FSM;
 
 namespace FSM
 {
-	public class Action_AttackUpdate:FSMAction
+	public class Action_UniqueUpdate:FSMAction
 	{
 		float animationTime =0f;	
 		public override void execute(FSMContext c, Object o){
-			UnityEngine.Debug.Log("attack");
-			UnityEngine.Debug.Log(GameManager.P1.GetCurrentAttack());
+			UnityEngine.Debug.Log("unique attack");
+			UnityEngine.Debug.Log(GameManager.P1.GetUniqueAttack());
 			
 			animationTime+= UnityEngine.Time.deltaTime;
 			if( animationTime > 2.0f)
@@ -22,4 +22,3 @@ namespace FSM
 		}
 	}
 }
-

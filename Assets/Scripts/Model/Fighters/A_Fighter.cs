@@ -16,7 +16,8 @@ namespace FightGame
 		protected GameObject gobj;
 		protected A_Status status;
 		protected FSMContext moveGraph;
-		public string attack_name;	//hieu add
+		public Dictionary<string,string> attacklist;	//hieu add
+		public Dictionary<string,string> uniquelist;	//hieu add
 		
 		public float lastAttackTimer = 0;
 		public List<HitBox> hitBoxes;	
@@ -72,12 +73,10 @@ namespace FightGame
 			initForwardVector(_playerNumber);
 			hitBoxes = new List<HitBox>();
 			InitHitBoxes(gobj);
+			attacklist = new Dictionary<string, string>();
+			uniquelist = new Dictionary<string, string>();
 		}
 		
-		public void GetAttackName(string attackname)		//hieu add
-		{
-			this.attack_name = attackname;
-		}
 		
 		public void Update(){
 			moveGraph.CurrentState.update(moveGraph, null);
@@ -177,10 +176,26 @@ namespace FightGame
 			forwardVector.x *= -1;
 		}
 		
-		public GameObject GetGOB()
+		public GameObject GetGOB()	//hieu add
 		{
 			return this.gobj;
 		}
+		public string GetCurrentAttack()
+		{
+			if(this.attacklist.ContainsKey(controllerDirection))
+			{
+				return this.attacklist[controllerDirection];
 		
+			}
+			return null;
+		}
+		public string GetUniqueAttack()
+		{
+			if(this.uniquelist.ContainsKey(controllerDirection))
+			{
+				return this.uniquelist[controllerDirection];
+			}
+			return null;
+		}
 	}
 }

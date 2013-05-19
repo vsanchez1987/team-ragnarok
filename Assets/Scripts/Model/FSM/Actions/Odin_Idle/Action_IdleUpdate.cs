@@ -37,9 +37,9 @@ namespace FSM
 				GameManager.P1.Dispatch("attack");
 			}
 			
-			else if(GameManager.P1.uniquePressed && GameManager.P1.GetUniqueAttack() != null)
+			else if(GameManager.P1.uniquePressed)
 			{
-				GameManager.P1.Dispatch("unique");
+				GameManager.P1.Dispatch("uniqueAttack");
 			}
 			
 			else if(GameManager.P1.controllerDirection == "forward")

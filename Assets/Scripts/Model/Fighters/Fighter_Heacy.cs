@@ -5,25 +5,25 @@ using FSM;
 
 namespace FightGame
 {
-	public class Fighter_Odin : A_Fighter
+	public class Fighter_Heacy : A_Fighter
 	{
-		public Fighter_Odin (GameObject gobj, int playerNumber, string hAxis, string vAxis, string atkBtn, string unqBtn, string specialBtn, string blockBtn)
+		public Fighter_Heacy (GameObject gobj, int playerNumber, string hAxis, string vAxis, string atkBtn, string unqBtn, string specialBtn, string blockBtn)
 			:base (playerNumber,hAxis,vAxis,atkBtn,unqBtn,specialBtn, blockBtn, gobj)
 		{
 			this.gobj = gobj;
 			this.status = new Status_None();
-			this.name = "Odin";
+			this.name = "Heacy";
 			
-			this.attacklist.Add("back","Sweeping Spear");
-			this.attacklist.Add("up","Scorpion Uppercut");
-			this.attacklist.Add("down","Speed Jab");
-			this.attacklist.Add("forward","Thrust");
-			this.attacklist.Add("none","Shield Swipe");
+			this.attacklist.Add("back","Megaton Punch");
+			this.attacklist.Add("up","Flee");
+			this.attacklist.Add("down","Fire Carpet");
+			this.attacklist.Add("forward","Bunker Buster");
+			this.attacklist.Add("none","Door Knocker");
 			
-			this.uniquelist.Add("back","Raven Soul Steal");
-			this.uniquelist.Add("up","Raven Storm");
-			this.uniquelist.Add("down","Teleport");
-			this.uniquelist.Add("forward","Ravens Fury");
+			this.uniquelist.Add("back","1 2 3 Fire");
+			this.uniquelist.Add("up","Heat Seeker");
+			this.uniquelist.Add("down","Rail Gun");
+			this.uniquelist.Add("forward","Napalm Flame Thrower");
 			
 			
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());

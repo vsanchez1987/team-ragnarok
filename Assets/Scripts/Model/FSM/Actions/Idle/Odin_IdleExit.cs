@@ -5,7 +5,7 @@ using FSM;
 
 namespace FSM
 {
-	public class Action_IdleEnter:FSMAction
+	public class Odin_IdleExit:FSMAction
 	{
 		public override void execute(FSMContext c, Object o){
 			
