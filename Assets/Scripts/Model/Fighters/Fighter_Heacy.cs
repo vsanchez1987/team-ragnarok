@@ -14,16 +14,16 @@ namespace FightGame
 			this.status = new Status_None();
 			this.name = "Heacy";
 			
-			this.attacklist.Add("back","Megaton Punch");
-			this.attacklist.Add("up","Flee");
-			this.attacklist.Add("down","Fire Carpet");
-			this.attacklist.Add("forward","Bunker Buster");
-			this.attacklist.Add("none","Door Knocker");
+			this.attacklist.Add("back",new Attack_MegatonPunch());
+			//this.attacklist.Add("up","Flee");
+			//this.attacklist.Add("down","Fire Carpet");
+			//this.attacklist.Add("forward","Bunker Buster");
+			//this.attacklist.Add("none","Door Knocker");
 			
-			this.uniquelist.Add("back","1 2 3 Fire");
-			this.uniquelist.Add("up","Heat Seeker");
-			this.uniquelist.Add("down","Rail Gun");
-			this.uniquelist.Add("forward","Napalm Flame Thrower");
+			//this.uniquelist.Add("back","1 2 3 Fire");
+			//this.uniquelist.Add("up","Heat Seeker");
+			//this.uniquelist.Add("down","Rail Gun");
+			//this.uniquelist.Add("forward","Napalm Flame Thrower");
 			
 			
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());

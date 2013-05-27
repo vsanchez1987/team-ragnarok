@@ -8,19 +8,31 @@ namespace FightGame
 {
 	public abstract class A_Fighter
 	{
-		const int P1Layer = 8;
-		const int P2Layer = 9;
+		//layer names
+		public const int P1_HIT_BOX_LAYER_NUMBER = 8;
+		public const int P2_HIT_BOX_LAYER_NUMBER = 9;
+		public const int P1_HURT_BOX_LAYER_NUMBER = 10;
+		public const int P2_HURT_BOX_LAYER_NUMBER = 11;
+		
+		//hitbox names
+		public const string HB_FIST_L="HB_L_Fist";
+		public const string HB_FIST_R="HB_R_Fist";
+		public const string HB_GLOBAL01="HB_Global01";
+		
+		public List<HitBox> hitBoxes;
+		public List<HitBoxInfo> hitBoxCollisionsToBeProcessed;
+		
+		public Dictionary<string,A_Attack> attacklist;	//hieu add, tom modify to add <string,A_attack>
+		public Dictionary<string,string> uniquelist;	//hieu add
+		
 		protected const float moveCoolDown = 2;
 		
 		protected string name;
 		protected GameObject gobj;
 		protected A_Status status;
 		protected FSMContext moveGraph;
-		public Dictionary<string,string> attacklist;	//hieu add
-		public Dictionary<string,string> uniquelist;	//hieu add
 		
 		public float lastAttackTimer = 0;
-		public List<HitBox> hitBoxes;	
 		
 		#region input related Data
 		// bool attackPressed, uniquePressed;
@@ -72,8 +84,9 @@ namespace FightGame
 			_spcBtn = specialBtn;
 			initForwardVector(_playerNumber);
 			hitBoxes = new List<HitBox>();
+			hitBoxCollisionsToBeProcessed = new List<HitBoxInfo>();
 			InitHitBoxes(gobj);
-			attacklist = new Dictionary<string, string>();
+			attacklist = new Dictionary<string, A_Attack>();
 			uniquelist = new Dictionary<string, string>();
 		}
 		
@@ -81,6 +94,22 @@ namespace FightGame
 		public void Update(){
 			moveGraph.CurrentState.update(moveGraph, null);
 			lastAttackTimer+=Time.deltaTime;
+			UpdateHitBoxes();
+			AssignHitBoxCollisions();
+		}
+		
+		public void AssignHitBoxCollisions()
+		{
+			foreach (HitBox hb in hitBoxes)
+			{
+				if(hb.getHitBoxInfo()!=null)
+				{
+					hitBoxCollisionsToBeProcessed.Add(hb.getHitBoxInfo());
+					Debug.Log(hb.getHitBoxInfo().location);
+					hb.removeHitBoxInfo();
+					
+				}
+			}
 		}
 		
 		private void InitHitBoxes(GameObject gobj)
@@ -116,11 +145,11 @@ namespace FightGame
 		{
 			if(_playerNumber==1)
 			{
-				t.gameObject.layer=P1Layer;
+				t.gameObject.layer=P1_HIT_BOX_LAYER_NUMBER;
 			}
 			else if(_playerNumber==2)
 			{
-				t.gameObject.layer=P2Layer;
+				t.gameObject.layer=P2_HIT_BOX_LAYER_NUMBER;
 			}
 		}
 		
@@ -128,7 +157,16 @@ namespace FightGame
 		{
 			foreach (HitBox hb in hitBoxes)
 			{
-				hb.Display(b);
+				if(!hb.VisiblityLocked())
+					hb.SetVisiblity(b);
+			}
+		}
+		
+		public void ShowHitBoxesAlwaysOn(bool b)
+		{
+			foreach (HitBox hb in hitBoxes)
+			{
+				hb.LockVisiblity(b);
 			}
 		}
 		
@@ -144,7 +182,24 @@ namespace FightGame
 			return null;
 		}
 		
-		// canAttack() - checks cool down to see if player can attack yet
+		
+		public void UpdateHitBoxes()
+		{
+			foreach (HitBox hb in hitBoxes)
+			{
+				hb.update();
+			}
+		}
+		
+		public void SendHitBoxMessage(HBM msg)
+		{
+			HitBox hb = getHitBox(msg.HB_recipient);
+			if (hb!=null)
+			{
+				hb.sendMessage(msg);
+			}
+		}
+		
 		public bool canAttack()
 		{
 			return lastAttackTimer>moveCoolDown;
@@ -184,7 +239,7 @@ namespace FightGame
 		{
 			if(this.attacklist.ContainsKey(controllerDirection))
 			{
-				return this.attacklist[controllerDirection];
+				return this.attacklist[controllerDirection].name;
 		
 			}
 			return null;

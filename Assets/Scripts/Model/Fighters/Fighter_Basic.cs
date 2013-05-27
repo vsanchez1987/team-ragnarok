@@ -14,6 +14,8 @@ namespace FightGame
 			this.status = new Status_None();
 			this.name = "Fighter_Basic";
 			
+			attacklist.Add("test",new Attack_Melee(0,0,0)); //tom add for hitbox test
+			
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
 			State S_walkForward = new State("walkForward", new Action_WalkForwardEnter(), new Action_WalkForwardUpdate(), new Action_WalkForwardExit());
 			

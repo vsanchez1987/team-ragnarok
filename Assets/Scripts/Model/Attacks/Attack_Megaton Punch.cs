@@ -4,12 +4,12 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Attack_Melee: A_Attack
+	public class Attack_MegatonPunch: A_Attack
 	{
 		float attackDuration = 3.0f;
-		string attack_name = "melee";
+		string attack_name = "Megaton Punch";
 		
-		public Attack_Melee (float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod)
+		public Attack_MegatonPunch (float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod)
 		{
 			// <<<HIT BOX MESSAGES>>>
 			string recipient;

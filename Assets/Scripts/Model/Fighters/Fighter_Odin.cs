@@ -14,16 +14,16 @@ namespace FightGame
 			this.status = new Status_None();
 			this.name = "Odin";
 			
-			this.attacklist.Add("back","Sweeping Spear");
-			this.attacklist.Add("up","Scorpion Uppercut");
-			this.attacklist.Add("down","Speed Jab");
-			this.attacklist.Add("forward","Thrust");
-			this.attacklist.Add("none","Shield Swipe");
+			//this.attacklist.Add("back","Sweeping Spear");
+			//this.attacklist.Add("up","Scorpion Uppercut");
+			//this.attacklist.Add("down","Speed Jab");
+			//this.attacklist.Add("forward","Thrust");
+			//this.attacklist.Add("none","Shield Swipe");
 			
-			this.uniquelist.Add("back","Raven Soul Steal");
-			this.uniquelist.Add("up","Raven Storm");
-			this.uniquelist.Add("down","Teleport");
-			this.uniquelist.Add("forward","Ravens Fury");
+			//this.uniquelist.Add("back","Raven Soul Steal");
+			//this.uniquelist.Add("up","Raven Storm");
+			//this.uniquelist.Add("down","Teleport");
+			//this.uniquelist.Add("forward","Ravens Fury");
 			
 			
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
