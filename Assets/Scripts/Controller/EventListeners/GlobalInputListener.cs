@@ -17,21 +17,21 @@ public class GlobalInputListener : MonoBehaviour {
 		//Player 1 Input
 		if (GameManager.P1!= null)
 		{
-			GameManager.P1.inputDirection = GetInputDirection(GameManager.P1._hAxis,GameManager.P1._vAxis);
+			GameManager.P1.inputDirection = GetInputDirection(GameManager.P1.hAxis,GameManager.P1.vAxis);
 			GameManager.P1.controllerDirection = GetControllerDirection(GameManager.P1.inputDirection);
-			GameManager.P1.attackPressed = Input.GetButton(GameManager.P1._atkBtn);
-			GameManager.P1.uniquePressed = Input.GetButton(GameManager.P1._unqBtn);
-			GameManager.P1.specialPressed = Input.GetButton(GameManager.P1._spcBtn);
-			GameManager.P1.blockPressed = Input.GetButton(GameManager.P1._blckBtn);
+			GameManager.P1.attackPressed = Input.GetButton(GameManager.P1.atkBtn);
+			GameManager.P1.uniquePressed = Input.GetButton(GameManager.P1.unqBtn);
+			GameManager.P1.specialPressed = Input.GetButton(GameManager.P1.spcBtn);
+			GameManager.P1.blockPressed = Input.GetButton(GameManager.P1.blckBtn);
 		}
 		
 		//Player 2 Input
 		if (GameManager.P2!= null)
 		{
-			GameManager.P2.inputDirection = GetInputDirection(GameManager.P2._hAxis,GameManager.P2._vAxis);
+			GameManager.P2.inputDirection = GetInputDirection(GameManager.P2.hAxis,GameManager.P2.vAxis);
 			GameManager.P2.controllerDirection = GetControllerDirection(GameManager.P2.inputDirection);
-			GameManager.P1.attackPressed = Input.GetButton(GameManager.P2._atkBtn);
-			GameManager.P1.uniquePressed = Input.GetButton(GameManager.P2._unqBtn);
+			GameManager.P1.attackPressed = Input.GetButton(GameManager.P2.atkBtn);
+			GameManager.P1.uniquePressed = Input.GetButton(GameManager.P2.unqBtn);
 		}			
 		
 		GameManager.Update();	

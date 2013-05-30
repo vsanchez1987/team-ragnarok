@@ -9,14 +9,14 @@ namespace FightGame
 		float attackDuration = 3.0f;
 		string attack_name = "Megaton Punch";
 		
-		public Attack_MegatonPunch (float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod)
+		public Attack_MegatonPunch (A_Fighter attackOwner, float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod,attackOwner)
 		{
 			// <<<HIT BOX MESSAGES>>>
 			string recipient;
 			Vector3 startLoc,velocity;
 			float startTime,endTime,damage,radius;
 			Mechanic attackMechanic;
-			HBM HB_message;
+			HitBoxInstruction HB_message;
 			
 			// ******** LEFT FIST ********
 			recipient = A_Fighter.HB_FIST_L;
@@ -28,7 +28,7 @@ namespace FightGame
 			radius = 1.0f;
 			attackMechanic = new Mechanic(); //knowdown, launch etc..
 			
-			HB_message = new HBM(recipient,startTime,endTime,damage,attackMechanic,velocity,startLoc,radius);
+			HB_message = new HitBoxInstruction(recipient,startTime,endTime,damage,attackMechanic,velocity,startLoc,radius);
 			base.attackInstructions.Add(HB_message);
 			//_---------------------------------
 			
@@ -42,7 +42,7 @@ namespace FightGame
 			radius = 1.5f;
 			attackMechanic = new Mechanic(); //knowdown, launch etc..
 			
-			HB_message = new HBM(recipient,startTime,endTime,damage,attackMechanic,velocity,startLoc,radius);
+			HB_message = new HitBoxInstruction(recipient,startTime,endTime,damage,attackMechanic,velocity,startLoc,radius);
 			base.attackInstructions.Add(HB_message);
 			//_---------------------------------
 			
@@ -57,19 +57,21 @@ namespace FightGame
 			radius = 1.0f;
 			attackMechanic = new Mechanic(); //knowdown, launch etc..
 			
-			HB_message = new HBM(recipient,startTime,endTime,damage,attackMechanic,velocity,startLoc,radius);
+			HB_message = new HitBoxInstruction(recipient,startTime,endTime,damage,attackMechanic,velocity,startLoc,radius);
 			base.attackInstructions.Add(HB_message);
 			base.name=attack_name;
 			//_---------------------------------
 
-
-			
 			//JONATHAN'S ORIGINAL CODE
 			this.preAttackPeriod = preAttackPeriod;
 			this.attackPeriod = attackPeriod;
 			this.animationDuration = animationDuration;
-			this.postAttackPeriod = animationDuration - (preAttackPeriod + attackPeriod);
-			
+			this.postAttackPeriod = animationDuration - (preAttackPeriod + attackPeriod);	
+		}
+		
+		public override void Execute ()
+		{
+			base.Execute ();
 			
 		}
 	}

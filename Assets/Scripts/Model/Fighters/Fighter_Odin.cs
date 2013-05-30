@@ -7,13 +7,14 @@ namespace FightGame
 {
 	public class Fighter_Odin : A_Fighter
 	{
-		public Fighter_Odin (GameObject gobj, int playerNumber, string hAxis, string vAxis, string atkBtn, string unqBtn, string specialBtn, string blockBtn)
-			:base (playerNumber,hAxis,vAxis,atkBtn,unqBtn,specialBtn, blockBtn, gobj)
+		public Fighter_Odin (GameObject gobj, int playerNumber)
+			:base (playerNumber,gobj)
 		{
 			this.gobj = gobj;
 			this.status = new Status_None();
 			this.name = "Odin";
 			
+			//Tom comment out
 			//this.attacklist.Add("back","Sweeping Spear");
 			//this.attacklist.Add("up","Scorpion Uppercut");
 			//this.attacklist.Add("down","Speed Jab");

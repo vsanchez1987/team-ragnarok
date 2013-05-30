@@ -18,7 +18,7 @@ public class inputTest : MonoBehaviour {
 			if (GameManager.P1.attackPressed)
 			{
 				printMsg += "regular attack";
-				if (GameManager.P1.canAttack())
+				if (GameManager.P1.CanAttack())
 				{
 					//attack
 					GameManager.P1.lastAttackTimer = 0;
@@ -27,7 +27,7 @@ public class inputTest : MonoBehaviour {
 			}
 			if (GameManager.P1.uniquePressed)
 			{
-				if (GameManager.P1.canAttack())
+				if (GameManager.P1.CanAttack())
 				{
 					GameManager.P1.lastAttackTimer = 0;
 					printMsg += "attacked"+"\n";
@@ -37,7 +37,7 @@ public class inputTest : MonoBehaviour {
 			if (GameManager.P1.specialPressed)
 			{
 				//GameManager.P1.canSpecial()
-				if (GameManager.P1.canAttack())
+				if (GameManager.P1.CanAttack())
 				{
 					//GameManager.P1.lastSpecialTimer = 0;
 					GameManager.P1.lastAttackTimer = 0;
@@ -48,7 +48,7 @@ public class inputTest : MonoBehaviour {
 			if (GameManager.P1.blockPressed)
 			{
 				//GameManager.P1.canBlock()
-				if (GameManager.P1.canAttack())
+				if (GameManager.P1.CanAttack())
 				{
 					//GameManager.P1.lastBlockTimer = 0;
 					printMsg += "blocked";
@@ -63,7 +63,7 @@ public class inputTest : MonoBehaviour {
 					//the casting is a manual way to make double precision decimal
 			
 			//can attack
-			if (GameManager.P1.canAttack())
+			if (GameManager.P1.CanAttack())
 			{
 				printMsg += "ready to attack"+"\n";
 			}
@@ -78,7 +78,7 @@ public class inputTest : MonoBehaviour {
 			//swap forward vector button
 		  	if (GUI.Button(new Rect(10, 110, 150, 30), "Switch ForwardVector"))
 			{
-	            GameManager.P1.switchForwardVector();
+	            GameManager.P1.SwitchForwardVector();
 			}
 			
 			

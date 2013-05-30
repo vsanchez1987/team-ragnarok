@@ -23,7 +23,7 @@ public class hitBoxTest_player : MonoBehaviour {
 		{
 			if(GameManager.P1.hitBoxes!=null)
 			{
-				testHB=GameManager.P1.getHitBox(hbName);
+				testHB=GameManager.P1.GetHitBox(hbName);
 			}
 		}
 	}
@@ -51,11 +51,11 @@ public class hitBoxTest_player : MonoBehaviour {
 			testHB.setCollisionEnable(collisionEnabled);
 			testHB.setVelocity(v);
 			testHB.setRadius(radius);
-			testHB.updatePosition();
+			testHB.UpdatePosition();
 			
 			
 			if (testHB.getCollisionEnabled())
-				Debug.Log(testHB.checkCollision());
+				Debug.Log(testHB.CheckCollision());
 			
 			if (setLoc)
 				testHB.setLocation(locationToSet);

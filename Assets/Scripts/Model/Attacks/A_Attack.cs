@@ -11,27 +11,32 @@ namespace FightGame
 		protected float attackPeriod;
 		protected float postAttackPeriod;
 		protected float animationDuration;
+		protected A_Fighter attackOwner;
 		
 		public string name;
-		public List<HBM> attackInstructions;
+		public List<HitBoxInstruction> attackInstructions;
 		float attackLength;
 		
-		public A_Attack(float attackLength)
+		public A_Attack(float attackLength,A_Fighter attackOwner)
 		{
-			this.attackInstructions=new List<HBM>();
+			this.attackInstructions=new List<HitBoxInstruction>();
 			this.attackLength=attackLength;
+			this.attackOwner = attackOwner;
 
 		}
 		
-		/*
-		public I_Attack (float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f)
+		public virtual void Execute()
 		{
-			this.preAttackPeriod = preAttackPeriod;
-			this.attackPeriod = attackPeriod;
-			this.animationDuration = animationDuration;
-			this.postAttackPeriod = animationDuration - (preAttackPeriod + attackPeriod);
+			if(attackInstructions!=null)
+			{		
+				foreach(HitBoxInstruction hbi in attackInstructions)
+				{
+					attackOwner.GetHitBox(hbi.HB_recip_name).sendInstruction(hbi);
+				}
+			
+			}
 		}
-		*/
+
 	}
 }
 

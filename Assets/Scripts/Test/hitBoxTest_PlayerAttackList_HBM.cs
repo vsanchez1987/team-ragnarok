@@ -5,7 +5,7 @@ public class hitBoxTest_PlayerAttackList_HBM : MonoBehaviour {
 
 	HitBox testHB,testHB2,testHB3;
 	public string loadedHitBox = "";
-	public bool showBoxes = false;
+	public bool showBoxes = true;
 	public bool alwaysShowHitBoxes = false;
 	
 	void Start () {	}
@@ -14,9 +14,9 @@ public class hitBoxTest_PlayerAttackList_HBM : MonoBehaviour {
 	{
 		if(GameManager.P1!=null)
 		{
-			testHB = GameManager.P1.getHitBox(A_Fighter.HB_FIST_L);
-			testHB2 = GameManager.P1.getHitBox(A_Fighter.HB_FIST_R);
-			testHB3 = GameManager.P1.getHitBox(A_Fighter.HB_GLOBAL01);
+			testHB = GameManager.P1.GetHitBox(A_Fighter.HB_FIST_L);
+			testHB2 = GameManager.P1.GetHitBox(A_Fighter.HB_FIST_R);
+			testHB3 = GameManager.P1.GetHitBox(A_Fighter.HB_GLOBAL01);
 		}
 	}
 	
@@ -27,14 +27,14 @@ public class hitBoxTest_PlayerAttackList_HBM : MonoBehaviour {
 			//this should be in "attack(A_attack)" For "A_Fighter"
 			//foreach(hbm in attack instructions) send message to appropriate hitbox
 			
-			HBM testMsg = GameManager.P1.attacklist["test"].attackInstructions[0];	
-        	testHB.sendMessage(testMsg);
+			HitBoxInstruction testMsg = GameManager.P1.attacklist["test"].attackInstructions[0];	
+        	testHB.sendInstruction(testMsg);
 			
-			HBM testMsg2 = GameManager.P1.attacklist["test"].attackInstructions[1];
-        	testHB2.sendMessage(testMsg2);
+			HitBoxInstruction testMsg2 = GameManager.P1.attacklist["test"].attackInstructions[1];
+        	testHB2.sendInstruction(testMsg2);
 			
-			HBM testMsg3 = GameManager.P1.attacklist["test"].attackInstructions[2];
-        	testHB3.sendMessage(testMsg3);
+			HitBoxInstruction testMsg3 = GameManager.P1.attacklist["test"].attackInstructions[2];
+        	testHB3.sendInstruction(testMsg3);
 		}
 	}
 	

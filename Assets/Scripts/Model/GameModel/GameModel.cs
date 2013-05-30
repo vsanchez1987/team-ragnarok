@@ -49,13 +49,13 @@ namespace FightGame{
 			switch (fighter)
 			{
 				case("Fighter_Basic"):
-					instance.p1 = new Fighter_Basic(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
+					instance.p1 = new Fighter_Basic(player1,1);
 					break;
 				case("Fighter_Odin"):
-					instance.p1 = new Fighter_Odin(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
+					instance.p1 = new Fighter_Odin(player1,1);
 					break;
 				case("Fighter_Heacy"):
-					instance.p1 = new Fighter_Heacy(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
+					instance.p1 = new Fighter_Heacy(player1,1);
 					break;
 			}
 			

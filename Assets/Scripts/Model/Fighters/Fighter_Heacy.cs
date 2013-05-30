@@ -7,15 +7,15 @@ namespace FightGame
 {
 	public class Fighter_Heacy : A_Fighter
 	{
-		public Fighter_Heacy (GameObject gobj, int playerNumber, string hAxis, string vAxis, string atkBtn, string unqBtn, string specialBtn, string blockBtn)
-			:base (playerNumber,hAxis,vAxis,atkBtn,unqBtn,specialBtn, blockBtn, gobj)
+		public Fighter_Heacy (GameObject gobj, int playerNumber)
+			:base (playerNumber,gobj)
 		{
 			this.gobj = gobj;
 			this.status = new Status_None();
 			this.name = "Heacy";
 			
-			this.attacklist.Add("back",new Attack_MegatonPunch());
-			//this.attacklist.Add("up","Flee");
+			this.attacklist.Add("back",new Attack_MegatonPunch(this)); //Tom add to show Hue 
+			//this.attacklist.Add("up","Flee"); 					//Tom Comment out
 			//this.attacklist.Add("down","Fire Carpet");
 			//this.attacklist.Add("forward","Bunker Buster");
 			//this.attacklist.Add("none","Door Knocker");

@@ -5,38 +5,34 @@ using FightGame;
 
 public class HitBox{
 	
-	#region data
-	GameObject gob;
-	List<HBM> inbox;
-	HBM currentMsg;
-	Vector3 scale;
-	Vector3 velocity;
-	public bool collisionEnabled;
-	float currentDmg;
-	Mechanic currentMechanic;
-	float endTime, startTime,elapsedTime;
-	bool lockVisibility,visible;
-	bool active;
-	HitBoxInfo hitBoxInfo;
-	#endregion
+	GameObject 				gob;
+	List<HitBoxInstruction> HBinstructionList;
+	HitBoxInstruction 		currentInstruction;
+	Vector3 				scale;
+	Vector3 				velocity;
+	public bool 			collisionEnabled;
+	float 					currentDmg;
+	Mechanic 				currentMechanic;
+	float 					endTime, startTime,elapsedTime;
+	bool 					lockVisibility,visible;
+	bool 					active;
+	HitBoxInfo 				hitBoxInfo;
 	
-	#region constructor
 	public HitBox(string name)
 	{
 		GOBset(name);
-		scale = gob.transform.lossyScale;
+		scale = 			gob.transform.lossyScale;
 		Debug.Log(name + " :hitbox scale:" + scale);
-		velocity = new Vector3(0,0,0);
-		collisionEnabled = false;
-		currentDmg=0;
-		currentMechanic = null;
+		velocity = 			new Vector3(0,0,0);
+		collisionEnabled = 	false;
+		currentDmg =		0;
+		currentMechanic = 	null;
 		lockVisibility=visible=false;
-		active = false;
-		hitBoxInfo = null;
+		active = 			false;
+		hitBoxInfo = 		null;
 	}
-	#endregion
 	
-	#region properties
+	#region get/set methods
 	public void setDamage(float damage)
 	{
 		this.currentDmg = damage;
@@ -114,28 +110,28 @@ public class HitBox{
 	}
 	#endregion
 	
-	#region actions
-	
-	public bool sendMessage(HBM HB_message)
+	public bool sendInstruction(HitBoxInstruction HBI)
 	{
-		if(currentMsg==null)
+		if(currentInstruction==null)
 		{
-			collisionEnabled = true;
-			startTime=HB_message.startTime;
-			elapsedTime=0;
-			endTime=HB_message.endTime;
-			if(HB_message.startLoc!=Vector3.zero)
-				setLocation(HB_message.startLoc);
-			setVelocity(HB_message.velocity);
-			setDamage(HB_message.damage);
-			setRadius(HB_message.radius);
-			setMechanic(HB_message.attackMechanic);
+			collisionEnabled 	= true;
+			startTime			= HBI.startTime;
+			elapsedTime			= 0;
+			endTime				= HBI.endTime;
+			if(HBI.startLoc!=Vector3.zero) //flag for using parent location
+			{
+				setLocation(HBI.startLoc);
+			}
+			setVelocity(HBI.velocity);
+			setDamage(HBI.damage);
+			setRadius(HBI.radius);
+			setMechanic(HBI.attackMechanic);
 			return true;
 		}
 		else return false;
 	}
 	
-	void setActive()
+	void SetActive()
 	{
 		if(CheckIfAlreadyCollided())
 		{
@@ -143,90 +139,98 @@ public class HitBox{
 			return;
 		}
 		
-		else if (checkIfInsideActiveTimeScope())
+		else if (CheckIfInsideActiveTimeScope())
 		{
 			active=true;
 		}
 		else
 		{
-			if(checkIfAfterActiveTimeScope())
+			if(CheckIfAfterActiveTimeScope())
 			{
 				Deactivate();
 			}
 		}
 	}
 	
+	void Deactivate()
+	{
+		active 				= false;
+		hitBoxInfo			= null;
+		currentInstruction	= null;
+		velocity 			= Vector3.zero;
+		collisionEnabled 	= false;
+		currentDmg			= 0;
+		currentMechanic 	= null;
+		elapsedTime			= endTime+1;
+	}
+	
+	bool CheckIfInsideActiveTimeScope()
+	{	
+		if(elapsedTime < endTime && elapsedTime > startTime)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	bool CheckIfAfterActiveTimeScope()
+	{
+		return elapsedTime>startTime;
+	}
+	
+	#region collision methods
 	bool CheckIfAlreadyCollided()
 	{
 		return hitBoxInfo!=null;
 	}
 	
-	void Deactivate()
-	{
-		active = false;
-		hitBoxInfo=null;
-		currentMsg=null;
-		velocity = Vector3.zero;
-		collisionEnabled = false;
-		currentDmg=0;
-		currentMechanic = null;
-		elapsedTime=endTime+1;
-	}
-	
-	
-	
-	bool checkIfInsideActiveTimeScope()
-	{	
-		if(elapsedTime < endTime && elapsedTime > startTime) //active
-			return true;
-		return false;//out of scope of activation time
-	}
-	
-	bool checkIfAfterActiveTimeScope()
-	{
-		return elapsedTime>startTime;
-	}
-	
-	public bool checkCollision()
+	public bool CheckCollision()
 	{
 		return (Physics.CheckSphere(gob.transform.position,scale.x/2.0f) && collisionEnabled);
 	}
 	
-	public bool checkCollision(LayerMask layerToCheck)
+	public bool CheckCollision(LayerMask layerToCheck)
 	{
 		return (Physics.CheckSphere(gob.transform.position,scale.x/2.0f, layerToCheck) && collisionEnabled);
 	}
 	
-	HitBoxInfo constructHitBoxInformation(int LayerM)
-	{
-		Vector3 location;
-		location = findCollidingHurtBoxLocation(LayerM);
-		if (location==Vector3.zero) return null;//collision check failed
-		HitBoxInfo hbi = new HitBoxInfo(location,this,this.currentMechanic,this.currentDmg);
-		return hbi;
-	}
-	
-	Vector3 findCollidingHurtBoxLocation(int enemyPlayerHurtBoxLayer)
+	Vector3 FindCollidingHurtBoxLocation(int enemyPlayerHurtBoxLayer)
+	// runs a move expensive collision check to find exact location, returns 0,0,0 if failed
 	{
 		Collider[] hitColliders = Physics.OverlapSphere(this.gob.transform.position,this.scale.x/2.0f,enemyPlayerHurtBoxLayer);
-		if (hitColliders==null)return Vector3.zero;//its possible this will fail and other collision check will pass
+		if (hitColliders==null) //if this collision check fails
+		{
+			return Vector3.zero;
+		}
 		Vector3 Distance = hitColliders[0].gameObject.transform.position - this.gob.transform.position;
 		return Distance.normalized * this.scale.x/2.0f;
 	}
+	#endregion
 	
-	public void update()
+	HitBoxInfo ConstructHitBoxInformation(int LayerM)
+	{
+		Vector3 location = FindCollidingHurtBoxLocation(LayerM);
+		if (location==Vector3.zero) //collision check failed
+		{
+			return null;
+		}	
+		return new HitBoxInfo(location,this,this.currentMechanic,this.currentDmg);
+	}
+
+	#region Update methods
+	public void Update()
 	{
 		if(active)
 		{
-			updatePosition();	
-			updateCollision();
+			UpdatePosition();	
+			UpdateCollision();
 		}
-		setActive(); 
-		updateTimer();
-		updateVisibility();
+		SetActive(); 
+		UpdateTimer();
+		UpdateVisibility();
 	}
 	
-	void updateCollision()
+	void UpdateCollision()
 	{
 		bool collide=false;
 		int layer;
@@ -235,34 +239,34 @@ public class HitBox{
 		//if this is player 1
 		if (gob.layer==A_Fighter.P1_HIT_BOX_LAYER_NUMBER) 
 		{
-			collide=checkCollision(1<<A_Fighter.P2_HURT_BOX_LAYER_NUMBER);
+			collide=CheckCollision(1<<A_Fighter.P2_HURT_BOX_LAYER_NUMBER);
 			layer=1<<A_Fighter.P2_HURT_BOX_LAYER_NUMBER;
 		}
 		else //if this is player 2
 		{
-			collide=checkCollision(1<<A_Fighter.P1_HURT_BOX_LAYER_NUMBER);
+			collide=CheckCollision(1<<A_Fighter.P1_HURT_BOX_LAYER_NUMBER);
 			layer=1<<A_Fighter.P1_HURT_BOX_LAYER_NUMBER;
 		}
 		
 		//construct hitbox information if hit happened
 		if (collide)
 		{
-			hitBoxInfo=constructHitBoxInformation(layer);
+			hitBoxInfo=ConstructHitBoxInformation(layer);
 		}
 		
 	}
-	void updateTimer()
+	
+	void UpdateTimer()
 	{
 		this.elapsedTime+=Time.deltaTime;
 	}
 	
-	
-	public void updatePosition()
+	public void UpdatePosition()
 	{
 		gob.transform.position+=velocity*Time.deltaTime;
 	}
 	
-	void updateVisibility()
+	void UpdateVisibility()
 	{
 		if(lockVisibility)
 		{
@@ -276,7 +280,6 @@ public class HitBox{
 			else gob.renderer.enabled = false;
 		}	
 	}
-	
 	#endregion
-	
+
 }

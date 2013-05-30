@@ -22,10 +22,10 @@ public class hitBoxTest : MonoBehaviour {
 		testHB.setCollisionEnable(collisionEnabled);
 		testHB.setVelocity(v);
 		testHB.setRadius(radius);
-		testHB.updatePosition();
+		testHB.UpdatePosition();
 		
 		if (testHB.getCollisionEnabled())
-			Debug.Log(testHB.checkCollision());
+			Debug.Log(testHB.CheckCollision());
 		
 		if (setLoc)
 			testHB.setLocation(locationToSet);

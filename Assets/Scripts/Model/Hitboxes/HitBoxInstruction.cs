@@ -3,9 +3,9 @@ using System.Collections;
 
 namespace FightGame
 {
-	public class HBM
+	public class HitBoxInstruction
 	{
-		public string HB_recipient; //name of hitbox msg is for
+		public string HB_recip_name; //name of hitbox msg is for
 		public Vector3 startLoc; // relative to fighter, is vector3.zero if parented
 		public Vector3 velocity;
 		public float startTime;
@@ -15,9 +15,9 @@ namespace FightGame
 		public Mechanic attackMechanic; //knowdown, launch etc..
 		
 		
-		public HBM(string HB_recipient, float startTime, float endTime, float damage, Mechanic atkMechanic, Vector3 velocity,  Vector3 startLoc , float radius)
+		public HitBoxInstruction(string HB_recipient_name, float startTime, float endTime, float damage, Mechanic atkMechanic, Vector3 velocity,  Vector3 startLoc , float radius)
 		{
-			this.HB_recipient = HB_recipient;
+			this.HB_recip_name = HB_recipient_name;
 			this.startTime=startTime;
 			this.endTime=endTime;
 			this.damage= damage;
