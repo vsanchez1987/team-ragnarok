@@ -47,23 +47,14 @@ namespace FightGame{
 			switch (fighter)
 			{
 				case("Fighter_Basic"):
-<<<<<<< HEAD
-					instance.p1 = new Fighter_Basic(player1,1);
+					this.p1 = new Fighter_Basic(player1,1);
 					break;
 				case("Fighter_Odin"):
-					instance.p1 = new Fighter_Odin(player1,1);
+					this.p1 = new Fighter_Odin(player1,1);
 					break;
 				case("Fighter_Heacy"):
-					instance.p1 = new Fighter_Heacy(player1,1);
-=======
-					this.p1 = new Fighter_Basic(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
-					break;
-				case("Fighter_Odin"):
-					this.p1 = new Fighter_Odin(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
-					break;
-				case("Fighter_Heacy"):
-					this.p1 = new Fighter_Heacy(player1,1,"HorizontalP1","VerticalP1","RegularAttackP1","UniqueAttackP1","SpecialAttackP1","BlockP1");
->>>>>>> origin/jonathan
+					this.p1 = new Fighter_Heacy(player1,1);
+
 					break;
 			}
 			
