@@ -13,27 +13,6 @@ namespace FSM
 			
 			if(GameManager.P1.attackPressed)
 			{
-				/*
-				switch(GameManager.P1.controllerDirection)
-				{
-				case("back"):
-					//attack name must be the same as animation name
-					GameManager.P1.GetAttackName("sweeping_spear");
-					break;
-				case("up"):
-					GameManager.P1.GetAttackName("scorpion_uppercut");
-					break;
-				case("down"):
-					GameManager.P1.GetAttackName("speed_jab");
-					break;
-				case("forward"):
-					GameManager.P1.GetAttackName("thrust");
-					break;
-				case("none"):
-					GameManager.P1.GetAttackName("shield_swipe");
-					break;
-				}
-				*/
 				GameManager.P1.Dispatch("attack");
 			}
 			
@@ -42,9 +21,13 @@ namespace FSM
 				GameManager.P1.Dispatch("unique");
 			}
 			
-			else if(GameManager.P1.controllerDirection == "forward")
+			else if(GameManager.P1.controllerDirection == "forward" || GameManager.P1.controllerDirection == "back")
 			{
 				GameManager.P1.Dispatch("walkForward");
+			}
+			else
+			{
+				GameManager.P1.Dispatch("idle");
 			}
 		}
 	}
