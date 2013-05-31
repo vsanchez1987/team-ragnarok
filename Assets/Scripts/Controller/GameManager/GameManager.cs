@@ -7,9 +7,11 @@ using FSM;
 namespace FightGame{
 	public class GameManager {
 		private static GameManager instance = new GameManager();
+		private GameModel gModel;
 		
 	    // make sure the constructor is private, so it can only be instantiated here
 	    private GameManager() {
+			this.gModel = new GameModel();
 	    }
 		
 	    public static GameManager Instance {
@@ -17,41 +19,39 @@ namespace FightGame{
 	    }
 		
 		public static A_Fighter P1{
-			get { return GameModel.P1; }
-			set { GameModel.P1 = value; }
+			get { return instance.gModel.P1; }
+			set { instance.gModel.P1 = value; }
 		}
 		
 		public static A_Fighter P2{
-			get { return GameModel.P2; }
-			set { GameModel.P2 = value; }
+			get { return instance.gModel.P2; }
+			set { instance.gModel.P2 = value; }
 		}
 		
 		public static void Print(){
-			string p1Name = GameModel.P1 != null ? GameModel.P1.Name : "No Player 1";
-			string p2Name = GameModel.P2 != null ? GameModel.P2.Name : "No Player 2";
+			string p1Name = instance.gModel.P1 != null ? instance.gModel.P1.Name : "No Player 1";
+			string p2Name = instance.gModel.P2 != null ? instance.gModel.P2.Name : "No Player 2";
 			//Debug.Log("Player 1: " + p1Name);
 			//Debug.Log("Player 2: " + p2Name);
 		}
 		
 		public static void Update(){
 			Print();
-			if (GameModel.P1 != null){
-				GameModel.P1.Update();
+			if (instance.gModel.P1 != null){
+				instance.gModel.P1.Update();
 			}
 		}
 		
 		public static A_Effect GetEffect(string effect){
-			return GameModel.GetEffect(effect);
+			return instance.gModel.GetEffect(effect);
 		}
 		
 		public static A_Attack GetAttack(string attack){
-			return GameModel.GetAttack(attack);
+			return instance.gModel.GetAttack(attack);
 		}
 		
 		public static void CreateFighter(string fighter){
-			GameModel.CreateFighter(fighter);
+			instance.gModel.CreateFighter(fighter);
 		}
-		
-
 	}
 }
