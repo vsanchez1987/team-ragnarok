@@ -33,7 +33,11 @@ namespace FightGame
 		public const string P2_BTN_UNQ_ATTACK 	= "UniqueAttackP2";
 		public const string P2_BTN_SPC_ATTACK 	= "SpecialAttackP2";
 		public const string P2_BTN_BLOCK 		= "BlockP2";
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> wolfe
 		
 		protected const float moveCoolDown = 2;
 		public float lastAttackTimer = 0;

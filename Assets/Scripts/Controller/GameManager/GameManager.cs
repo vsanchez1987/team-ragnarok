@@ -53,7 +53,5 @@ namespace FightGame{
 		public static void CreateFighter(string fighter){
 			instance.gModel.CreateFighter(fighter);
 		}
-		
-
 	}
 }
