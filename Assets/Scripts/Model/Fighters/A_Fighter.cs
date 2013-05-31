@@ -27,13 +27,13 @@ namespace FightGame
 		public const string P1_BTN_SPC_ATTACK 	= "SpecialAttackP1";
 		public const string P1_BTN_BLOCK 		= "BlockP1";
 		
-		public const string P2_AXIS_HORIZONTAL 	= "HorizontalP1";
-		public const string P2_AXIS_VERTICAL	= "VerticalP1";
-		public const string P2_BTN_REG_ATTACK 	= "RegularAttackP1";
-		public const string P2_BTN_UNQ_ATTACK 	= "UniqueAttackP1";
-		public const string P2_BTN_SPC_ATTACK 	= "SpecialAttackP1";
-		public const string P2_BTN_BLOCK 		= "BlockP1";
-		
+		public const string P2_AXIS_HORIZONTAL 	= "HorizontalP2";
+		public const string P2_AXIS_VERTICAL	= "VerticalP2";
+		public const string P2_BTN_REG_ATTACK 	= "RegularAttackP2";
+		public const string P2_BTN_UNQ_ATTACK 	= "UniqueAttackP2";
+		public const string P2_BTN_SPC_ATTACK 	= "SpecialAttackP2";
+		public const string P2_BTN_BLOCK 		= "BlockP2";
+
 		
 		protected const float moveCoolDown = 2;
 		public float lastAttackTimer = 0;
