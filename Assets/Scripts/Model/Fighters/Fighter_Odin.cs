@@ -26,7 +26,8 @@ namespace FightGame
 			//this.uniquelist.Add("down","Teleport");
 			//this.uniquelist.Add("forward","Ravens Fury");
 			
-			
+			this.attacklist.Add("back",new Sweeping_Spear(this,0,0,0));
+
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
 			State S_walkForward = new State("walkForward", new Action_WalkForwardEnter(), new Action_WalkForwardUpdate(), new Action_WalkForwardExit());
 			State S_attack = new State("attack",new Action_AttackEnter(), new Action_AttackUpdate(), new Action_AttackExit());
@@ -40,9 +41,10 @@ namespace FightGame
 			S_idle.addTransition(T_walkForward, "walkForward");
 			S_idle.addTransition(T_attack,"attack");
 			S_idle.addTransition(T_unique,"unique");
+			S_idle.addTransition(T_idle,"idle");
 			
 			S_walkForward.addTransition(T_idle, "idle");
-			//S_walkForward.addTransition(T_attack,"attack");
+			S_walkForward.addTransition(T_walkForward,"walkForward");
 			
 			S_attack.addTransition(T_idle,"idle");
 			//S_attack.addTransition(T_walkForward,"walkForward");
