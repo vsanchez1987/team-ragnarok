@@ -322,12 +322,13 @@ ModelImporter:
     7400002: WalkBack
     7400004: WalkForward
     7400006: Knockout
-    7400008: Kicks
+    7400008: Shield_Swipe
     7400010: PunchUpperCut
     7400012: Punch
     7400014: idle
     7400016: Stand0
     7400018: Sweeping_Spear
+    7400020: Kicks
     9500000: //RootNode
     11100000: //RootNode
     13700000: Male2
@@ -525,6 +526,28 @@ ModelImporter:
       firstFrame: 84
       lastFrame: 105
       wrapMode: 4
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      keepAdditionalBonesAnimation: 1
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      skeletonMaskElements: []
+    - name: Shield_Swipe
+      takeName: Kicks
+      firstFrame: 147
+      lastFrame: 186
+      wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0

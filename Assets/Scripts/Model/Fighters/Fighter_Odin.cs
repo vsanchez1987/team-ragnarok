@@ -30,7 +30,7 @@ namespace FightGame
 			//this.attacklist.Add( "1" if regular attack + direction "back,forward,up,down",create new cs file) 
 			//					   "2" if unique attack  + direction "back,forward,up,down",
 			this.attacklist.Add("1back",new Sweeping_Spear(this,0,0,0)); 
-			
+			this.attacklist.Add("1none",new Shield_Swipe(this,0,0,0));
 
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
 			State S_walkForward = new State("walkForward", new Action_WalkForwardEnter(), new Action_WalkForwardUpdate(), new Action_WalkForwardExit());
