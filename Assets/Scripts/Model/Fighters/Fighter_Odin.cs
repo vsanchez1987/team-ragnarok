@@ -26,7 +26,7 @@ namespace FightGame
 			//this.uniquelist.Add("down","Teleport");
 			//this.uniquelist.Add("forward","Ravens Fury");
 			
-			this.attacklist.Add("none",new Sweeping_Spear(this,0,0,0));
+			this.attacklist.Add("1back",new Sweeping_Spear(this,0,0,0));
 			
 
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());

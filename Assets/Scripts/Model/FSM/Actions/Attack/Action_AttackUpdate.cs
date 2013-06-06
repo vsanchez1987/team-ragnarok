@@ -17,6 +17,7 @@ namespace FSM
 			{
 				Debug.Log ("aaaaaaaaaaaaaaa");
 				GameManager.P1.Dispatch("idle");
+				time=0f;
 			}	
 			
 		}
