@@ -26,7 +26,10 @@ namespace FightGame
 			//this.uniquelist.Add("down","Teleport");
 			//this.uniquelist.Add("forward","Ravens Fury");
 			
-			this.attacklist.Add("1back",new Sweeping_Spear(this,0,0,0));
+			//Formula to add more attack to attack list:
+			//this.attacklist.Add( "1" if regular attack + direction "back,forward,up,down",create new cs file) 
+			//					   "2" if unique attack  + direction "back,forward,up,down",
+			this.attacklist.Add("1back",new Sweeping_Spear(this,0,0,0)); 
 			
 
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());

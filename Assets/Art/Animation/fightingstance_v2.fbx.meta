@@ -524,7 +524,7 @@ ModelImporter:
       takeName: PunchUpperCut
       firstFrame: 84
       lastFrame: 105
-      wrapMode: 0
+      wrapMode: 4
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0

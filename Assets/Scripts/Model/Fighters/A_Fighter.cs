@@ -42,7 +42,6 @@ namespace FightGame
 				 */
 		protected const float moveCoolDown = 2;
 		public float lastAttackTimer = 0;
-		
 		protected string name;
 		protected GameObject gobj;
 		protected A_Status status;
@@ -85,9 +84,14 @@ namespace FightGame
 		}
 		
 		public void SetCurrentAttack()
+		//This function will set the current Attack, base on the input from controller
+		//It will look up in the dictionary, attacklist, which is created in each Fighter class(ex: Fighter_Odin.cs)
+		//Note: _this function shouldn't be called under Update()
+		//		because the controllerDirection variable will change during Update time.
+		//		_During Update(), you can access the variable currentAttack.
 		{
 			string attackType=controllerDirection;
-			if(attackPressed) attackType ="1"+controllerDirection;
+			if(attackPressed) attackType ="1"+controllerDirection;	//define the key base on attack type
 			if(uniquePressed) attackType ="2"+controllerDirection;
 			if(this.attacklist.ContainsKey(attackType))
 			{
