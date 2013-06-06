@@ -7,23 +7,17 @@ public class inputTest : MonoBehaviour {
 	public Vector2 locationP1;
 	public Vector2 locationP2;
     public string printMsg = "";
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	public Vector2 location;
 	
 
-	
-    void OnGUI()
-	{
-		DisplayP1Info();
-    }
-=======
     void OnGUI()
 	{
 		DisplayP1Info();
 		DisplayP2Info();
     }
 	
->>>>>>> wolfe
+//>>>>>>> wolfe
 
 	// Use this for initialization
 	void Start () {
@@ -31,23 +25,19 @@ public class inputTest : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-<<<<<<< HEAD
-	void Update () {
-	
-=======
 	void Update ()
 	{
 
->>>>>>> wolfe
+//>>>>>>> wolfe
 	}
 	
 	void DisplayP2Info()
 	{
-<<<<<<< HEAD
+//<<<<<<< HEAD
 				
-=======
+//=======
 		
->>>>>>> wolfe
+//>>>>>>> wolfe
 		if(GameManager.P2!=null)
 		{
 			//pcontroller direction
@@ -114,17 +104,17 @@ public class inputTest : MonoBehaviour {
 			}
 			
 			//print msg in a text area
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	        GUI.TextArea(new Rect(location.x, location.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
 		  	if (GUI.Button(new Rect(location.x, location.y+110, 150, 30), "Switch ForwardVector"))
-=======
+//=======
 	        GUI.TextArea(new Rect(locationP2.x, locationP1.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
 		  	if (GUI.Button(new Rect(10, locationP2.y+110, 150, 30), "Switch ForwardVector"))
->>>>>>> wolfe
+//>>>>>>> wolfe
 			{
 	            GameManager.P2.SwitchForwardVector();
 			}
@@ -134,16 +124,10 @@ public class inputTest : MonoBehaviour {
 		}
 	}
 	
-<<<<<<< HEAD
-	
-	void DisplayP1Info()
-	{
-				
-=======
 	void DisplayP1Info()
 	{
 		
->>>>>>> wolfe
+//>>>>>>> wolfe
 		if(GameManager.P1!=null)
 		{
 			//pcontroller direction
@@ -210,28 +194,20 @@ public class inputTest : MonoBehaviour {
 			}
 			
 			//print msg in a text area
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	        GUI.TextArea(new Rect(location.x, location.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
 		  	if (GUI.Button(new Rect(location.x, location.y+110, 150, 30), "Switch ForwardVector"))
-=======
+//=======
 	        GUI.TextArea(new Rect(locationP1.x, locationP1.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
 		  	if (GUI.Button(new Rect(locationP1.x, locationP1.y+110, 150, 30), "Switch ForwardVector"))
->>>>>>> wolfe
+//>>>>>>> wolfe
 			{
 	            GameManager.P1.SwitchForwardVector();
 			}
-			
-			
-			
 		}
 	}
-	
-<<<<<<< HEAD
-	
-=======
->>>>>>> wolfe
 }

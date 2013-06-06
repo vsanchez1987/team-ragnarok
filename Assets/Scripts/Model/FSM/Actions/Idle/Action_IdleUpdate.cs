@@ -11,14 +11,9 @@ namespace FSM
 			UnityEngine.Debug.Log("idling");
 			//UnityEngine.Debug.Log (GameManager.P1.controllerDirection);
 			
-			if(GameManager.P1.attackPressed)
+			if(GameManager.P1.attackPressed || GameManager.P1.uniquePressed)
 			{
 				GameManager.P1.Dispatch("attack");
-			}
-			
-			else if(GameManager.P1.uniquePressed && GameManager.P1.GetUniqueAttack() != null)
-			{
-				GameManager.P1.Dispatch("unique");
 			}
 			
 			else if(GameManager.P1.controllerDirection == "forward" || GameManager.P1.controllerDirection == "back")

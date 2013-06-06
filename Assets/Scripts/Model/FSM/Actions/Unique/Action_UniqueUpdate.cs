@@ -10,7 +10,7 @@ namespace FSM
 		float animationTime =0f;	
 		public override void execute(FSMContext c, Object o){
 			UnityEngine.Debug.Log("unique attack");
-			UnityEngine.Debug.Log(GameManager.P1.GetUniqueAttack());
+			//UnityEngine.Debug.Log(GameManager.P1.GetUniqueAttack());
 			
 			animationTime+= UnityEngine.Time.deltaTime;
 			if( animationTime > 2.0f)

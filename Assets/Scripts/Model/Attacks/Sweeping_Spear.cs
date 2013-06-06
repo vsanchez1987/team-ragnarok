@@ -7,12 +7,13 @@ namespace FightGame
 	public class Sweeping_Spear: A_Attack
 	{
 		float attackDuration = 3.0f;
-		string attack_name = "Sweeping Spear";
+		public string attack_name = "Sweeping_Spear";
+		
 		public Sweeping_Spear(A_Fighter attackOwner, float preAttackPeriod, 
 								float attackPeriod, 
 								float animationDuration):base(attackPeriod,attackOwner)
 		{
-			//JONATHAN'S ORIGINAL CODE
+			base.attack_name = attack_name;
 			this.preAttackPeriod = preAttackPeriod;
 			this.attackPeriod = attackPeriod;
 			this.animationDuration = animationDuration;

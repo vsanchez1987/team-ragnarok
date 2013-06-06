@@ -33,12 +33,13 @@ namespace FightGame
 		public const string P2_BTN_UNQ_ATTACK 	= "UniqueAttackP2";
 		public const string P2_BTN_SPC_ATTACK 	= "SpecialAttackP2";
 		public const string P2_BTN_BLOCK 		= "BlockP2";
-<<<<<<< HEAD
+/*
+			<<<<<<< HEAD
 
 =======
 		
 >>>>>>> wolfe
-		
+				 */
 		protected const float moveCoolDown = 2;
 		public float lastAttackTimer = 0;
 		
@@ -53,7 +54,7 @@ namespace FightGame
 		public List<HitBoxInfo> hitBoxCollisionsToBeProcessed;
 		
 		public Dictionary<string,A_Attack> attacklist;	//hieu add, tom modify to add <string,A_attack>
-		public Dictionary<string,string> uniquelist;	//hieu add
+		public A_Attack currentAttack;
 		
 		protected A_Fighter(int playerNumber, GameObject gobj)
 		{
@@ -69,7 +70,6 @@ namespace FightGame
 			hitBoxCollisionsToBeProcessed = new List<HitBoxInfo>();
 			AddHitBoxesGroupedInPrefab(gobj);
 			attacklist = new Dictionary<string, A_Attack>();
-			uniquelist = new Dictionary<string, string>();
 		}
 		
 		#region accessors
@@ -84,24 +84,18 @@ namespace FightGame
 			return this.gobj;
 		}
 		
-		public string GetCurrentAttack()
+		public void SetCurrentAttack()
 		{
-			if(this.attacklist.ContainsKey(controllerDirection))
+			string attackType=controllerDirection;
+			if(attackPressed) attackType ="1"+controllerDirection;
+			if(uniquePressed) attackType ="2"+controllerDirection;
+			if(this.attacklist.ContainsKey(attackType))
 			{
-				return this.attacklist[controllerDirection].name;
-		
+				this.currentAttack = this.attacklist[attackType];
 			}
-			return null;
+			else this.currentAttack = null;
 		}
 		
-		public string GetUniqueAttack()
-		{
-			if(this.uniquelist.ContainsKey(controllerDirection))
-			{
-				return this.uniquelist[controllerDirection];
-			}
-			return null;
-		}
 		
 		//describes player forward direction
 		public Vector2 ForwardVector {

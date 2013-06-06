@@ -23,7 +23,7 @@ namespace FSM
 			}
 			
 			
-			if( GameManager.P1.controllerDirection != "forward")
+			if( GameManager.P1.controllerDirection == "none")
 			{
 				GameManager.P1.Dispatch("idle");
 			}

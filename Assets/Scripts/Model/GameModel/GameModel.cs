@@ -54,10 +54,6 @@ namespace FightGame{
 					break;
 				case("Fighter_Heacy"):
 					this.p1 = new Fighter_Heacy(player1,1);
-<<<<<<< HEAD
-
-=======
->>>>>>> wolfe
 					break;
 			}
 			

@@ -11,6 +11,7 @@ namespace FightGame
 		
 		public Attack_Melee (A_Fighter attackOwner, float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod,attackOwner)
 		{
+			
 			// <<<HIT BOX MESSAGES>>>
 			string recipient;
 			Vector3 startLoc,velocity;
@@ -59,7 +60,7 @@ namespace FightGame
 			
 			HB_message = new HitBoxInstruction(recipient,startTime,endTime,damage,attackMechanic,velocity,startLoc,radius);
 			base.attackInstructions.Add(HB_message);
-			base.name=attack_name;
+			base.attack_name=attack_name;
 			//_---------------------------------
 
 

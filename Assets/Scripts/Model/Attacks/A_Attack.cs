@@ -13,9 +13,9 @@ namespace FightGame
 		protected float animationDuration;
 		protected A_Fighter attackOwner;
 		
-		public string name;
+		public string attack_name;
 		public List<HitBoxInstruction> attackInstructions;
-		float attackLength;
+		public float attackLength;
 		
 		public A_Attack(float attackLength,A_Fighter attackOwner)
 		{
@@ -24,6 +24,7 @@ namespace FightGame
 			this.attackOwner = attackOwner;
 
 		}
+		
 		
 		public virtual void Execute()
 		{

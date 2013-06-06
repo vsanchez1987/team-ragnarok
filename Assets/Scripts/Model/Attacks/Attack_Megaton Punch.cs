@@ -59,7 +59,7 @@ namespace FightGame
 			
 			HB_message = new HitBoxInstruction(recipient,startTime,endTime,damage,attackMechanic,velocity,startLoc,radius);
 			base.attackInstructions.Add(HB_message);
-			base.name=attack_name;
+			base.attack_name=attack_name;
 			//_---------------------------------
 
 			//JONATHAN'S ORIGINAL CODE
