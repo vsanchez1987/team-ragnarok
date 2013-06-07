@@ -41,7 +41,10 @@ namespace FightGame{
 		}
 		
 		public void CreateFighter(string fighter){ // let's use delegates 
-			GameObject player1 = GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/Prefabs/" + fighter + ".prefab", typeof(GameObject)) ) as GameObject;
+			GameObject locatorP1 = GameObject.FindGameObjectWithTag("LocatorP1");
+			GameObject locatorP2 = GameObject.FindGameObjectWithTag("LocatorP2");
+			GameObject player1 = GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/Prefabs/" + fighter + ".prefab", typeof(GameObject))
+															,locatorP1.transform.position,locatorP1.transform.rotation ) as GameObject;
 			//instance.p1 = instance.fighterlist[fighter];
 			
 			switch (fighter)

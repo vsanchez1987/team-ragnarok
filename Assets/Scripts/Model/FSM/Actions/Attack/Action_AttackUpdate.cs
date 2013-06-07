@@ -16,11 +16,12 @@ namespace FSM
 			//then it will send to idle state.
 			time+=Time.deltaTime;
 			//Debug.Log(time);
-			if(time > GameManager.P1.currentAttack.attackLength)
+			if(time >= GameManager.P1.currentAttack.attackLength)
 			{
 				Debug.Log ("aaaaaaaaaaaaaaa");
-				GameManager.P1.Dispatch("idle");
 				time=0f;
+				GameManager.P1.Dispatch("idle");
+				
 			}	
 			
 		}

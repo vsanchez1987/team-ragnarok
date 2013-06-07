@@ -13,13 +13,13 @@ namespace FSM
 			
 			if(GameManager.P1.controllerDirection == "forward" )
 			{
-				//GameManager.P1.GetGOB().animation.CrossFade("WalkForward");
 				gobj.transform.Translate(Vector3.forward*Time.deltaTime);
 			}
 			else if(GameManager.P1.controllerDirection == "back")
 			{
 				//GameManager.P1.GetGOB().animation.CrossFade("WalkBack");
-				gobj.transform.Translate(Vector3.back*Time.deltaTime);
+
+				gobj.transform.Translate(Vector3.forward*-1*Time.deltaTime);
 			}
 			
 			
@@ -31,8 +31,6 @@ namespace FSM
 			{
 				GameManager.P1.Dispatch("walkForward");
 			}
-
-			
 		}
 	}
 }

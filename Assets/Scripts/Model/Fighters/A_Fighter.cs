@@ -47,7 +47,7 @@ namespace FightGame
 		protected A_Status status;
 		protected FSMContext moveGraph;
 		protected int playerNumber;
-		protected Vector2 forwardVector;
+		public Vector2 globalFowardVector;
 		
 		public List<HitBox> hitBoxes;
 		public List<HitBoxInfo> hitBoxCollisionsToBeProcessed;
@@ -103,8 +103,8 @@ namespace FightGame
 		
 		//describes player forward direction
 		public Vector2 ForwardVector {
-			get {return forwardVector;}
-			set {this.forwardVector=value;}
+			get {return globalFowardVector;}
+			set {this.globalFowardVector=value;}
 		}
 		#endregion
 		
@@ -128,7 +128,7 @@ namespace FightGame
 		
 		private void InitForwardVector(int player)
 		{
-			forwardVector = (player==1 ? new Vector2(1,0) : new Vector2(-1,0));
+			globalFowardVector = (player==1 ? new Vector2(1,0) : new Vector2(-1,0));
 		}
 		
 		public void Update()
@@ -145,7 +145,7 @@ namespace FightGame
 		
 		public void SwitchForwardVector()
 		{
-			forwardVector.x *= -1;
+			globalFowardVector.x *= -1;
 		}
 		
 		public bool CanAttack()
