@@ -23,6 +23,7 @@ namespace FSM
 			{
 				//if there's no attack go back to idle state
 				GameManager.P1.Dispatch("idle");
+				
 			}
 			else
 			{
@@ -30,6 +31,7 @@ namespace FSM
 				obj.animation.CrossFade(attackName);
 				//store animation length, it will be used it in Action_AttackUpdate 
 				currentAttack.attackLength = obj.animation[attackName].length;
+				currentAttack.Execute();
 			}
 		}
 	}

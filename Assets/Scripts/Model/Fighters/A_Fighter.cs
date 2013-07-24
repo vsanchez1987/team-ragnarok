@@ -49,8 +49,16 @@ namespace FightGame
 		protected int playerNumber;
 		public Vector2 globalFowardVector;
 		
-		public List<HitBox> hitBoxes;
-		public List<HitBoxInfo> hitBoxCollisionsToBeProcessed;
+		//public List<HitBox> hitBoxes;
+		//public List<HitBoxInfo> hitBoxCollisionsToBeProcessed;
+		
+		// NEW HITBOX CODE 7/23
+		GameObject gob;
+		Dictionary<string,HitBox> hitBoxes; //<gobName,hitBox>
+		List<Projectile> projectiles; //activeProjectiles
+		List<string> joints;
+		int numProjectilesMax;
+		// ***
 		
 		public Dictionary<string,A_Attack> attacklist;	//hieu add, tom modify to add <string,A_attack>
 		public A_Attack currentAttack;
@@ -65,9 +73,22 @@ namespace FightGame
 			this.blckBtn = (playerNumber == 1 ? P1_BTN_BLOCK : P2_BTN_BLOCK);
 			this.spcBtn = (playerNumber == 1 ? P1_BTN_SPC_ATTACK : P2_BTN_SPC_ATTACK);
 			InitForwardVector(playerNumber);
-			hitBoxes = new List<HitBox>();
-			hitBoxCollisionsToBeProcessed = new List<HitBoxInfo>();
-			AddHitBoxesGroupedInPrefab(gobj);
+			//hitBoxes = new List<HitBox>();
+			//hitBoxCollisionsToBeProcessed = new List<HitBoxInfo>();
+			//AddHitBoxesGroupedInPrefab(gobj);
+			
+			// NEW HITBOX CODE 7/23
+			hitBoxes = new Dictionary<string, HitBox>();
+			projectiles = new List<Projectile>();
+			joints = new List<string>();
+			this.gob = this.gobj = gobj;
+			AssignJoints();
+			InitHitBoxes();
+			
+			ShowInActiveHitBoxes(true); //should be taken out, used to see hitboxes
+			ShowActiveHitBoxes(true);
+			// ***
+			
 			attacklist = new Dictionary<string, A_Attack>();
 		}
 		
@@ -82,6 +103,23 @@ namespace FightGame
 		{
 			return this.gobj;
 		}
+		
+		// NEW HITBOX CODE 7/23
+		void AssignJoints()
+		{
+			// *** NAMING CONVENTION FOR HITBOXES
+			//  ================================================
+			//  HERE WE ESTABLISH NAMING CONVENTIONS FOR JOINTS/HITBOXES
+			//  THESE MUST MATCH PREFAB HITBOXES ON CHARACTERS
+			//  PROJECTILE HITBOXES MUST BE NAMED "HB_Projectile_"X  where X is the number 0 through max
+			//  ==============================================
+			joints.Add("HB_Fist_L");
+			//joints.Add("HB_Fist_R");
+			//joints.Add("HB_Foot_L");
+			//joints.Add("HB_Foot_R");
+			numProjectilesMax = 0;
+		}
+		// ***
 		
 		public void SetCurrentAttack()
 		//This function will set the current Attack, base on the input from controller
@@ -135,9 +173,121 @@ namespace FightGame
 		{
 			moveGraph.CurrentState.update(moveGraph, null);
 			lastAttackTimer+=Time.deltaTime;
+			
+			// NEW HITBOX CODE 7/23
 			UpdateHitBoxes();
-			AssignHitBoxCollisions();
+			// ***
+
 		}
+		
+		// NEW HITBOX CODE 7/23
+		public void ShowActiveHitBoxes(bool setting)
+		{
+			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
+			{
+				kvp.Value.displayWhenActive = setting;
+			}
+		}
+		
+		public void ShowInActiveHitBoxes(bool setting)
+		{
+			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
+			{
+				kvp.Value.displayWhenNotActive = setting;
+			}
+		}
+		
+		public void SendHitBoxInstructions(A_Attack attack)
+		{
+			foreach(HB_Instruction hbi in attack.hb_instructions)
+			{
+				if(hbi.jointName != "projectile")
+				{
+					GetHitBox(hbi.jointName).SendInstruction(hbi);
+				}
+				else if (hbi.jointName == "projectile")
+				{
+					GetFreeProjectileHitBox().SendInstruction(hbi);
+				}
+			}
+		}
+		
+		public HitBox GetHitBox(string name)
+		{
+			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
+			{
+				if(kvp.Value.GetName() == name)
+					return kvp.Value;
+			}
+			return null;
+		}
+		
+		void InitHitBoxes()
+		{
+			//Joints
+			foreach(string joint in joints)
+			{
+				//hitBoxes.Add(joint,new HitBox(this,gob.transform.Find("HitBoxes").transform.Find(joint).gameObject,false));
+				AddHitBoxesGroupedInPrefab(gob, joint,false);
+			}
+			
+			//Projectiles
+			for (int i=0 ; i < numProjectilesMax ; i++)
+			{
+				string name = "HB_Projectile_"+i;
+				hitBoxes.Add(name , new HitBox(this,gob.transform.Find("HitBoxes").transform.Find(name).gameObject, true));
+			}
+		}
+		
+		
+		private void AddHitBoxesGroupedInPrefab(GameObject gob, string joint, bool isProjectile)
+		{
+			foreach (Transform t in gob.transform)
+			{
+				if (t.name == joint)
+				{
+					//AssignHitBoxLayer(t);
+					hitBoxes.Add(joint,new HitBox(this,t.gameObject,isProjectile));
+					return;
+				}
+				AddHitBoxesGroupedInPrefab(t.gameObject,joint,isProjectile);// <--recursively go through child tree
+			}
+		}
+		
+		
+		void UpdateHitBoxes()
+		{
+			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
+			{
+				kvp.Value.Update();
+			}
+		}
+		
+		void StopActiveHitBoxes()
+		{
+			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
+			{
+				if(kvp.Value.active)
+				{
+					kvp.Value.DeActivate();
+				}
+			}
+		}
+		
+		HitBox GetFreeProjectileHitBox()
+		{
+			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
+			{
+				if(kvp.Value.isProjectile && !kvp.Value.active)
+				{
+					return kvp.Value;
+				}
+			}
+			Debug.Log("Need More Projectiles!");
+			return null;
+		}
+		
+		// ***
 		
 		public void Dispatch(string eventName){
 			moveGraph.dispatch(eventName, null);
@@ -154,6 +304,7 @@ namespace FightGame
 		}
 		
 		#region HitBox Functions
+		/*
 		public void AssignHitBoxCollisions()
 		// adds collision info to hitBoxCollisionsToBeProcessed
 		{
@@ -168,7 +319,9 @@ namespace FightGame
 				}
 			}
 		}
+		*/
 		
+		/*
 		private void AddHitBoxesGroupedInPrefab(GameObject gobj)
 		{
 			// add hitboxes with "HB_" prefix that are children of A_figher prefab
@@ -197,7 +350,9 @@ namespace FightGame
 				}
 			}
 		}
+		*/
 		
+		/*
 		private void AssignHitBoxLayer(Transform t)
 		{
 			if(playerNumber==1)
@@ -209,52 +364,9 @@ namespace FightGame
 				t.gameObject.layer=P2_HIT_BOX_LAYER_NUMBER;
 			}
 		}
+		*/
 		
-		public void ShowHitBoxes(bool b)
-		{
-			foreach (HitBox hb in hitBoxes)
-			{
-				if(!hb.VisiblityLocked())
-					hb.SetVisiblity(b);
-			}
-		}
 		
-		public void ShowHitBoxesAlwaysOn(bool b)
-		{
-			foreach (HitBox hb in hitBoxes)
-			{
-				hb.LockVisiblity(b);
-			}
-		}
-		
-		public HitBox GetHitBox(string hitBoxName)
-		{
-			foreach (HitBox hb in hitBoxes)
-			{
-				if (hb.GOB.name==hitBoxName)
-				{
-					return hb;
-				}
-			}
-			return null;
-		}
-		
-		public void UpdateHitBoxes()
-		{
-			foreach (HitBox hb in hitBoxes)
-			{
-				hb.Update();
-			}
-		}
-		
-		public void SendHitBoxMessage(HitBoxInstruction msg)
-		{
-			HitBox hb = GetHitBox(msg.HB_recip_name);
-			if (hb!=null)
-			{
-				hb.sendInstruction(msg);
-			}
-		}
 		#endregion
 			
 	}

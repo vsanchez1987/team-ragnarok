@@ -13,29 +13,31 @@ namespace FightGame
 		protected float animationDuration;
 		protected A_Fighter attackOwner;
 		
+		// NEW HITBOX CODE 7/23
+		public List<HB_Instruction> hb_instructions;
+		// ***
+		
 		public string attack_name;
-		public List<HitBoxInstruction> attackInstructions;
+		
 		public float attackLength;
 		
 		public A_Attack(float attackLength,A_Fighter attackOwner)
 		{
-			this.attackInstructions=new List<HitBoxInstruction>();
+			
 			this.attackLength=attackLength;
 			this.attackOwner = attackOwner;
-
+			
+			hb_instructions = new List<HB_Instruction>();
+			
 		}
 		
 		
 		public virtual void Execute()
 		{
-			if(attackInstructions!=null)
-			{		
-				foreach(HitBoxInstruction hbi in attackInstructions)
-				{
-					attackOwner.GetHitBox(hbi.HB_recip_name).sendInstruction(hbi);
-				}
+			UnityEngine.Debug.Log("hit attack");
 			
-			}
+			attackOwner.GetHitBox("HB_Fist_L").SendInstruction(hb_instructions[0]);
+			//attackOwner.SendHitBoxInstructions(this);
 		}
 
 	}

@@ -7,12 +7,13 @@ namespace FSM
 {
 	public class Action_IdleUpdate:FSMAction
 	{
-		public override void execute(FSMContext c, Object o){
-			UnityEngine.Debug.Log("idling");
+		public override void execute(FSMContext c, object o){
+			//UnityEngine.Debug.Log("idling");
 			//UnityEngine.Debug.Log (GameManager.P1.controllerDirection);
 			
-			if(GameManager.P1.attackPressed || GameManager.P1.uniquePressed)
+			if(GameManager.P1.attackPressed || GameManager.P1.uniquePressed )
 			{
+				
 				GameManager.P1.Dispatch("attack");
 			}
 			
