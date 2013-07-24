@@ -40,6 +40,9 @@ namespace FightGame{
 			if (instance.gModel.P1 != null){
 				instance.gModel.P1.Update();
 			}
+			if (instance.gModel.P2 != null){
+				instance.gModel.P2.Update();
+			}
 		}
 		
 		public static A_Effect GetEffect(string effect){

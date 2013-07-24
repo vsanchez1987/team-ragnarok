@@ -32,7 +32,7 @@ namespace FightGame
 			// construct a list of on and off times
 			keyFrames = new List<HB_KeyFrame>();
 			keyFrames.Add(new HB_KeyFrame(0.0f,1.0f));
-			keyFrames.Add(new HB_KeyFrame(2.0f,4.0f));
+			keyFrames.Add(new HB_KeyFrame(1.5f,2.2f));
 			
 			
 			// compose hitbox instruction
@@ -45,7 +45,7 @@ namespace FightGame
 			// PROJECTILE ATTACK EXAMPLE
 			// *************************************
 			keyFrames = new List<HB_KeyFrame>();
-			keyFrames.Add(new HB_KeyFrame(0.0f,attackLength));
+			keyFrames.Add(new HB_KeyFrame(0.0f,2.0f));
 			
 			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"projectile",20.0f,1.0f,null,null);
 			base.hb_instructions.Add(hbInstruct);

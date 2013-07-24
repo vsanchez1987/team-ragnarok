@@ -11,6 +11,9 @@ namespace FightGame
 		HB_Instruction currentInstruction;
 		A_Fighter owner;
 		public bool active;
+		Color initialColor;
+		Color collideColor = Color.red;
+		bool checkCollision;
 		float radius;
 		float activeTime;
 		public bool displayWhenNotActive;
@@ -25,13 +28,18 @@ namespace FightGame
 			this.currentInstruction = null;
 			this.radius = this.activeTime = 0.1f;
 			this.isProjectile = isProjectile;
+			this.checkCollision = false;
+			this.initialColor = gob.renderer.material.color;
 		}
 		
 		public void Update()
 		{
 			UpdateActiveTime();
+			ProcessCurrentInstruction();
+			DeactivateExpired();
 			DrawBoxes();
 			CheckCollision();
+			
 		}
 		
 		LayerMask CreateLayerMask()
@@ -56,18 +64,51 @@ namespace FightGame
 			return gob.name;
 		}
 		
-		void InactivityCheck(){}
+		void DeactivateExpired()
+		{
+			
+			// deactivate if after last valid keyframe
+			if(this.currentInstruction != null)
+			{
+				
+				int expired = 0;
+				int count = currentInstruction.onOffTimes.Count;
+				
+				for (int i = 0; i < count ; i++)
+				{
+					
+					if(currentInstruction.onOffTimes[i].expired)
+					{
+						//Debug.Log(currentInstruction.onOffTimes[i].expired);
+						expired+=1;
+					}
+				}
+				
+				if (expired>=count)
+				{
+					Debug.Log("Deactivating " + this.gob.name);
+					DeActivate();
+				}
+			}
+			
+		}
 		
 		void Activate()
 		{
 			SetRadius(currentInstruction.radius);
 			active = true;
 			activeTime = 0.0f;
+			this.checkCollision=false;
 		}
 		
 		public void DeActivate()
 		{
 			radius = 0.1f;
+			this.checkCollision=false;
+			//ResetHBKeyFrames();
+			active= false;
+			this.currentInstruction= null;
+			
 		}
 		
 		HitBoxCollisionInfo GenerateCollisionInfo(){return null;}
@@ -81,16 +122,76 @@ namespace FightGame
 			{
 				gob.transform.localScale = new Vector3(radius,radius,radius);
 			}
+			if (checkCollision)
+			{
+				gob.renderer.material.color = collideColor;
+			}
+			else 
+			{
+				gob.renderer.material.color = initialColor;
+			}
 		}
 		
 		void CheckCollision()
 		{
-			//Physics.CheckSphere(gob.transform.position, radius/2.0f) <-- simple 
-			 Collider[] hitColliders = Physics.OverlapSphere(gob.transform.position,radius/2.0f,CreateLayerMask());
-        
-			foreach(Collider c in hitColliders)
+			if(checkCollision)
 			{
-				Debug.Log(c.gameObject.name + " " +Time.time);
+				//Physics.CheckSphere(gob.transform.position, radius/2.0f) <-- simple 
+				 Collider[] hitColliders = Physics.OverlapSphere(gob.transform.position,radius/2.0f,CreateLayerMask());
+	        
+				foreach(Collider c in hitColliders)
+				{
+					Debug.Log(c.gameObject.name + " " +Time.time);
+				}
+			}
+		}
+		
+		void ResetHBKeyFrames()
+		{
+			if(this.currentInstruction!=null)
+			{
+				for (int i = 0; i < currentInstruction.onOffTimes.Count ; i++)
+				{
+					HB_KeyFrame key =  currentInstruction.onOffTimes[i];
+					key.expired = false;
+					currentInstruction.onOffTimes[i]=key;
+				}
+			}
+		}
+		
+		void ProcessCurrentInstruction()
+		{
+			//check all keyframes for activation and flag collission if needed
+			if(this.currentInstruction!=null)
+			{
+				for (int i = 0; i < currentInstruction.onOffTimes.Count ; i++)
+				{
+					HB_KeyFrame key =  currentInstruction.onOffTimes[i];
+					
+					if (this.activeTime > key.onTime && this.activeTime < key.offTime)
+					{
+						this.checkCollision = true;
+					}
+					else if(this.activeTime > key.offTime && key.expired == false)
+					{
+						this.checkCollision = false;
+						key.expired = true;
+						currentInstruction.onOffTimes[i]=key;
+					}
+				}
+				/*foreach(HB_KeyFrame key in currentInstruction.onOffTimes)
+				{
+					if (this.activeTime > key.onTime && this.activeTime < key.offTime)
+					{
+						this.checkCollision = true;
+					}
+					else if(this.activeTime > key.offTime && key.expired == false)
+					{
+						this.checkCollision = false;
+						key.expired = true;
+					}
+				}
+				*/
 			}
 		}
 		
@@ -102,10 +203,15 @@ namespace FightGame
 		
 		public void SendInstruction(HB_Instruction hb_instruction)
 		{
-			this.currentInstruction = hb_instruction;
+			if(this.currentInstruction!=null) DeActivate();
+			
+			this.currentInstruction = hb_instruction.DuplicateHBInstructions(hb_instruction);
+			//Debug.Log(currentInstruction);
 			Debug.Log(this.gob.name);
 			Activate();
 		}
+		
+		
 		
 		public void ParentToProjectile(GameObject projectile){}
 	
