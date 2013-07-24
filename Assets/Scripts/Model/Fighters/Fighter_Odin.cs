@@ -14,6 +14,7 @@ namespace FightGame
 			this.status = new Status_None();
 			this.name = "Odin";
 			
+			
 			//Formula to add more attack to attack list:
 			//this.attacklist.Add( "1" if regular attack + direction "back,forward,up,down",create new cs file) 
 			//					   "2" if unique attack  + direction "back,forward,up,down",
@@ -43,7 +44,7 @@ namespace FightGame
 			//S_attack.addTransition(T_walkForward,"walkForward");
 			
 			//S_unique.addTransition(T_idle,"idle");
-			this.moveGraph = new FSMContext(S_idle, new Action_None());
+			this.moveGraph = new FSMContext(S_idle, new Action_None(),this);
 			
 		}
 		

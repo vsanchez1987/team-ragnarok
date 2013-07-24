@@ -11,16 +11,19 @@ namespace FSM
 		float time =0f;
 		public override void execute(FSMContext c, object o)
 		{
+			A_Fighter fighter;
+			fighter = (A_Fighter)o;
+			
 			//when this execute() run, time will increase
 			//if time is greater than attackLength, which is animation length from Action_AttackEnter
 			//then it will send to idle state.
 			time+=Time.deltaTime;
 			//Debug.Log(time);
-			if(time >= GameManager.P1.currentAttack.attackLength)
+			if(time >= fighter.currentAttack.attackLength)
 			{
-				Debug.Log ("aaaaaaaaaaaaaaa");
+				Debug.Log ("attackinginginginging");
 				time=0f;
-				GameManager.P1.Dispatch("idle");
+				fighter.Dispatch("idle");
 				
 			}	
 			

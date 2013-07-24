@@ -10,11 +10,14 @@ namespace FSM
 	{
 		public override void execute(FSMContext c, object o)
 		{
+			A_Fighter fighter;
+			fighter = (A_Fighter)o;
+			
 			//Get a gameobject
-			GameObject obj = GameManager.P1.GetGOB();
-			A_Attack currentAttack = GameManager.P1.currentAttack;
+			GameObject obj = fighter.GetGOB();
+			A_Attack currentAttack = fighter.currentAttack;
 			//Set an attack from dictionary to a public variable currentAttack
-			GameManager.P1.SetCurrentAttack();
+			fighter.SetCurrentAttack();
 			//assign attack name
 			string attackName = (currentAttack !=null
 								? currentAttack.attack_name : null);
@@ -22,7 +25,7 @@ namespace FSM
 			if(attackName==null)
 			{
 				//if there's no attack go back to idle state
-				GameManager.P1.Dispatch("idle");
+				fighter.Dispatch("idle");
 				
 			}
 			else

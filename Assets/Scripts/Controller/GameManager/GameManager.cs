@@ -56,5 +56,10 @@ namespace FightGame{
 		public static void CreateFighter(string fighter){
 			instance.gModel.CreateFighter(fighter);
 		}
+		
+		//Hieu added. Test 2 players. Must have a better way to do this
+		public static void CreateFighter(string fighter,int playernum){
+			instance.gModel.CreateFighter(fighter,playernum);
+		}
 	}
 }

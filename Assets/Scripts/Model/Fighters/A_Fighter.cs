@@ -171,7 +171,7 @@ namespace FightGame
 		
 		public void Update()
 		{
-			moveGraph.CurrentState.update(moveGraph, null);
+			moveGraph.CurrentState.update(moveGraph, this);
 			lastAttackTimer+=Time.deltaTime;
 			
 			// NEW HITBOX CODE 7/23
@@ -290,7 +290,7 @@ namespace FightGame
 		// ***
 		
 		public void Dispatch(string eventName){
-			moveGraph.dispatch(eventName, null);
+			moveGraph.dispatch(eventName, this);
 		}
 		
 		public void SwitchForwardVector()

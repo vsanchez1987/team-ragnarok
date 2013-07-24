@@ -10,11 +10,11 @@ namespace FSM
         private FSMAction initAction;
         private State currentState;
         
-        public FSMContext(State startState, FSMAction initAction)
+        public FSMContext(State startState, FSMAction initAction,object o)
         {
             this.currentState = startState;
             this.initAction = initAction;
-			this.initAction.execute(this, null);
+			this.initAction.execute(this, o);
         }
 		
 		public State CurrentState

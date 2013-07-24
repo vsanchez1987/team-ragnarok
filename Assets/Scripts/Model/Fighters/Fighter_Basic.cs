@@ -25,7 +25,7 @@ namespace FightGame
 			S_idle.addTransition(T_walkForward, "walkForward");
 			S_walkForward.addTransition(T_idle, "idle");
 			
-			this.moveGraph = new FSMContext(S_idle, new Action_None());
+			this.moveGraph = new FSMContext(S_idle, new Action_None(),this);
 			
 		}
 		

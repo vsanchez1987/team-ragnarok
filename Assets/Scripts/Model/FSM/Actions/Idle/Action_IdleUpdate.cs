@@ -10,20 +10,23 @@ namespace FSM
 		public override void execute(FSMContext c, object o){
 			//UnityEngine.Debug.Log("idling");
 			//UnityEngine.Debug.Log (GameManager.P1.controllerDirection);
+			A_Fighter fighter;
+			fighter = (A_Fighter)o;
 			
-			if(GameManager.P1.attackPressed || GameManager.P1.uniquePressed )
+			
+			if(fighter.attackPressed || fighter.uniquePressed )
 			{
 				
-				GameManager.P1.Dispatch("attack");
+				fighter.Dispatch("attack");
 			}
 			
-			else if(GameManager.P1.controllerDirection == "forward" || GameManager.P1.controllerDirection == "back")
+			else if(fighter.controllerDirection == "forward" || fighter.controllerDirection == "back")
 			{
-				GameManager.P1.Dispatch("walkForward");
+				fighter.Dispatch("walkForward");
 			}
 			else
 			{
-				GameManager.P1.Dispatch("idle");
+				fighter.Dispatch("idle");
 			}
 		}
 	}

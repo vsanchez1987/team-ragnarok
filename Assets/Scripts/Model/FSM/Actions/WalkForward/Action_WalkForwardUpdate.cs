@@ -9,13 +9,17 @@ namespace FSM
 	{
 		public override void execute(FSMContext c, object o){
 			UnityEngine.Debug.Log("walking forward");
-			GameObject gobj = GameManager.P1.GetGOB();
 			
-			if(GameManager.P1.controllerDirection == "forward" )
+			A_Fighter fighter;
+			fighter = (A_Fighter)o;
+			
+			GameObject gobj = fighter.GetGOB();
+			
+			if(fighter.controllerDirection == "forward" )
 			{
 				gobj.transform.Translate(Vector3.forward*Time.deltaTime);
 			}
-			else if(GameManager.P1.controllerDirection == "back")
+			else if(fighter.controllerDirection == "back")
 			{
 				//GameManager.P1.GetGOB().animation.CrossFade("WalkBack");
 
@@ -23,13 +27,13 @@ namespace FSM
 			}
 			
 			
-			if( GameManager.P1.controllerDirection == "none")
+			if( fighter.controllerDirection == "none")
 			{
-				GameManager.P1.Dispatch("idle");
+				fighter.Dispatch("idle");
 			}
-			if( GameManager.P1.controllerDirection == "forward" || GameManager.P1.controllerDirection == "back")
+			if( fighter.controllerDirection == "forward" || fighter.controllerDirection == "back")
 			{
-				GameManager.P1.Dispatch("walkForward");
+				fighter.Dispatch("walkForward");
 			}
 		}
 	}
