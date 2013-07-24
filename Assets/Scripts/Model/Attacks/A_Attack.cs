@@ -37,6 +37,8 @@ namespace FightGame
 			UnityEngine.Debug.Log("hit attack");
 			
 			attackOwner.GetHitBox("HB_Fist_L").SendInstruction(hb_instructions[0]);
+			attackOwner.GetHitBox("HB_Foot_L").SendInstruction(hb_instructions[0]);
+			attackOwner.GetHitBox("HB_Projectile_0").SendInstruction(hb_instructions[0]);
 			//attackOwner.SendHitBoxInstructions(this);
 		}
 

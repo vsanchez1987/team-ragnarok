@@ -115,9 +115,9 @@ namespace FightGame
 			//  ==============================================
 			joints.Add("HB_Fist_L");
 			//joints.Add("HB_Fist_R");
-			//joints.Add("HB_Foot_L");
+			joints.Add("HB_Foot_L");
 			//joints.Add("HB_Foot_R");
-			numProjectilesMax = 0;
+			numProjectilesMax = 2;
 		}
 		// ***
 		
@@ -235,7 +235,7 @@ namespace FightGame
 			for (int i=0 ; i < numProjectilesMax ; i++)
 			{
 				string name = "HB_Projectile_"+i;
-				hitBoxes.Add(name , new HitBox(this,gob.transform.Find("HitBoxes").transform.Find(name).gameObject, true));
+				hitBoxes.Add(name , new HitBox(this,gob.transform.Find("ProjectileHitBoxes").transform.Find(name).gameObject, true));
 			}
 		}
 		
