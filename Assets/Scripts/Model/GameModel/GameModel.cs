@@ -93,6 +93,7 @@ namespace FightGame{
 				GameObject player = GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/Prefabs/" + fighter + ".prefab", typeof(GameObject))
 															,locatorP2.transform.position,locatorP2.transform.rotation ) as GameObject;
 			
+				player.transform.localScale = new Vector3(-player.transform.localScale.x,player.transform.localScale.y,player.transform.localScale.z);
 			//instance.p1 = instance.fighterlist[fighter];
 			
 				switch (fighter)
