@@ -259,7 +259,9 @@ namespace FightGame
 			for (int i=0 ; i < numProjectilesMax ; i++)
 			{
 				string name = "HB_Projectile_"+i;
+				
 				hitBoxes.Add(name , new HitBox(this,gob.transform.Find("ProjectileHitBoxes").transform.Find(name).gameObject, true));
+				gob.transform.Find("ProjectileHitBoxes").transform.Find(name).parent=null;
 			}
 		}
 		

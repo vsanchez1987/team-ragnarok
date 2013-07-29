@@ -142,6 +142,8 @@ namespace FightGame
 				foreach(Collider c in hitColliders)
 				{
 					Debug.Log(this.gob.name + " colliding with " + c.gameObject.name + " at time:" +Time.time);
+					DeActivate();
+					return;
 				}
 			}
 		}
