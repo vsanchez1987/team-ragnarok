@@ -36,6 +36,7 @@ namespace FightGame{
 		}
 		
 		public static void Update(){
+			
 			Print();
 			if (instance.gModel.P1 != null){
 				instance.gModel.P1.Update();

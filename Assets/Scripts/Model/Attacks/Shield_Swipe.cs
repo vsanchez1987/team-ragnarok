@@ -29,15 +29,26 @@ namespace FightGame
 			// ****************************************
 			//  MELEE ATTACK EXAMPLE
 			// ****************************************
+			
+			////////////////////////////////
+			// RIGHT FOOT
 			// construct a list of on and off times
 			keyFrames = new List<HB_KeyFrame>();
-			keyFrames.Add(new HB_KeyFrame(0.0f,1.0f));
-			keyFrames.Add(new HB_KeyFrame(1.5f,2.2f));
-			
-			
+			keyFrames.Add(new HB_KeyFrame(0.25f,0.75f));
+			//keyFrames.Add(new HB_KeyFrame(f,f)); //you can add mutliple keyframes per attack
 			// compose hitbox instruction
-			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"HB_Fist_L",20.0f,1.0f,null,null);
+			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"HB_Foot_R",20.0f,1.0f,null,null);
 			base.hb_instructions.Add(hbInstruct);
+			
+			
+			////////////////////////////////
+			// LEFT FOOT
+			keyFrames = new List<HB_KeyFrame>();
+			keyFrames.Add(new HB_KeyFrame(0.85f,1.25f));
+			//keyFrames.Add(new HB_KeyFrame(f,f)); //you can add mutliple keyframes per attack
+			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"HB_Foot_L",20.0f,1.0f,null,null);
+			base.hb_instructions.Add(hbInstruct);		
+			/////////////////////////////////////
 			
 			
 			
@@ -46,7 +57,6 @@ namespace FightGame
 			// *************************************
 			keyFrames = new List<HB_KeyFrame>();
 			keyFrames.Add(new HB_KeyFrame(0.0f,2.0f));
-			
 			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"projectile",20.0f,1.0f,null,null);
 			base.hb_instructions.Add(hbInstruct);
 			

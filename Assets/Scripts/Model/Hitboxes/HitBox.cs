@@ -44,8 +44,9 @@ namespace FightGame
 		
 		LayerMask CreateLayerMask()
 		{
-			// thiis needs to check player number and assign a layer 
-			LayerMask m = 1 << 8;//8 references the layer number
+			LayerMask m = 1 << 
+				(this.owner.playerNumber == 1 ? A_Fighter.P2_HURT_BOX_LAYER_NUMBER: A_Fighter.P1_HURT_BOX_LAYER_NUMBER);
+			
 			return m;
 		}
 		
@@ -118,17 +119,16 @@ namespace FightGame
 		void DrawBoxes()
 		{
 			gob.renderer.enabled =  (active && displayWhenActive  ||  !active && displayWhenNotActive);
-			if(gob.renderer.enabled)
+			//if(gob.renderer.enabled) //set scale if active{}
+			if (checkCollision) // make collide color if checking collision
 			{
 				gob.transform.localScale = new Vector3(radius,radius,radius);
-			}
-			if (checkCollision)
-			{
 				gob.renderer.material.color = collideColor;
 			}
-			else 
+			else  // make disabled color if checking collision & smaller
 			{
 				gob.renderer.material.color = initialColor;
+				gob.transform.localScale = new Vector3(radius/2,radius/2,radius/2);
 			}
 		}
 		
@@ -141,7 +141,7 @@ namespace FightGame
 	        
 				foreach(Collider c in hitColliders)
 				{
-					Debug.Log(c.gameObject.name + " " +Time.time);
+					Debug.Log(this.gob.name + " colliding with " + c.gameObject.name + " at time:" +Time.time);
 				}
 			}
 		}
