@@ -56,6 +56,8 @@ namespace FightGame
 		GameObject gob;
 		Dictionary<string,HitBox> hitBoxes; //<gobName,hitBox>
 		List<GameObject> hurtBoxes;
+		public List<HitBoxCollisionInfo> HitBoxCollisions;
+		
 		List<Projectile> projectiles; //activeProjectiles
 		List<string> joints;
 		int numProjectilesMax;
@@ -81,6 +83,7 @@ namespace FightGame
 			// NEW HITBOX CODE 7/23
 			hitBoxes = new Dictionary<string, HitBox>();
 			hurtBoxes = new List<GameObject>();
+			HitBoxCollisions = new List<HitBoxCollisionInfo>();
 			projectiles = new List<Projectile>();
 			joints = new List<string>();
 			this.gob = this.gobj = gobj;

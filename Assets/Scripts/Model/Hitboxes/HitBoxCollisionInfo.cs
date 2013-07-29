@@ -7,10 +7,17 @@ namespace FightGame
 {
 	public class HitBoxCollisionInfo
 	{
-		Vector3 location;
-		Mechanic m;
-		float damage;
-		ParticleSystem particleSystem;
-		A_Fighter hitPlayer;
+		public Vector3 location;
+		public Mechanic m;
+		public float damage;
+		public ParticleSystem particleSystem;
+		public A_Fighter hitPlayer;
+		
+		public HitBoxCollisionInfo(Vector3 location, float damage, A_Fighter hitPlayer)
+		{
+			this.location = location;
+			this.damage =damage;
+			this.hitPlayer = hitPlayer;
+		}
 	}
 }

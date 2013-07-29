@@ -20,6 +20,7 @@ namespace FightGame
 		public bool displayWhenActive;
 		public bool isProjectile;
 		
+		
 		public HitBox(A_Fighter owner, GameObject gob, bool isProjectile)
 		{
 			this.gob = gob;
@@ -38,7 +39,7 @@ namespace FightGame
 			ProcessCurrentInstruction();
 			DeactivateExpired();
 			DrawBoxes();
-			CheckCollision();
+			CheckAndProcessCollision();
 			
 		}
 		
@@ -112,9 +113,16 @@ namespace FightGame
 			
 		}
 		
-		HitBoxCollisionInfo GenerateCollisionInfo(){return null;}
+		HitBoxCollisionInfo GenerateCollisionInfo(Collider c)
+		{
+			A_Fighter hitPlayer = (this.owner.playerNumber == 1 ? GameManager.P2 : GameManager.P1);
+			return new HitBoxCollisionInfo(c.transform.position, this.currentInstruction.damage,hitPlayer );
+		}
 		
-		void GiveCollisionInfoToGameManager(){}
+		void GiveCollisionInfoToGameManager(Collider c)
+		{
+			this.owner.HitBoxCollisions.Add(GenerateCollisionInfo(c));
+		}
 		
 		void DrawBoxes()
 		{
@@ -132,17 +140,18 @@ namespace FightGame
 			}
 		}
 		
-		void CheckCollision()
+		void CheckAndProcessCollision()
 		{
 			if(checkCollision)
 			{
 				//Physics.CheckSphere(gob.transform.position, radius/2.0f) <-- simple 
 				 Collider[] hitColliders = Physics.OverlapSphere(gob.transform.position,radius/2.0f,CreateLayerMask());
 	        
-				foreach(Collider c in hitColliders)
+				foreach(Collider c in hitColliders)  
 				{
 					Debug.Log(this.gob.name + " colliding with " + c.gameObject.name + " at time:" +Time.time);
-					DeActivate();
+					GiveCollisionInfoToGameManager(c);
+					DeActivate(); // this needs to deactiate keyframe only
 					return;
 				}
 			}
