@@ -33,7 +33,7 @@ namespace FSM
 				//if yes,run the animation
 				obj.animation.CrossFade(attackName);
 				//store animation length, it will be used it in Action_AttackUpdate 
-				currentAttack.attackLength = obj.animation[attackName].length;
+				currentAttack.attackLength = obj.animation[attackName].length;		
 				currentAttack.Execute();
 			}
 		}

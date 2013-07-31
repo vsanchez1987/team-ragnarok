@@ -19,6 +19,7 @@ namespace FSM
 			//then it will send to idle state.
 			time+=Time.deltaTime;
 			//Debug.Log(time);
+			
 			if(time >= fighter.currentAttack.attackLength)
 			{
 				Debug.Log ("attackinginginginging");
