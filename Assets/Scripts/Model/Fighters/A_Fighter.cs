@@ -46,7 +46,7 @@ namespace FightGame
 		protected GameObject gobj;
 		protected A_Status status;
 		protected FSMContext moveGraph;
-		protected int playerNumber;
+		public int playerNumber;
 		public Vector2 globalFowardVector;
 		
 		//public List<HitBox> hitBoxes;
@@ -55,6 +55,9 @@ namespace FightGame
 		// NEW HITBOX CODE 7/23
 		GameObject gob;
 		Dictionary<string,HitBox> hitBoxes; //<gobName,hitBox>
+		List<GameObject> hurtBoxes;
+		public List<HitBoxCollisionInfo> HitBoxCollisions;
+		
 		List<Projectile> projectiles; //activeProjectiles
 		List<string> joints;
 		int numProjectilesMax;
@@ -79,9 +82,13 @@ namespace FightGame
 			
 			// NEW HITBOX CODE 7/23
 			hitBoxes = new Dictionary<string, HitBox>();
+			hurtBoxes = new List<GameObject>();
+			HitBoxCollisions = new List<HitBoxCollisionInfo>();
 			projectiles = new List<Projectile>();
 			joints = new List<string>();
 			this.gob = this.gobj = gobj;
+			
+			AssignHurtBoxes(this.gob);
 			AssignJoints();
 			InitHitBoxes();
 			InitStateMachine();
@@ -117,12 +124,29 @@ namespace FightGame
 			//  PROJECTILE HITBOXES MUST BE NAMED "HB_Projectile_"X  where X is the number 0 through max
 			//  ==============================================
 			joints.Add("HB_Fist_L");
-			//joints.Add("HB_Fist_R");
+			joints.Add("HB_Fist_R");
 			joints.Add("HB_Foot_L");
-			//joints.Add("HB_Foot_R");
+			joints.Add("HB_Foot_R");
 			numProjectilesMax = 2;
 		}
 		// ***
+		
+		void AssignHurtBoxes(GameObject gob)
+		{
+		
+			foreach (Transform t in gob.transform)
+			{
+			
+				if (t.name == "HurtBox")
+				{
+					hurtBoxes.Add(t.gameObject);
+					t.gameObject.layer = (this.playerNumber == 1 ? A_Fighter.P1_HURT_BOX_LAYER_NUMBER: A_Fighter.P2_HURT_BOX_LAYER_NUMBER);
+					return;
+				}
+				AssignHurtBoxes(t.gameObject);// <--recursively go through child tree
+				
+			}
+		}
 		
 		public void SetCurrentAttack()
 		//This function will set the current Attack, base on the input from controller
@@ -238,7 +262,9 @@ namespace FightGame
 			for (int i=0 ; i < numProjectilesMax ; i++)
 			{
 				string name = "HB_Projectile_"+i;
+				
 				hitBoxes.Add(name , new HitBox(this,gob.transform.Find("ProjectileHitBoxes").transform.Find(name).gameObject, true));
+				gob.transform.Find("ProjectileHitBoxes").transform.Find(name).parent=null;
 			}
 		}
 		

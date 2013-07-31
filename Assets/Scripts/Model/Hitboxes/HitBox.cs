@@ -20,6 +20,7 @@ namespace FightGame
 		public bool displayWhenActive;
 		public bool isProjectile;
 		
+		
 		public HitBox(A_Fighter owner, GameObject gob, bool isProjectile)
 		{
 			this.gob = gob;
@@ -38,14 +39,15 @@ namespace FightGame
 			ProcessCurrentInstruction();
 			DeactivateExpired();
 			DrawBoxes();
-			CheckCollision();
+			CheckAndProcessCollision();
 			
 		}
 		
 		LayerMask CreateLayerMask()
 		{
-			// thiis needs to check player number and assign a layer 
-			LayerMask m = 1 << 8;//8 references the layer number
+			LayerMask m = 1 << 
+				(this.owner.playerNumber == 1 ? A_Fighter.P2_HURT_BOX_LAYER_NUMBER: A_Fighter.P1_HURT_BOX_LAYER_NUMBER);
+			
 			return m;
 		}
 		
@@ -111,37 +113,46 @@ namespace FightGame
 			
 		}
 		
-		HitBoxCollisionInfo GenerateCollisionInfo(){return null;}
+		HitBoxCollisionInfo GenerateCollisionInfo(Collider c)
+		{
+			A_Fighter hitPlayer = (this.owner.playerNumber == 1 ? GameManager.P2 : GameManager.P1);
+			return new HitBoxCollisionInfo(c.transform.position, this.currentInstruction.damage,hitPlayer );
+		}
 		
-		void GiveCollisionInfoToGameManager(){}
+		void GiveCollisionInfoToGameManager(Collider c)
+		{
+			this.owner.HitBoxCollisions.Add(GenerateCollisionInfo(c));
+		}
 		
 		void DrawBoxes()
 		{
 			gob.renderer.enabled =  (active && displayWhenActive  ||  !active && displayWhenNotActive);
-			if(gob.renderer.enabled)
+			//if(gob.renderer.enabled) //set scale if active{}
+			if (checkCollision) // make collide color if checking collision
 			{
 				gob.transform.localScale = new Vector3(radius,radius,radius);
-			}
-			if (checkCollision)
-			{
 				gob.renderer.material.color = collideColor;
 			}
-			else 
+			else  // make disabled color if checking collision & smaller
 			{
 				gob.renderer.material.color = initialColor;
+				gob.transform.localScale = new Vector3(radius/2,radius/2,radius/2);
 			}
 		}
 		
-		void CheckCollision()
+		void CheckAndProcessCollision()
 		{
 			if(checkCollision)
 			{
 				//Physics.CheckSphere(gob.transform.position, radius/2.0f) <-- simple 
 				 Collider[] hitColliders = Physics.OverlapSphere(gob.transform.position,radius/2.0f,CreateLayerMask());
 	        
-				foreach(Collider c in hitColliders)
+				foreach(Collider c in hitColliders)  
 				{
-					Debug.Log(c.gameObject.name + " " +Time.time);
+					Debug.Log(this.gob.name + " colliding with " + c.gameObject.name + " at time:" +Time.time);
+					GiveCollisionInfoToGameManager(c);
+					DeActivate(); // this needs to deactiate keyframe only
+					return;
 				}
 			}
 		}

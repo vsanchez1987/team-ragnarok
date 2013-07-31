@@ -36,12 +36,30 @@ namespace FightGame{
 		}
 		
 		public static void Update(){
+			
 			Print();
+			
+			GameManager.processCollisions();
+			
 			if (instance.gModel.P1 != null){
 				instance.gModel.P1.Update();
+				
 			}
 			if (instance.gModel.P2 != null){
 				instance.gModel.P2.Update();
+			}
+		}
+		
+		public static void processCollisions()
+		// an example of how to get info with current hitbox system
+		{
+			if (instance.gModel.P1 != null)
+			{
+				foreach(HitBoxCollisionInfo hbi in GameManager.P1.HitBoxCollisions)
+				{
+					Debug.Log("hit player: " +hbi.hitPlayer.playerNumber + " for " +hbi.damage + " damage at " + hbi.location);
+				}
+				GameManager.P1.HitBoxCollisions.Clear();
 			}
 		}
 		

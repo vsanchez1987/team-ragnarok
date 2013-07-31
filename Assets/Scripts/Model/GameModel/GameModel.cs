@@ -40,6 +40,9 @@ namespace FightGame{
 			return this.Attacks[attack];
 		}
 		
+		
+		
+		
 		public void CreateFighter(string fighter){ // let's use delegates 
 			GameObject locatorP1 = GameObject.FindGameObjectWithTag("LocatorP1");
 			GameObject locatorP2 = GameObject.FindGameObjectWithTag("LocatorP2");
