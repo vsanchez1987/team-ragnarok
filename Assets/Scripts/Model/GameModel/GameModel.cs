@@ -72,7 +72,7 @@ namespace FightGame{
 			
 			if (playernum == 1)
 			{
-				GameObject player = GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/Prefabs/" + fighter + ".prefab", typeof(GameObject))
+				GameObject player = GameObject.Instantiate( Resources.Load("Prefabs/" + fighter, typeof(GameObject))
 															,locatorP1.transform.position,locatorP1.transform.rotation ) as GameObject;
 			
 			//instance.p1 = instance.fighterlist[fighter];
@@ -93,7 +93,7 @@ namespace FightGame{
 			
 			if (playernum == 2)
 			{
-				GameObject player = GameObject.Instantiate( Resources.LoadAssetAtPath("Assets/Prefabs/" + fighter + ".prefab", typeof(GameObject))
+				GameObject player = GameObject.Instantiate( Resources.Load("Prefabs/" + fighter, typeof(GameObject))
 															,locatorP2.transform.position,locatorP2.transform.rotation ) as GameObject;
 			
 				player.transform.localScale = new Vector3(-player.transform.localScale.x,player.transform.localScale.y,player.transform.localScale.z);
