@@ -20,7 +20,7 @@ namespace FSM
 			
 			}
 			
-			if(fighter.attackPressed || fighter.uniquePressed )
+			else if(fighter.attackPressed || fighter.uniquePressed )
 			{
 				
 				fighter.Dispatch("attack");

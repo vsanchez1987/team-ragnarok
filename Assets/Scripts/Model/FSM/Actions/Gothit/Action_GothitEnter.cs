@@ -10,7 +10,9 @@ namespace FSM
 		public override void execute(FSMContext c, Object o){
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
-			fighter.GetGOB().animation.Play();
+			fighter.gothit = false;
+			//"mega_punch" animation just for testing
+			fighter.GetGOB().animation.CrossFade("mega_punch");
 		}
 	}
 }

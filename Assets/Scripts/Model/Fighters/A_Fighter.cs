@@ -88,6 +88,9 @@ namespace FightGame
 			projectiles = new List<Projectile>();
 			joints = new List<string>();
 			this.gob = this.gobj = gobj;
+			//hieu add
+			this.currentAttack = new Attack_None(this,0,0,0);
+			//
 			
 			AssignHurtBoxes(this.gob);
 			AssignJoints();
@@ -163,7 +166,7 @@ namespace FightGame
 			{
 				this.currentAttack = this.attacklist[attackType];
 			}
-			else this.currentAttack = null;
+			else this.currentAttack = new Attack_None(this,0,0,0);
 		}
 		
 		

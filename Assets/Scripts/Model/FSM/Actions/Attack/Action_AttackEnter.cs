@@ -19,10 +19,9 @@ namespace FSM
 			//Set an attack from dictionary to a public variable currentAttack
 			fighter.SetCurrentAttack();
 			//assign attack name
-			string attackName = (currentAttack !=null
-								? currentAttack.attack_name : null);
+			string attackName = currentAttack.attack_name;
 			
-			if(attackName==null)
+			if(attackName=="Attack_None")
 			{
 				//if there's no attack go back to idle state
 				fighter.Dispatch("idle");
