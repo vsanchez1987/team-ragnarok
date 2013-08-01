@@ -6,30 +6,34 @@ using FSM;
 
 namespace FightGame{
 	public class GameModel {
-		private A_Fighter p1;
-		private A_Fighter p2;
+		private Player p1;
+		private Player p2;
+		private Player[] players;
 		private Dictionary<string, A_Effect> Effects;
 		private Dictionary<string, A_Attack> Attacks;
 		//private Dictionary<string, A_Fighter> fighterlist;
 		
 	    // make sure the constructor is private, so it can only be instantiated here
 	    public GameModel() {
-			p1 = null;
-			p2 = null;
-			Effects = new Dictionary<string, A_Effect>();
-			Attacks = new Dictionary<string, A_Attack>();
+			this.p1 = new Player(1);
+			this.p2 = new Player(2);
+			this.players = new Player[] { p1, p2 };
+			this.Effects = new Dictionary<string, A_Effect>();
+			this.Attacks = new Dictionary<string, A_Attack>();
 			//fighterlist.Add("Odin",Fighter_Odin);
 			//fighterlist.Add("Basic",Fighter_Basic);
 	    }
 		
-		public A_Fighter P1{
+		public Player P1{
 			get { return this.p1; }
-			set { this.p1 = value; }
 		}
 		
-		public A_Fighter P2{
+		public Player P2{
 			get { return this.p2; }
-			set { this.p2 = value; }
+		}
+		
+		public Player[] Players{
+			get { return this.players; }
 		}
 		
 		public A_Effect GetEffect(string effect){
@@ -39,8 +43,6 @@ namespace FightGame{
 		public A_Attack GetAttack(string attack){
 			return this.Attacks[attack];
 		}
-		
-		
 		
 		
 		public void CreateFighter(string fighter){ // let's use delegates 
@@ -113,6 +115,5 @@ namespace FightGame{
 				}
 			}
 		}
-		
 	}
 }

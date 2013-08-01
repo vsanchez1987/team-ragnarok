@@ -1,41 +1,76 @@
 using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using FightGame;
 using FSM;
 
 public class GlobalInputListener : MonoBehaviour {
+	/*
+	// Private class to handle input values
+	private class JoyStick
+	{
+		public int player;
+		public string[] ButtonAxes;
+		public string[] DirectionalAxes;
+		
+		public JoyStick(int player){
+			this.player = player;
+			
+			string playerPostfix = "P" + player;
+			
+			this.DirectionalAxes = new string[2];
+			this.DirectionalAxes[0] = "Horizontal" + playerPostfix;
+			this.DirectionalAxes[1] = "Vertical" + playerPostfix;
+			
+			this.ButtonAxes = new string[4];
+			this.ButtonAxes[0] = "RegularAttack" + playerPostfix;
+			this.ButtonAxes[1] = "UniqueAttack" + playerPostfix;
+			this.ButtonAxes[2] = "SpecialAttack" + playerPostfix;
+			this.ButtonAxes[3] = "Block" + playerPostfix;
+		}
+	}
 	
-	const float halfCircle = 3.14f;
-	const float one16thCircle = halfCircle/8;
+	private const float halfCircle = 3.14f;
+	private const float one16thCircle = halfCircle/8;
 	
-	void Start () {	}
+	private JoyStick[] joysticks;
+	
+	void Start () {
+		JoyStick playerOneStick = new JoyStick(1);
+		JoyStick playerTwoStick = new JoyStick(2);
+		
+		this.joysticks = new JoyStick[2];
+		this.joysticks[0] = playerOneStick;
+		this.joysticks[1] = playerTwoStick;
+	}
 
 	void Update ()
 	{
-		// we can add "foreach(A_Fighter Player in GameManager.players)" to prevent code duplication
-		
-		//Player 1 Input
-		if (GameManager.P1!= null)
-		{
-			GameManager.P1.inputDirection = GetInputDirection(GameManager.P1.hAxis,GameManager.P1.vAxis);
-			GameManager.P1.controllerDirection = GetControllerDirection(GameManager.P1.inputDirection);
-			//GameManager.P1.attackPressed = Input.GetButton(GameManager.P1.atkBtn);
-			GameManager.P1.attackPressed = Input.GetMouseButtonDown(0);
-			GameManager.P1.uniquePressed = Input.GetButton(GameManager.P1.unqBtn);
-			GameManager.P1.specialPressed = Input.GetButton(GameManager.P1.spcBtn);
-			GameManager.P1.blockPressed = Input.GetButton(GameManager.P1.blckBtn);
+		for (int i = 0; i < this.joysticks.Length; i++){
+			Vector2 inputDirection = this.GetInputDirection(joysticks[i].DirectionalAxes[0], joysticks[i].DirectionalAxes[1]);
+			string controllerDirection = this.GetControllerDirection(inputDirection);
+			
+			if (controllerDirection != "none")
+				Debug.Log("Direction: " + controllerDirection);
+			
+			List<string> pressedButtons = new List<string>();
+			if (Input.anyKeyDown){
+				for (int j = 0; j < this.joysticks[i].ButtonAxes.Length; j++){
+					string axis = this.joysticks[i].ButtonAxes[j];
+					//Debug.Log("Button: " + axis);
+					
+					//if (Mathf.Abs(Input.GetAxisRaw(axis)) > 0){
+					if (Input.GetButtonDown(axis)){
+						//Debug.Log("Hit: " + axis);
+						pressedButtons.Add(axis);
+					}
+				}
+			}
+			GameManager.ProcessInput(controllerDirection, pressedButtons);
 		}
 		
-		//Player 2 Input
-		if (GameManager.P2!= null)
-		{
-			GameManager.P2.inputDirection = GetInputDirection(GameManager.P2.hAxis,GameManager.P2.vAxis);
-			GameManager.P2.controllerDirection = GetControllerDirection(GameManager.P2.inputDirection);
-			GameManager.P2.attackPressed = Input.GetButton(GameManager.P2.atkBtn);
-			GameManager.P2.uniquePressed = Input.GetButton(GameManager.P2.unqBtn);
-		}			
-		
-		GameManager.Update();	
+		GameManager.Update();
 	}
 	
 	private Vector2 GetInputDirection(string hAxis, string vAxis)
@@ -64,7 +99,10 @@ public class GlobalInputListener : MonoBehaviour {
 		}
 		else
 		{
-			float inputAngle = GetInputAngle(GameManager.P1.ForwardVector, inputDirection);
+			//Vector3 forward = GameManager.P1.ForwardVector;
+			Vector3 forward = new Vector3(1.0f, 0.0f, 0.0f);
+			
+			float inputAngle = GetInputAngle(forward, inputDirection);
 			
 			if (inputAngle >= 0 && inputAngle < one16thCircle * 1 ||
 				inputAngle >= one16thCircle *15 && inputAngle < one16thCircle *16)
@@ -104,8 +142,15 @@ public class GlobalInputListener : MonoBehaviour {
 				return "invalid";
 			}
 		}
-
+	}
+	*/
+	void Start(){
+		GameManager.ProcessInput();
 	}
 	
-
+	void Update(){
+		if (Input.anyKey){
+			GameManager.ProcessInput();
+		}
+	}
 }

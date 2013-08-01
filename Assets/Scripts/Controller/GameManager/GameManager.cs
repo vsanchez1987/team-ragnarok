@@ -18,12 +18,12 @@ namespace FightGame{
 	        get { return instance; }
 	    }
 		
-		public static A_Fighter P1{
+		public static Player P1{
 			get { return instance.gModel.P1; }
 			set { instance.gModel.P1 = value; }
 		}
 		
-		public static A_Fighter P2{
+		public static Player P2{
 			get { return instance.gModel.P2; }
 			set { instance.gModel.P2 = value; }
 		}
@@ -33,6 +33,24 @@ namespace FightGame{
 			string p2Name = instance.gModel.P2 != null ? instance.gModel.P2.Name : "No Player 2";
 			//Debug.Log("Player 1: " + p1Name);
 			//Debug.Log("Player 2: " + p2Name);
+		}
+		
+		public static void ProcessInput(){
+			foreach (Player p in instance.gModel.Players){
+				MoveCommand moveCommand = p.controls.GetMoveCommand();
+				List<AttackCommand> attackCommands = p.controls.GetAttackCommands();
+				
+				if (moveCommand != MoveCommand.NONE){
+					p.DoMoveCommand(moveCommand);
+				}
+				
+				foreach (AttackCommand cmd in attackCommands){
+					if (cmd != AttackCommand.NONE){
+						Debug.Log("Player: " + i + " Command: " + cmd.ToString());
+						p.DoAttackCommand(cmd);
+					}
+				}
+			}
 		}
 		
 		public static void Update(){
@@ -58,6 +76,7 @@ namespace FightGame{
 				foreach(HitBoxCollisionInfo hbi in GameManager.P1.HitBoxCollisions)
 				{
 					Debug.Log("hit player: " +hbi.hitPlayer.playerNumber + " for " +hbi.damage + " damage at " + hbi.location);
+					hbi.hitPlayer.hitPlayer.gothit = true;
 				}
 				GameManager.P1.HitBoxCollisions.Clear();
 			}
