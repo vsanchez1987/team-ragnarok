@@ -47,7 +47,7 @@ namespace FightGame
 		protected A_Status status;
 		protected FSMContext moveGraph;
 		public int playerNumber;
-		public Vector2 globalFowardVector;
+		Vector3 globalFowardVector;
 		public bool gothit = false;
 		
 		//public List<HitBox> hitBoxes;
@@ -171,7 +171,8 @@ namespace FightGame
 		
 		
 		//describes player forward direction
-		public Vector2 ForwardVector {
+		public Vector3 ForwardVector
+		{
 			get {return globalFowardVector;}
 			set {this.globalFowardVector=value;}
 		}
@@ -197,7 +198,8 @@ namespace FightGame
 		
 		private void InitForwardVector(int player)
 		{
-			globalFowardVector = (player==1 ? new Vector2(1,0) : new Vector2(-1,0));
+			//DEFINE PLAYER FORWARD VECTORS HERE (1,0,0) FOR X AND (0,0,1) FOR Z
+			globalFowardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
 		}
 		
 		public void Update()
@@ -330,7 +332,7 @@ namespace FightGame
 		
 		public void SwitchForwardVector()
 		{
-			globalFowardVector.x *= -1;
+			globalFowardVector *= -1;
 		}
 		
 		public bool CanAttack()

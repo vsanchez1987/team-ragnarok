@@ -18,9 +18,9 @@ public class GlobalInputListener : MonoBehaviour {
 		if (GameManager.P1!= null)
 		{
 			GameManager.P1.inputDirection = GetInputDirection(GameManager.P1.hAxis,GameManager.P1.vAxis);
-			GameManager.P1.controllerDirection = GetControllerDirection(GameManager.P1.inputDirection);
-			//GameManager.P1.attackPressed = Input.GetButton(GameManager.P1.atkBtn);
-			GameManager.P1.attackPressed = Input.GetMouseButtonDown(0);
+			GameManager.P1.controllerDirection = GetControllerDirection(GameManager.P1.inputDirection,GameManager.P1.ForwardVector);
+			GameManager.P1.attackPressed = Input.GetButton(GameManager.P1.atkBtn);
+			//GameManager.P1.attackPressed = Input.GetMouseButtonDown(0);
 			GameManager.P1.uniquePressed = Input.GetButton(GameManager.P1.unqBtn);
 			GameManager.P1.specialPressed = Input.GetButton(GameManager.P1.spcBtn);
 			GameManager.P1.blockPressed = Input.GetButton(GameManager.P1.blckBtn);
@@ -30,7 +30,7 @@ public class GlobalInputListener : MonoBehaviour {
 		if (GameManager.P2!= null)
 		{
 			GameManager.P2.inputDirection = GetInputDirection(GameManager.P2.hAxis,GameManager.P2.vAxis);
-			GameManager.P2.controllerDirection = GetControllerDirection(GameManager.P2.inputDirection);
+			GameManager.P2.controllerDirection = GetControllerDirection(GameManager.P2.inputDirection,GameManager.P2.ForwardVector);
 			GameManager.P2.attackPressed = Input.GetButton(GameManager.P2.atkBtn);
 			GameManager.P2.uniquePressed = Input.GetButton(GameManager.P2.unqBtn);
 		}			
@@ -55,8 +55,16 @@ public class GlobalInputListener : MonoBehaviour {
 			return 0;
 	}
 	
-	private string GetControllerDirection(Vector2 inputDirection)
+	
+	Vector2 ThreeD_to_TwoDVector(Vector3 direction)
 	{
+		return new Vector2(direction.x + direction.y + direction.z,0);
+	}
+	
+	
+	private string GetControllerDirection(Vector2 inputDirection, Vector3 forwardDirection)
+	{
+		
 		
 		if (inputDirection.x == 0 && inputDirection.y == 0)
 		{
@@ -64,7 +72,7 @@ public class GlobalInputListener : MonoBehaviour {
 		}
 		else
 		{
-			float inputAngle = GetInputAngle(GameManager.P1.ForwardVector, inputDirection);
+			float inputAngle = GetInputAngle(ThreeD_to_TwoDVector(forwardDirection), inputDirection);
 			
 			if (inputAngle >= 0 && inputAngle < one16thCircle * 1 ||
 				inputAngle >= one16thCircle *15 && inputAngle < one16thCircle *16)

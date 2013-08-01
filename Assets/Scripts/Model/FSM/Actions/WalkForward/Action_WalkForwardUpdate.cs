@@ -13,17 +13,20 @@ namespace FSM
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
 			
+			
 			GameObject gobj = fighter.GetGOB();
+			
+			UnityEngine.Debug.Log("test     "+fighter.playerNumber+" "+fighter.controllerDirection);
 			
 			if(fighter.controllerDirection == "forward" )
 			{
-				gobj.transform.Translate(Vector3.forward*Time.deltaTime);
+				gobj.transform.Translate(fighter.ForwardVector*Time.deltaTime);
 			}
 			else if(fighter.controllerDirection == "back")
 			{
 				//GameManager.P1.GetGOB().animation.CrossFade("WalkBack");
 
-				gobj.transform.Translate(Vector3.forward*-1*Time.deltaTime);
+				gobj.transform.Translate(fighter.ForwardVector*-1*Time.deltaTime);
 			}
 			
 			
