@@ -5,12 +5,12 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Shield_Swipe: A_Attack
+	public class Attack_ShieldSwipe: A_Attack
 	{
 		float attackDuration = 3.0f;
-		public string attack_name = "Shield_Swipe";
+		public string attack_name = "ShieldSwipe";
 		
-		public Shield_Swipe(A_Fighter attackOwner, float preAttackPeriod, 
+		public Attack_ShieldSwipe(A_Fighter attackOwner, float preAttackPeriod, 
 								float attackPeriod, 
 								float animationDuration):base(attackPeriod,attackOwner)
 		{

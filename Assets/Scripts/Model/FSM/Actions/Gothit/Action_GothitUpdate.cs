@@ -16,7 +16,7 @@ namespace FSM
 			
 			//check animation's duration, exit to idle state when animation done
 			//"mega_punch" animation just for testing
-			if(time > fighter.GetGOB().animation["mega_punch"].length)
+			if(time > fighter.GetGOB().animation["MegaPunch"].length)
 			{
 				time = 0f;
 				fighter.Dispatch("idle");

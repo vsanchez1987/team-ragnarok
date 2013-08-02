@@ -364,6 +364,7 @@ namespace FightGame
 			S_walkForward.addTransition(T_idle, "idle");
 			S_walkForward.addTransition(T_walkForward,"walkForward");
 			S_walkForward.addTransition(T_gothit,"gothit");
+			S_walkForward.addTransition(T_attack,"attack");
 			
 			S_attack.addTransition(T_idle,"idle");
 			S_attack.addTransition(T_gothit,"gothit");

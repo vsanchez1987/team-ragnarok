@@ -13,11 +13,11 @@ namespace FSM
 			
 			if(fighter.controllerDirection == "forward" )
 			{
-				fighter.GetGOB().animation.CrossFade("WalkForward");
+				fighter.GetGOB().animation.CrossFade(fighter.Name+"_WalkForward");
 			}
 			else if(fighter.controllerDirection == "back")
 			{
-				fighter.GetGOB().animation.CrossFade("WalkBack");
+				fighter.GetGOB().animation.CrossFade(fighter.Name+"_WalkBack");
 			}
 
 		}

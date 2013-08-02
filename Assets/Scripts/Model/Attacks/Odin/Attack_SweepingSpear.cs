@@ -4,12 +4,12 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Sweeping_Spear: A_Attack
+	public class Attack_SweepingSpear: A_Attack
 	{
 		float attackDuration = 3.0f;
-		public string attack_name = "Sweeping_Spear";
+		public string attack_name = "SweepingSpear";
 		
-		public Sweeping_Spear(A_Fighter attackOwner, float preAttackPeriod, 
+		public Attack_SweepingSpear(A_Fighter attackOwner, float preAttackPeriod, 
 								float attackPeriod, 
 								float animationDuration):base(attackPeriod,attackOwner)
 		{
