@@ -199,7 +199,7 @@ namespace FightGame
 		private void InitForwardVector(int player)
 		{
 			//DEFINE PLAYER FORWARD VECTORS HERE (1,0,0) FOR X AND (0,0,1) FOR Z
-			globalFowardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
+			globalFowardVector = (player==1 ? new Vector3(0,0,1) : new Vector3(0,0,-1));
 		}
 		
 		public void Update()
