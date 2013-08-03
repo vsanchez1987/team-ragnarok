@@ -31,9 +31,10 @@ namespace FSM
 			{
 				Debug.Log(fighter.Name+"_"+attackName);
 				//if yes,run the animation
-				obj.animation.CrossFade(fighter.Name+"_"+attackName);
+				string animationName = fighter.GetAnimationName(fighter,attackName);
+				obj.animation.CrossFade(animationName);
 				//store animation length, it will be used it in Action_AttackUpdate 
-				currentAttack.attackLength = obj.animation[fighter.Name+"_"+attackName].length;		
+				currentAttack.attackLength = obj.animation[animationName].length;		
 				currentAttack.Execute();				
 			}
 		}

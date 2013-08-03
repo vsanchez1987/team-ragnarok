@@ -18,8 +18,8 @@ namespace FightGame
 			//Formula to add more attack to attack list:
 			//this.attacklist.Add( "1" if regular attack + direction "back,forward,up,down",create new cs file) 
 			//					   "2" if unique attack  + direction "back,forward,up,down",
-			this.attacklist.Add("1back",new Attack_SweepingSpear(this,0,0,0)); 
-			this.attacklist.Add("1none",new Attack_ShieldSwipe(this,0,0,0));
+			this.attacklist.Add("RegAttack_back",new Attack_SweepingSpear(this,0,0,0)); 
+			this.attacklist.Add("RegAttack_none",new Attack_ShieldSwipe(this,0,0,0));
 			
 			
 			

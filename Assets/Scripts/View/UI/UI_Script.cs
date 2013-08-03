@@ -9,8 +9,8 @@ public class UI_Script : MonoBehaviour
     void OnGUI() {
 		if (!created){
 	        if (GUI.Button(new Rect(Screen.width/2, Screen.height/2, 50, 30), "Start")){
-				GameManager.CreateFighter("Fighter_Odin",1);
-				GameManager.CreateFighter("Fighter_Odin",2);
+				GameManager.CreateFighter("Fighter_Heavy",1);
+				GameManager.CreateFighter("Fighter_Heavy",2);
 	            created = true;
 			}
 			/*

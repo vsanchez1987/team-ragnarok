@@ -5,7 +5,7 @@ using FSM;
 
 namespace FSM
 {
-	public class Action_WalkForwardExit:FSMAction
+	public class Action_WalkExit:FSMAction
 	{
 		public override void execute(FSMContext c, Object o){
 			

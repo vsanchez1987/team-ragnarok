@@ -10,7 +10,9 @@ namespace FSM
 		public override void execute(FSMContext c, object o){
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
-			fighter.GetGOB().animation.CrossFade(fighter.Name+"_Idle");
+			
+			string animationName = fighter.GetAnimationName(fighter,"Idle");
+			fighter.GetGOB().animation.CrossFade(animationName);
 		}
 	}
 }

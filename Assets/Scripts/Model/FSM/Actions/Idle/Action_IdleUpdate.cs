@@ -13,11 +13,11 @@ namespace FSM
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
 			UnityEngine.Debug.Log("idling "+fighter.playerNumber);
+			
 			if(fighter.gothit)
 			{
 				UnityEngine.Debug.Log("hithithithithithithit");
-				fighter.Dispatch("gothit");
-			
+				fighter.Dispatch("gothit");			
 			}
 			
 			else if(fighter.attackPressed || fighter.uniquePressed )
@@ -28,7 +28,7 @@ namespace FSM
 			
 			else if(fighter.controllerDirection == "forward" || fighter.controllerDirection == "back")
 			{
-				fighter.Dispatch("walkForward");
+				fighter.Dispatch("walk");
 			}
 			else
 			{

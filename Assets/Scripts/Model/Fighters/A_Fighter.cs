@@ -160,8 +160,11 @@ namespace FightGame
 		//		_During Update(), you can access the variable currentAttack.
 		{
 			string attackType=controllerDirection;
-			if(attackPressed) attackType ="1"+controllerDirection;	//define the key base on attack type
-			if(uniquePressed) attackType ="2"+controllerDirection;
+			//if(attackPressed) attackType ="1"+controllerDirection; //define the key base on attack type
+			if(attackPressed) attackType ="RegAttack_"+controllerDirection;	
+			if(uniquePressed) attackType ="UniqueAttack_"+controllerDirection;
+			if(specialPressed) attackType ="SpecialAttack_"+controllerDirection;
+			if(blockPressed) attackType ="Block_"+controllerDirection;
 			if(this.attacklist.ContainsKey(attackType))
 			{
 				this.currentAttack = this.attacklist[attackType];
@@ -199,7 +202,7 @@ namespace FightGame
 		private void InitForwardVector(int player)
 		{
 			//DEFINE PLAYER FORWARD VECTORS HERE (1,0,0) FOR X AND (0,0,1) FOR Z
-			globalFowardVector = (player==1 ? new Vector3(0,0,1) : new Vector3(0,0,-1));
+			globalFowardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
 		}
 		
 		public void Update()
@@ -344,27 +347,27 @@ namespace FightGame
 		void InitStateMachine()
 		{
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
-			State S_walkForward = new State("walkForward", new Action_WalkForwardEnter(), new Action_WalkForwardUpdate(), new Action_WalkForwardExit());
+			State S_walk = new State("walk", new Action_WalkEnter(), new Action_WalkUpdate(), new Action_WalkExit());
 			State S_attack = new State("attack",new Action_AttackEnter(), new Action_AttackUpdate(), new Action_AttackExit());
 			State S_gothit = new State("gothit",new Action_GothitEnter(), new Action_GothitUpdate(),new Action_GothitExit());
 			//State S_unique = new State("unique",new Action_UniqueEnter(), new Action_UniqueUpdate(), new Action_UniqueExit());
 			
 			Transition T_idle = new Transition(S_idle, new Action_None());
-			Transition T_walkForward = new Transition(S_walkForward, new Action_None());
+			Transition T_walk = new Transition(S_walk, new Action_None());
 			Transition T_attack = new Transition(S_attack, new Action_None());
 			Transition T_gothit = new Transition(S_gothit, new Action_None());
 			//Transition T_unique = new Transition(S_unique,new Action_None());
 			
-			S_idle.addTransition(T_walkForward, "walkForward");
+			S_idle.addTransition(T_walk, "walk");
 			S_idle.addTransition(T_attack,"attack");
 			S_idle.addTransition(T_gothit,"gothit");
 			//S_idle.addTransition(T_unique,"unique");
 			S_idle.addTransition(T_idle,"idle");
 			
-			S_walkForward.addTransition(T_idle, "idle");
-			S_walkForward.addTransition(T_walkForward,"walkForward");
-			S_walkForward.addTransition(T_gothit,"gothit");
-			S_walkForward.addTransition(T_attack,"attack");
+			S_walk.addTransition(T_idle, "idle");
+			S_walk.addTransition(T_walk,"walk");
+			S_walk.addTransition(T_gothit,"gothit");
+			S_walk.addTransition(T_attack,"attack");
 			
 			S_attack.addTransition(T_idle,"idle");
 			S_attack.addTransition(T_gothit,"gothit");
@@ -376,6 +379,12 @@ namespace FightGame
 			
 			//S_unique.addTransition(T_idle,"idle");
 			this.moveGraph = new FSMContext(S_idle, new Action_None(),this);
+		}
+		
+		
+		public string GetAnimationName(A_Fighter fighter,string animationName)
+		{
+			return fighter.Name+"_"+animationName;
 		}
 		
 		

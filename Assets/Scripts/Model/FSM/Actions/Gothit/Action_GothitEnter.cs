@@ -12,7 +12,9 @@ namespace FSM
 			fighter = (A_Fighter)o;
 			fighter.gothit = false;
 			//"mega_punch" animation just for testing
-			fighter.GetGOB().animation.CrossFade(fighter.Name+"_MegaPunch");
+			string animationName = fighter.GetAnimationName(fighter,"FallDown");
+			
+			fighter.GetGOB().animation.CrossFade(animationName);
 		}
 	}
 }
