@@ -13,7 +13,7 @@ public class HB_Instruction
 	public Mechanic attackMechanic;
 	public ParticleSystem particleSystem;
 	
-	public HB_Instruction(A_Fighter owner, List<HB_KeyFrame> onOffTimes, string jointName, float damage, float radius, Mechanic attackMechanic = null, ParticleSystem p = null)
+	public HB_Instruction(A_Fighter owner, List<HB_KeyFrame> onOffTimes, string jointName, float damage, float radius,Mechanic attackMechanic = null, ParticleSystem p = null)
 	{
 		this.owner = owner;
 		this.onOffTimes = onOffTimes;

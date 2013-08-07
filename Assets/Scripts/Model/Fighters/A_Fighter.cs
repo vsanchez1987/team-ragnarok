@@ -1,13 +1,22 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
 using FightGame;
 using FSM;
+
+using System;
+
+using System.Linq;//for string split
+
+
 
 namespace FightGame
 {
 	public abstract class A_Fighter
 	{
+		public static Vector3 projectileOffset = new Vector3(0,1,0);
+		
 		//layer names
 		public const int P1_HIT_BOX_LAYER_NUMBER	= 8;
 		public const int P2_HIT_BOX_LAYER_NUMBER 	= 9;
@@ -54,7 +63,7 @@ namespace FightGame
 		//public List<HitBoxInfo> hitBoxCollisionsToBeProcessed;
 		
 		// NEW HITBOX CODE 7/23
-		GameObject gob;
+		public GameObject gob;
 		Dictionary<string,HitBox> hitBoxes; //<gobName,hitBox>
 		List<GameObject> hurtBoxes;
 		public List<HitBoxCollisionInfo> HitBoxCollisions;
@@ -199,7 +208,7 @@ namespace FightGame
 		private void InitForwardVector(int player)
 		{
 			//DEFINE PLAYER FORWARD VECTORS HERE (1,0,0) FOR X AND (0,0,1) FOR Z
-			globalFowardVector = (player==1 ? new Vector3(0,0,1) : new Vector3(0,0,-1));
+			globalFowardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
 		}
 		
 		public void Update()
@@ -211,6 +220,9 @@ namespace FightGame
 			//hieu add
 			// NEW HITBOX CODE 7/23
 			UpdateHitBoxes();
+			
+			UpdateProjectiles();
+			
 			// ***
 
 		}
@@ -236,16 +248,26 @@ namespace FightGame
 		{
 			foreach(HB_Instruction hbi in attack.hb_instructions)
 			{
-				if(hbi.jointName != "projectile")
+				string jtName = hbi.jointName;
+            	string[] stringSeparator = new string[] { "_" };
+            	string[] splitString = jtName.Split(stringSeparator, StringSplitOptions.None);
+				
+				if(splitString[0] == "HB")
 				{
 					GetHitBox(hbi.jointName).SendInstruction(hbi);
 				}
-				else if (hbi.jointName == "projectile")
+				else if (splitString[0] == "P")
 				{
-					GetFreeProjectileHitBox().SendInstruction(hbi);
+					HitBox hb = GetFreeProjectileHitBox();
+					hb.SendInstruction(hbi);
+					Projectile p = CreateProjectile(splitString[1]);
+					hb.ParentToProjectile(p);
+					
 				}
 			}
 		}
+		
+	
 		
 		public HitBox GetHitBox(string name)
 		{
@@ -325,6 +347,34 @@ namespace FightGame
 		}
 		
 		// ***
+		
+		// PROJECTILE FUNCTIONS
+		void UpdateProjectiles()
+		{
+			foreach(Projectile p in projectiles)
+			{
+				p.Update();
+			}
+		}
+		
+		Projectile CreateProjectile(string prefabName)
+		{
+			UnityEngine.Object ob = Resources.Load("Prefabs/" + prefabName, typeof(GameObject));
+			if(ob == null)
+			{
+				Debug.Log("cannot find "+ prefabName);
+				return null;
+			}
+			else
+			{
+				Projectile p = new Projectile(this,ob);
+				projectiles.Add(p);
+				return p;
+				
+			}
+		}
+		
+		// END PROJECTILE FUNCTIONS
 		
 		public void Dispatch(string eventName){
 			moveGraph.dispatch(eventName, this);

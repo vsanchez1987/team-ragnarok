@@ -46,7 +46,7 @@ namespace FightGame
 			keyFrames = new List<HB_KeyFrame>();
 			keyFrames.Add(new HB_KeyFrame(0.0f,attackLength));
 			
-			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"projectile",20.0f,1.0f,null,null);
+			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"P_FireBall",20.0f,1.0f,null,null);
 			base.hb_instructions.Add(hbInstruct);
 			
 			// ***
