@@ -15,13 +15,13 @@ namespace FSM
 						
 			if(fighter.controllerDirection == "forward" )
 			{
-				gobj.transform.Translate(fighter.ForwardVector*Time.deltaTime);
+				gobj.transform.Translate(fighter.ForwardVector*fighter.movespeed*Time.deltaTime);
 				
 			}
 			else if(fighter.controllerDirection == "back")
 			{
 				//GameManager.P1.GetGOB().animation.CrossFade("WalkBack");
-				gobj.transform.Translate(fighter.ForwardVector*-1*Time.deltaTime);
+				gobj.transform.Translate(fighter.ForwardVector*-1*fighter.movespeed*Time.deltaTime);
 			}
 			
 			

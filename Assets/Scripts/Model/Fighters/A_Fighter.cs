@@ -40,15 +40,23 @@ namespace FightGame
 		
 >>>>>>> wolfe
 				 */
+		
+		public float lastAttackTimer = 0f;
+		public int playerNumber;
+		public bool gothit = false;
+		
+		//Hieu add
+		public float movespeed;
+		
+		
 		protected const float moveCoolDown = 2;
-		public float lastAttackTimer = 0;
 		protected string name;
 		protected GameObject gobj;
 		protected A_Status status;
 		protected FSMContext moveGraph;
-		public int playerNumber;
+		
 		Vector3 globalFowardVector;
-		public bool gothit = false;
+		
 		
 		//public List<HitBox> hitBoxes;
 		//public List<HitBoxInfo> hitBoxCollisionsToBeProcessed;
@@ -67,6 +75,8 @@ namespace FightGame
 		public Dictionary<string,A_Attack> attacklist;	//hieu add, tom modify to add <string,A_attack>
 		public A_Attack currentAttack;
 		
+		
+		//Hieu add movespeed to constructor
 		protected A_Fighter(int playerNumber, GameObject gobj)
 		{
 			this.playerNumber = playerNumber;
@@ -202,7 +212,7 @@ namespace FightGame
 		private void InitForwardVector(int player)
 		{
 			//DEFINE PLAYER FORWARD VECTORS HERE (1,0,0) FOR X AND (0,0,1) FOR Z
-			globalFowardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
+			globalFowardVector = (player==1 ? new Vector3(0,0,1) : new Vector3(0,0,-1));
 		}
 		
 		public void Update()

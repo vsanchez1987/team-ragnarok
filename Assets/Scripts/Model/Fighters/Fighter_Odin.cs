@@ -7,13 +7,13 @@ namespace FightGame
 {
 	public class Fighter_Odin : A_Fighter
 	{
-		public Fighter_Odin (GameObject gobj, int playerNumber)
+		public Fighter_Odin (GameObject gobj, int playerNumber, float movespeed)
 			:base (playerNumber,gobj)
 		{
 			this.gobj = gobj;
 			this.status = new Status_None();
 			this.name = "Odin";
-			
+			this.movespeed = movespeed;
 			
 			//Formula to add more attack to attack list:
 			//this.attacklist.Add( "1" if regular attack + direction "back,forward,up,down",create new cs file) 
