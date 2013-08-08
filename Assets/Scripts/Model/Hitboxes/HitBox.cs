@@ -19,6 +19,7 @@ namespace FightGame
 		public bool displayWhenNotActive;
 		public bool displayWhenActive;
 		public bool isProjectile;
+		Projectile linkedProjectile= null;
 		
 		
 		public HitBox(A_Fighter owner, GameObject gob, bool isProjectile)
@@ -40,8 +41,18 @@ namespace FightGame
 			DeactivateExpired();
 			DrawBoxes();
 			CheckAndProcessCollision();
+			FollowLinkedProjectile();
 			
 		}
+		
+		void FollowLinkedProjectile()
+		{
+			if(linkedProjectile!=null)
+			{
+				this.gob.transform.position = linkedProjectile.gob.transform.position;
+			}
+		}
+				
 		
 		LayerMask CreateLayerMask()
 		{
@@ -110,6 +121,7 @@ namespace FightGame
 			//ResetHBKeyFrames();
 			active= false;
 			this.currentInstruction= null;
+			this.linkedProjectile=null;
 			
 		}
 		
@@ -227,7 +239,11 @@ namespace FightGame
 		
 		
 		
-		public void ParentToProjectile(GameObject projectile){}
+		public void ParentToProjectile(Projectile projectile)
+		{
+			
+			linkedProjectile = projectile;
+		}
 	
 		
 	}
