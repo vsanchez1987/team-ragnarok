@@ -56,10 +56,10 @@ namespace FightGame{
 					this.p1 = new Fighter_Basic(player1,1);
 					break;
 				case("Fighter_Odin"):
-					this.p1 = new Fighter_Odin(player1,1,5);
+					this.p1 = new Fighter_Odin(player1,1);
 					break;
 				case("Fighter_Heavy"):
-					this.p1 = new Fighter_Heavy(player1,1,5);
+					this.p1 = new Fighter_Heavy(player1,1);
 					break;
 			}
 		}
@@ -83,10 +83,10 @@ namespace FightGame{
 						this.p1 = new Fighter_Basic(player,playernum);
 						break;
 					case("Fighter_Odin"):
-						this.p1 = new Fighter_Odin(player,playernum,5);
+						this.p1 = new Fighter_Odin(player,playernum);
 						break;
 					case("Fighter_Heavy"):
-						this.p1 = new Fighter_Heavy(player,playernum,5);
+						this.p1 = new Fighter_Heavy(player,playernum);
 						break;
 				}
 			}
@@ -105,10 +105,10 @@ namespace FightGame{
 						this.p2 = new Fighter_Basic(player,playernum);
 						break;
 					case("Fighter_Odin"):
-						this.p2 = new Fighter_Odin(player,playernum,5);
+						this.p2 = new Fighter_Odin(player,playernum);
 						break;
 					case("Fighter_Heavy"):
-						this.p2 = new Fighter_Heavy(player,playernum,5);
+						this.p2 = new Fighter_Heavy(player,playernum);
 						break;
 				}
 			}

@@ -7,13 +7,13 @@ namespace FightGame
 {
 	public class Fighter_Heavy : A_Fighter
 	{
-		public Fighter_Heavy (GameObject gobj, int playerNumber,float movespeed)
+		public Fighter_Heavy (GameObject gobj, int playerNumber)
 			:base (playerNumber,gobj)
 		{
 			this.gobj = gobj;
 			this.status = new Status_None();
 			this.name = "Heavy";
-			this.movespeed = movespeed;
+			this.movespeed = 6;
 								
 			//this.attacklist.Add("1back",new Attack_SweepingSpear(this,0,0,0)); 
 			this.attacklist.Add("RegAttack_none",new Attack_MegatonPunch(this,0,0,0));						

@@ -17,6 +17,7 @@ namespace FightGame
 	{
 		public static Vector3 projectileOffset = new Vector3(0,1,0);
 		
+		
 		//layer names
 		public const int P1_HIT_BOX_LAYER_NUMBER	= 8;
 		public const int P2_HIT_BOX_LAYER_NUMBER 	= 9;
@@ -65,6 +66,7 @@ namespace FightGame
 		protected FSMContext moveGraph;
 		
 		Vector3 globalFowardVector;
+		public Vector3 localForwardVector;
 		
 		
 		//public List<HitBox> hitBoxes;
@@ -222,6 +224,7 @@ namespace FightGame
 		{
 			//DEFINE PLAYER FORWARD VECTORS HERE (1,0,0) FOR X AND (0,0,1) FOR Z
 			globalFowardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
+			localForwardVector = (player==1 ? new Vector3(0,0,1) : new Vector3(0,0,-1));
 		}
 		
 		public void Update()
@@ -396,6 +399,7 @@ namespace FightGame
 		public void SwitchForwardVector()
 		{
 			globalFowardVector *= -1;
+			localForwardVector *= -1;
 		}
 		
 		public bool CanAttack()
