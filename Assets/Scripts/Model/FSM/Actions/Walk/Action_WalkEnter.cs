@@ -15,12 +15,12 @@ namespace FSM
 			
 			if(fighter.controllerDirection == "forward" )
 			{
-				string animationName = fighter.GetAnimationName(fighter,"WalkForward");
+				string animationName = fighter.GetAnimationName(fighter,"walk_forward");
 				fighter.GetGOB().animation.CrossFade(animationName);
 			}
 			else if(fighter.controllerDirection == "back")
 			{
-				string animationName = fighter.GetAnimationName(fighter,"WalkBack");
+				string animationName = fighter.GetAnimationName(fighter,"walk_backward");
 				fighter.GetGOB().animation.CrossFade(animationName);
 			}
 

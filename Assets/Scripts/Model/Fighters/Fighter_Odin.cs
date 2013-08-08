@@ -14,7 +14,7 @@ namespace FightGame
 		{
 			this.gobj = gobj;
 			this.status = new Status_None();
-			this.name = "Odin";
+			this.name = "odin";
 			this.movespeed = 1;
 			
 			//Formula to add more attack to attack list:

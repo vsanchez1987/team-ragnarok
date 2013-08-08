@@ -8,7 +8,7 @@ namespace FightGame
 	public class Attack_MegatonPunch: A_Attack
 	{
 		float attackDuration = 3.0f;
-		string attack_name = "MegatonPunch";
+		string attack_name = "megaton_punch";
 		
 		public Attack_MegatonPunch (A_Fighter attackOwner, float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod,attackOwner)
 		{	

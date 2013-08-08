@@ -8,7 +8,7 @@ namespace FightGame
 	public class Attack_Shot02: A_Attack
 	{
 		float attackDuration = 3.0f;
-		string attack_name = "Shot02";
+		string attack_name = "1-2-3_fire";
 		
 		public Attack_Shot02 (A_Fighter attackOwner, float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod,attackOwner)
 		{

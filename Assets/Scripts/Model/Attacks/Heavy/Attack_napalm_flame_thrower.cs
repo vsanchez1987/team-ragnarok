@@ -5,16 +5,15 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Attack_Punch02: A_Attack
+	public class Attack_napalm_flame_thrower: A_Attack
 	{
 		float attackDuration = 3.0f;
-		string attack_name = "triple_punch";
+		string attack_name = "napalm_flame_thrower";
 		
-		public Attack_Punch02 (A_Fighter attackOwner, float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod,attackOwner)
-		{
+		public Attack_napalm_flame_thrower (A_Fighter attackOwner, float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod,attackOwner)
+		{	
 			base.attack_name=attack_name;
 			//_---------------------------------
-			
 			//HB_Instruction(attackOwner, keyframe, "hitbox Name", damage, radius, attackMechanic, Particle)
 
 			// ********* this goes in attacks that inherit A_Attack		
@@ -40,7 +39,6 @@ namespace FightGame
 			this.animationDuration = animationDuration;
 			this.postAttackPeriod = animationDuration - (preAttackPeriod + attackPeriod);	
 		}
-		
 		public override void Execute ()
 		{
 			base.Execute ();

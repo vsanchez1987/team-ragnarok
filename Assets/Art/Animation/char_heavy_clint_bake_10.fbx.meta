@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: 68d67972318a88743abc5d0a6d76ba82
+guid: f389dbd0131aa554faaf89cc60debd3d
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
     100000: back_plate_jnt
-    100002: char_heavy_root_jnt
-    100004: chest_jnt
-    100006: front_plate_jnt
-    100008: head_jnt
-    100010: //RootNode
+    100002: //RootNode
+    100004: char_heavy_root_jnt
+    100006: chest_jnt
+    100008: front_plate_jnt
+    100010: head_jnt
     100012: hip_jnt
     100014: l_ankle_jnt
     100016: l_ball_jnt
@@ -70,11 +70,11 @@ ModelImporter:
     100128: spine1_jnt
     100130: spine2_jnt
     400000: back_plate_jnt
-    400002: char_heavy_root_jnt
-    400004: chest_jnt
-    400006: front_plate_jnt
-    400008: head_jnt
-    400010: //RootNode
+    400002: //RootNode
+    400004: char_heavy_root_jnt
+    400006: chest_jnt
+    400008: front_plate_jnt
+    400010: head_jnt
     400012: hip_jnt
     400014: l_ankle_jnt
     400016: l_ball_jnt
@@ -135,9 +135,10 @@ ModelImporter:
     400126: r_wrist_jnt
     400128: spine1_jnt
     400130: spine2_jnt
-    7400000: Heavy_Full_Walk_Cycle
-    7400002: char_heavy_walk_forward
-    7400004: char_heavy_walk_backward
+    7400000: char_heavy_idle
+    7400002: char_heavy_flinch_up
+    7400004: char_heavy_flinch_down
+    7400006: char_heavy_knocked_off_feet
     9500000: //RootNode
     11100000: //RootNode
   materials:
@@ -153,10 +154,10 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     clipAnimations:
-    - name: Heavy_Full_Walk_Cycle
+    - name: char_heavy_idle
       takeName: Take 001
       firstFrame: 2
-      lastFrame: 101
+      lastFrame: 38
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -174,10 +175,10 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: char_heavy_walk_forward
+    - name: char_heavy_flinch_up
       takeName: Take 001
-      firstFrame: 2
-      lastFrame: 50
+      firstFrame: 83
+      lastFrame: 114
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -195,10 +196,31 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: char_heavy_walk_backward
+    - name: char_heavy_flinch_down
       takeName: Take 001
-      firstFrame: 51
-      lastFrame: 101
+      firstFrame: 40
+      lastFrame: 81
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      transformMask: []
+    - name: char_heavy_knocked_off_feet
+      takeName: Take 001
+      firstFrame: 116
+      lastFrame: 169
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

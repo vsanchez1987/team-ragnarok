@@ -448,7 +448,7 @@ namespace FightGame
 		
 		public string GetAnimationName(A_Fighter fighter,string animationName)
 		{
-			return fighter.Name+"_"+animationName;
+			return "char_"+fighter.Name+"_"+animationName;
 		}
 		
 		

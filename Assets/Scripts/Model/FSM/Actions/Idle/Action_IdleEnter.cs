@@ -11,7 +11,7 @@ namespace FSM
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
 			
-			string animationName = fighter.GetAnimationName(fighter,"Idle");
+			string animationName = fighter.GetAnimationName(fighter,"idle");
 			fighter.GetGOB().animation.CrossFade(animationName);
 		}
 	}
