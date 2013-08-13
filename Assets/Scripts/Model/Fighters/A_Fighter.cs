@@ -19,6 +19,7 @@ namespace FightGame
 		public const string HB_FIST_R	= "HB_R_Fist";
 		public const string HB_GLOBAL01	= "HB_Global01";
 		
+		/*
 		//input buttons-axes
 		public const string P1_AXIS_HORIZONTAL 	= "HorizontalP1";
 		public const string P1_AXIS_VERTICAL	= "VerticalP1";
@@ -33,77 +34,71 @@ namespace FightGame
 		public const string P2_BTN_UNQ_ATTACK 	= "UniqueAttackP2";
 		public const string P2_BTN_SPC_ATTACK 	= "SpecialAttackP2";
 		public const string P2_BTN_BLOCK 		= "BlockP2";
-/*
-			<<<<<<< HEAD
+		*/
 
-=======
+		protected 	const float 	moveCoolDown = 2;
+		protected 	string 			name;
+		protected 	GameObject 		gobj;
+		protected 	A_Status 		status;
+		protected 	FSMContext 		moveGraph;
 		
->>>>>>> wolfe
-				 */
-		protected const float moveCoolDown = 2;
-		public float lastAttackTimer = 0;
-		protected string name;
-		protected GameObject gobj;
-		protected A_Status status;
-		protected FSMContext moveGraph;
-		public int playerNumber;
-		public Vector2 globalFowardVector;
-		public bool gothit = false;
+		public 		float 			lastAttackTimer = 0;
+		public 		int 			playerNumber;
+		public 		Vector2 		globalFowardVector;
+		public 		bool 			gothit = false;
 		
 		//public List<HitBox> hitBoxes;
 		//public List<HitBoxInfo> hitBoxCollisionsToBeProcessed;
 		
 		// NEW HITBOX CODE 7/23
-		GameObject gob;
-		Dictionary<string,HitBox> hitBoxes; //<gobName,hitBox>
-		List<GameObject> hurtBoxes;
-		public List<HitBoxCollisionInfo> HitBoxCollisions;
+		//GameObject gobj;
+		private Dictionary<string, HitBox> 	hitBoxes; //<gobjName,hitBox>
+		private List<GameObject> 			hurtBoxes;
+		public 	List<HitBoxCollisionInfo> 	HitBoxCollisions;
 		
-		List<Projectile> projectiles; //activeProjectiles
-		List<string> joints;
-		int numProjectilesMax;
+		private List<Projectile> 			projectiles; //activeProjectiles
+		private List<string> 				joints;
+		private int 						numProjectilesMax;
 		// ***
 		
-		public Dictionary<string,A_Attack> attacklist;	//hieu add, tom modify to add <string,A_attack>
-		public A_Attack currentAttack;
+		public Dictionary<string, A_Attack> attacklist;	//hieu add, tom modify to add <string,A_attack>
+		public A_Attack 					currentAttack;
 		
 		protected A_Fighter(int playerNumber, GameObject gobj)
 		{
 			this.playerNumber = playerNumber;
+			/*
 			this.hAxis = (playerNumber == 1 ? P1_AXIS_HORIZONTAL : P2_AXIS_HORIZONTAL);
 			this.vAxis = (playerNumber == 1 ? P1_AXIS_VERTICAL : P2_AXIS_VERTICAL);
 			this.unqBtn = (playerNumber == 1 ? P1_BTN_UNQ_ATTACK : P2_BTN_UNQ_ATTACK);
 			this.atkBtn = (playerNumber == 1 ? P1_BTN_REG_ATTACK : P2_BTN_REG_ATTACK);
 			this.blckBtn = (playerNumber == 1 ? P1_BTN_BLOCK : P2_BTN_BLOCK);
 			this.spcBtn = (playerNumber == 1 ? P1_BTN_SPC_ATTACK : P2_BTN_SPC_ATTACK);
-			InitForwardVector(playerNumber);
+			*/
+			
 			//hitBoxes = new List<HitBox>();
 			//hitBoxCollisionsToBeProcessed = new List<HitBoxInfo>();
 			//AddHitBoxesGroupedInPrefab(gobj);
 			
 			// NEW HITBOX CODE 7/23
-			hitBoxes = new Dictionary<string, HitBox>();
-			hurtBoxes = new List<GameObject>();
-			HitBoxCollisions = new List<HitBoxCollisionInfo>();
-			projectiles = new List<Projectile>();
-			joints = new List<string>();
-			this.gob = this.gobj = gobj;
+			this.hitBoxes 			= new Dictionary<string, HitBox>();
+			this.hurtBoxes 			= new List<GameObject>();
+			this.HitBoxCollisions 	= new List<HitBoxCollisionInfo>();
+			this.projectiles 		= new List<Projectile>();
+			this.joints 			= new List<string>();
+			this.gobj 				= gobj;
 			//hieu add
-			this.currentAttack = new Attack_None(this,0,0,0);
-			//
+			this.currentAttack 		= new Attack_None(this,0,0,0);
+			this.attacklist 		= new Dictionary<string, A_Attack>();
 			
-			AssignHurtBoxes(this.gob);
-			AssignJoints();
-			InitHitBoxes();
-			InitStateMachine();
+			this.InitForwardVector(playerNumber);
+			this.AssignHurtBoxes(this.gobj);
+			this.AssignJoints();
+			this.InitHitBoxes();
+			this.InitStateMachine();
 			
-			
-			
-			ShowInActiveHitBoxes(true); //should be taken out, used to see hitboxes
-			ShowActiveHitBoxes(true);
-			// ***
-			
-			attacklist = new Dictionary<string, A_Attack>();
+			this.ShowInActiveHitBoxes(true); //should be taken out, used to see hitboxes
+			this.ShowActiveHitBoxes(true);
 		}
 		
 		#region accessors
@@ -135,10 +130,18 @@ namespace FightGame
 		}
 		// ***
 		
-		void AssignHurtBoxes(GameObject gob)
+		public void DoAttackCommand( AttackCommand ac ){
+			//this.moveGraph.dispatch("attack", this);
+		}
+		
+		public void DoMoveCommand( MoveCommand mc ){
+			
+		}
+		
+		private void AssignHurtBoxes(GameObject gobj)
 		{
 		
-			foreach (Transform t in gob.transform)
+			foreach (Transform t in gobj.transform)
 			{
 			
 				if (t.name == "HurtBox")
@@ -159,6 +162,8 @@ namespace FightGame
 		//		because the controllerDirection variable will change during Update time.
 		//		_During Update(), you can access the variable currentAttack.
 		{
+			// Commented out, changing input
+			/*
 			string attackType=controllerDirection;
 			if(attackPressed) attackType ="1"+controllerDirection;	//define the key base on attack type
 			if(uniquePressed) attackType ="2"+controllerDirection;
@@ -167,6 +172,7 @@ namespace FightGame
 				this.currentAttack = this.attacklist[attackType];
 			}
 			else this.currentAttack = new Attack_None(this,0,0,0);
+			*/
 		}
 		
 		
@@ -178,20 +184,20 @@ namespace FightGame
 		#endregion
 		
 		#region input related Data
-		public bool attackPressed, uniquePressed, specialPressed, blockPressed;
+		//public bool attackPressed, uniquePressed, specialPressed, blockPressed;
 		// true if player is pressing button
 		
-		public Vector2 inputDirection;
+		//public Vector2 inputDirection;
 		// Direction pressed on analog stick in vector format
 		
-		public string controllerDirection;
+		//public string controllerDirection;
 		// Direction pressed on analog stick in 8-directional string format
 		// returns  "forward","forwardUp", "up",backUp","back","backDown","down",forwardDown" or "invalid"
 		
-		public string hAxis, vAxis;
+		//public string hAxis, vAxis;
 		// Vertical and Horizontal controller axes declared in Unity's input preferences
 		
-		public string atkBtn, unqBtn,spcBtn,blckBtn;
+		//public string atkBtn, unqBtn,spcBtn,blckBtn;
 		// attack button & unique attack button declared in Unity's input preferences
 		#endregion
 		
@@ -260,8 +266,8 @@ namespace FightGame
 			//Joints
 			foreach(string joint in joints)
 			{
-				//hitBoxes.Add(joint,new HitBox(this,gob.transform.Find("HitBoxes").transform.Find(joint).gameObject,false));
-				AddHitBoxesGroupedInPrefab(gob, joint,false);
+				//hitBoxes.Add(joint,new HitBox(this,gobj.transform.Find("HitBoxes").transform.Find(joint).gameObject,false));
+				AddHitBoxesGroupedInPrefab(gobj, joint,false);
 			}
 			
 			//Projectiles
@@ -269,15 +275,15 @@ namespace FightGame
 			{
 				string name = "HB_Projectile_"+i;
 				
-				hitBoxes.Add(name , new HitBox(this,gob.transform.Find("ProjectileHitBoxes").transform.Find(name).gameObject, true));
-				gob.transform.Find("ProjectileHitBoxes").transform.Find(name).parent=null;
+				hitBoxes.Add(name , new HitBox(this,gobj.transform.Find("ProjectileHitBoxes").transform.Find(name).gameObject, true));
+				gobj.transform.Find("ProjectileHitBoxes").transform.Find(name).parent=null;
 			}
 		}
 		
 		
-		private void AddHitBoxesGroupedInPrefab(GameObject gob, string joint, bool isProjectile)
+		private void AddHitBoxesGroupedInPrefab(GameObject gobj, string joint, bool isProjectile)
 		{
-			foreach (Transform t in gob.transform)
+			foreach (Transform t in gobj.transform)
 			{
 				if (t.name == joint)
 				{

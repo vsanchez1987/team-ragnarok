@@ -115,7 +115,7 @@ namespace FightGame
 		
 		HitBoxCollisionInfo GenerateCollisionInfo(Collider c)
 		{
-			A_Fighter hitPlayer = (this.owner.playerNumber == 1 ? GameManager.P2 : GameManager.P1);
+			A_Fighter hitPlayer = (this.owner.playerNumber == 1 ? GameManager.P2.Fighter : GameManager.P1.Fighter);
 			//hieu add
 			//hitPlayer.gothit = true;
 			//////////

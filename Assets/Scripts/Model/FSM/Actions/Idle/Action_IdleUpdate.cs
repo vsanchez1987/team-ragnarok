@@ -12,6 +12,8 @@ namespace FSM
 			//UnityEngine.Debug.Log (GameManager.P1.controllerDirection);
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
+			// Commented out, changing input
+			/*
 			UnityEngine.Debug.Log("idling "+fighter.playerNumber);
 			if(fighter.gothit)
 			{
@@ -34,6 +36,7 @@ namespace FSM
 			{
 				fighter.Dispatch("idle");
 			}
+			*/
 		}
 	}
 }

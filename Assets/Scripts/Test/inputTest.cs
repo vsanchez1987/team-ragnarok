@@ -3,11 +3,10 @@ using System.Collections;
 using FightGame;
 
 public class inputTest : MonoBehaviour {
-
+	/*
 	public Vector2 locationP1;
 	public Vector2 locationP2;
     public string printMsg = "";
-//<<<<<<< HEAD
 	public Vector2 location;
 	
 
@@ -16,8 +15,6 @@ public class inputTest : MonoBehaviour {
 		DisplayP1Info();
 		DisplayP2Info();
     }
-	
-//>>>>>>> wolfe
 
 	// Use this for initialization
 	void Start () {
@@ -28,60 +25,54 @@ public class inputTest : MonoBehaviour {
 	void Update ()
 	{
 
-//>>>>>>> wolfe
 	}
 	
 	void DisplayP2Info()
 	{
-//<<<<<<< HEAD
-				
-//=======
-		
-//>>>>>>> wolfe
 		if(GameManager.P2!=null)
 		{
 			//pcontroller direction
-			printMsg = "controller direction: " + GameManager.P2.controllerDirection +"\n" +
-						"forward vector: " + GameManager.P2.ForwardVector +"\n ";
+			printMsg = "controller direction: " + GameManager.P2.Fighter.controllerDirection +"\n" +
+						"forward vector: " + GameManager.P2.Fighter.ForwardVector +"\n ";
 			
 			//button press
 			printMsg+="buttons pressed: " + "\n";
-			if (GameManager.P2.attackPressed)
+			if (GameManager.P2.Fighter.attackPressed)
 			{
 				printMsg += "regular attack";
-				if (GameManager.P2.CanAttack())
+				if (GameManager.P2.Fighter.CanAttack())
 				{
 					//attack
-					GameManager.P2.lastAttackTimer = 0;
+					GameManager.P2.Fighter.lastAttackTimer = 0;
 					printMsg += "attacked"+"\n";
 				}
 			}
-			if (GameManager.P2.uniquePressed)
+			if (GameManager.P2.Fighter.uniquePressed)
 			{
-				if (GameManager.P2.CanAttack())
+				if (GameManager.P2.Fighter.CanAttack())
 				{
-					GameManager.P2.lastAttackTimer = 0;
+					GameManager.P2.Fighter.lastAttackTimer = 0;
 					printMsg += "attacked"+"\n";
 				}
 				printMsg += "unique attack";
 			}
-			if (GameManager.P2.specialPressed)
+			if (GameManager.P2.Fighter.specialPressed)
 			{
-				//GameManager.P1.canSpecial()
-				if (GameManager.P2.CanAttack())
+				//GameManager.p1.Fighter.canSpecial()
+				if (GameManager.P2.Fighter.CanAttack())
 				{
-					//GameManager.P1.lastSpecialTimer = 0;
-					GameManager.P2.lastAttackTimer = 0;
+					//GameManager.p1.Fighter.lastSpecialTimer = 0;
+					GameManager.P2.Fighter.lastAttackTimer = 0;
 					printMsg += "special attacked"+"\n";
 				}
 				printMsg += "special attack";
 			}
-			if (GameManager.P2.blockPressed)
+			if (GameManager.P2.Fighter.blockPressed)
 			{
-				//GameManager.P1.canBlock()
-				if (GameManager.P2.CanAttack())
+				//GameManager.p1.Fighter.canBlock()
+				if (GameManager.P2.Fighter.CanAttack())
 				{
-					//GameManager.P1.lastBlockTimer = 0;
+					//GameManager.p1.Fighter.lastBlockTimer = 0;
 					printMsg += "blocked";
 				}
 				printMsg += "block";
@@ -90,11 +81,11 @@ public class inputTest : MonoBehaviour {
 			
 			// timer display
 			printMsg += "Time since last atk:";
-			printMsg += (float)((int)(GameManager.P2.lastAttackTimer*100))/100.0f +"\n";
+			printMsg += (float)((int)(GameManager.P2.Fighter.lastAttackTimer*100))/100.0f +"\n";
 					//the casting is a manual way to make double precision decimal
 			
 			//can attack
-			if (GameManager.P2.CanAttack())
+			if (GameManager.P2.Fighter.CanAttack())
 			{
 				printMsg += "ready to attack"+"\n";
 			}
@@ -104,19 +95,16 @@ public class inputTest : MonoBehaviour {
 			}
 			
 			//print msg in a text area
-//<<<<<<< HEAD
 	        GUI.TextArea(new Rect(location.x, location.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
 		  	if (GUI.Button(new Rect(location.x, location.y+110, 150, 30), "Switch ForwardVector"))
-//=======
 	        GUI.TextArea(new Rect(locationP2.x, locationP1.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
 		  	if (GUI.Button(new Rect(10, locationP2.y+110, 150, 30), "Switch ForwardVector"))
-//>>>>>>> wolfe
 			{
-	            GameManager.P2.SwitchForwardVector();
+	            GameManager.P2.Fighter.SwitchForwardVector();
 			}
 			
 			
@@ -126,52 +114,50 @@ public class inputTest : MonoBehaviour {
 	
 	void DisplayP1Info()
 	{
-		
-//>>>>>>> wolfe
 		if(GameManager.P1!=null)
 		{
 			//pcontroller direction
-			printMsg = "controller direction: " + GameManager.P1.controllerDirection +"\n" +
-						"forward vector: " + GameManager.P1.ForwardVector +"\n ";
+			printMsg = "controller direction: " + GameManager.P1.Fighter.controllerDirection +"\n" +
+						"forward vector: " + GameManager.P1.Fighter.ForwardVector +"\n ";
 			
 			//button press
 			printMsg+="buttons pressed: " + "\n";
-			if (GameManager.P1.attackPressed)
+			if (GameManager.P1.Fighter.attackPressed)
 			{
 				printMsg += "regular attack";
-				if (GameManager.P1.CanAttack())
+				if (GameManager.P1.Fighter.CanAttack())
 				{
 					//attack
-					GameManager.P1.lastAttackTimer = 0;
+					GameManager.P1.Fighter.lastAttackTimer = 0;
 					printMsg += "attacked"+"\n";
 				}
 			}
-			if (GameManager.P1.uniquePressed)
+			if (GameManager.P1.Fighter.uniquePressed)
 			{
-				if (GameManager.P1.CanAttack())
+				if (GameManager.P1.Fighter.CanAttack())
 				{
-					GameManager.P1.lastAttackTimer = 0;
+					GameManager.P1.Fighter.lastAttackTimer = 0;
 					printMsg += "attacked"+"\n";
 				}
 				printMsg += "unique attack";
 			}
-			if (GameManager.P1.specialPressed)
+			if (GameManager.P1.Fighter.specialPressed)
 			{
-				//GameManager.P1.canSpecial()
-				if (GameManager.P1.CanAttack())
+				//GameManager.P1.Fighter.canSpecial()
+				if (GameManager.P1.Fighter.CanAttack())
 				{
-					//GameManager.P1.lastSpecialTimer = 0;
-					GameManager.P1.lastAttackTimer = 0;
+					//GameManager.P1.Fighter.lastSpecialTimer = 0;
+					GameManager.P1.Fighter.lastAttackTimer = 0;
 					printMsg += "special attacked"+"\n";
 				}
 				printMsg += "special attack";
 			}
-			if (GameManager.P1.blockPressed)
+			if (GameManager.P1.Fighter.blockPressed)
 			{
-				//GameManager.P1.canBlock()
-				if (GameManager.P1.CanAttack())
+				//GameManager.P1.Fighter.canBlock()
+				if (GameManager.P1.Fighter.CanAttack())
 				{
-					//GameManager.P1.lastBlockTimer = 0;
+					//GameManager.P1.Fighter.lastBlockTimer = 0;
 					printMsg += "blocked";
 				}
 				printMsg += "block";
@@ -180,11 +166,11 @@ public class inputTest : MonoBehaviour {
 			
 			// timer display
 			printMsg += "Time since last atk:";
-			printMsg += (float)((int)(GameManager.P1.lastAttackTimer*100))/100.0f +"\n";
+			printMsg += (float)((int)(GameManager.P1.Fighter.lastAttackTimer*100))/100.0f +"\n";
 					//the casting is a manual way to make double precision decimal
 			
 			//can attack
-			if (GameManager.P1.CanAttack())
+			if (GameManager.P1.Fighter.CanAttack())
 			{
 				printMsg += "ready to attack"+"\n";
 			}
@@ -194,20 +180,18 @@ public class inputTest : MonoBehaviour {
 			}
 			
 			//print msg in a text area
-//<<<<<<< HEAD
 	        GUI.TextArea(new Rect(location.x, location.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
 		  	if (GUI.Button(new Rect(location.x, location.y+110, 150, 30), "Switch ForwardVector"))
-//=======
 	        GUI.TextArea(new Rect(locationP1.x, locationP1.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
 		  	if (GUI.Button(new Rect(locationP1.x, locationP1.y+110, 150, 30), "Switch ForwardVector"))
-//>>>>>>> wolfe
 			{
-	            GameManager.P1.SwitchForwardVector();
+	            GameManager.P1.Fighter.SwitchForwardVector();
 			}
 		}
 	}
+	*/
 }

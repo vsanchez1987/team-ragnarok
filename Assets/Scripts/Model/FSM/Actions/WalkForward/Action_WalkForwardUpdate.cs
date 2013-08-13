@@ -14,7 +14,8 @@ namespace FSM
 			fighter = (A_Fighter)o;
 			
 			GameObject gobj = fighter.GetGOB();
-			
+			// Commented out, changing input
+			/*
 			if(fighter.controllerDirection == "forward" )
 			{
 				gobj.transform.Translate(Vector3.forward*Time.deltaTime);
@@ -35,6 +36,7 @@ namespace FSM
 			{
 				fighter.Dispatch("walkForward");
 			}
+			*/
 		}
 	}
 }

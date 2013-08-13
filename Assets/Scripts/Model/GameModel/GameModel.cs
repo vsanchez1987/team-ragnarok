@@ -6,11 +6,11 @@ using FSM;
 
 namespace FightGame{
 	public class GameModel {
-		private Player p1;
-		private Player p2;
-		private Player[] players;
-		private Dictionary<string, A_Effect> Effects;
-		private Dictionary<string, A_Attack> Attacks;
+		public Player p1;
+		public Player p2;
+		public Player[] players;
+		//public Dictionary<string, A_Effect> effects;
+		//public Dictionary<string, A_Attack> attacks;
 		//private Dictionary<string, A_Fighter> fighterlist;
 		
 	    // make sure the constructor is private, so it can only be instantiated here
@@ -18,33 +18,14 @@ namespace FightGame{
 			this.p1 = new Player(1);
 			this.p2 = new Player(2);
 			this.players = new Player[] { p1, p2 };
-			this.Effects = new Dictionary<string, A_Effect>();
-			this.Attacks = new Dictionary<string, A_Attack>();
-			//fighterlist.Add("Odin",Fighter_Odin);
-			//fighterlist.Add("Basic",Fighter_Basic);
+			//this.effects = new Dictionary<string, A_Effect>();
+			//this.attacks = new Dictionary<string, A_Attack>();
+			
+			//this.fighterlist.Add("Odin", Fighter_Odin);
+			//this.fighterlist.Add("Basic", Fighter_Basic);
 	    }
 		
-		public Player P1{
-			get { return this.p1; }
-		}
-		
-		public Player P2{
-			get { return this.p2; }
-		}
-		
-		public Player[] Players{
-			get { return this.players; }
-		}
-		
-		public A_Effect GetEffect(string effect){
-			return this.Effects[effect];
-		}
-		
-		public A_Attack GetAttack(string attack){
-			return this.Attacks[attack];
-		}
-		
-		
+		/*
 		public void CreateFighter(string fighter){ // let's use delegates 
 			GameObject locatorP1 = GameObject.FindGameObjectWithTag("LocatorP1");
 			GameObject locatorP2 = GameObject.FindGameObjectWithTag("LocatorP2");
@@ -65,9 +46,10 @@ namespace FightGame{
 					break;
 			}
 		}
-		
+		*/
 		//Hieu added. Test 2 players. Must have a better way to do this
-		public void CreateFighter(string fighter,int playernum)
+		/*
+		public void CreateFighter(string fighter, int playernum)
 		{
 			GameObject locatorP1 = GameObject.FindGameObjectWithTag("LocatorP1");
 			GameObject locatorP2 = GameObject.FindGameObjectWithTag("LocatorP2");
@@ -114,6 +96,6 @@ namespace FightGame{
 						break;
 				}
 			}
-		}
+		}*/
 	}
 }

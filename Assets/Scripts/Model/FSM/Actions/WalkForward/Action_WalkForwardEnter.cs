@@ -10,7 +10,7 @@ namespace FSM
 		public override void execute(FSMContext c, Object o){
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
-			
+			/*
 			if(fighter.controllerDirection == "forward" )
 			{
 				fighter.GetGOB().animation.CrossFade("WalkForward");
@@ -19,7 +19,7 @@ namespace FSM
 			{
 				fighter.GetGOB().animation.CrossFade("WalkBack");
 			}
-
+			*/
 		}
 	}
 }

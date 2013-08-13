@@ -15,7 +15,7 @@ namespace FSM
 			animationTime+= UnityEngine.Time.deltaTime;
 			if( animationTime > 2.0f)
 			{
-				GameManager.P1.Dispatch("idle");
+				GameManager.P1.Fighter.Dispatch("idle");
 				animationTime =0f;
 			}
 			

@@ -14,14 +14,19 @@ namespace FightGame{
 		private AttackCommand[]				attackCommands;
 		private string 						XAxis;
 		private string						YAxis;
-		private const float 				halfCircle 		= 3.141592f;
-		private const float 				one16thCircle 	= 3.141592f/8.0f;
+		private const float 				halfCircle 		= 3.1415f;
+		private const float 				one16thCircle 	= 3.1415f/8.0f;
+		private Player						player;
 		
-		public GamePad(int playerNumber){
-			this.keys = new Dictionary<string, KeyCode>();
+		public GamePad(Player player){
+			int playerNumber 	= player.PlayerNumber + 1;
+			
+			this.player 		= player;
+			this.keys 			= new Dictionary<string, KeyCode>();
+			this.XAxis 			= "HorizontalP" + playerNumber;
+			this.YAxis 			= "VerticalP" + playerNumber;
 			this.AssignKeysByPlayerNumber(playerNumber);
-			this.XAxis = "HorizontalP" + playerNumber;
-			this.YAxis = "VerticalP" + playerNumber;
+			
 			if (Application.platform.ToString().Substring(0, 3) == "OSX"){
 				this.keys["RegularJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button16");
 				this.keys["UniqueJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button19");
@@ -37,7 +42,7 @@ namespace FightGame{
 		// Get a movement command when there has been an input
 		public MoveCommand GetMoveCommand(){
 			Vector2 inputDirection = this.GetInputDirection(this.XAxis, this.YAxis);
-			return controllerDirection = this.GetControllerDirection(inputDirection);
+			return this.GetControllerDirection(inputDirection, this.player.Fighter.ForwardVector);
 		}
 		
 		
@@ -117,10 +122,8 @@ namespace FightGame{
 			return new Vector2(direction.x + direction.y + direction.z,0);
 		}
 		
-		private string GetControllerDirection(Vector2 inputDirection, Vector3 forwardDirection)
+		private MoveCommand GetControllerDirection(Vector2 inputDirection, Vector3 forwardDirection)
 		{
-			
-			
 			if (inputDirection.x == 0 && inputDirection.y == 0)
 			{
 				return MoveCommand.NONE;
