@@ -25,9 +25,12 @@ namespace FSM
 			}
 			
 			
+			if(fighter.blockPressed)
+			{
+				fighter.Dispatch("block");
+			}
 			
-			
-			if( fighter.controllerDirection == "none")
+			if( fighter.controllerDirection != "forward" || fighter.controllerDirection != "back"  )
 			{
 				fighter.Dispatch("idle");
 			}

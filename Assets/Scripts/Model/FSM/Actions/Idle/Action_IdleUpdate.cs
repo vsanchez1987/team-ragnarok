@@ -16,7 +16,6 @@ namespace FSM
 			
 			if(fighter.gothit)
 			{
-				//UnityEngine.Debug.Log("hithithithithithithit");
 				fighter.Dispatch("gothit");			
 			}
 			
@@ -29,6 +28,10 @@ namespace FSM
 			else if(fighter.controllerDirection == "forward" || fighter.controllerDirection == "back")
 			{
 				fighter.Dispatch("walk");
+			}
+			else if(fighter.blockPressed)
+			{
+				fighter.Dispatch("block");
 			}
 			else
 			{

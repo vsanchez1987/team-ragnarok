@@ -14,7 +14,7 @@ namespace FSM
 			fighter = (A_Fighter)o;
 			time+= UnityEngine.Time.deltaTime;
 			
-			string animationName = fighter.GetAnimationName(fighter,"GotHit01");
+			string animationName = fighter.GetAnimationName(fighter,"flinch_down");
 			
 			//check animation's duration, exit to idle state when animation done
 			//"mega_punch" animation just for testing
