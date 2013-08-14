@@ -16,16 +16,16 @@ namespace FSM
 			
 			//check animation's duration, exit to idle state when animation done
 			//"mega_punch" animation just for testing
-			if(time > fighter.GetGOB().animation["mega_punch"].length)
+			if(time > fighter.gobj.animation["mega_punch"].length)
 			{
 				time = 0f;
-				fighter.Dispatch("idle");
+				c.dispatch("idle", this);
 			}
 			//if during animation, got hit again, go back to got hit state
 			if(fighter.gothit)
 			{
 				time = 0f;
-				fighter.Dispatch("gothit");
+				c.dispatch("gothit", this);
 			}
 				
 		}

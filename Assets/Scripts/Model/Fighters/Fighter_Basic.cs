@@ -8,8 +8,9 @@ namespace FightGame
 	public class Fighter_Basic : A_Fighter
 	{
 		public Fighter_Basic (GameObject gobj, int playerNumber)
-			:base (playerNumber,gobj)
+			:base (gobj, playerNumber)
 		{
+			/*
 			this.gobj = gobj;
 			this.status = new Status_None();
 			this.name = "Fighter_Basic";
@@ -26,7 +27,7 @@ namespace FightGame
 			S_walkForward.addTransition(T_idle, "idle");
 			
 			this.moveGraph = new FSMContext(S_idle, new Action_None(),this);
-			
+			*/
 		}
 		
 

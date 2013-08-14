@@ -8,100 +8,44 @@ namespace FightGame
 {
 	public abstract class A_Fighter
 	{
-		//layer names
-		public const int P1_HIT_BOX_LAYER_NUMBER	= 8;
-		public const int P2_HIT_BOX_LAYER_NUMBER 	= 9;
-		public const int P1_HURT_BOX_LAYER_NUMBER 	= 10;
-		public const int P2_HURT_BOX_LAYER_NUMBER 	= 11;
+		protected A_Status 						status;
+		protected FSMContext 					moveGraph;
+		protected Vector2 						globalFowardVector;
+		public 	GameObject 						gobj;
+		public 	Dictionary<string, Transform> 	joints;
+		public 	Dictionary<string, HurtBox> 	hurtBoxes;
+		public 	Dictionary<string, HitBox> 		hitBoxes;
+		public	bool							gothit;
 		
-		//hitbox names
-		public const string HB_FIST_L	= "HB_L_Fist";
-		public const string HB_FIST_R	= "HB_R_Fist";
-		public const string HB_GLOBAL01	= "HB_Global01";
+		public AttackCommand 					currentAttack;
+		public MoveCommand						currentMovement;
+		public Dictionary<AttackCommand, A_Attack> 	attacksCommandMap;
 		
-		/*
-		//input buttons-axes
-		public const string P1_AXIS_HORIZONTAL 	= "HorizontalP1";
-		public const string P1_AXIS_VERTICAL	= "VerticalP1";
-		public const string P1_BTN_REG_ATTACK 	= "RegularAttackP1";
-		public const string P1_BTN_UNQ_ATTACK 	= "UniqueAttackP1";
-		public const string P1_BTN_SPC_ATTACK 	= "SpecialAttackP1";
-		public const string P1_BTN_BLOCK 		= "BlockP1";
-		
-		public const string P2_AXIS_HORIZONTAL 	= "HorizontalP2";
-		public const string P2_AXIS_VERTICAL	= "VerticalP2";
-		public const string P2_BTN_REG_ATTACK 	= "RegularAttackP2";
-		public const string P2_BTN_UNQ_ATTACK 	= "UniqueAttackP2";
-		public const string P2_BTN_SPC_ATTACK 	= "SpecialAttackP2";
-		public const string P2_BTN_BLOCK 		= "BlockP2";
-		*/
-
-		protected 	const float 	moveCoolDown = 2;
-		protected 	string 			name;
-		protected 	GameObject 		gobj;
-		protected 	A_Status 		status;
-		protected 	FSMContext 		moveGraph;
-		
-		public 		float 			lastAttackTimer = 0;
-		public 		int 			playerNumber;
-		public 		Vector2 		globalFowardVector;
-		public 		bool 			gothit = false;
-		
-		//public List<HitBox> hitBoxes;
-		//public List<HitBoxInfo> hitBoxCollisionsToBeProcessed;
-		
-		// NEW HITBOX CODE 7/23
-		//GameObject gobj;
-		private Dictionary<string, HitBox> 	hitBoxes; //<gobjName,hitBox>
-		private List<GameObject> 			hurtBoxes;
-		public 	List<HitBoxCollisionInfo> 	HitBoxCollisions;
-		
-		private List<Projectile> 			projectiles; //activeProjectiles
-		private List<string> 				joints;
-		private int 						numProjectilesMax;
-		// ***
-		
-		public Dictionary<string, A_Attack> attacklist;	//hieu add, tom modify to add <string,A_attack>
-		public A_Attack 					currentAttack;
-		
-		protected A_Fighter(int playerNumber, GameObject gobj)
+		public A_Fighter(GameObject gobj, int playerNumber)
 		{
-			this.playerNumber = playerNumber;
-			/*
-			this.hAxis = (playerNumber == 1 ? P1_AXIS_HORIZONTAL : P2_AXIS_HORIZONTAL);
-			this.vAxis = (playerNumber == 1 ? P1_AXIS_VERTICAL : P2_AXIS_VERTICAL);
-			this.unqBtn = (playerNumber == 1 ? P1_BTN_UNQ_ATTACK : P2_BTN_UNQ_ATTACK);
-			this.atkBtn = (playerNumber == 1 ? P1_BTN_REG_ATTACK : P2_BTN_REG_ATTACK);
-			this.blckBtn = (playerNumber == 1 ? P1_BTN_BLOCK : P2_BTN_BLOCK);
-			this.spcBtn = (playerNumber == 1 ? P1_BTN_SPC_ATTACK : P2_BTN_SPC_ATTACK);
-			*/
-			
-			//hitBoxes = new List<HitBox>();
-			//hitBoxCollisionsToBeProcessed = new List<HitBoxInfo>();
-			//AddHitBoxesGroupedInPrefab(gobj);
-			
-			// NEW HITBOX CODE 7/23
-			this.hitBoxes 			= new Dictionary<string, HitBox>();
-			this.hurtBoxes 			= new List<GameObject>();
-			this.HitBoxCollisions 	= new List<HitBoxCollisionInfo>();
-			this.projectiles 		= new List<Projectile>();
-			this.joints 			= new List<string>();
+			FighterInput input		= gobj.GetComponent<FighterInput>();
 			this.gobj 				= gobj;
-			//hieu add
-			this.currentAttack 		= new Attack_None(this,0,0,0);
-			this.attacklist 		= new Dictionary<string, A_Attack>();
+			this.currentAttack 		= AttackCommand.NONE;
+			this.currentMovement	= MoveCommand.NONE;
+			this.status				= new Status_None();
+			//this.attacklist 		= new Dictionary<string, A_Attack>();
+			
+			List<GameObject> hurtboxObjects = input.hurtboxObjects;
+			List<GameObject> hitboxObjects	= input.hitboxObjects;
+			List<Transform> jointTransforms = input.jointTransforms;
 			
 			this.InitForwardVector(playerNumber);
-			this.AssignHurtBoxes(this.gobj);
-			this.AssignJoints();
-			this.InitHitBoxes();
+			this.InitHitBoxes(hitboxObjects);
+			this.InitHurtBoxes(hurtboxObjects);
+			this.InitJoints(jointTransforms);
 			this.InitStateMachine();
 			
-			this.ShowInActiveHitBoxes(true); //should be taken out, used to see hitboxes
-			this.ShowActiveHitBoxes(true);
+			//this.ShowInActiveHitBoxes(true); //should be taken out, used to see hitboxes
+			//this.ShowActiveHitBoxes(true);
 		}
 		
 		#region accessors
+		/*
 		public string Name
 		{
 			get{ return this.name; }
@@ -112,8 +56,9 @@ namespace FightGame
 		{
 			return this.gobj;
 		}
-		
+		*/
 		// NEW HITBOX CODE 7/23
+		/*
 		void AssignJoints()
 		{
 			// *** NAMING CONVENTION FOR HITBOXES
@@ -122,22 +67,52 @@ namespace FightGame
 			//  THESE MUST MATCH PREFAB HITBOXES ON CHARACTERS
 			//  PROJECTILE HITBOXES MUST BE NAMED "HB_Projectile_"X  where X is the number 0 through max
 			//  ==============================================
+			
 			joints.Add("HB_Fist_L");
 			joints.Add("HB_Fist_R");
 			joints.Add("HB_Foot_L");
 			joints.Add("HB_Foot_R");
 			numProjectilesMax = 2;
 		}
+		*/
 		// ***
 		
 		public void DoAttackCommand( AttackCommand ac ){
-			//this.moveGraph.dispatch("attack", this);
+			/*
+			if (this.attacksCommandMap.ContainsKey(ac)){
+				this.currentAttack = this.attacksCommandMap[ac];
+			}
+			*/
+			this.currentAttack = ac;
+			if (ac != AttackCommand.NONE)
+				this.moveGraph.dispatch("attack", this);
 		}
 		
 		public void DoMoveCommand( MoveCommand mc ){
-			
+			this.currentMovement = mc;
+			if (mc != MoveCommand.NONE)
+				this.moveGraph.dispatch("walkForward", this);
 		}
 		
+		private void InitJoints( List<Transform> joints ){
+			foreach (Transform t in joints){
+				this.joints[t.name] = t;
+			}
+		}
+		
+		private void InitHitBoxes( List<GameObject> hitboxObjects ){
+			foreach (GameObject gobj in hitboxObjects){
+				this.hitBoxes[gobj.name] = new HitBox(this, gobj, false);
+			}
+		}
+		
+		private void InitHurtBoxes( List<GameObject> hurtboxObjects ){
+			foreach (GameObject gobj in hurtboxObjects){
+				this.hurtBoxes[gobj.name] = new HurtBox(this, gobj, false);
+			}
+		}
+		
+		/*
 		private void AssignHurtBoxes(GameObject gobj)
 		{
 		
@@ -154,7 +129,10 @@ namespace FightGame
 				
 			}
 		}
+		*/
 		
+		
+		/*
 		public void SetCurrentAttack()
 		//This function will set the current Attack, base on the input from controller
 		//It will look up in the dictionary, attacklist, which is created in each Fighter class(ex: Fighter_Odin.cs)
@@ -162,8 +140,6 @@ namespace FightGame
 		//		because the controllerDirection variable will change during Update time.
 		//		_During Update(), you can access the variable currentAttack.
 		{
-			// Commented out, changing input
-			/*
 			string attackType=controllerDirection;
 			if(attackPressed) attackType ="1"+controllerDirection;	//define the key base on attack type
 			if(uniquePressed) attackType ="2"+controllerDirection;
@@ -172,9 +148,8 @@ namespace FightGame
 				this.currentAttack = this.attacklist[attackType];
 			}
 			else this.currentAttack = new Attack_None(this,0,0,0);
-			*/
 		}
-		
+		*/
 		
 		//describes player forward direction
 		public Vector2 ForwardVector {
@@ -209,17 +184,16 @@ namespace FightGame
 		public void Update()
 		{
 			moveGraph.CurrentState.update(moveGraph, this);
-			lastAttackTimer+=Time.deltaTime;
+			//lastAttackTimer+=Time.deltaTime;
 			//hieu add
-			this.gothit=false;
+			//this.gothit=false;
 			//hieu add
 			// NEW HITBOX CODE 7/23
-			UpdateHitBoxes();
-			// ***
-
+			//UpdateHitBoxes();
 		}
 		
 		// NEW HITBOX CODE 7/23
+		/*
 		public void ShowActiveHitBoxes(bool setting)
 		{
 			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
@@ -235,7 +209,8 @@ namespace FightGame
 				kvp.Value.displayWhenNotActive = setting;
 			}
 		}
-		
+		*/
+		/*
 		public void SendHitBoxInstructions(A_Attack attack)
 		{
 			foreach(HB_Instruction hbi in attack.hb_instructions)
@@ -334,16 +309,16 @@ namespace FightGame
 			moveGraph.dispatch(eventName, this);
 		}
 		
-		public void SwitchForwardVector()
-		{
-			globalFowardVector.x *= -1;
-		}
-		
 		public bool CanAttack()
 		{
 			return lastAttackTimer>moveCoolDown;
 		}
+		*/
 		
+		public void SwitchForwardVector()
+		{
+			globalFowardVector.x *= -1;
+		}
 		
 		void InitStateMachine()
 		{

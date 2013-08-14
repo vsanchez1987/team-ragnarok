@@ -10,33 +10,22 @@ namespace FSM
 		public override void execute(FSMContext c, object o){
 			UnityEngine.Debug.Log("walking forward");
 			
-			A_Fighter fighter;
-			fighter = (A_Fighter)o;
-			
-			GameObject gobj = fighter.GetGOB();
-			// Commented out, changing input
-			/*
-			if(fighter.controllerDirection == "forward" )
+			A_Fighter fighter = (A_Fighter) o;
+			GameObject gobj = fighter.gobj;
+
+			if(fighter.currentMovement == MoveCommand.FORWARD || fighter.currentMovement == MoveCommand.FORWARD_UP)
 			{
 				gobj.transform.Translate(Vector3.forward*Time.deltaTime);
 			}
-			else if(fighter.controllerDirection == "back")
+			else if(fighter.currentMovement == MoveCommand.BACK || fighter.currentMovement == MoveCommand.BACK_UP)
 			{
-				//GameManager.P1.GetGOB().animation.CrossFade("WalkBack");
-
 				gobj.transform.Translate(Vector3.forward*-1*Time.deltaTime);
 			}
 			
-			
-			if( fighter.controllerDirection == "none")
+			if( fighter.currentMovement == MoveCommand.NONE)
 			{
-				fighter.Dispatch("idle");
+				c.dispatch("idle", this);
 			}
-			if( fighter.controllerDirection == "forward" || fighter.controllerDirection == "back")
-			{
-				fighter.Dispatch("walkForward");
-			}
-			*/
 		}
 	}
 }

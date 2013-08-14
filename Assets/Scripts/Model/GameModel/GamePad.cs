@@ -62,32 +62,12 @@ namespace FightGame{
 		private void AssignKeysByPlayerNumber(int number){
 			switch (number){
 			case 1:
-				/*
-				this.keys["LeftKey"] 	 		= KeyCode.LeftArrow;
-				this.keys["RightKey"] 	 		= KeyCode.RightArrow;
-				this.keys["UpKey"] 		 		= KeyCode.UpArrow;
-				this.keys["DownKey"]	 		= KeyCode.DownArrow;
-				this.keys["RegularKey"] 	 	= KeyCode.K;
-				this.keys["UniqueKey"] 			= KeyCode.I;
-				this.keys["SpecialKey"]	 		= KeyCode.J;
-				this.keys["BlockKey"]	 		= KeyCode.L;
-				*/
 				this.keys["RegularJoystick"] 	= KeyCode.Joystick1Button0;
 				this.keys["UniqueJoystick"] 	= KeyCode.Joystick1Button3;
 				this.keys["SpecialJoystick"]	= KeyCode.Joystick1Button2;
 				this.keys["BlockJoystick"]	  	= KeyCode.Joystick1Button1;
 				break;
 			case 2:
-				/*
-				this.keys["LeftKey"] 	 		= KeyCode.A;
-				this.keys["RightKey"] 	 		= KeyCode.D;
-				this.keys["UpKey"] 		 		= KeyCode.W;
-				this.keys["DownKey"]	 		= KeyCode.S;
-				this.keys["RegularKey"]			= KeyCode.V;
-				this.keys["UniqueKey"] 	 		= KeyCode.F;
-				this.keys["SpecialKey"]	 		= KeyCode.C;
-				this.keys["BlockKey"]	 		= KeyCode.B;
-				*/
 				this.keys["RegularJoystick"] 	= KeyCode.Joystick2Button0;
 				this.keys["UniqueJoystick"]		= KeyCode.Joystick2Button3;
 				this.keys["SpecialJoystick"]	= KeyCode.Joystick2Button2;

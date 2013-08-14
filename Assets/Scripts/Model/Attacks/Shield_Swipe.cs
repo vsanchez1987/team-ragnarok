@@ -7,22 +7,24 @@ namespace FightGame
 {
 	public class Shield_Swipe: A_Attack
 	{
-		float attackDuration = 3.0f;
-		public string attack_name = "Shield_Swipe";
-		
-		public Shield_Swipe(A_Fighter attackOwner, float preAttackPeriod, 
-								float attackPeriod, 
-								float animationDuration):base(attackPeriod,attackOwner)
+		public Shield_Swipe(string animationName, float attackLength, A_Fighter attackOwner) : base(attackOwner)
 		{
-			base.attack_name = attack_name;
-			
+			this.animationName = animationName;
+		}
+		/*
+		public float attackLength;
+		public string animationName;
+		public Shield_Swipe(string animationName, float attackLength, A_Fighter attackOwner) : base(attackOwner)
+		{
+			this.animationName 	= animationName;
+			this.attackLength	= attackOwner.gobj.animation[animationName].clip.length;
 			
 			// NEW HITBOX CODE 7/23
 			
 			// HOW TO SCRIPT ATTACKS
 			// ********* this goes in attacks that inherit A_Attack		
-			HB_KeyFrame onOffTime;  
-			List<HB_KeyFrame> keyFrames; 
+			HB_KeyFrame onOffTime;
+			List<HB_KeyFrame> keyFrames;
 			HB_Instruction hbInstruct;
 			
 			
@@ -60,16 +62,11 @@ namespace FightGame
 			base.hb_instructions.Add(hbInstruct);
 			
 			
-			
-			this.preAttackPeriod = preAttackPeriod;
-			this.attackPeriod = attackPeriod;
-			this.animationDuration = animationDuration;
-			this.postAttackPeriod = animationDuration - (preAttackPeriod + attackPeriod);
-		}
+		}*/
+	
 		public override void Execute ()
 		{
-			base.Execute ();
-			
+			timer += Time.deltaTime;
 		}
 	}
 }

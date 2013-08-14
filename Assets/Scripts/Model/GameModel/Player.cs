@@ -23,7 +23,6 @@ namespace FightGame
 			if (this.fighter != null){
 				Debug.Log("Attack Command: " + attackCommand.ToString());
 				this.fighter.DoAttackCommand( attackCommand );
-				//this.fighter.DoMoveCommand( attackCommand );
 			}
 		}
 		
@@ -31,7 +30,6 @@ namespace FightGame
 			if (this.fighter != null){
 				Debug.Log("Move Command: " + moveCommand.ToString());
 				this.fighter.DoMoveCommand( moveCommand );
-				//this.fighter.DoMoveCommand( moveCommand );
 			}
 		}
 		
@@ -40,11 +38,11 @@ namespace FightGame
 				this.fighter.Update();
 			}
 		}
-		
+		/*
 		public List<HitBoxCollisionInfo> HitBoxCollisions{
 			get { return this.fighter.HitBoxCollisions; }
 		}
-		
+		*/
 		public bool GotHit{
 			get { return this.fighter.gothit; }
 			set { this.fighter.gothit = value; }
@@ -59,7 +57,7 @@ namespace FightGame
 		}
 		
 		public void InstantiateFighter(string fighter, Vector3 position, Quaternion rotation){
-			GameObject character = GameObject.Instantiate( Resources.Load("Prefabs/" + fighter, typeof(GameObject)),
+			GameObject character = GameObject.Instantiate( Resources.Load("Fighters/" + fighter, typeof(GameObject)),
 				position, rotation ) as GameObject;
 			Vector3 localScale = this.playerNumber == 1 ? character.transform.localScale : 
 				new Vector3(-character.transform.localScale.x, character.transform.localScale.y, character.transform.localScale.z);

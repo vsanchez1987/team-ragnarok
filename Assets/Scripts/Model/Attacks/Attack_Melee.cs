@@ -7,6 +7,16 @@ namespace FightGame
 {
 	public class Attack_Melee: A_Attack
 	{
+		public Attack_Melee(string animationName, float attackLength, A_Fighter attackOwner) : base(attackOwner)
+		{
+			this.animationName = animationName;
+		}
+		
+		public override void Execute ()
+		{
+			this.timer += Time.deltaTime;
+		}
+		/*
 		float attackDuration = 3.0f;
 		string attack_name = "melee";
 		
@@ -61,6 +71,7 @@ namespace FightGame
 			
 			
 		}
+		*/
 	}
 }
 

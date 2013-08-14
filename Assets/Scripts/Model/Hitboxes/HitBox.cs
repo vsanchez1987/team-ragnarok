@@ -7,6 +7,25 @@ namespace FightGame
 {
 	public class HitBox
 	{
+		public GameObject 	gobj;
+		public A_Fighter	owner;
+		public bool			isProjectile;
+		
+		public HitBox(A_Fighter owner, GameObject gob, bool isProjectile)
+		{
+			this.owner			= owner;
+			this.gobj			= gobj;
+			this.isProjectile 	= isProjectile;
+		}
+		
+		public void TurnOnCollider(){
+			this.gobj.collider.enabled = true;
+		}
+		
+		public void TurnOffCollider(){
+			this.gobj.collider.enabled = false;
+		}
+		/*
 		GameObject gob;
 		HB_Instruction currentInstruction;
 		A_Fighter owner;
@@ -193,19 +212,6 @@ namespace FightGame
 						currentInstruction.onOffTimes[i]=key;
 					}
 				}
-				/*foreach(HB_KeyFrame key in currentInstruction.onOffTimes)
-				{
-					if (this.activeTime > key.onTime && this.activeTime < key.offTime)
-					{
-						this.checkCollision = true;
-					}
-					else if(this.activeTime > key.offTime && key.expired == false)
-					{
-						this.checkCollision = false;
-						key.expired = true;
-					}
-				}
-				*/
 			}
 		}
 		
@@ -229,6 +235,6 @@ namespace FightGame
 		
 		public void ParentToProjectile(GameObject projectile){}
 	
-		
+	*/	
 	}
 }

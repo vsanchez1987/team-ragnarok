@@ -12,7 +12,7 @@ namespace FSM
 			fighter = (A_Fighter)o;
 			fighter.gothit = false;
 			//"mega_punch" animation just for testing
-			fighter.GetGOB().animation.CrossFade("mega_punch");
+			fighter.gobj.animation.CrossFade("mega_punch");
 		}
 	}
 }

@@ -6,6 +6,11 @@ namespace FightGame
 {
 	public class Sweeping_Spear: A_Attack
 	{
+		public Sweeping_Spear(string animationName, float attackLength, A_Fighter attackOwner) : base(attackOwner)
+		{
+			this.animationName = animationName;
+		}
+		/*
 		float attackDuration = 3.0f;
 		public string attack_name = "Sweeping_Spear";
 		
@@ -19,10 +24,10 @@ namespace FightGame
 			this.animationDuration = animationDuration;
 			this.postAttackPeriod = animationDuration - (preAttackPeriod + attackPeriod);
 		}
+		*/
 		public override void Execute ()
 		{
-			base.Execute ();
-			
+			timer += Time.deltaTime;
 		}
 	}
 }

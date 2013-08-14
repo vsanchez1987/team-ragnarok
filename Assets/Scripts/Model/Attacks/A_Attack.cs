@@ -7,41 +7,20 @@ namespace FightGame
 {
 	public abstract class A_Attack
 	{
-		protected float preAttackPeriod;
-		protected float attackPeriod;
-		protected float postAttackPeriod;
-		protected float animationDuration;
-		protected A_Fighter attackOwner;
+		public		float						timer;
+		public		float						attackLength;
+		public 		string 						animationName;
+		public	 	List<A_HitBoxInstruction>	instructions;
+		protected 	A_Fighter 					attackOwner;
 		
-		// NEW HITBOX CODE 7/23
-		public List<HB_Instruction> hb_instructions;
-		// ***
-		
-		public string attack_name;
-		
-		public float attackLength;
-		
-		public A_Attack(float attackLength,A_Fighter attackOwner)
+		protected A_Attack( A_Fighter attackOwner )
 		{
-			
-			this.attackLength=attackLength;
-			this.attackOwner = attackOwner;
-			
-			hb_instructions = new List<HB_Instruction>();
-			
+			this.timer				= timer;
+			this.instructions 		= new List<A_HitBoxInstruction>();
+			this.attackOwner		= attackOwner;
 		}
 		
-		
-		public virtual void Execute()
-		{
-			//UnityEngine.Debug.Log("hit attack");
-			attackOwner.SendHitBoxInstructions(this);
-			//attackOwner.GetHitBox("HB_Fist_L").SendInstruction(hb_instructions[0]);
-			//attackOwner.GetHitBox("HB_Foot_L").SendInstruction(hb_instructions[0]);
-			//attackOwner.GetHitBox("HB_Projectile_0").SendInstruction(hb_instructions[0]);
-			//attackOwner.SendHitBoxInstructions(this);
-		}
-
+		public abstract void Execute();
 	}
 }
 
