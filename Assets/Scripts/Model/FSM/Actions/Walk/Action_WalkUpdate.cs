@@ -12,6 +12,8 @@ namespace FSM
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;				
 			GameObject gobj = fighter.GetGOB();
+			
+			Debug.Log ("fighter "+fighter.playerNumber+" "+"localforwardvector "+fighter.localForwardVector);
 						
 			if(fighter.controllerDirection == "forward" )
 			{
@@ -20,7 +22,7 @@ namespace FSM
 			}
 			else if(fighter.controllerDirection == "back")
 			{
-				//GameManager.P1.GetGOB().animation.CrossFade("WalkBack");
+				
 				gobj.transform.Translate(fighter.localForwardVector*-1*fighter.movespeed*Time.deltaTime);
 			}
 			

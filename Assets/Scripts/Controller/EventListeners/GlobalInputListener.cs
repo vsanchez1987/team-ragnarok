@@ -33,6 +33,7 @@ public class GlobalInputListener : MonoBehaviour {
 			GameManager.P2.controllerDirection = GetControllerDirection(GameManager.P2.inputDirection,GameManager.P2.ForwardVector);
 			GameManager.P2.attackPressed = Input.GetButton(GameManager.P2.atkBtn);
 			GameManager.P2.uniquePressed = Input.GetButton(GameManager.P2.unqBtn);
+			GameManager.P2.blockPressed = Input.GetButton(GameManager.P2.blckBtn);
 		}			
 		
 		GameManager.Update();	

@@ -80,13 +80,13 @@ namespace FightGame{
 				switch (fighter)
 				{
 					case("Fighter_Basic"):
-						this.p1 = new Fighter_Basic(player,playernum);
+						this.p1 = new Fighter_Basic(player,1);
 						break;
 					case("Fighter_Odin"):
-						this.p1 = new Fighter_Odin(player,playernum);
+						this.p1 = new Fighter_Odin(player,1);
 						break;
 					case("Fighter_Heavy"):
-						this.p1 = new Fighter_Heavy(player,playernum);
+						this.p1 = new Fighter_Heavy(player,1);
 						break;
 				}
 			}
@@ -102,13 +102,13 @@ namespace FightGame{
 				switch (fighter)
 				{
 					case("Fighter_Basic"):
-						this.p2 = new Fighter_Basic(player,playernum);
+						this.p2 = new Fighter_Basic(player,2);
 						break;
 					case("Fighter_Odin"):
-						this.p2 = new Fighter_Odin(player,playernum);
+						this.p2 = new Fighter_Odin(player,2);
 						break;
 					case("Fighter_Heavy"):
-						this.p2 = new Fighter_Heavy(player,playernum);
+						this.p2 = new Fighter_Heavy(player,2);
 						break;
 				}
 			}
