@@ -12,7 +12,7 @@ namespace FSM
 			//UnityEngine.Debug.Log (GameManager.P1.controllerDirection);
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
-			UnityEngine.Debug.Log("idling "+fighter.playerNumber);
+			//UnityEngine.Debug.Log("idling "+fighter.playerNumber);
 			
 			if(fighter.gothit)
 			{

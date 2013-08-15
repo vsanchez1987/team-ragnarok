@@ -10,10 +10,15 @@ public class HB_Instruction
 	public string jointName;//pass "projectile" if projectile
 	public float damage;
 	public float radius;
+	public float projectileSpeed;
+	public Vector3 projectileDirection;
+	public Vector3 projectileStartLocation;
 	public Mechanic attackMechanic;
 	public ParticleSystem particleSystem;
 	
-	public HB_Instruction(A_Fighter owner, List<HB_KeyFrame> onOffTimes, string jointName, float damage, float radius,Mechanic attackMechanic = null, ParticleSystem p = null)
+	//non projectile
+	public HB_Instruction(A_Fighter owner, List<HB_KeyFrame> onOffTimes, string jointName, 
+		float damage, float radius, Mechanic attackMechanic = null, ParticleSystem p = null)
 	{
 		this.owner = owner;
 		this.onOffTimes = onOffTimes;
@@ -22,7 +27,32 @@ public class HB_Instruction
 		this. radius = radius;
 		this.attackMechanic = attackMechanic;
 		this.particleSystem = particleSystem;
+		this.projectileSpeed = 0.0f;
+		this.projectileStartLocation = Vector3.zero;
+		this.projectileDirection = Vector3.zero;
+		
 	}
+	
+	//projectile
+	public HB_Instruction(A_Fighter owner, List<HB_KeyFrame> onOffTimes, string jointName, 
+		float damage, float radius, float projectileSpeed,
+		Vector3 projectileDirection,Vector3 projectileStartLocation, Mechanic attackMechanic = null, ParticleSystem p = null)
+	{
+		this.owner = owner;
+		this.onOffTimes = onOffTimes;
+		this.jointName = jointName;
+		this.damage = damage;
+		this. radius = radius;
+		this.attackMechanic = attackMechanic;
+		this.particleSystem = particleSystem;
+		this.projectileSpeed = projectileSpeed;
+		this.projectileStartLocation = projectileStartLocation;
+		this.projectileDirection = projectileDirection;
+		
+	}
+	
+	
+	
 	
 	List<HB_KeyFrame> DuplicateKeyFrames (List<HB_KeyFrame> keyFrames)
 	{

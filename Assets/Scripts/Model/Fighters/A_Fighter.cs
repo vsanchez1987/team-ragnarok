@@ -283,7 +283,7 @@ namespace FightGame
 				else if (splitString[0] == "P")
 				{
 					HitBox hb = GetFreeProjectileHitBox();
-					Projectile p = CreateProjectile(splitString[1]);
+					Projectile p = CreateProjectile(splitString[1],hbi.projectileSpeed,hbi.projectileDirection,hbi.projectileStartLocation);
 					hb.ParentToProjectile(p);
 					hb.SendInstruction(hbi);
 					
@@ -383,9 +383,10 @@ namespace FightGame
 		}
 	
 		
-		Projectile CreateProjectile(string prefabName)
+		Projectile CreateProjectile(string prefabName,float speed, Vector3 direction, Vector3 startLocation)
 		{
 			UnityEngine.Object ob = Resources.Load("Prefabs/" + prefabName, typeof(GameObject));
+			
 			if(ob == null)
 			{
 				Debug.Log("cannot find "+ prefabName);
@@ -393,7 +394,7 @@ namespace FightGame
 			}
 			else
 			{
-				Projectile p = new Projectile(this,ob);
+				Projectile p = new Projectile(this,ob,speed,direction,startLocation);
 				projectiles.Add(p);
 				return p;
 				
