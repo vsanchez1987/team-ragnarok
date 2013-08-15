@@ -75,7 +75,7 @@ public class UI_Script : MonoBehaviour
 			/*
 			if (GUI.Button(new Rect(Screen.width/3, Screen.height/2, 50, 30), "Heacy")){
 				GameManager.CreateFighter("Fighter_Heacy");
-	            created = true;
+	            created = true;a
 			}
 			*/
 		}
