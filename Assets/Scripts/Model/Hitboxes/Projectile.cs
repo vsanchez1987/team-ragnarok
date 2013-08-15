@@ -11,18 +11,23 @@ namespace FightGame
 		//Vector3 velocity;
 		float speed;
 		A_Fighter owner;
-		public Projectile( A_Fighter owner,UnityEngine.Object ob)
+		public Projectile( A_Fighter owner,UnityEngine.Object prefab)
 		{
-			gob = GameObject.Instantiate(ob) as GameObject;
+			gob = GameObject.Instantiate(prefab) as GameObject;
 			gob.transform.position = owner.gob.transform.position + A_Fighter.projectileOffset;
 			//velocity = new Vector3(1,0,0);
-			speed = .05f;
+			speed = .2f;
 			this.owner = owner;
 		}
 		
 		public void Update()
 		{
 			this.gob.transform.position+=speed*owner.ForwardVector;
+		}
+		
+		public void Delete()
+		{
+			GameObject.Destroy(gob);
 		}
 		
 	}

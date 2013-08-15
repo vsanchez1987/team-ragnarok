@@ -79,7 +79,7 @@ namespace FightGame
 		List<GameObject> hurtBoxes;
 		public List<HitBoxCollisionInfo> HitBoxCollisions;
 		
-		List<Projectile> projectiles; //activeProjectiles
+		public List<Projectile> projectiles; //activeProjectiles
 		List<string> joints;
 		int numProjectilesMax;
 		// ***
@@ -283,9 +283,9 @@ namespace FightGame
 				else if (splitString[0] == "P")
 				{
 					HitBox hb = GetFreeProjectileHitBox();
-					hb.SendInstruction(hbi);
 					Projectile p = CreateProjectile(splitString[1]);
 					hb.ParentToProjectile(p);
+					hb.SendInstruction(hbi);
 					
 				}
 			}
@@ -379,7 +379,9 @@ namespace FightGame
 			{
 				p.Update();
 			}
+			
 		}
+	
 		
 		Projectile CreateProjectile(string prefabName)
 		{

@@ -38,7 +38,7 @@ namespace FightGame
 			// PROJECTILE ATTACK EXAMPLE
 			// *************************************
 			keyFrames = new List<HB_KeyFrame>();
-			keyFrames.Add(new HB_KeyFrame(0.0f,2.0f));
+			keyFrames.Add(new HB_KeyFrame(0.0f,8.0f));
 			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"P_MilkySpore",20.0f,1.5f,null,null);
 			base.hb_instructions.Add(hbInstruct);
 

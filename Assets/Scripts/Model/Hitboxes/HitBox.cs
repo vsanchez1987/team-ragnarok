@@ -40,8 +40,9 @@ namespace FightGame
 			ProcessCurrentInstruction();
 			DeactivateExpired();
 			DrawBoxes();
-			CheckAndProcessCollision();
 			FollowLinkedProjectile();
+			CheckAndProcessCollision();
+			
 			
 		}
 		
@@ -121,6 +122,12 @@ namespace FightGame
 			//ResetHBKeyFrames();
 			active= false;
 			this.currentInstruction= null;
+			//Remove Projectile
+			if(this.linkedProjectile!=null)
+			{
+				linkedProjectile.Delete();//removes game object
+				this.owner.projectiles.Remove(linkedProjectile); //removes from players projectile list
+			}
 			this.linkedProjectile=null;
 			
 		}
@@ -163,6 +170,7 @@ namespace FightGame
 				{
 					Debug.Log(this.gob.name + " colliding with " + c.gameObject.name + " at time:" +Time.time);
 					GiveCollisionInfoToGameManager(c);
+					
 					DeActivate(); // this needs to deactiate keyframe only
 					return;
 				}
