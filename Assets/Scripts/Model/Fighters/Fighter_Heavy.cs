@@ -13,7 +13,8 @@ namespace FightGame
 			this.gobj = gobj;
 			this.status = new Status_None();
 			this.name = "heavy";
-			this.movespeed = 6;
+			this.movespeed = 5;
+			
 								
 			//this.attacklist.Add("1back",new Attack_SweepingSpear(this,0,0,0)); 
 			this.attacklist.Add("RegAttack_none",new Attack_MegatonPunch(this,0,0,0));						

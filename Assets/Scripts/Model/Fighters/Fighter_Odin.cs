@@ -17,6 +17,7 @@ namespace FightGame
 			this.name = "odin";
 			this.movespeed = 1;
 			
+			
 			//Formula to add more attack to attack list:
 			//this.attacklist.Add( "1" if regular attack + direction "back,forward,up,down",create new cs file) 
 			//					   "2" if unique attack  + direction "back,forward,up,down",

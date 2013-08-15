@@ -41,6 +41,21 @@ namespace FightGame{
 			
 			GameManager.processCollisions();
 			
+			if (instance.gModel.P1 != null && instance.gModel.P2 != null)
+			{
+				if (GameManager.P1.cur_hp <= 0)
+				{
+					//play p1 victory animation
+					//play p2 defeat animation
+				}
+				
+				if (GameManager.P2.cur_hp <= 0)
+				{
+					//vice versa
+				}
+				
+			}
+			
 			if (instance.gModel.P1 != null){
 				instance.gModel.P1.Update();
 				
@@ -57,10 +72,35 @@ namespace FightGame{
 			{
 				foreach(HitBoxCollisionInfo hbi in GameManager.P1.HitBoxCollisions)
 				{
+					//hieu add
+					if(!hbi.hitPlayer.blockPressed)	//if block button is unpressed;
+					{	
+						hbi.hitPlayer.gothit = true;
+						hbi.hitPlayer.cur_hp -= hbi.damage;
+					}
+					//////////
 					Debug.Log("hit player: " +hbi.hitPlayer.playerNumber + " for " +hbi.damage + " damage at " + hbi.location);
 				}
 				GameManager.P1.HitBoxCollisions.Clear();
 			}
+			
+			if (instance.gModel.P2 != null)
+			{
+				foreach(HitBoxCollisionInfo hbi in GameManager.P2.HitBoxCollisions)
+				{
+					//hieu add
+					if(!hbi.hitPlayer.blockPressed)
+					{	
+						hbi.hitPlayer.gothit = true;
+						hbi.hitPlayer.cur_hp -= hbi.damage;
+					}
+					//////////
+					Debug.Log("hit player: " +hbi.hitPlayer.playerNumber + " for " +hbi.damage + " damage at " + hbi.location);
+				}
+				GameManager.P2.HitBoxCollisions.Clear();
+			}
+			
+			
 		}
 		
 		public static A_Effect GetEffect(string effect){

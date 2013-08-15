@@ -33,6 +33,14 @@ namespace FightGame
 			keyFrames.Add(new HB_KeyFrame(0.35f,1.8f));
 			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"HB_Fist_L",20.0f,0.8f,null,null);					
 			base.hb_instructions.Add(hbInstruct);
+			
+			// *************************************
+			// PROJECTILE ATTACK EXAMPLE
+			// *************************************
+			keyFrames = new List<HB_KeyFrame>();
+			keyFrames.Add(new HB_KeyFrame(0.0f,2.0f));
+			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"P_MilkySpore",20.0f,1.5f,null,null);
+			base.hb_instructions.Add(hbInstruct);
 
 			//JONATHAN'S ORIGINAL CODE
 			this.preAttackPeriod = preAttackPeriod;

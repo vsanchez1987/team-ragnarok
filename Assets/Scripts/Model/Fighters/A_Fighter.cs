@@ -57,7 +57,8 @@ namespace FightGame
 		
 		//Hieu add
 		public float movespeed;
-		
+		public float	cur_hp,
+						max_hp;
 		
 		protected const float moveCoolDown = 2;
 		protected string name;
@@ -111,6 +112,8 @@ namespace FightGame
 			this.gob = this.gobj = gobj;
 			//hieu add
 			this.currentAttack = new Attack_None(this,0,0,0);
+			this.cur_hp = 100f;
+			this.max_hp = 100f;
 			//
 			
 			AssignHurtBoxes(this.gob);
@@ -233,6 +236,10 @@ namespace FightGame
 			lastAttackTimer+=Time.deltaTime;
 			//hieu add
 			this.gothit=false;
+			if(this.cur_hp <=0)
+			{
+				this.cur_hp = 0f;
+			}
 			//hieu add
 			// NEW HITBOX CODE 7/23
 			UpdateHitBoxes();

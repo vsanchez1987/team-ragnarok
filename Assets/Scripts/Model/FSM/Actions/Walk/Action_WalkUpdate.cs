@@ -30,20 +30,25 @@ namespace FSM
 				fighter.Dispatch("block");
 			}
 			
-			if( fighter.controllerDirection != "forward" || fighter.controllerDirection != "back"  )
-			{
-				fighter.Dispatch("idle");
-			}
-			
 			if(fighter.attackPressed || fighter.uniquePressed )
 			{				
 				fighter.Dispatch("attack");
 			}
 			
-			else if( fighter.controllerDirection == "forward" || fighter.controllerDirection == "back")
+			if( fighter.controllerDirection == "forward" || fighter.controllerDirection == "back")
 			{
 				fighter.Dispatch("walk");
 			}
+
+			else if( fighter.controllerDirection != "forward" || fighter.controllerDirection != "back"  )
+			{
+				fighter.Dispatch("idle");
+			}
+			
+			
+			
+			
+			
 		}
 	}
 }
