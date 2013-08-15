@@ -73,7 +73,7 @@ namespace FightGame{
 				foreach(HitBoxCollisionInfo hbi in GameManager.P1.HitBoxCollisions)
 				{
 					//hieu add
-					if(!hbi.hitPlayer.blockPressed)	//if block button is unpressed;
+					if(!hbi.hitPlayer.blockPressed && hbi.hitPlayer.gothit )	//if block button is unpressed;
 					{	
 						hbi.hitPlayer.gothit = true;
 						hbi.hitPlayer.cur_hp -= hbi.damage;
@@ -89,7 +89,7 @@ namespace FightGame{
 				foreach(HitBoxCollisionInfo hbi in GameManager.P2.HitBoxCollisions)
 				{
 					//hieu add
-					if(!hbi.hitPlayer.blockPressed)
+					if(!hbi.hitPlayer.blockPressed && hbi.hitPlayer.gothit)
 					{	
 						hbi.hitPlayer.gothit = true;
 						hbi.hitPlayer.cur_hp -= hbi.damage;

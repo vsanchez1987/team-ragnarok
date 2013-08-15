@@ -13,8 +13,8 @@ namespace FSM
 			fighter = (A_Fighter)o;				
 			GameObject gobj = fighter.GetGOB();
 			
-			Debug.Log ("fighter "+fighter.playerNumber+" "+"localforwardvector "+fighter.localForwardVector);
-						
+			//Debug.Log ("fighter "+fighter.playerNumber+" "+"localforwardvector "+fighter.localForwardVector);
+		
 			if(fighter.controllerDirection == "forward" )
 			{
 				gobj.transform.Translate(fighter.localForwardVector*fighter.movespeed*Time.deltaTime);
