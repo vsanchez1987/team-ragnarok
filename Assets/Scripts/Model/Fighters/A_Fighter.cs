@@ -11,87 +11,57 @@ namespace FightGame
 		protected A_Status 						status;
 		protected FSMContext 					moveGraph;
 		protected Vector2 						globalFowardVector;
+		
+		public	string							name;
 		public 	GameObject 						gobj;
 		public 	Dictionary<string, Transform> 	joints;
 		public 	Dictionary<string, HurtBox> 	hurtBoxes;
 		public 	Dictionary<string, HitBox> 		hitBoxes;
 		public	bool							gothit;
+		public	int								playerNumber;
 		
 		public AttackCommand 					currentAttack;
 		public MoveCommand						currentMovement;
 		public Dictionary<AttackCommand, A_Attack> 	attacksCommandMap;
+		public Dictionary<FighterAnimation, string> animationNameMap;
 		
 		public A_Fighter(GameObject gobj, int playerNumber)
 		{
 			FighterInput input		= gobj.GetComponent<FighterInput>();
 			this.gobj 				= gobj;
+			this.playerNumber		= playerNumber;
 			this.currentAttack 		= AttackCommand.NONE;
 			this.currentMovement	= MoveCommand.NONE;
 			this.status				= new Status_None();
-			//this.attacklist 		= new Dictionary<string, A_Attack>();
+			this.animationNameMap	= input.animationNameMap;
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;
 			List<Transform> jointTransforms = input.jointTransforms;
+			this.joints = new Dictionary<string, Transform>();
+			this.hurtBoxes = new Dictionary<string, HurtBox>();
+			this.hitBoxes = new Dictionary<string, HitBox>();
 			
 			this.InitForwardVector(playerNumber);
 			this.InitHitBoxes(hitboxObjects);
 			this.InitHurtBoxes(hurtboxObjects);
 			this.InitJoints(jointTransforms);
 			this.InitStateMachine();
-			
-			//this.ShowInActiveHitBoxes(true); //should be taken out, used to see hitboxes
-			//this.ShowActiveHitBoxes(true);
 		}
-		
-		#region accessors
-		/*
-		public string Name
-		{
-			get{ return this.name; }
-			set{ this.name = value; }
-		}
-		
-		public GameObject GetGOB()	//hieu add
-		{
-			return this.gobj;
-		}
-		*/
-		// NEW HITBOX CODE 7/23
-		/*
-		void AssignJoints()
-		{
-			// *** NAMING CONVENTION FOR HITBOXES
-			//  ================================================
-			//  HERE WE ESTABLISH NAMING CONVENTIONS FOR JOINTS/HITBOXES
-			//  THESE MUST MATCH PREFAB HITBOXES ON CHARACTERS
-			//  PROJECTILE HITBOXES MUST BE NAMED "HB_Projectile_"X  where X is the number 0 through max
-			//  ==============================================
-			
-			joints.Add("HB_Fist_L");
-			joints.Add("HB_Fist_R");
-			joints.Add("HB_Foot_L");
-			joints.Add("HB_Foot_R");
-			numProjectilesMax = 2;
-		}
-		*/
-		// ***
 		
 		public void DoAttackCommand( AttackCommand ac ){
-			/*
-			if (this.attacksCommandMap.ContainsKey(ac)){
-				this.currentAttack = this.attacksCommandMap[ac];
-			}
-			*/
+			Debug.Log(this.name + " Attack: " + ac.ToString());
 			this.currentAttack = ac;
 			if (ac != AttackCommand.NONE)
 				this.moveGraph.dispatch("attack", this);
 		}
 		
 		public void DoMoveCommand( MoveCommand mc ){
+			Debug.Log(this.name + " Move: " + mc.ToString());
 			this.currentMovement = mc;
-			if (mc != MoveCommand.NONE)
+			if (mc != MoveCommand.NONE){
 				this.moveGraph.dispatch("walkForward", this);
+			}
 		}
 		
 		private void InitJoints( List<Transform> joints ){
@@ -102,247 +72,89 @@ namespace FightGame
 		
 		private void InitHitBoxes( List<GameObject> hitboxObjects ){
 			foreach (GameObject gobj in hitboxObjects){
-				this.hitBoxes[gobj.name] = new HitBox(this, gobj, false);
+				HitBox hitbox = new HitBox(this, gobj, false);
+				hitbox.TurnOffVisibility();
+				hitbox.TurnOffCollider();
+				gobj.GetComponent<HitBoxInput>().hitbox = hitbox;
+				this.hitBoxes[gobj.name] = hitbox;
 			}
 		}
 		
 		private void InitHurtBoxes( List<GameObject> hurtboxObjects ){
 			foreach (GameObject gobj in hurtboxObjects){
-				this.hurtBoxes[gobj.name] = new HurtBox(this, gobj, false);
+				HurtBox hurtbox = new HurtBox(this, gobj);
+				//hurtbox.TurnOffVisibility();
+				gobj.GetComponent<HurtBoxInput>().hurtbox = hurtbox;
+				this.hurtBoxes[gobj.name] = hurtbox;
 			}
 		}
-		
-		/*
-		private void AssignHurtBoxes(GameObject gobj)
-		{
-		
-			foreach (Transform t in gobj.transform)
-			{
-			
-				if (t.name == "HurtBox")
-				{
-					hurtBoxes.Add(t.gameObject);
-					t.gameObject.layer = (this.playerNumber == 1 ? A_Fighter.P1_HURT_BOX_LAYER_NUMBER: A_Fighter.P2_HURT_BOX_LAYER_NUMBER);
-					return;
-				}
-				AssignHurtBoxes(t.gameObject);// <--recursively go through child tree
-				
-			}
-		}
-		*/
-		
-		
-		/*
-		public void SetCurrentAttack()
-		//This function will set the current Attack, base on the input from controller
-		//It will look up in the dictionary, attacklist, which is created in each Fighter class(ex: Fighter_Odin.cs)
-		//Note: _this function shouldn't be called under Update()
-		//		because the controllerDirection variable will change during Update time.
-		//		_During Update(), you can access the variable currentAttack.
-		{
-			string attackType=controllerDirection;
-			if(attackPressed) attackType ="1"+controllerDirection;	//define the key base on attack type
-			if(uniquePressed) attackType ="2"+controllerDirection;
-			if(this.attacklist.ContainsKey(attackType))
-			{
-				this.currentAttack = this.attacklist[attackType];
-			}
-			else this.currentAttack = new Attack_None(this,0,0,0);
-		}
-		*/
 		
 		//describes player forward direction
 		public Vector2 ForwardVector {
 			get {return globalFowardVector;}
 			set {this.globalFowardVector=value;}
 		}
-		#endregion
-		
-		#region input related Data
-		//public bool attackPressed, uniquePressed, specialPressed, blockPressed;
-		// true if player is pressing button
-		
-		//public Vector2 inputDirection;
-		// Direction pressed on analog stick in vector format
-		
-		//public string controllerDirection;
-		// Direction pressed on analog stick in 8-directional string format
-		// returns  "forward","forwardUp", "up",backUp","back","backDown","down",forwardDown" or "invalid"
-		
-		//public string hAxis, vAxis;
-		// Vertical and Horizontal controller axes declared in Unity's input preferences
-		
-		//public string atkBtn, unqBtn,spcBtn,blckBtn;
-		// attack button & unique attack button declared in Unity's input preferences
-		#endregion
 		
 		private void InitForwardVector(int player)
 		{
 			globalFowardVector = (player==1 ? new Vector2(1,0) : new Vector2(-1,0));
 		}
 		
-		public void Update()
-		{
-			moveGraph.CurrentState.update(moveGraph, this);
-			//lastAttackTimer+=Time.deltaTime;
-			//hieu add
-			//this.gothit=false;
-			//hieu add
-			// NEW HITBOX CODE 7/23
-			//UpdateHitBoxes();
-		}
-		
-		// NEW HITBOX CODE 7/23
-		/*
-		public void ShowActiveHitBoxes(bool setting)
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				kvp.Value.displayWhenActive = setting;
-			}
-		}
-		
-		public void ShowInActiveHitBoxes(bool setting)
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				kvp.Value.displayWhenNotActive = setting;
-			}
-		}
-		*/
-		/*
-		public void SendHitBoxInstructions(A_Attack attack)
-		{
-			foreach(HB_Instruction hbi in attack.hb_instructions)
-			{
-				if(hbi.jointName != "projectile")
-				{
-					GetHitBox(hbi.jointName).SendInstruction(hbi);
+		public HitBox FindFreeHitBox(){
+			int count = 1;
+			foreach ( HitBox h in this.hitBoxes.Values ){
+				if ( !h.inUse ){
+					h.inUse = true;
+					return h;
 				}
-				else if (hbi.jointName == "projectile")
-				{
-					GetFreeProjectileHitBox().SendInstruction(hbi);
-				}
-			}
-		}
-		
-		public HitBox GetHitBox(string name)
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				if(kvp.Value.GetName() == name)
-					return kvp.Value;
-			}
-			return null;
-		}
-		
-		void InitHitBoxes()
-		{
-			//Joints
-			foreach(string joint in joints)
-			{
-				//hitBoxes.Add(joint,new HitBox(this,gobj.transform.Find("HitBoxes").transform.Find(joint).gameObject,false));
-				AddHitBoxesGroupedInPrefab(gobj, joint,false);
+				count++;
 			}
 			
-			//Projectiles
-			for (int i=0 ; i < numProjectilesMax ; i++)
-			{
-				string name = "HB_Projectile_"+i;
-				
-				hitBoxes.Add(name , new HitBox(this,gobj.transform.Find("ProjectileHitBoxes").transform.Find(name).gameObject, true));
-				gobj.transform.Find("ProjectileHitBoxes").transform.Find(name).parent=null;
-			}
+			GameObject gobj = (GameObject)GameObject.Instantiate( Resources.Load( "Prefabs/Hitbox", typeof(GameObject) ), this.gobj.transform.position, Quaternion.identity );
+			gobj.transform.parent = this.gobj.transform;
+			
+			HitBox hitbox = new HitBox( this, gobj, false );
+			this.hitBoxes["Hitbox" + count.ToString()] = hitbox;
+			gobj.GetComponent<HitBoxInput>().hitbox = hitbox;
+			
+			return hitbox;
 		}
 		
-		
-		private void AddHitBoxesGroupedInPrefab(GameObject gobj, string joint, bool isProjectile)
+		public void Update()
 		{
-			foreach (Transform t in gobj.transform)
-			{
-				if (t.name == joint)
-				{
-					//AssignHitBoxLayer(t);
-					hitBoxes.Add(joint,new HitBox(this,t.gameObject,isProjectile));
-					return;
-				}
-				AddHitBoxesGroupedInPrefab(t.gameObject,joint,isProjectile);// <--recursively go through child tree
-			}
+			this.moveGraph.CurrentState.update(moveGraph, this);
 		}
-		
-		
-		void UpdateHitBoxes()
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				kvp.Value.Update();
-			}
-		}
-		
-		void StopActiveHitBoxes()
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				if(kvp.Value.active)
-				{
-					kvp.Value.DeActivate();
-				}
-			}
-		}
-		
-		HitBox GetFreeProjectileHitBox()
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				if(kvp.Value.isProjectile && !kvp.Value.active)
-				{
-					return kvp.Value;
-				}
-			}
-			Debug.Log("Need More Projectiles!");
-			return null;
-		}
-		
-		// ***
-		
-		public void Dispatch(string eventName){
-			moveGraph.dispatch(eventName, this);
-		}
-		
-		public bool CanAttack()
-		{
-			return lastAttackTimer>moveCoolDown;
-		}
-		*/
 		
 		public void SwitchForwardVector()
 		{
 			globalFowardVector.x *= -1;
 		}
 		
-		void InitStateMachine()
+		public void TakeDamage(float damage){
+			Debug.Log(this.name + " - Damage Taken: " + damage);
+		}
+		
+		private void InitStateMachine()
 		{
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
 			State S_walkForward = new State("walkForward", new Action_WalkForwardEnter(), new Action_WalkForwardUpdate(), new Action_WalkForwardExit());
 			State S_attack = new State("attack",new Action_AttackEnter(), new Action_AttackUpdate(), new Action_AttackExit());
 			State S_gothit = new State("gothit",new Action_GothitEnter(), new Action_GothitUpdate(),new Action_GothitExit());
-			//State S_unique = new State("unique",new Action_UniqueEnter(), new Action_UniqueUpdate(), new Action_UniqueExit());
 			
 			Transition T_idle = new Transition(S_idle, new Action_None());
 			Transition T_walkForward = new Transition(S_walkForward, new Action_None());
 			Transition T_attack = new Transition(S_attack, new Action_None());
 			Transition T_gothit = new Transition(S_gothit, new Action_None());
-			//Transition T_unique = new Transition(S_unique,new Action_None());
 			
 			S_idle.addTransition(T_walkForward, "walkForward");
 			S_idle.addTransition(T_attack,"attack");
 			S_idle.addTransition(T_gothit,"gothit");
-			//S_idle.addTransition(T_unique,"unique");
 			S_idle.addTransition(T_idle,"idle");
 			
 			S_walkForward.addTransition(T_idle, "idle");
 			S_walkForward.addTransition(T_walkForward,"walkForward");
 			S_walkForward.addTransition(T_gothit,"gothit");
+			S_walkForward.addTransition(T_attack,"attack");
 			
 			S_attack.addTransition(T_idle,"idle");
 			S_attack.addTransition(T_gothit,"gothit");
@@ -350,78 +162,7 @@ namespace FightGame
 			S_gothit.addTransition(T_idle,"idle");
 			S_gothit.addTransition(T_gothit,"gothit");
 			
-			//S_attack.addTransition(T_walkForward,"walkForward");
-			
-			//S_unique.addTransition(T_idle,"idle");
-			this.moveGraph = new FSMContext(S_idle, new Action_None(),this);
+			this.moveGraph = FSM.FSM.createFSMInstance(S_idle, new Action_None(), this);
 		}
-		
-		
-		#region HitBox Functions
-		/*
-		public void AssignHitBoxCollisions()
-		// adds collision info to hitBoxCollisionsToBeProcessed
-		{
-			foreach (HitBox hb in hitBoxes)
-			{
-				if(hb.getHitBoxInfo()!=null)
-				{
-					hitBoxCollisionsToBeProcessed.Add(hb.getHitBoxInfo());
-					Debug.Log(hb.getHitBoxInfo().location);
-					hb.removeHitBoxInfo();
-					
-				}
-			}
-		}
-		*/
-		
-		/*
-		private void AddHitBoxesGroupedInPrefab(GameObject gobj)
-		{
-			// add hitboxes with "HB_" prefix that are children of A_figher prefab
-			foreach (Transform t in gobj.transform)
-			{
-				AddHitBoxesGroupedInPrefab(t.gameObject); // <--recursively go through child tree
-				int length = t.name.Length;
-				int num = 0;
-				int match = 0;
-				foreach (char c in t.name)
-				{
-					if ( c == 'H' && num==0)
-					{
-						match+=1;
-					}
-					if (c=='B' && num==1)
-					{
-						match+=1;
-					}
-					if (c=='_' && num==2 && match==2)
-					{
-						AssignHitBoxLayer(t);
-						hitBoxes.Add(new HitBox(t.name));
-					}
-					num++;
-				}
-			}
-		}
-		*/
-		
-		/*
-		private void AssignHitBoxLayer(Transform t)
-		{
-			if(playerNumber==1)
-			{
-				t.gameObject.layer=P1_HIT_BOX_LAYER_NUMBER;
-			}
-			else if(playerNumber==2)
-			{
-				t.gameObject.layer=P2_HIT_BOX_LAYER_NUMBER;
-			}
-		}
-		*/
-		
-		
-		#endregion
-			
 	}
 }

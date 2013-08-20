@@ -13,29 +13,28 @@ namespace FSM
 		{
 			A_Fighter 	fighter = (A_Fighter)o;
 			A_Attack 	attack 	= fighter.attacksCommandMap[fighter.currentAttack];
-			//when this execute() run, time will increase
-			//if time is greater than attackLength, which is animation length from Action_AttackEnter
-			//then it will send to idle state.
-			//time+=Time.deltaTime;
-			//Debug.Log(time);
 			
 			foreach (A_HitBoxInstruction hbi in attack.instructions){
 				if (attack.timer < hbi.startTime){
-					hbi.hitbox.TurnOffCollider();
+					hbi.hitbox.Disable();
 				}
 				else if (attack.timer >= hbi.startTime && attack.timer <= hbi.endTime){
 					hbi.Execute();
 				}
 				else if (attack.timer >= hbi.endTime){
-					hbi.hitbox.TurnOffCollider();
+					hbi.Reset();
 				}
 			}
-			
+			//Debug.Log(attack.timer.ToString() + " > " + attack.attackLength.ToString());
 			if(attack.timer >= attack.attackLength)
 			{
-				Debug.Log ("attackinginginginging");
+				attack.timer = 0.0f;
+				attack.Reset();
 				c.dispatch("idle", this);
 			}
+			
+			fighter.gobj.animation.CrossFade(attack.animationName);
+			attack.Execute();
 		}
 	}
 }

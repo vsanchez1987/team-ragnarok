@@ -6,20 +6,9 @@ namespace FightGame
 {
 	public class Attack_MegatonPunch: A_Attack
 	{	
-		public Attack_MegatonPunch(string animationName, float attackLength, A_Fighter attackOwner) : base(attackOwner)
+		public Attack_MegatonPunch(string animationName, A_Fighter attackOwner) : base(animationName, attackOwner)
 		{
-			this.animationName = animationName;
-			//base.attack_name=attack_name;
-			//_---------------------------------
-
-			//JONATHAN'S ORIGINAL CODE
-			/*
-			this.preAttackPeriod = preAttackPeriod;
-			this.attackPeriod = attackPeriod;
-			this.animationDuration = animationDuration;
-			this.postAttackPeriod = animationDuration - (preAttackPeriod + attackPeriod);	
-			*/
-			this.instructions.Add(new JointHitBoxInstruction(attackOwner.hitBoxes["RightHand"], attackOwner.joints["RightHand"], 0.5f, 0.6f));
+			//this.instructions.Add(new JointHitBoxInstruction(attackOwner.joints["r_wrist_jnt"], attackOwner.hitBoxes["Hitbox1"], 5.0f, 10.0f, 0.7f, 1.0f));
 		}
 		
 		public override void Execute ()

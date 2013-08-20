@@ -11,12 +11,15 @@ namespace FightGame
 		public Fighter_Odin (GameObject gobj, int playerNumber)
 			:base (gobj, playerNumber)
 		{
+			this.name = "Odin";
 			this.gobj = gobj;
 			this.status = new Status_None();
 			this.attacksCommandMap = new Dictionary<AttackCommand, A_Attack>();
 			
-			this.attacksCommandMap[AttackCommand.REGULAR] = new Shield_Swipe("ShieldSwipe", 5.0f, this);
-			this.attacksCommandMap[AttackCommand.REGULAR] = new Sweeping_Spear("SweepingSpear", 5.0f, this);
+			this.attacksCommandMap[AttackCommand.REGULAR] = new Sweeping_Spear("Sweeping_Spear", this);
+			this.attacksCommandMap[AttackCommand.SPECIAL] = new Sweeping_Spear("Sweeping_Spear", this);
+			this.attacksCommandMap[AttackCommand.UNIQUE] = new Sweeping_Spear("Sweeping_Spear", this);
+			this.attacksCommandMap[AttackCommand.BLOCK] = new Sweeping_Spear("Sweeping_Spear", this);
 			//this.name = "Odin";
 			
 			

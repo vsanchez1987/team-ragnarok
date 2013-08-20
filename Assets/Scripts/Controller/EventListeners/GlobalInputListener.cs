@@ -8,5 +8,6 @@ using FSM;
 public class GlobalInputListener : MonoBehaviour {
 	void Update(){
 		GameManager.ProcessInput();
+		GameManager.Update();
 	}
 }

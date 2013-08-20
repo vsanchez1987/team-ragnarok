@@ -7,9 +7,8 @@ namespace FightGame
 {
 	public class Shield_Swipe: A_Attack
 	{
-		public Shield_Swipe(string animationName, float attackLength, A_Fighter attackOwner) : base(attackOwner)
+		public Shield_Swipe(string animationName, A_Fighter attackOwner) : base(animationName, attackOwner)
 		{
-			this.animationName = animationName;
 		}
 		/*
 		public float attackLength;

@@ -7,9 +7,8 @@ namespace FightGame
 {
 	public class Attack_Melee: A_Attack
 	{
-		public Attack_Melee(string animationName, float attackLength, A_Fighter attackOwner) : base(attackOwner)
+		public Attack_Melee(string animationName, A_Fighter attackOwner) : base(animationName, attackOwner)
 		{
-			this.animationName = animationName;
 		}
 		
 		public override void Execute ()

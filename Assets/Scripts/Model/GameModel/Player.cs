@@ -14,21 +14,21 @@ namespace FightGame
 		
 		public Player (int playerNumber)
 		{
-			this.controls     	= new GamePad(this);
 			this.playerNumber 	= playerNumber;
+			this.controls     	= new GamePad(this);
 			this.fighter 		= null;
 		}
 		
 		public void DoAttackCommand( AttackCommand attackCommand ){
 			if (this.fighter != null){
-				Debug.Log("Attack Command: " + attackCommand.ToString());
+				//Debug.Log("Attack Command: " + attackCommand.ToString());
 				this.fighter.DoAttackCommand( attackCommand );
 			}
 		}
 		
 		public void DoMoveCommand( MoveCommand moveCommand ){
 			if (this.fighter != null){
-				Debug.Log("Move Command: " + moveCommand.ToString());
+				//Debug.Log("Move Command: " + moveCommand.ToString());
 				this.fighter.DoMoveCommand( moveCommand );
 			}
 		}

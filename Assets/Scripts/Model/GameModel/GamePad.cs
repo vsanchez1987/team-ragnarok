@@ -19,13 +19,14 @@ namespace FightGame{
 		private Player						player;
 		
 		public GamePad(Player player){
-			int playerNumber 	= player.PlayerNumber + 1;
+			int playerNumber 	= player.PlayerNumber;
 			
 			this.player 		= player;
 			this.keys 			= new Dictionary<string, KeyCode>();
 			this.XAxis 			= "HorizontalP" + playerNumber;
 			this.YAxis 			= "VerticalP" + playerNumber;
 			this.AssignKeysByPlayerNumber(playerNumber);
+			Debug.Log(player.PlayerNumber.ToString() + " - XAxis: " + XAxis + " YAxis: " + YAxis);
 			
 			if (Application.platform.ToString().Substring(0, 3) == "OSX"){
 				this.keys["RegularJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button16");
@@ -62,12 +63,20 @@ namespace FightGame{
 		private void AssignKeysByPlayerNumber(int number){
 			switch (number){
 			case 1:
+				this.keys["RegularKey"] 		= KeyCode.C;
+				this.keys["UniqueKey"] 			= KeyCode.F;
+				this.keys["SpecialKey"]			= KeyCode.B;
+				this.keys["BlockKey"]	  		= KeyCode.V;
 				this.keys["RegularJoystick"] 	= KeyCode.Joystick1Button0;
 				this.keys["UniqueJoystick"] 	= KeyCode.Joystick1Button3;
 				this.keys["SpecialJoystick"]	= KeyCode.Joystick1Button2;
 				this.keys["BlockJoystick"]	  	= KeyCode.Joystick1Button1;
 				break;
 			case 2:
+				this.keys["RegularKey"] 		= KeyCode.Comma;
+				this.keys["UniqueKey"] 			= KeyCode.L;
+				this.keys["SpecialKey"]			= KeyCode.Backslash;
+				this.keys["BlockKey"]	  		= KeyCode.Period;
 				this.keys["RegularJoystick"] 	= KeyCode.Joystick2Button0;
 				this.keys["UniqueJoystick"]		= KeyCode.Joystick2Button3;
 				this.keys["SpecialJoystick"]	= KeyCode.Joystick2Button2;
@@ -181,16 +190,16 @@ namespace FightGame{
 		private bool IsCorrectCommand( AttackCommand command ){
 			switch (command){
 			case AttackCommand.REGULAR:
-				return (this.GetKeyDown("RegularJoystick"));
+				return (this.GetKeyDown("RegularJoystick") || this.GetKeyDown("RegularKey"));
 				break;
 			case AttackCommand.SPECIAL:
-				return (this.GetKeyDown("SpecialJoystick"));
+				return (this.GetKeyDown("SpecialJoystick") || this.GetKeyDown("SpecialKey"));
 				break;
 			case AttackCommand.UNIQUE:
-				return (this.GetKeyDown("UniqueJoystick"));
+				return (this.GetKeyDown("UniqueJoystick") || this.GetKeyDown("UniqueKey"));
 				break;
 			case AttackCommand.BLOCK:
-				return (this.GetKeyDown("BlockJoystick"));
+				return (this.GetKeyDown("BlockJoystick") || this.GetKeyDown("BlockKey"));
 				break;
 			default:
 				break;
