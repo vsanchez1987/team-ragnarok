@@ -318,17 +318,17 @@ ModelImporter:
     400310: Male2
     400312: Male_Grp
     4300000: Male2
-    7400000: Stand
-    7400002: WalkBack
-    7400004: WalkForward
-    7400006: Knockout
-    7400008: Shield_Swipe
-    7400010: PunchUpperCut
-    7400012: Punch
-    7400014: idle
+    7400000: char_odin_Stand
+    7400002: char_odin_walk_backward
+    7400004: char_odin_walk_forward
+    7400006: char_odin_Knockout
+    7400008: char_odin_ShieldSwipe
+    7400010: char_odin_PunchUpperCut
+    7400012: char_odin_Punch
+    7400014: char_odin_idle
     7400016: Stand0
-    7400018: Sweeping_Spear
-    7400020: Kicks
+    7400018: char_odin_SweepingSpear
+    7400020: char_odin_Kicks
     9500000: //RootNode
     11100000: //RootNode
     13700000: Male2
@@ -345,7 +345,7 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     clipAnimations:
-    - name: Stand
+    - name: char_odin_Stand
       takeName: Stand
       firstFrame: 0
       lastFrame: 24
@@ -366,7 +366,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: WalkBack
+    - name: char_odin_walk_backward
       takeName: WalkBackwards_M
       firstFrame: 0
       lastFrame: 26
@@ -387,7 +387,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: WalkForward
+    - name: char_odin_walk_forward
       takeName: WalkSlow_M
       firstFrame: 0
       lastFrame: 35
@@ -408,7 +408,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: Knockout
+    - name: char_odin_Knockout
       takeName: Knockout
       firstFrame: 0
       lastFrame: 116
@@ -429,7 +429,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: Kicks
+    - name: char_odin_Kicks
       takeName: Kicks
       firstFrame: 0
       lastFrame: 329
@@ -450,7 +450,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: PunchUpperCut
+    - name: char_odin_PunchUpperCut
       takeName: PunchUpperCut
       firstFrame: 0
       lastFrame: 200
@@ -471,7 +471,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: Punch
+    - name: char_odin_Punch
       takeName: Punch
       firstFrame: 0
       lastFrame: 206
@@ -492,7 +492,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: idle
+    - name: char_odin_idle
       takeName: PunchUpperCut
       firstFrame: 41
       lastFrame: 56
@@ -513,7 +513,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: Sweeping_Spear
+    - name: char_odin_SweepingSpear
       takeName: PunchUpperCut
       firstFrame: 84
       lastFrame: 105
@@ -534,7 +534,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: Shield_Swipe
+    - name: char_odin_ShieldSwipe
       takeName: Kicks
       firstFrame: 147
       lastFrame: 186
