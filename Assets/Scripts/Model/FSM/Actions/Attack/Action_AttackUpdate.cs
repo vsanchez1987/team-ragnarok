@@ -17,16 +17,21 @@ namespace FSM
 			//when this execute() run, time will increase
 			//if time is greater than attackLength, which is animation length from Action_AttackEnter
 			//then it will send to idle state.
-			time+=Time.deltaTime;
+			
+			if(fighter.takeDamage)
+			{
+				fighter.Dispatch("takeDamage");			
+			}
 			
 			if(time >= fighter.currentAttack.attackLength)
 			{
 				//Debug.Log ("attackinginginginging");
 				time=0f;
+				fighter.currentAttack = new Attack_None(fighter,0,0,0);
 				fighter.Dispatch("idle");
 				
 			}	
-			
+			time+=Time.deltaTime;
 		}
 	}
 }

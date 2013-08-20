@@ -16,6 +16,7 @@ namespace FightGame
 			this.status = new Status_None();
 			this.name = "odin";
 			this.movespeed = 1;
+			this.slide = 10;
 			
 			
 			//Formula to add more attack to attack list:

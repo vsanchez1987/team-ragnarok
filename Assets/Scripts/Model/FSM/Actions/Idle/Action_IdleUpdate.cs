@@ -12,11 +12,12 @@ namespace FSM
 			//UnityEngine.Debug.Log (GameManager.P1.controllerDirection);
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
-			//UnityEngine.Debug.Log("idling "+fighter.playerNumber);
+			//UnityEngine.Debug.Log(fighter.playerNumber+" direction "+fighter.controllerDirection);
 			
-			if(fighter.gothit)
+			
+			if(fighter.takeDamage)
 			{
-				fighter.Dispatch("gothit");			
+				fighter.Dispatch("takeDamage");			
 			}
 			
 			else if(fighter.attackPressed || fighter.uniquePressed )
@@ -27,7 +28,7 @@ namespace FSM
 			
 			else if(fighter.controllerDirection == "forward" || fighter.controllerDirection == "back")
 			{
-				UnityEngine.Debug.Log("dispatch to walk");
+				//UnityEngine.Debug.Log("dispatch to walk");
 				fighter.Dispatch("walk");
 			}
 			else if(fighter.blockPressed)

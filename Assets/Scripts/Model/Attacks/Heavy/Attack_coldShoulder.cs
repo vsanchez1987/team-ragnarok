@@ -5,12 +5,12 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Attack_Shot01: A_Attack
+	public class Attack_coldShoulder: A_Attack
 	{
 		float attackDuration = 3.0f;
-		string attack_name = "cold_shoulder";
+		string attack_name = "cold_shoulder";		
 		
-		public Attack_Shot01 (A_Fighter attackOwner, float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod,attackOwner)
+		public Attack_coldShoulder (A_Fighter attackOwner, float preAttackPeriod = 0.0f, float attackPeriod = 0.0f, float animationDuration = 0.0f):base(attackPeriod,attackOwner)
 		{
 			base.attack_name=attack_name;
 			//_---------------------------------
@@ -32,10 +32,7 @@ namespace FightGame
 			keyFrames = new List<HB_KeyFrame>();
 			keyFrames.Add(new HB_KeyFrame(0.35f,1.8f));
 			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"HB_Fist_L",20.0f,0.8f,null,null);					
-			base.hb_instructions.Add(hbInstruct);
-			
-			
-			
+			base.hb_instructions.Add(hbInstruct);		
 
 			//JONATHAN'S ORIGINAL CODE
 			this.preAttackPeriod = preAttackPeriod;

@@ -72,14 +72,15 @@ namespace FightGame{
 			{
 				foreach(HitBoxCollisionInfo hbi in GameManager.P1.HitBoxCollisions)
 				{
-					//hieu add
+					hbi.hitPlayer.gotHit = true;
+					
 					if(!hbi.hitPlayer.blockPressed)	//if block button is unpressed;
 					{	
-						hbi.hitPlayer.gothit = true;
+						hbi.hitPlayer.takeDamage = true;
 						hbi.hitPlayer.cur_hp -= hbi.damage;
 					}
 					//////////
-					Debug.Log("hit player: " +hbi.hitPlayer.playerNumber + " for " +hbi.damage + " damage at " + hbi.location);
+					//Debug.Log("hit player: " +hbi.hitPlayer.playerNumber + " for " +hbi.damage + " damage at " + hbi.location);
 				}
 				GameManager.P1.HitBoxCollisions.Clear();
 			}
@@ -88,14 +89,15 @@ namespace FightGame{
 			{
 				foreach(HitBoxCollisionInfo hbi in GameManager.P2.HitBoxCollisions)
 				{
-					//hieu add
+					hbi.hitPlayer.gotHit = true;
+					
 					if(!hbi.hitPlayer.blockPressed)
 					{	
-						hbi.hitPlayer.gothit = true;
+						hbi.hitPlayer.takeDamage = true;
 						hbi.hitPlayer.cur_hp -= hbi.damage;
 					}
 					//////////
-					Debug.Log("hit player: " +hbi.hitPlayer.playerNumber + " for " +hbi.damage + " damage at " + hbi.location);
+					//Debug.Log("hit player: " +hbi.hitPlayer.playerNumber + " for " +hbi.damage + " damage at " + hbi.location);
 				}
 				GameManager.P2.HitBoxCollisions.Clear();
 			}

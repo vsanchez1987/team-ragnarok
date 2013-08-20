@@ -53,10 +53,12 @@ namespace FightGame
 		
 		public float lastAttackTimer = 0f;
 		public int playerNumber;
-		public bool gothit = false;
+		public bool takeDamage = false;
+		public bool gotHit = false;
 		
 		//Hieu add
 		public float movespeed;
+		public float slide;
 		public float	cur_hp,
 						max_hp;
 		
@@ -188,7 +190,7 @@ namespace FightGame
 			if(attackPressed) attackType ="RegAttack_"+controllerDirection;	
 			if(uniquePressed) attackType ="UniqueAttack_"+controllerDirection;
 			if(specialPressed) attackType ="SpecialAttack_"+controllerDirection;
-			if(blockPressed) attackType ="Block_"+controllerDirection;
+			//if(blockPressed) attackType ="Block_"+controllerDirection;
 			if(this.attacklist.ContainsKey(attackType))
 			{
 				this.currentAttack = this.attacklist[attackType];
@@ -236,7 +238,8 @@ namespace FightGame
 			moveGraph.CurrentState.update(moveGraph, this);
 			lastAttackTimer+=Time.deltaTime;
 			//hieu add
-			this.gothit=false;
+			this.takeDamage=false;
+			this.gotHit=false;
 			if(this.cur_hp <=0)
 			{
 				this.cur_hp = 0f;
@@ -424,36 +427,39 @@ namespace FightGame
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
 			State S_walk = new State("walk", new Action_WalkEnter(), new Action_WalkUpdate(), new Action_WalkExit());
 			State S_attack = new State("attack",new Action_AttackEnter(), new Action_AttackUpdate(), new Action_AttackExit());
-			State S_gothit = new State("gothit",new Action_GothitEnter(), new Action_GothitUpdate(),new Action_GothitExit());
+			State S_takeDamage = new State("takeDamage",new Action_TakeDamageEnter(), new Action_TakeDamageUpdate(),new Action_TakeDamageExit());
 			State S_block = new State("block", new Action_BlockEnter(),new Action_BlockUpdate(), new Action_BlockExit());
 			//State S_unique = new State("unique",new Action_UniqueEnter(), new Action_UniqueUpdate(), new Action_UniqueExit());
 			
 			Transition T_idle = new Transition(S_idle, new Action_None());
 			Transition T_walk = new Transition(S_walk, new Action_None());
 			Transition T_attack = new Transition(S_attack, new Action_None());
-			Transition T_gothit = new Transition(S_gothit, new Action_None());
+			Transition T_takeDamage = new Transition(S_takeDamage, new Action_None());
 			Transition T_block = new Transition(S_block, new Action_None());
 			//Transition T_unique = new Transition(S_unique,new Action_None());
 			
 			S_idle.addTransition(T_walk, "walk");
 			S_idle.addTransition(T_attack,"attack");
-			S_idle.addTransition(T_gothit,"gothit");
+			S_idle.addTransition(T_takeDamage,"takeDamage");
 			S_idle.addTransition(T_block,"block");
 			S_idle.addTransition(T_idle,"idle");
 			
 			S_walk.addTransition(T_idle, "idle");
 			S_walk.addTransition(T_walk,"walk");
-			S_walk.addTransition(T_gothit,"gothit");
+			S_walk.addTransition(T_takeDamage,"takeDamage");
 			S_walk.addTransition(T_attack,"attack");
 			S_walk.addTransition(T_block,"block");
 			
 			S_attack.addTransition(T_idle,"idle");
-			S_attack.addTransition(T_gothit,"gothit");
+			S_attack.addTransition(T_walk,"walk");
+			S_attack.addTransition(T_takeDamage,"takeDamage");
 			
-			S_gothit.addTransition(T_idle,"idle");
-			S_gothit.addTransition(T_gothit,"gothit");
+			S_takeDamage.addTransition(T_idle,"idle");
+			S_takeDamage.addTransition(T_walk,"walk");			
+			//S_gothit.addTransition(T_gothit,"takeDamage");
 			
 			S_block.addTransition(T_idle,"idle");
+			S_block.addTransition(T_walk,"walk");
 			
 			//S_attack.addTransition(T_walkForward,"walkForward");
 			
