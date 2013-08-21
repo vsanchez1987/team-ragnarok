@@ -74,6 +74,11 @@ namespace FightGame{
 				{
 					hbi.hitPlayer.gotHit = true;
 					
+					if(hbi.hitPlayer.gotHit && hbi.hitPlayer.blockPressed)
+					{
+						hbi.hitPlayer.cur_meter+=10;
+					}
+					
 					if(!hbi.hitPlayer.blockPressed)	//if block button is unpressed;
 					{	
 						hbi.hitPlayer.takeDamage = true;
@@ -90,6 +95,11 @@ namespace FightGame{
 				foreach(HitBoxCollisionInfo hbi in GameManager.P2.HitBoxCollisions)
 				{
 					hbi.hitPlayer.gotHit = true;
+					
+					if(hbi.hitPlayer.gotHit && hbi.hitPlayer.blockPressed)
+					{
+						hbi.hitPlayer.cur_meter+=10;
+					}
 					
 					if(!hbi.hitPlayer.blockPressed)
 					{	

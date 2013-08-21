@@ -60,7 +60,9 @@ namespace FightGame
 		public float movespeed;
 		public float slide;
 		public float	cur_hp,
-						max_hp;
+						max_hp,
+						cur_meter,
+						max_meter;
 		
 		protected const float moveCoolDown = 2;
 		protected string name;
@@ -116,6 +118,8 @@ namespace FightGame
 			this.currentAttack = new Attack_None(this,0,0,0);
 			this.cur_hp = 100f;
 			this.max_hp = 100f;
+			this.cur_meter = 0f;
+			this.max_meter = 100f;
 			//
 			
 			AssignHurtBoxes(this.gob);
@@ -286,7 +290,7 @@ namespace FightGame
 				else if (splitString[0] == "P")
 				{
 					HitBox hb = GetFreeProjectileHitBox();
-					Projectile p = CreateProjectile(splitString[1],hbi.projectileSpeed,hbi.projectileDirection,hbi.projectileStartLocation);
+					Projectile p = CreateProjectile(splitString[1],hbi.projectileSpeed,hbi.projectileDirection,hbi.projectileStartLocation,hbi.startTime);
 					hb.ParentToProjectile(p);
 					hb.SendInstruction(hbi);
 					
@@ -386,7 +390,7 @@ namespace FightGame
 		}
 	
 		
-		Projectile CreateProjectile(string prefabName,float speed, Vector3 direction, Vector3 startLocation)
+		Projectile CreateProjectile(string prefabName,float speed, Vector3 direction, Vector3 startLocation,float startTime)
 		{
 			UnityEngine.Object ob = Resources.Load("Prefabs/" + prefabName, typeof(GameObject));
 			
@@ -397,7 +401,7 @@ namespace FightGame
 			}
 			else
 			{
-				Projectile p = new Projectile(this,ob,speed,direction,startLocation);
+				Projectile p = new Projectile(this,ob,speed,direction,startLocation,startTime);
 				projectiles.Add(p);
 				return p;
 				

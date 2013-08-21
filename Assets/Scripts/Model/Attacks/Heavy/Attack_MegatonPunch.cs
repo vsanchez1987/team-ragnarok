@@ -43,7 +43,6 @@ namespace FightGame
 			//hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"P_MilkySpore",22.0f,1.5f,0.2f,new Vector3(1,1,0),new Vector3(0,5,0),null,null);
 			//base.hb_instructions.Add(hbInstruct);
 			
-			
 			//JONATHAN'S ORIGINAL CODE
 			this.preAttackPeriod = preAttackPeriod;
 			this.attackPeriod = attackPeriod;

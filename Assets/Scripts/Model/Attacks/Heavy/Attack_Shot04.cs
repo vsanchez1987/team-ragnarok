@@ -30,9 +30,9 @@ namespace FightGame
 			// PROJECTILE ATTACK EXAMPLE
 			// *************************************
 			keyFrames = new List<HB_KeyFrame>();
-			keyFrames.Add(new HB_KeyFrame(0.0f,8.0f)); //turn on, turn off keyframe
+			keyFrames.Add(new HB_KeyFrame(2.0f,8.0f)); //turn on, turn off keyframe
 			//hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"P_MilkySpore",20.0f,1.5f,null,null);
-			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"P_MilkySpore",5.0f,1.5f,0.2f,new Vector3(1,0,0),new Vector3(0,5,0),null,null);
+			hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"P_MilkySpore",5.0f,1.5f,0.2f,new Vector3(1,0,0),new Vector3(0,5,0),2f,null,null);
 			base.hb_instructions.Add(hbInstruct);
 		}
 		

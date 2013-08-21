@@ -11,6 +11,7 @@ public class HB_Instruction
 	public float damage;
 	public float radius;
 	public float projectileSpeed;
+	public float startTime;
 	public Vector3 projectileDirection;
 	public Vector3 projectileStartLocation;
 	public Mechanic attackMechanic;
@@ -36,7 +37,7 @@ public class HB_Instruction
 	//projectile
 	public HB_Instruction(A_Fighter owner, List<HB_KeyFrame> onOffTimes, string jointName, 
 		float damage, float radius, float projectileSpeed,
-		Vector3 projectileDirection,Vector3 projectileStartLocation, Mechanic attackMechanic = null, ParticleSystem p = null)
+		Vector3 projectileDirection,Vector3 projectileStartLocation, float startTime, Mechanic attackMechanic = null, ParticleSystem p = null)
 	{
 		this.owner = owner;
 		this.onOffTimes = onOffTimes;
@@ -48,7 +49,7 @@ public class HB_Instruction
 		this.projectileSpeed = projectileSpeed;
 		this.projectileStartLocation = projectileStartLocation;
 		this.projectileDirection = projectileDirection;
-		
+		this.startTime = startTime;
 	}
 	
 	
