@@ -45,13 +45,20 @@ namespace FightGame{
 			{
 				if (GameManager.P1.cur_hp <= 0)
 				{
-					//play p1 victory animation
-					//play p2 defeat animation
+					//play p2 victory animation
+					
+					
+					//p1 defeat animation
+					GameManager.Defeat(GameManager.P1);
 				}
 				
 				if (GameManager.P2.cur_hp <= 0)
 				{
-					//vice versa
+					//play p1 victory animation
+					
+					
+					//p2 defeat animation
+					GameManager.Defeat(GameManager.P2);
 				}
 				
 			}
@@ -131,5 +138,41 @@ namespace FightGame{
 		public static void CreateFighter(string fighter,int playernum){
 			instance.gModel.CreateFighter(fighter,playernum);
 		}
+		
+		//Hieu add. Dispatch to defeat function
+		public static void Defeat(A_Fighter p)
+		{
+			p.cur_hp =0;
+			p.Dispatch("defeat");
+			string animationName =p.GetAnimationName(p,"crumple");
+			p.gob.animation[animationName].wrapMode=UnityEngine.WrapMode.ClampForever;
+			p.gob.animation.CrossFade(animationName);
+		}
+		
+		
+		//Hieu add. 8/20/13
+		public static bool CheckCollideAnotherPlayer()
+		//this function return true when 2 player collide.
+		// Calculate base on fighter.radius
+		{
+			float distance = Mathf.Abs(GameManager.P1.gob.transform.position.x - 
+								GameManager.P2.gob.transform.position.x);
+			return distance < (GameManager.P1.radius + GameManager.P2.radius);
+		}
+		
+		public static bool CheckCollideEdge(A_Fighter p, int num)
+		//this function return true when player collide with the edge of camera
+		//function take 2 argu, fighter and playerNumber.
+		// LocEdge is an empty GameObject in game. We can adjust it later
+		{
+			string edge = null;
+			if(num == 1) edge = "EdgeL";
+			else if(num == 2) edge = "EdgeR";
+			GameObject locEdge = GameObject.FindGameObjectWithTag(edge);
+			//need create an empty gameobject in the scene, with the tage EdgeL and EdgeR.
+			//open the scene: "animationtest" for more reference
+			return Mathf.Abs(p.gob.transform.position.x - locEdge.transform.position.x) < 3;	
+		}
+		//end add
 	}
 }

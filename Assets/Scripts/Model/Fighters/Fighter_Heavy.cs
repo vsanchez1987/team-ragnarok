@@ -15,6 +15,7 @@ namespace FightGame
 			this.name = "heavy";
 			this.movespeed = 5;
 			this.slide = 20;
+			this.radius = 2.2f;
 			
 								
 			//this.attacklist.Add("1back",new Attack_SweepingSpear(this,0,0,0)); 

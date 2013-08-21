@@ -83,9 +83,6 @@ public class UI_Script : MonoBehaviour
 			length_p1health=length_default*(cur_p1hp/max_p1hp);
 			length_p2health=length_default*(cur_p2hp/max_p2hp);
 		}
-		
-		Debug.Log (length_p1meter);
-		
 	}
 	
     void OnGUI() {

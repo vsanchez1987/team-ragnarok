@@ -58,7 +58,8 @@ namespace FightGame
 		
 		//Hieu add
 		public float movespeed;
-		public float slide;
+		public float 	slide,
+						radius; //radius of fighter
 		public float	cur_hp,
 						max_hp,
 						cur_meter,
@@ -244,10 +245,6 @@ namespace FightGame
 			//hieu add
 			this.takeDamage=false;
 			this.gotHit=false;
-			if(this.cur_hp <=0)
-			{
-				this.cur_hp = 0f;
-			}
 			//hieu add
 			// NEW HITBOX CODE 7/23
 			UpdateHitBoxes();
@@ -433,6 +430,7 @@ namespace FightGame
 			State S_attack = new State("attack",new Action_AttackEnter(), new Action_AttackUpdate(), new Action_AttackExit());
 			State S_takeDamage = new State("takeDamage",new Action_TakeDamageEnter(), new Action_TakeDamageUpdate(),new Action_TakeDamageExit());
 			State S_block = new State("block", new Action_BlockEnter(),new Action_BlockUpdate(), new Action_BlockExit());
+			State S_defeat = new State("defeat",new Action_None(),new Action_None(),new Action_None());
 			//State S_unique = new State("unique",new Action_UniqueEnter(), new Action_UniqueUpdate(), new Action_UniqueExit());
 			
 			Transition T_idle = new Transition(S_idle, new Action_None());
@@ -440,6 +438,7 @@ namespace FightGame
 			Transition T_attack = new Transition(S_attack, new Action_None());
 			Transition T_takeDamage = new Transition(S_takeDamage, new Action_None());
 			Transition T_block = new Transition(S_block, new Action_None());
+			Transition T_defeat = new Transition(S_defeat,new Action_None());
 			//Transition T_unique = new Transition(S_unique,new Action_None());
 			
 			S_idle.addTransition(T_walk, "walk");
@@ -447,19 +446,23 @@ namespace FightGame
 			S_idle.addTransition(T_takeDamage,"takeDamage");
 			S_idle.addTransition(T_block,"block");
 			S_idle.addTransition(T_idle,"idle");
+			S_idle.addTransition(T_defeat,"defeat");
 			
 			S_walk.addTransition(T_idle, "idle");
 			S_walk.addTransition(T_walk,"walk");
 			S_walk.addTransition(T_takeDamage,"takeDamage");
 			S_walk.addTransition(T_attack,"attack");
 			S_walk.addTransition(T_block,"block");
+			S_walk.addTransition(T_defeat,"defeat");
 			
 			S_attack.addTransition(T_idle,"idle");
 			S_attack.addTransition(T_walk,"walk");
 			S_attack.addTransition(T_takeDamage,"takeDamage");
+			S_attack.addTransition(T_defeat,"defeat");
 			
 			S_takeDamage.addTransition(T_idle,"idle");
-			S_takeDamage.addTransition(T_walk,"walk");			
+			S_takeDamage.addTransition(T_walk,"walk");	
+			S_takeDamage.addTransition(T_defeat,"defeat");
 			//S_gothit.addTransition(T_gothit,"takeDamage");
 			
 			S_block.addTransition(T_idle,"idle");

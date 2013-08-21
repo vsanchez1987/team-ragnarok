@@ -18,12 +18,16 @@ namespace FSM
 			
 			if(fighter.controllerDirection == "forward" )
 			{
-				gobj.transform.Translate(fighter.localForwardVector*fighter.movespeed*Time.deltaTime);				
+				if(!GameManager.CheckCollideAnotherPlayer())
+				{
+					gobj.transform.Translate(fighter.localForwardVector*fighter.movespeed*Time.deltaTime);	
+				}
 			}
 			else if(fighter.controllerDirection == "back")
-			{				
-				gobj.transform.Translate(fighter.localForwardVector*-1*fighter.movespeed*Time.deltaTime);
-			}			
+			{		
+				if(!GameManager.CheckCollideEdge(fighter,fighter.playerNumber))
+				gobj.transform.Translate(fighter.localForwardVector*-1*fighter.movespeed*Time.deltaTime);	
+			}		
 			
 			if(fighter.takeDamage)
 			{
@@ -49,11 +53,6 @@ namespace FSM
 			{
 				fighter.Dispatch("idle");
 			}
-			
-			
-			
-			
-			
 		}
 	}
 }

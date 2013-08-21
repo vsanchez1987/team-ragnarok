@@ -41,6 +41,13 @@ namespace FightGame
 			//attackOwner.GetHitBox("HB_Projectile_0").SendInstruction(hb_instructions[0]);
 			//attackOwner.SendHitBoxInstructions(this);
 		}
+		
+		public virtual void SpecialExecute(float time)
+		{
+			//use for some special attack, involve in update time
+			//For instance, move player forward etc
+		}
+		
 
 	}
 }
