@@ -6,7 +6,11 @@ using FightGame;
 
 namespace FightGame{
 	public enum MoveCommand { FORWARD, FORWARD_DOWN, FORWARD_UP, BACK, BACK_DOWN, BACK_UP, UP, DOWN, NONE };
-	public enum ActionCommand { REGULAR, UNIQUE, SPECIAL, BLOCK, NONE };
+	public enum ActionCommand {  NONE, BLOCK,
+		REGULAR, REGULAR_FORWARD, REGULAR_BACK, REGULAR_UP, REGULAR_DOWN,
+		UNIQUE, UNIQUE_FORWARD, UNIQUE_BACK, UNIQUE_UP, UNIQUE_DOWN, 
+		SPECIAL, SPECIAL_FORWARD, SPECIAL_BACK, SPECIAL_UP, SPECIAL_DOWN
+	};
 	
 	public class GamePad{
 		private Dictionary<string, KeyCode> keys;

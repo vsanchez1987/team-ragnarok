@@ -55,12 +55,74 @@ namespace FightGame
 		
 		public void DoActionCommand( ActionCommand ac ){
 			Debug.Log(this.name + " Action: " + ac.ToString());
+			
 			this.currentAction = ac;
+			
 			if ( ac != ActionCommand.NONE ){
 				if ( ac == ActionCommand.BLOCK ){
+					this.currentAction = ac;
 					this.moveGraph.dispatch("block", this);
 				}
 				else{
+					switch ( ac ){
+					case ActionCommand.REGULAR:
+						switch ( this.currentMovement ){
+						case MoveCommand.FORWARD:
+							this.currentAction = ActionCommand.REGULAR_FORWARD;
+							break;
+						case MoveCommand.BACK:
+							this.currentAction = ActionCommand.REGULAR_BACK;
+							break;
+						case MoveCommand.UP:
+							this.currentAction = ActionCommand.REGULAR_UP;
+							break;
+						case MoveCommand.DOWN:
+							this.currentAction = ActionCommand.REGULAR_DOWN;
+							break;
+						default:
+							break;
+						}
+						break;
+					case ActionCommand.SPECIAL:
+						switch ( this.currentMovement ){
+						case MoveCommand.FORWARD:
+							this.currentAction = ActionCommand.SPECIAL_FORWARD;
+							break;
+						case MoveCommand.BACK:
+							this.currentAction = ActionCommand.SPECIAL_BACK;
+							break;
+						case MoveCommand.UP:
+							this.currentAction = ActionCommand.SPECIAL_UP;
+							break;
+						case MoveCommand.DOWN:
+							this.currentAction = ActionCommand.SPECIAL_DOWN;
+							break;
+						default:
+							break;
+						}
+						break;
+					case ActionCommand.UNIQUE:
+						switch ( this.currentMovement ){
+						case MoveCommand.FORWARD:
+							this.currentAction = ActionCommand.UNIQUE_FORWARD;
+							break;
+						case MoveCommand.BACK:
+							this.currentAction = ActionCommand.UNIQUE_BACK;
+							break;
+						case MoveCommand.UP:
+							this.currentAction = ActionCommand.UNIQUE_UP;
+							break;
+						case MoveCommand.DOWN:
+							this.currentAction = ActionCommand.UNIQUE_DOWN;
+							break;
+						default:
+							break;
+						}
+						break;
+					default:
+						break;
+					}
+					
 					this.moveGraph.dispatch("attack", this);
 				}
 			}

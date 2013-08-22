@@ -25,7 +25,7 @@ namespace FSM
 			if(fighter.gothit)
 			{
 				time = 0f;
-				c.dispatch("gothit", this);
+				c.dispatch("takeDamage", this);
 			}
 				
 		}

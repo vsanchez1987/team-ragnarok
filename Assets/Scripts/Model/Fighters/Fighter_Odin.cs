@@ -16,10 +16,10 @@ namespace FightGame
 			this.status = new Status_None();
 			this.actionsCommandMap = new Dictionary<ActionCommand, A_Attack>();
 			
-			this.actionsCommandMap[ActionCommand.REGULAR] = new Sweeping_Spear("Sweeping_Spear", this);
-			this.actionsCommandMap[ActionCommand.SPECIAL] = new Sweeping_Spear("Sweeping_Spear", this);
-			this.actionsCommandMap[ActionCommand.UNIQUE] = new Sweeping_Spear("Sweeping_Spear", this);
-			this.actionsCommandMap[ActionCommand.BLOCK] = new Sweeping_Spear("Sweeping_Spear", this);
+			//this.actionsCommandMap[ActionCommand.REGULAR] = new Sweeping_Spear("Sweeping_Spear", this);
+			//this.actionsCommandMap[ActionCommand.SPECIAL] = new Sweeping_Spear("Sweeping_Spear", this);
+			//this.actionsCommandMap[ActionCommand.UNIQUE] = new Sweeping_Spear("Sweeping_Spear", this);
+			//this.actionsCommandMap[ActionCommand.BLOCK] = new Sweeping_Spear("Sweeping_Spear", this);
 			//this.name = "Odin";
 			
 			
