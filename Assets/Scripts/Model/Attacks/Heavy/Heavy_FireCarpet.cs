@@ -9,11 +9,11 @@ namespace FightGame
 	{	
 		public Heavy_FireCarpet(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
-<<<<<<< HEAD
+
 			this.instructions.Add(new ProjectileHitBoxInstruction( "MilkySpore", "r_wrist_jnt", new Vector3(1.0f, 0.0f, 0.0f), 10.0f, attackOwner, 2.0f, 10.0f, 0.7f, 2.0f ));
 			//this.instructions.Add(new ProjectileHitBoxInstruction( "Projectile_Cube", "r_wrist_jnt", new Vector3(1.0f, 0.0f, 0.0f), 10.0f, attackOwner, 2.0f, 10.0f, 0.9f, 2.2f ));
 			//this.instructions.Add(new ProjectileHitBoxInstruction( "Projectile_Cube", "r_wrist_jnt", new Vector3(1.0f, 0.0f, 0.0f), 10.0f, attackOwner, 2.0f, 10.0f, 1.1f, 2.4f ));
-=======
+
 			this.instructions.Add(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 				// projectile name
 				"r_wrist_jnt", 					// starting joint
@@ -25,7 +25,7 @@ namespace FightGame
 				0.8f, 							// startTime
 				5.0f  							// endTime
 				));
->>>>>>> c6fd01af228a86dde53613725fb6a675bcc014f2
+
 		}
 	}
 }

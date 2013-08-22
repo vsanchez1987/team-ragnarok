@@ -15,13 +15,13 @@ namespace FSM
 			fighter = (A_Fighter)o;				
 			GameObject gobj = fighter.gobj;
 			
-			FighterAnimation animation = FighterAnimation.FLINCH;
+			FighterAnimation animation = FighterAnimation.FLINCH_UP;
 			
 			if (fighter.hurtLocation == Location.HIGH){
-				animation = FighterAnimation.FLINCH;
+				animation = FighterAnimation.FLINCH_UP;
 			}
 			else if (fighter.hurtLocation == Location.LOW){
-				animation = FighterAnimation.FLINCH;
+				animation = FighterAnimation.FLINCH_DOWN;
 			}
 			
 			//check animation's duration, exit to idle state when animation done
