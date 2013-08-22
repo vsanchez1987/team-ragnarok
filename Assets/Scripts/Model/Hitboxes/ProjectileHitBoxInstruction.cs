@@ -9,21 +9,30 @@ namespace FightGame{
 		private string 		projectileName;
 		private Transform	startJoint;
 		private Vector3		increment;
+		private Vector3		offset;
 		
 		public ProjectileHitBoxInstruction( string projectileName, string startJoint, Vector3 direction, float speed, A_Fighter fighter, float radius, float damage, float startTime, float endTime ) : base(fighter, radius, damage, startTime, endTime){
+			float timePeriod	= (endTime - startTime);
 			this.projectileName = projectileName;
 			this.startJoint		= fighter.joints[startJoint];
-			
+			this.increment		= direction.normalized * speed * (Time.deltaTime);
+			this.offset			= Vector3.zero;
+		}
+		
+		public ProjectileHitBoxInstruction( string projectileName, string startJoint, Vector3 direction, float speed, Vector3 offset, A_Fighter fighter, float radius, float damage, float startTime, float endTime ) : base(fighter, radius, damage, startTime, endTime){
 			float timePeriod	= (endTime - startTime);
+			this.projectileName = projectileName;
+			this.startJoint		= fighter.joints[startJoint];
+			this.offset			= offset;
 			this.increment		= direction.normalized * speed * (Time.deltaTime);
 		}
 		
 		public override void Start(){
 			//Debug.Break();
 			GameObject projectile = (GameObject)GameObject.Instantiate( Resources.Load("Projectiles/" + this.projectileName, typeof(GameObject)),
-				this.startJoint.position, Quaternion.identity );
+				this.startJoint.position + this.startJoint.TransformDirection(this.offset), Quaternion.identity );
 			ProjectileInput pInput = projectile.GetComponent<ProjectileInput>();
-			pInput.direction = this.increment;
+			pInput.direction = new Vector3(this.increment.x * fighter.ForwardVector.x, this.increment.y, this.increment.z);
 			pInput.hitbox = new HitBox( this.fighter, pInput.hitboxObject, true );
 			this.hitbox = pInput.hitbox;
 			

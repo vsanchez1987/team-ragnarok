@@ -7,6 +7,7 @@ namespace FightGame
 {
 	public class HitBoxCollisionInfo
 	{
+		/*
 		public Vector3 location;
 		public Mechanic m;
 		public float damage;
@@ -19,5 +20,6 @@ namespace FightGame
 			this.damage =damage;
 			this.hitPlayer = hitPlayer;
 		}
+		*/
 	}
 }

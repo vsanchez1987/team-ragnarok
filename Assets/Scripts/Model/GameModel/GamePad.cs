@@ -6,12 +6,12 @@ using FightGame;
 
 namespace FightGame{
 	public enum MoveCommand { FORWARD, FORWARD_DOWN, FORWARD_UP, BACK, BACK_DOWN, BACK_UP, UP, DOWN, NONE };
-	public enum AttackCommand { REGULAR, UNIQUE, SPECIAL, BLOCK, NONE };
+	public enum ActionCommand { REGULAR, UNIQUE, SPECIAL, BLOCK, NONE };
 	
 	public class GamePad{
 		private Dictionary<string, KeyCode> keys;
 		private MoveCommand[]				moveCommands;
-		private AttackCommand[]				attackCommands;
+		private ActionCommand[]				actionCommands;
 		private string 						XAxis;
 		private string						YAxis;
 		private const float 				halfCircle 		= 3.1415f;
@@ -36,7 +36,7 @@ namespace FightGame{
 			}
 			
 			this.moveCommands = new MoveCommand[] { MoveCommand.FORWARD, MoveCommand.FORWARD_DOWN, MoveCommand.FORWARD_UP, MoveCommand.BACK, MoveCommand.BACK_DOWN, MoveCommand.BACK_UP, MoveCommand.UP, MoveCommand.DOWN, MoveCommand.NONE };
-			this.attackCommands = new AttackCommand[] { AttackCommand.REGULAR, AttackCommand.UNIQUE, AttackCommand.SPECIAL, AttackCommand.BLOCK, AttackCommand.NONE };
+			this.actionCommands = new ActionCommand[] { ActionCommand.REGULAR, ActionCommand.UNIQUE, ActionCommand.SPECIAL, ActionCommand.BLOCK, ActionCommand.NONE };
 		}
 		
 		
@@ -48,9 +48,9 @@ namespace FightGame{
 		
 		
 		// Get a list of attack commands when there has been an input
-		public List<AttackCommand> GetAttackCommands(){
-			List<AttackCommand> commands = new List<AttackCommand>();
-			foreach (AttackCommand ac in this.attackCommands){
+		public List<ActionCommand> GetActionCommands(){
+			List<ActionCommand> commands = new List<ActionCommand>();
+			foreach (ActionCommand ac in this.actionCommands){
 				if ( this.IsCorrectCommand(ac) ){
 					commands.Add(ac);
 				}
@@ -58,33 +58,27 @@ namespace FightGame{
 			return commands;
 		}
 		
+		// Get single action commands when there has been an input
+		public ActionCommand GetActionCommand(){
+			foreach (ActionCommand ac in this.actionCommands){
+				if ( this.IsCorrectCommand(ac) ){
+					return ac;
+				}
+			}
+			return ActionCommand.NONE;
+		}
 		
 		// Private Helper Functions
 		private void AssignKeysByPlayerNumber(int number){
-			switch (number){
-			case 1:
-				this.keys["RegularKey"] 		= KeyCode.C;
-				this.keys["UniqueKey"] 			= KeyCode.F;
-				this.keys["SpecialKey"]			= KeyCode.B;
-				this.keys["BlockKey"]	  		= KeyCode.V;
-				this.keys["RegularJoystick"] 	= KeyCode.Joystick1Button0;
-				this.keys["UniqueJoystick"] 	= KeyCode.Joystick1Button3;
-				this.keys["SpecialJoystick"]	= KeyCode.Joystick1Button2;
-				this.keys["BlockJoystick"]	  	= KeyCode.Joystick1Button1;
-				break;
-			case 2:
-				this.keys["RegularKey"] 		= KeyCode.Comma;
-				this.keys["UniqueKey"] 			= KeyCode.L;
-				this.keys["SpecialKey"]			= KeyCode.Backslash;
-				this.keys["BlockKey"]	  		= KeyCode.Period;
-				this.keys["RegularJoystick"] 	= KeyCode.Joystick2Button0;
-				this.keys["UniqueJoystick"]		= KeyCode.Joystick2Button3;
-				this.keys["SpecialJoystick"]	= KeyCode.Joystick2Button2;
-				this.keys["BlockJoystick"]	  	= KeyCode.Joystick2Button1;
-				break;
-			default:
-				break;
-			}
+			PlayerControls controls 		= GameObject.Find("GlobalInputListener").GetComponent<GlobalInputListener>().GetControls(number);
+			this.keys["RegularKey"] 		= controls.Regular;
+			this.keys["UniqueKey"] 			= controls.Unique;
+			this.keys["SpecialKey"]			= controls.Special;
+			this.keys["BlockKey"]	  		= controls.Block;
+			this.keys["RegularJoystick"] 	= controls.RegularJoystick;
+			this.keys["UniqueJoystick"] 	= controls.UniqueJoystick;
+			this.keys["SpecialJoystick"]	= controls.SpecialJoystick;
+			this.keys["BlockJoystick"]	  	= controls.BlockJoystick;
 		}
 		
 		
@@ -168,8 +162,6 @@ namespace FightGame{
 					return true;
 				}
 			}
-			
-			//Debug.Log("Key " + key + " not found");
 			return false;
 		}
 		
@@ -179,7 +171,6 @@ namespace FightGame{
 					return true;
 				}
 			}
-			//Debug.Log("Key " + key + " not found");
 			return false;
 		}
 		
@@ -187,19 +178,19 @@ namespace FightGame{
 			return ( Input.GetAxisRaw(axis) );
 		}
 		
-		private bool IsCorrectCommand( AttackCommand command ){
+		private bool IsCorrectCommand( ActionCommand command ){
 			switch (command){
-			case AttackCommand.REGULAR:
-				return (this.GetKeyDown("RegularJoystick") || this.GetKeyDown("RegularKey"));
+			case ActionCommand.BLOCK:
+				return (this.GetKey("BlockJoystick") || this.GetKey("BlockKey"));
 				break;
-			case AttackCommand.SPECIAL:
-				return (this.GetKeyDown("SpecialJoystick") || this.GetKeyDown("SpecialKey"));
+			case ActionCommand.REGULAR:
+				return (this.GetKey("RegularJoystick") || this.GetKey("RegularKey"));
 				break;
-			case AttackCommand.UNIQUE:
-				return (this.GetKeyDown("UniqueJoystick") || this.GetKeyDown("UniqueKey"));
+			case ActionCommand.SPECIAL:
+				return (this.GetKey("SpecialJoystick") || this.GetKey("SpecialKey"));
 				break;
-			case AttackCommand.BLOCK:
-				return (this.GetKeyDown("BlockJoystick") || this.GetKeyDown("BlockKey"));
+			case ActionCommand.UNIQUE:
+				return (this.GetKey("UniqueJoystick") || this.GetKey("UniqueKey"));
 				break;
 			default:
 				break;

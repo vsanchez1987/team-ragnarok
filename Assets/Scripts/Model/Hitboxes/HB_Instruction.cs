@@ -5,6 +5,7 @@ using FightGame;
 
 public class HB_Instruction
 {
+	/*
 	public List<HB_KeyFrame> onOffTimes;
 	public A_Fighter owner;
 	public string jointName;//pass "projectile" if projectile
@@ -74,4 +75,5 @@ public class HB_Instruction
 			hbi.jointName,hbi.damage,hbi.radius,hbi.attackMechanic,hbi.particleSystem);
 		return HBI;
 	}
+	*/
 }

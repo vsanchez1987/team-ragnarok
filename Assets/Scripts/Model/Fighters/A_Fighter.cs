@@ -19,10 +19,13 @@ namespace FightGame
 		public 	Dictionary<string, HitBox> 		hitBoxes;
 		public	bool							gothit;
 		public	int								playerNumber;
+		public	float							cur_hp, max_hp;
+		public	float							moveSpeed = 2.0f;
 		
-		public AttackCommand 					currentAttack;
+		public ActionCommand 					currentAction;
 		public MoveCommand						currentMovement;
-		public Dictionary<AttackCommand, A_Attack> 	attacksCommandMap;
+		public A_Attack							currentAttack;
+		public Dictionary<ActionCommand, A_Attack> 	actionsCommandMap;
 		public Dictionary<FighterAnimation, string> animationNameMap;
 		
 		public A_Fighter(GameObject gobj, int playerNumber)
@@ -30,8 +33,9 @@ namespace FightGame
 			FighterInput input		= gobj.GetComponent<FighterInput>();
 			this.gobj 				= gobj;
 			this.playerNumber		= playerNumber;
-			this.currentAttack 		= AttackCommand.NONE;
+			this.currentAction 		= ActionCommand.NONE;
 			this.currentMovement	= MoveCommand.NONE;
+			this.currentAttack		= null;
 			this.status				= new Status_None();
 			this.animationNameMap	= input.animationNameMap;
 			
@@ -49,18 +53,24 @@ namespace FightGame
 			this.InitStateMachine();
 		}
 		
-		public void DoAttackCommand( AttackCommand ac ){
-			Debug.Log(this.name + " Attack: " + ac.ToString());
-			this.currentAttack = ac;
-			if (ac != AttackCommand.NONE)
-				this.moveGraph.dispatch("attack", this);
+		public void DoActionCommand( ActionCommand ac ){
+			Debug.Log(this.name + " Action: " + ac.ToString());
+			this.currentAction = ac;
+			if ( ac != ActionCommand.NONE ){
+				if ( ac == ActionCommand.BLOCK ){
+					this.moveGraph.dispatch("block", this);
+				}
+				else{
+					this.moveGraph.dispatch("attack", this);
+				}
+			}
 		}
 		
 		public void DoMoveCommand( MoveCommand mc ){
-			Debug.Log(this.name + " Move: " + mc.ToString());
+			//Debug.Log(this.name + " Move: " + mc.ToString());
 			this.currentMovement = mc;
 			if (mc != MoveCommand.NONE){
-				this.moveGraph.dispatch("walkForward", this);
+				this.moveGraph.dispatch("walk", this);
 			}
 		}
 		
@@ -123,6 +133,7 @@ namespace FightGame
 		public void Update()
 		{
 			this.moveGraph.CurrentState.update(moveGraph, this);
+			//Debug.Log(this.moveGraph.CurrentState.Name);
 		}
 		
 		public void SwitchForwardVector()
@@ -131,36 +142,47 @@ namespace FightGame
 		}
 		
 		public void TakeDamage(float damage){
+			if (this.moveGraph.CurrentState.Name != "block"){
+				this.moveGraph.dispatch( "takeDamage", this );
+			}
 			Debug.Log(this.name + " - Damage Taken: " + damage);
 		}
 		
 		private void InitStateMachine()
 		{
-			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
-			State S_walkForward = new State("walkForward", new Action_WalkForwardEnter(), new Action_WalkForwardUpdate(), new Action_WalkForwardExit());
-			State S_attack = new State("attack",new Action_AttackEnter(), new Action_AttackUpdate(), new Action_AttackExit());
-			State S_gothit = new State("gothit",new Action_GothitEnter(), new Action_GothitUpdate(),new Action_GothitExit());
+			State S_idle 		= new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
+			State S_walk 		= new State("walk", new Action_WalkEnter(), new Action_WalkUpdate(), new Action_WalkExit());
+			State S_attack 		= new State("attack",new Action_AttackEnter(), new Action_AttackUpdate(), new Action_AttackExit());
+			State S_takeDamage 	= new State("takeDamage",new Action_TakeDamageEnter(), new Action_TakeDamageUpdate(),new Action_TakeDamageExit());
+			State S_block		= new State("block",new Action_BlockEnter(), new Action_BlockUpdate(),new Action_BlockExit());
 			
-			Transition T_idle = new Transition(S_idle, new Action_None());
-			Transition T_walkForward = new Transition(S_walkForward, new Action_None());
-			Transition T_attack = new Transition(S_attack, new Action_None());
-			Transition T_gothit = new Transition(S_gothit, new Action_None());
+			Transition T_idle 		= new Transition(S_idle, new Action_None());
+			Transition T_walk 		= new Transition(S_walk, new Action_None());
+			Transition T_attack 	= new Transition(S_attack, new Action_None());
+			Transition T_takeDamage = new Transition(S_takeDamage, new Action_None());
+			Transition T_block 		= new Transition(S_block, new Action_None());
 			
-			S_idle.addTransition(T_walkForward, "walkForward");
+			S_idle.addTransition(T_walk, "walk");
 			S_idle.addTransition(T_attack,"attack");
-			S_idle.addTransition(T_gothit,"gothit");
+			S_idle.addTransition(T_takeDamage,"takeDamage");
 			S_idle.addTransition(T_idle,"idle");
+			S_idle.addTransition(T_block, "block");
 			
-			S_walkForward.addTransition(T_idle, "idle");
-			S_walkForward.addTransition(T_walkForward,"walkForward");
-			S_walkForward.addTransition(T_gothit,"gothit");
-			S_walkForward.addTransition(T_attack,"attack");
+			S_walk.addTransition(T_idle, "idle");
+			S_walk.addTransition(T_walk,"walk");
+			S_walk.addTransition(T_takeDamage,"takeDamage");
+			S_walk.addTransition(T_attack,"attack");
+			S_walk.addTransition(T_block, "block");
 			
 			S_attack.addTransition(T_idle,"idle");
-			S_attack.addTransition(T_gothit,"gothit");
+			S_attack.addTransition(T_takeDamage,"takeDamage");
 			
-			S_gothit.addTransition(T_idle,"idle");
-			S_gothit.addTransition(T_gothit,"gothit");
+			S_takeDamage.addTransition(T_idle,"idle");
+			S_takeDamage.addTransition(T_takeDamage,"takeDamage");
+			
+			S_block.addTransition(T_idle, "idle");
+			S_block.addTransition(T_walk, "walk");
+			S_block.addTransition(T_takeDamage,"takeDamage");
 			
 			this.moveGraph = FSM.FSM.createFSMInstance(S_idle, new Action_None(), this);
 		}

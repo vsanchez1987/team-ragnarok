@@ -5,6 +5,7 @@ using FightGame;
 
 namespace FightGame
 {
+	/*
 	public class Attack_napalm_flame_thrower: A_Attack
 	{
 		float attackDuration = 3.0f;
@@ -44,6 +45,6 @@ namespace FightGame
 			base.Execute ();
 			
 		}
-	}
+	}*/
 }
 

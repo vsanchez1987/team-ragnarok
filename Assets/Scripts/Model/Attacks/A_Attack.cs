@@ -11,6 +11,7 @@ namespace FightGame
 		public		float						attackLength;
 		public 		string 						animationName;
 		public	 	List<A_HitBoxInstruction>	instructions;
+		//public		
 		protected 	A_Fighter 					attackOwner;
 		
 		protected A_Attack( string animationName, A_Fighter attackOwner )
@@ -25,7 +26,9 @@ namespace FightGame
 			}
 		}
 		
-		public abstract void Execute();
+		public virtual void Execute(){
+			this.timer += Time.deltaTime;
+		}
 		
 		public void Reset(){
 			foreach (A_HitBoxInstruction hbi in this.instructions){

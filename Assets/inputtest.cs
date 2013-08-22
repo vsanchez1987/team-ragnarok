@@ -10,8 +10,8 @@ public class inputtest : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log("player 1" + GameManager.P1.currentAttack.attack_name);
-		Debug.Log("player 2" + GameManager.P2.currentAttack.attack_name);
+		Debug.Log("player 1" + GameManager.P1.Fighter.currentAction.ToString());
+		Debug.Log("player 2" + GameManager.P2.Fighter.currentAction.ToString());
 	}
 	
 }

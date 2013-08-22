@@ -27,15 +27,17 @@ namespace FightGame{
 		
 		public static void ProcessInput(){
 			foreach (Player p in instance.gModel.players){
-				Debug.Log("Player " + p.PlayerNumber);
+				//Debug.Log("Player " + p.PlayerNumber);
 				if (p.Fighter != null){
 					MoveCommand moveCommand = p.controls.GetMoveCommand();
-					List<AttackCommand> attackCommands = p.controls.GetAttackCommands();
+					//List<ActionCommand> actionCommands = p.controls.GetActionCommands();
+					ActionCommand actionCommand = p.controls.GetActionCommand();
 					
 					p.DoMoveCommand(moveCommand);
-					foreach (AttackCommand cmd in attackCommands){
-						p.DoAttackCommand(cmd);
-					}
+					p.DoActionCommand(actionCommand);
+					/*foreach (ActionCommand cmd in actionCommands){
+						p.DoActionCommand(cmd);
+					}*/
 				}
 			}
 		}

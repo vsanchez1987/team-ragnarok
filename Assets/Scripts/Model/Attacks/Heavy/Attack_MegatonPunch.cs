@@ -5,8 +5,10 @@ using FightGame;
 
 namespace FightGame
 {
+	/*
 	public class Attack_MegatonPunch: A_Attack
 	{
+		
 		float attackDuration = 3.0f;
 		string attack_name = "megaton_punch";
 		
@@ -42,13 +44,7 @@ namespace FightGame
 			//hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"P_MilkySpore",20.0f,1.5f,null,null);
 			//hbInstruct =  new HB_Instruction(attackOwner,keyFrames,"P_MilkySpore",22.0f,1.5f,0.2f,new Vector3(1,1,0),new Vector3(0,5,0),null,null);
 			//base.hb_instructions.Add(hbInstruct);
-			
-			
-			//JONATHAN'S ORIGINAL CODE
-			this.preAttackPeriod = preAttackPeriod;
-			this.attackPeriod = attackPeriod;
-			this.animationDuration = animationDuration;
-			this.postAttackPeriod = animationDuration - (preAttackPeriod + attackPeriod);	
+	/*
 		}
 		public override void Execute ()
 		{
@@ -56,5 +52,6 @@ namespace FightGame
 			
 		}
 	}
+	*/
 }
 

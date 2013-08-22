@@ -5,6 +5,7 @@ using FightGame;
 
 namespace FightGame
 {
+	/*
 	public class Attack_Shot02: A_Attack
 	{
 		float attackDuration = 3.0f;
@@ -55,5 +56,6 @@ namespace FightGame
 			
 		}
 	}
+	*/
 }
 

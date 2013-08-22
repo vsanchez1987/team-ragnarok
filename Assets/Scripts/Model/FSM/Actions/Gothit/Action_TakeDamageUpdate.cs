@@ -5,7 +5,7 @@ using FSM;
 
 namespace FSM
 {
-	public class Action_GothitUpdate:FSMAction
+	public class Action_TakeDamageUpdate:FSMAction
 	{
 		float time = 0f;
 		public override void execute(FSMContext c, Object o){

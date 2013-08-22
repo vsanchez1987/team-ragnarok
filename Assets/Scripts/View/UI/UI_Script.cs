@@ -57,8 +57,8 @@ public class UI_Script : MonoBehaviour
 		if(GameManager.P1!=null && GameManager.P2!=null)
 		{
 			//update both player's hp during fighting time
-			cur_p1hp = GameManager.P1.cur_hp;
-			cur_p2hp = GameManager.P2.cur_hp;
+			cur_p1hp = GameManager.P1.Fighter.cur_hp;
+			cur_p2hp = GameManager.P2.Fighter.cur_hp;
 			length_p1health=length_default*(cur_p1hp/max_p1hp);
 			length_p2health=length_default*(cur_p2hp/max_p2hp);
 		}

@@ -6,6 +6,7 @@ namespace FightGame
 
 	public struct HB_KeyFrame
 	{
+		/*
 		public float onTime;
 		public float offTime;
 		public bool expired;
@@ -16,6 +17,6 @@ namespace FightGame
 			this.offTime = offTime;
 			this.expired = false;
 		}
-		
+		*/
 	}
 }

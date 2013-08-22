@@ -14,12 +14,12 @@ namespace FightGame
 			this.name = "Odin";
 			this.gobj = gobj;
 			this.status = new Status_None();
-			this.attacksCommandMap = new Dictionary<AttackCommand, A_Attack>();
+			this.actionsCommandMap = new Dictionary<ActionCommand, A_Attack>();
 			
-			this.attacksCommandMap[AttackCommand.REGULAR] = new Sweeping_Spear("Sweeping_Spear", this);
-			this.attacksCommandMap[AttackCommand.SPECIAL] = new Sweeping_Spear("Sweeping_Spear", this);
-			this.attacksCommandMap[AttackCommand.UNIQUE] = new Sweeping_Spear("Sweeping_Spear", this);
-			this.attacksCommandMap[AttackCommand.BLOCK] = new Sweeping_Spear("Sweeping_Spear", this);
+			this.actionsCommandMap[ActionCommand.REGULAR] = new Sweeping_Spear("Sweeping_Spear", this);
+			this.actionsCommandMap[ActionCommand.SPECIAL] = new Sweeping_Spear("Sweeping_Spear", this);
+			this.actionsCommandMap[ActionCommand.UNIQUE] = new Sweeping_Spear("Sweeping_Spear", this);
+			this.actionsCommandMap[ActionCommand.BLOCK] = new Sweeping_Spear("Sweeping_Spear", this);
 			//this.name = "Odin";
 			
 			

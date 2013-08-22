@@ -5,7 +5,7 @@ using FSM;
 
 namespace FSM
 {
-	public class Action_GothitEnter:FSMAction
+	public class Action_TakeDamageEnter:FSMAction
 	{
 		public override void execute(FSMContext c, Object o){
 			A_Fighter fighter;

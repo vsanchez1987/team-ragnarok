@@ -10,18 +10,19 @@ namespace FSM
 	{
 		public override void execute(FSMContext c, object o)
 		{
-			/*
 			A_Fighter fighter = (A_Fighter)o;
 			
-			//Get a gameobject
-			GameObject gobj = fighter.gobj;
-			A_Attack currentAttack = fighter.currentAttack;
-			//Set an attack from dictionary to a public variable currentAttack
+			if (fighter.currentAction != ActionCommand.NONE){
+				fighter.currentAttack = fighter.actionsCommandMap[fighter.currentAction];
+			}
+			/*
+			A_Attack currentAttack = fighter.currentAction;
+			//Set an attack from dictionary to a public variable currentAction
 			//fighter.SetCurrentAttack();
 			//assign attack name
-			//string attackName = currentAttack.attack_name;
+			//string attackName = currentAction.attack_name;
 			
-			if(currentAttack == AttackCommand.NONE)
+			if(currentAction == ActionCommand.NONE)
 			{
 				//if there's no attack go back to idle state
 				c.dispatch("idle");
@@ -30,10 +31,10 @@ namespace FSM
 			else
 			{
 				//if yes,run the animation
-				gobj.animation.CrossFade(currentAttack.animationName);
+				gobj.animation.CrossFade(currentAction.animationName);
 				//store animation length, it will be used it in Action_AttackUpdate 
-				currentAttack.attackLength = gobj.animation[currentAttack.animationName].length;		
-				currentAttack.Execute();
+				currentAction.attackLength = gobj.animation[currentAction.animationName].length;		
+				currentAction.Execute();
 			}
 			*/
 		}

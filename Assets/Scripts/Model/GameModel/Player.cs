@@ -19,10 +19,10 @@ namespace FightGame
 			this.fighter 		= null;
 		}
 		
-		public void DoAttackCommand( AttackCommand attackCommand ){
+		public void DoActionCommand( ActionCommand actionCommand ){
 			if (this.fighter != null){
-				//Debug.Log("Attack Command: " + attackCommand.ToString());
-				this.fighter.DoAttackCommand( attackCommand );
+				//Debug.Log("Attack Command: " + actionCommand.ToString());
+				this.fighter.DoActionCommand( actionCommand );
 			}
 		}
 		

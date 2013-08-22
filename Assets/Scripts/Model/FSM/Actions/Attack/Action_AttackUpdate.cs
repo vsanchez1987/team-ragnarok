@@ -8,11 +8,10 @@ namespace FSM
 {
 	public class Action_AttackUpdate:FSMAction
 	{
-		//float time =0f;
 		public override void execute(FSMContext c, object o)
 		{
 			A_Fighter 	fighter = (A_Fighter)o;
-			A_Attack 	attack 	= fighter.attacksCommandMap[fighter.currentAttack];
+			A_Attack 	attack 	= fighter.currentAttack;
 			
 			foreach (A_HitBoxInstruction hbi in attack.instructions){
 				if (attack.timer < hbi.startTime){
@@ -30,7 +29,7 @@ namespace FSM
 			{
 				attack.timer = 0.0f;
 				attack.Reset();
-				c.dispatch("idle", this);
+				c.dispatch("idle", o);
 			}
 			
 			fighter.gobj.animation.CrossFade(attack.animationName);

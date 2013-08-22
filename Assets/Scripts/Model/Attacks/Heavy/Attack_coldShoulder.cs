@@ -5,6 +5,7 @@ using FightGame;
 
 namespace FightGame
 {
+	/*
 	public class Attack_coldShoulder: A_Attack
 	{
 		float attackDuration = 3.0f;
@@ -47,5 +48,6 @@ namespace FightGame
 			
 		}
 	}
+	*/
 }
 
