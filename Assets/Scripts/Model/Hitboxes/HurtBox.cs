@@ -7,13 +7,15 @@ namespace FightGame
 {
 	public class HurtBox
 	{
-		public A_Fighter owner;
-		public GameObject gobj;
+		public A_Fighter 	owner;
+		public GameObject 	gobj;
+		public Location		location;
 		
 		public HurtBox(A_Fighter owner, GameObject gobj)
 		{
 			this.owner = owner;
 			this.gobj = gobj;
+			this.location = gobj.GetComponent<HurtBoxInput>().location;
 		}
 		
 		public void TurnOnVisibility(){

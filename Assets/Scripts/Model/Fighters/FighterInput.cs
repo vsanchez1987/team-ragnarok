@@ -13,9 +13,11 @@ public class Animations{
 	public string UniqueAttack;
 	public string SpecialAttack;
 	public string Block;
+	public string ForwardRegularAttack;
+	public string Flinch;
 }
 
-public enum FighterAnimation { WALK_FORWARD, WALK_BACKWARD, IDLE, REGULAR_ATTACK, UNIQUE_ATTACK, SPECIAL_ATTACK, BLOCK };
+public enum FighterAnimation { WALK_FORWARD, WALK_BACKWARD, IDLE, REGULAR_ATTACK, UNIQUE_ATTACK, SPECIAL_ATTACK, BLOCK, FORWARD_REGULAR_ATTACK, FLINCH };
 
 public class FighterInput : MonoBehaviour
 {
@@ -30,12 +32,14 @@ public class FighterInput : MonoBehaviour
 	
 	void Awake(){
 		this.animationNameMap = new Dictionary<FighterAnimation, string>();
-		this.animationNameMap[FighterAnimation.WALK_FORWARD] 	= this.animations.WalkForward;
-		this.animationNameMap[FighterAnimation.WALK_BACKWARD] 	= this.animations.WalkBackward;
-		this.animationNameMap[FighterAnimation.IDLE] 			= this.animations.Idle;
-		this.animationNameMap[FighterAnimation.REGULAR_ATTACK] 	= this.animations.RegularAttack;
-		this.animationNameMap[FighterAnimation.SPECIAL_ATTACK] 	= this.animations.SpecialAttack;
-		this.animationNameMap[FighterAnimation.UNIQUE_ATTACK] 	= this.animations.UniqueAttack;
-		this.animationNameMap[FighterAnimation.BLOCK]		 	= this.animations.Block;
+		this.animationNameMap[FighterAnimation.WALK_FORWARD] 			= this.animations.WalkForward;
+		this.animationNameMap[FighterAnimation.WALK_BACKWARD] 			= this.animations.WalkBackward;
+		this.animationNameMap[FighterAnimation.IDLE] 					= this.animations.Idle;
+		this.animationNameMap[FighterAnimation.REGULAR_ATTACK] 			= this.animations.RegularAttack;
+		this.animationNameMap[FighterAnimation.SPECIAL_ATTACK] 			= this.animations.SpecialAttack;
+		this.animationNameMap[FighterAnimation.UNIQUE_ATTACK] 			= this.animations.UniqueAttack;
+		this.animationNameMap[FighterAnimation.BLOCK]		 			= this.animations.Block;
+		this.animationNameMap[FighterAnimation.FORWARD_REGULAR_ATTACK]	= this.animations.ForwardRegularAttack;
+		this.animationNameMap[FighterAnimation.FLINCH]					= this.animations.Flinch;
 	}
 }

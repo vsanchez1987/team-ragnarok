@@ -2,10 +2,14 @@ using UnityEngine;
 using System.Collections;
 using FightGame;
 
+public enum Location { HIGH, LOW, NONE };
+
 public class HurtBoxInput : MonoBehaviour
 {
 	[HideInInspector]
 	public HurtBox hurtbox;
+	
+	public Location location;
 	
 	/*
 	void OnTriggerEnter( Collider other ){

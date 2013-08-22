@@ -11,10 +11,12 @@ namespace FSM
 		public override void execute(FSMContext c, object o)
 		{
 			A_Fighter fighter = (A_Fighter)o;
+			A_Attack 	attack 	= fighter.currentAttack;
 			
 			if (fighter.currentAction != ActionCommand.NONE){
 				fighter.currentAttack = fighter.actionsCommandMap[fighter.currentAction];
 			}
+			//fighter.gobj.animation.CrossFade(attack.animationName);
 			/*
 			A_Attack currentAttack = fighter.currentAction;
 			//Set an attack from dictionary to a public variable currentAction

@@ -21,6 +21,7 @@ namespace FightGame
 		public	int								playerNumber;
 		public	float							cur_hp, max_hp;
 		public	float							moveSpeed = 2.0f;
+		public	Location						hurtLocation;
 		
 		public ActionCommand 					currentAction;
 		public MoveCommand						currentMovement;
@@ -38,6 +39,7 @@ namespace FightGame
 			this.currentAttack		= null;
 			this.status				= new Status_None();
 			this.animationNameMap	= input.animationNameMap;
+			this.hurtLocation		= Location.NONE;
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;
@@ -141,8 +143,9 @@ namespace FightGame
 			globalFowardVector.x *= -1;
 		}
 		
-		public void TakeDamage(float damage){
+		public void TakeDamage(float damage, HurtBox hurtbox){
 			if (this.moveGraph.CurrentState.Name != "block"){
+				this.hurtLocation = hurtbox.location;
 				this.moveGraph.dispatch( "takeDamage", this );
 			}
 			Debug.Log(this.name + " - Damage Taken: " + damage);
