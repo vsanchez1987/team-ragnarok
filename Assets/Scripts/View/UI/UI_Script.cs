@@ -2,8 +2,23 @@ using UnityEngine;
 using System.Collections;
 using FightGame;
 
+
 public class UI_Script : MonoBehaviour
 {	
+	const int healthBarXoffSet = 113;
+	public int healthBarYoffSet = 40;
+	
+	const int INIT_X = 1024;
+	const int INIT_Y = 768;
+	
+	const int HEALTH_BAR_HEIGHT = 30;
+
+	public Texture2D healthBar;
+	public Texture2D backgourndTexture;
+	public Texture2D mainBorderTexture;
+
+
+
 	private bool created = false;
 	GameObject player;
 	float length_default, height_default;
@@ -102,6 +117,11 @@ public class UI_Script : MonoBehaviour
 		
 		if(GameManager.P1!=null && GameManager.P2!=null)
 		{
+			// this is the rectangle
+			Rect myrect = new Rect(0,0, Screen.width, Screen.height);
+			// this is the box
+			GUI.Box(myrect,mainBorderTexture);
+			
 			//draw empty bars
 			GUI.Box(new Rect(p1_GUIstartX,p1_GUIstartY,length_default,height_default),"");
 			GUI.Box(new Rect(p2_GUIstartX,p2_GUIstartY,length_default,height_default),"");
@@ -109,7 +129,11 @@ public class UI_Script : MonoBehaviour
 			GUI.Box(new Rect(p2_GUIstartX,p2_GUIstartY+meterPosY,length_default,height_default),"");
 			
 			//draw health bars and meter bars over
-			GUI.Box(new Rect(p1_GUIstartX,p1_GUIstartY,length_p1health,height_default),"",health_style);
+			int healthBarX =  (int)( ((float)Screen.width/(float)INIT_X) * (float)healthBarXoffSet);
+			int healthBarY = (int)(((float)Screen.height/(float)INIT_Y) * (float)healthBarYoffSet);
+			int healthBarHeight = (int)(((float)Screen.height/(float)INIT_Y) * HEALTH_BAR_HEIGHT);
+			Debug.Log(healthBarX );
+			GUI.Box(new Rect(healthBarX,healthBarY,healthBar.width,healthBar.height),healthBar);
 			GUI.Box(new Rect(p2_GUIstartX,p2_GUIstartY,length_p2health,height_default),"",health_style);
 			GUI.Box(new Rect(p1_GUIstartX,p1_GUIstartY+meterPosY,length_p1meter,height_default),"",meter_style);
 			GUI.Box(new Rect(p2_GUIstartX,p2_GUIstartY+meterPosY,length_p2meter,height_default),"",meter_style);
