@@ -42,13 +42,12 @@ namespace FightGame
 			//attackOwner.SendHitBoxInstructions(this);
 		}
 		
+	
 		public virtual void SpecialExecute(float time)
 		{
 			//use for some special attack, involve in update time
 			//For instance, move player forward etc
 		}
-		
-
 	}
 }
 

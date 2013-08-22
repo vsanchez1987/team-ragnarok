@@ -43,6 +43,7 @@ namespace FightGame
 		{
 			base.Execute ();
 		}
+		
 		public override void SpecialExecute(float time)
 		{
 			//use for some special attack, involve in update time

@@ -51,25 +51,9 @@ namespace FightGame
 		
 		public override void SpecialExecute(float time)
 		{
-			Debug.Log(moving);
-			if(!moving)
+			if(time >= 0.8f && time <= 1.0f)
 			{
-				origin = attackOwner.gob.transform.position;
-				desire = new Vector3(origin.x+5,origin.y,origin.z);
-				moving=true;
-			}
-			
-			if(time >= 0.8)
-			{
-				/*
-				attackOwner.gob.transform.position = new Vector3(attackOwner.gob.transform.position.x+1,
-																 attackOwner.gob.transform.position.y,
-																 attackOwner.gob.transform.position.z);
-				*/
-				//attackOwner.gob.transform.Translate(attackOwner.localForwardVector*7.5f*Time.deltaTime);
-				attackOwner.gob.transform.position =Vector3.Lerp(origin,new Vector3(origin.x+5,origin.y,origin.z),Time.deltaTime*2);
-				dest = attackOwner.gob.transform.position;
-				moving=false;
+				attackOwner.gob.transform.Translate(attackOwner.localForwardVector*30f*Time.deltaTime);
 			}
 		}
 		
