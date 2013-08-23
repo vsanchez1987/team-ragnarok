@@ -25,19 +25,27 @@ namespace FightGame{
 			get { return instance.gModel.p2; }
 		}
 		
+		public static FightCamera Camera{
+			get { return instance.gModel.camera; }
+		}
+		
+		public static float LeftBoundary {
+			get { return instance.gModel.leftBoundary; }
+		}
+		
+		public static float RightBoundary {
+			get { return instance.gModel.rightBoundary; }
+		}
+		
 		public static void ProcessInput(){
 			foreach (Player p in instance.gModel.players){
 				//Debug.Log("Player " + p.PlayerNumber);
 				if (p.Fighter != null){
 					MoveCommand moveCommand = p.controls.GetMoveCommand();
-					//List<ActionCommand> actionCommands = p.controls.GetActionCommands();
 					ActionCommand actionCommand = p.controls.GetActionCommand();
 					
 					p.DoMoveCommand(moveCommand);
 					p.DoActionCommand(actionCommand);
-					/*foreach (ActionCommand cmd in actionCommands){
-						p.DoActionCommand(cmd);
-					}*/
 				}
 			}
 		}
@@ -60,6 +68,54 @@ namespace FightGame{
 			GameObject locator = GameObject.FindGameObjectWithTag("LocatorP" + playerNum.ToString());
 			
 			player.InstantiateFighter(fighter, locator.transform.position, locator.transform.rotation);
+		}
+		
+		private static float GetPlayersDistance(){
+			return Mathf.Abs(instance.gModel.p1.Fighter.gobj.transform.position.x - instance.gModel.p2.Fighter.gobj.transform.position.x);
+		}
+		
+		public static bool CheckCanMoveForward(A_Fighter fighter){
+			if ( GameManager.P1.Fighter != null && GameManager.P2.Fighter != null ){
+				if (GameManager.GetPlayersDistance() > GameManager.P1.Fighter.radius + GameManager.P2.Fighter.radius){
+					if (fighter.ForwardVector.x == 1){
+						if (GameManager.CheckWithinRightBoundary(fighter)){
+							return true;
+						}
+					}
+					else if (fighter.ForwardVector.x == -1){
+						if (GameManager.CheckWithinLeftBoundary(fighter)){
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		}
+		
+		public static bool CheckCanMoveBackward(A_Fighter fighter){
+			if ( GameManager.P1.Fighter != null && GameManager.P2.Fighter != null ){
+				if (GameManager.GetPlayersDistance() < GameManager.Camera.maxDistance){
+					if (fighter.ForwardVector.x == 1){
+						if (GameManager.CheckWithinLeftBoundary(fighter)){
+							return true;
+						}
+					}
+					else if (fighter.ForwardVector.x == -1){
+						if (GameManager.CheckWithinRightBoundary(fighter)){
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		}
+		
+		private static bool CheckWithinLeftBoundary(A_Fighter fighter){
+			return fighter.gobj.transform.position.x > GameManager.LeftBoundary;
+		}
+		
+		private static bool CheckWithinRightBoundary(A_Fighter fighter){
+			return fighter.gobj.transform.position.x < GameManager.RightBoundary;
 		}
 	}
 }

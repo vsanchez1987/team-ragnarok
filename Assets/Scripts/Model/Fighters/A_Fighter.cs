@@ -24,6 +24,8 @@ namespace FightGame
 		public	Location						hurtLocation;
 		public	float							globalActionTimer;
 		public	Vector3							movement;
+		public	float							radius;
+		public	Vector3							localForwardVector;
 		
 		public ActionCommand 					currentAction;
 		public MoveCommand						currentMovement;
@@ -46,6 +48,7 @@ namespace FightGame
 			this.hurtLocation		= Location.NONE;
 			this.globalActionTimer	= 0.0f;
 			this.movement			= Vector3.zero;
+			this.radius				= 0.0f;
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;
@@ -181,6 +184,7 @@ namespace FightGame
 		private void InitForwardVector(int player)
 		{
 			globalFowardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
+			this.localForwardVector = new Vector3 (0, 0, 1);
 		}
 		
 		public HitBox FindFreeHitBox(){
@@ -209,10 +213,13 @@ namespace FightGame
 		
 		private void ApplyMovement(){
 			if (this.movement.magnitude > 0.001f){
-				this.gobj.transform.position += this.movement;
-				this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 5 );
-				if ( this.movement.magnitude < 0.001f ){
-					this.movement = Vector3.zero;
+				if ( GameManager.CheckCanMoveForward(this) && GameManager.CheckCanMoveBackward(this) ){
+					this.gobj.transform.position += this.movement;
+					this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 5 );
+					
+					if ( this.movement.magnitude < 0.001f ){
+						this.movement = Vector3.zero;
+					}
 				}
 			}
 		}
@@ -236,7 +243,7 @@ namespace FightGame
 				this.moveGraph.dispatch( "takeDamage", this );
 			}
 			else{
-				this.movement = direction * 0.01f;
+				this.movement = direction * 0.05f;
 			}
 			Debug.Log(this.name + " - Damage Taken: " + damage);
 		}
