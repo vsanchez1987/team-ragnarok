@@ -11,11 +11,17 @@ namespace FSM
 		public override void execute(FSMContext c, object o)
 		{
 			A_Fighter fighter = (A_Fighter)o;
-			A_Attack 	attack 	= fighter.currentAttack;
 			
 			if (fighter.currentAction != ActionCommand.NONE){
 				fighter.currentAttack = fighter.actionsCommandMap[fighter.currentAction];
 			}
+			
+			fighter.gobj.animation[fighter.currentAttack.animationName].speed = fighter.currentAttack.animationSpeed;
+			
+			foreach (A_HitBoxInstruction hbi in fighter.currentAttack.instructions){
+				hbi.Init();
+			}
+			
 			//fighter.gobj.animation.CrossFade(attack.animationName);
 			/*
 			A_Attack currentAttack = fighter.currentAction;

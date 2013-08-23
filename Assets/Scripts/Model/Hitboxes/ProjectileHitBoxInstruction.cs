@@ -11,20 +11,12 @@ namespace FightGame{
 		private Vector3		increment;
 		private Vector3		offset;
 		
-		public ProjectileHitBoxInstruction( string projectileName, string startJoint, Vector3 direction, float speed, A_Fighter fighter, float radius, float damage, float startTime, float endTime ) : base(fighter, radius, damage, startTime, endTime){
+		public ProjectileHitBoxInstruction( string projectileName, string startJoint, Vector3 direction, float speed, A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 offset = default(Vector3), Vector3 movement = default(Vector3)) : base(fighter, radius, damage, startTime, endTime, movement){
 			float timePeriod	= (endTime - startTime);
 			this.projectileName = projectileName;
 			this.startJoint		= fighter.joints[startJoint];
 			this.increment		= direction.normalized * speed * (Time.deltaTime);
-			this.offset			= Vector3.zero;
-		}
-		
-		public ProjectileHitBoxInstruction( string projectileName, string startJoint, Vector3 direction, float speed, Vector3 offset, A_Fighter fighter, float radius, float damage, float startTime, float endTime ) : base(fighter, radius, damage, startTime, endTime){
-			float timePeriod	= (endTime - startTime);
-			this.projectileName = projectileName;
-			this.startJoint		= fighter.joints[startJoint];
 			this.offset			= offset;
-			this.increment		= direction.normalized * speed * (Time.deltaTime);
 		}
 		
 		public override void Start(){

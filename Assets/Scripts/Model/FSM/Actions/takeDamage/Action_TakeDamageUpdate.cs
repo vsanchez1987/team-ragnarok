@@ -8,7 +8,6 @@ namespace FSM
 {
 	public class Action_TakeDamageUpdate:FSMAction
 	{
-		float time = 0f;
 		public override void execute(FSMContext c, object o){
 			//UnityEngine.Debug.Log("in hit state");
 			A_Fighter fighter;
@@ -27,9 +26,8 @@ namespace FSM
 			//check animation's duration, exit to idle state when animation done
 			//"mega_punch" animation just for testing
 			
-			if(time > gobj.animation[fighter.animationNameMap[animation]].length)
+			if(fighter.globalActionTimer > gobj.animation[fighter.animationNameMap[animation]].length)
 			{
-				time = 0f;
 				c.dispatch("idle", o);
 			}
 			
@@ -41,8 +39,8 @@ namespace FSM
 				c.dispatch("takeDamage", this);
 			}
 			*/
-			time+= UnityEngine.Time.deltaTime;
-			gobj.animation.CrossFade(fighter.animationNameMap[animation]);
+			fighter.globalActionTimer += UnityEngine.Time.deltaTime;
+			gobj.animation.Play(fighter.animationNameMap[animation]);
 				
 		}
 	}

@@ -6,6 +6,7 @@ using FSM;
 
 namespace FightGame{
 	public class GameModel {
+		public FightCamera camera;
 		public Player p1;
 		public Player p2;
 		public Player[] players;
@@ -15,6 +16,7 @@ namespace FightGame{
 			this.p1 = new Player(1);
 			this.p2 = new Player(2);
 			this.players = new Player[] { p1, p2 };
+			this.camera = new FightCamera( p1, p2 );
 	    }
 	}
 }

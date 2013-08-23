@@ -13,8 +13,8 @@ namespace FSM
 			fighter = (A_Fighter)o;
 			GameObject gobj = fighter.gobj;
 			
-			gobj.animation.Stop();
 			fighter.hurtLocation = Location.NONE;
+			fighter.globalActionTimer = 0.0f;
 		}
 	}
 }

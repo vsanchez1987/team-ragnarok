@@ -49,6 +49,9 @@ namespace FightGame{
 			if (instance.gModel.p2 != null){
 				instance.gModel.p2.Update();
 			}
+			if (instance.gModel.camera != null){
+				instance.gModel.camera.Update();
+			}
 		}
 
 		public static void CreateFighter(string fighter, int playerNum)

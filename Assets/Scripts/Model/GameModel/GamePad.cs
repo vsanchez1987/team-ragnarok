@@ -33,10 +33,10 @@ namespace FightGame{
 			Debug.Log(player.PlayerNumber.ToString() + " - XAxis: " + XAxis + " YAxis: " + YAxis);
 			
 			if (Application.platform.ToString().Substring(0, 3) == "OSX"){
-				this.keys["RegularJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button16");
+				this.keys["RegularJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button18");
 				this.keys["UniqueJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button19");
 				this.keys["SpecialJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button17");
-				this.keys["BlockJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button18");
+				this.keys["BlockJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button16");
 			}
 			
 			this.moveCommands = new MoveCommand[] { MoveCommand.FORWARD, MoveCommand.FORWARD_DOWN, MoveCommand.FORWARD_UP, MoveCommand.BACK, MoveCommand.BACK_DOWN, MoveCommand.BACK_UP, MoveCommand.UP, MoveCommand.DOWN, MoveCommand.NONE };
@@ -75,6 +75,10 @@ namespace FightGame{
 		// Private Helper Functions
 		private void AssignKeysByPlayerNumber(int number){
 			PlayerControls controls 		= GameObject.Find("GlobalInputListener").GetComponent<GlobalInputListener>().GetControls(number);
+			this.keys["Left"]				= controls.Left;
+			this.keys["Right"]				= controls.Right;
+			this.keys["Up"]					= controls.Up;
+			this.keys["Down"]				= controls.Down;
 			this.keys["RegularKey"] 		= controls.Regular;
 			this.keys["UniqueKey"] 			= controls.Unique;
 			this.keys["SpecialKey"]			= controls.Special;
@@ -88,7 +92,32 @@ namespace FightGame{
 		
 		private Vector2 GetInputDirection(string hAxis, string vAxis)
 		{
-			return new Vector2(Input.GetAxis(hAxis),Input.GetAxisRaw(vAxis));
+			float horizontal = 0.0f;
+			float vertical = 0.0f;
+			
+			if (Input.GetKey(this.keys["Left"])){
+				horizontal = -1.0f;
+			}
+			else if (Input.GetKey(this.keys["Right"])){
+				horizontal = 1.0f;
+			}
+			
+			if (Input.GetKey(this.keys["Up"])){
+				vertical = 1.0f;
+			}
+			else if (Input.GetKey(this.keys["Down"])){
+				vertical = -1.0f;
+			}
+			
+			if (Input.GetAxisRaw(hAxis) != 0){
+				horizontal = Input.GetAxisRaw(hAxis);
+			}
+			
+			if (Input.GetAxisRaw(vAxis) != 0){
+				vertical = Input.GetAxisRaw(vAxis);
+			}
+			
+			return new Vector2(horizontal, vertical);
 		}
 		
 		private float GetInputAngle(Vector2 forward, Vector2 inputDirection)
@@ -188,13 +217,13 @@ namespace FightGame{
 				return (this.GetKey("BlockJoystick") || this.GetKey("BlockKey"));
 				break;
 			case ActionCommand.REGULAR:
-				return (this.GetKey("RegularJoystick") || this.GetKey("RegularKey"));
+				return (this.GetKeyDown("RegularJoystick") || this.GetKeyDown("RegularKey"));
 				break;
 			case ActionCommand.SPECIAL:
-				return (this.GetKey("SpecialJoystick") || this.GetKey("SpecialKey"));
+				return (this.GetKeyDown("SpecialJoystick") || this.GetKeyDown("SpecialKey"));
 				break;
 			case ActionCommand.UNIQUE:
-				return (this.GetKey("UniqueJoystick") || this.GetKey("UniqueKey"));
+				return (this.GetKeyDown("UniqueJoystick") || this.GetKeyDown("UniqueKey"));
 				break;
 			default:
 				break;

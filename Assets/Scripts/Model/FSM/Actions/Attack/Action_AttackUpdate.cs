@@ -14,18 +14,18 @@ namespace FSM
 			A_Attack 	attack 	= fighter.currentAttack;
 			
 			foreach (A_HitBoxInstruction hbi in attack.instructions){
-				if (attack.timer < hbi.startTime){
+				if (attack.timer < hbi.startTime / attack.animationSpeed){
 					hbi.hitbox.Disable();
 				}
-				else if (attack.timer >= hbi.startTime && attack.timer <= hbi.endTime){
+				else if ((attack.timer >= hbi.startTime / attack.animationSpeed) && (attack.timer <= hbi.endTime / attack.animationSpeed)){
 					hbi.Execute();
 				}
-				else if (attack.timer >= hbi.endTime){
+				else if (attack.timer >= hbi.endTime / attack.animationSpeed){
 					hbi.Reset();
 				}
 			}
 			//Debug.Log(attack.timer.ToString() + " > " + attack.attackLength.ToString());
-			if(attack.timer >= attack.attackLength)
+			if(attack.timer >= attack.attackLength / attack.animationSpeed)
 			{
 				attack.timer = 0.0f;
 				attack.Reset();

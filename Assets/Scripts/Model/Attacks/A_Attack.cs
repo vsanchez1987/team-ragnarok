@@ -14,7 +14,7 @@ namespace FightGame
 		public		float						animationSpeed;
 		protected 	A_Fighter 					attackOwner;
 		
-		protected A_Attack( string animationName, float animationSpeed, A_Fighter attackOwner )
+		protected A_Attack( string animationName, float animationSpeed, A_Fighter attackOwner)
 		{
 			this.timer				= timer;
 			this.instructions 		= new List<A_HitBoxInstruction>();
@@ -22,8 +22,11 @@ namespace FightGame
 			this.animationName 		= animationName;
 			this.animationSpeed		= animationSpeed;
 			
+			//Debug.Log("Animation: " + this.animationName + " Speed: " + this.attackOwner.gobj.animation[animationName].speed.ToString());
+			
 			if (attackOwner.gobj.animation.GetClip(animationName) != null){
-				this.attackLength  = attackOwner.gobj.animation[animationName].clip.length;
+				//attackOwner.gobj.animation[animationName].speed = animationSpeed;
+				this.attackLength = attackOwner.gobj.animation[animationName].clip.length;
 			}
 		}
 		
@@ -35,6 +38,10 @@ namespace FightGame
 			foreach (A_HitBoxInstruction hbi in this.instructions){
 				hbi.Reset();
 			}
+		}
+		
+		public void SetSpeed( float speed ){
+			this.animationSpeed = speed;
 		}
 	}
 }

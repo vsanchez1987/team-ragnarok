@@ -12,20 +12,22 @@ namespace FightGame
 			this.instructions.Add(new JointHitBoxInstruction(
 				"l_wrist_jnt", 					// joint
 				attackOwner, 					// fighter
-				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
 				3.0f, 							// radius
 				20.0f,							// damage
-				0.1f, 							// startTime
-				0.5f  							// endTime
+				0.08f, 							// startTime
+				0.5f,  							// endTime
+				Vector3.zero,					// offset
+				new Vector3( 0.1f, 0.0f, 0.0f )// movement
 				));			
 			this.instructions.Add(new JointHitBoxInstruction(
 				"r_wrist_jnt", 					// joint
 				attackOwner, 					// fighter
-				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
 				3.0f, 							// radius
 				20.0f,							// damage
-				1.1f, 							// startTime
-				1.6f  							// endTime
+				1.0f, 							// startTime
+				1.6f,  							// endTime
+				Vector3.zero,					// offset
+				new Vector3( 0.1f, 0.0f, 0.0f )// movement
 				));
 
 		}

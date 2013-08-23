@@ -10,7 +10,7 @@ namespace FightGame
 	{
 		protected A_Status 						status;
 		protected FSMContext 					moveGraph;
-		protected Vector2 						globalFowardVector;
+		protected Vector3 						globalFowardVector;
 		
 		public	string							name;
 		public 	GameObject 						gobj;
@@ -20,8 +20,10 @@ namespace FightGame
 		public	bool							gothit;
 		public	int								playerNumber;
 		public	float							cur_hp, max_hp;
-		public	float							moveSpeed = 2.0f;
+		public	float							moveSpeed;
 		public	Location						hurtLocation;
+		public	float							globalActionTimer;
+		public	Vector3							movement;
 		
 		public ActionCommand 					currentAction;
 		public MoveCommand						currentMovement;
@@ -37,9 +39,13 @@ namespace FightGame
 			this.currentAction 		= ActionCommand.NONE;
 			this.currentMovement	= MoveCommand.NONE;
 			this.currentAttack		= null;
+			this.cur_hp				= 0.0f;
+			this.max_hp				= 0.0f;
 			this.status				= new Status_None();
 			this.animationNameMap	= input.animationNameMap;
 			this.hurtLocation		= Location.NONE;
+			this.globalActionTimer	= 0.0f;
+			this.movement			= Vector3.zero;
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;
@@ -56,7 +62,7 @@ namespace FightGame
 		}
 		
 		public void DoActionCommand( ActionCommand ac ){
-			Debug.Log(this.name + " Action: " + ac.ToString());
+			//Debug.Log(this.name + " Action: " + ac.ToString());
 			
 			this.currentAction = ac;
 			
@@ -124,7 +130,8 @@ namespace FightGame
 					default:
 						break;
 					}
-					
+					//Debug.Log(this.currentAction.ToString());
+					//Debug.Break();
 					this.moveGraph.dispatch("attack", this);
 				}
 			}
@@ -134,7 +141,9 @@ namespace FightGame
 			//Debug.Log(this.name + " Move: " + mc.ToString());
 			this.currentMovement = mc;
 			if (mc != MoveCommand.NONE){
-				this.moveGraph.dispatch("walk", this);
+				if (mc == MoveCommand.FORWARD || mc == MoveCommand.BACK){
+					this.moveGraph.dispatch("walk", this);
+				}
 			}
 		}
 		
@@ -171,7 +180,7 @@ namespace FightGame
 		
 		private void InitForwardVector(int player)
 		{
-			globalFowardVector = (player==1 ? new Vector2(1,0) : new Vector2(-1,0));
+			globalFowardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
 		}
 		
 		public HitBox FindFreeHitBox(){
@@ -194,8 +203,23 @@ namespace FightGame
 			return hitbox;
 		}
 		
+		public void AddMovement( Vector3 movement ){
+			this.movement += new Vector3( movement.x * this.globalFowardVector.x, movement.y, movement.z );
+		}
+		
+		private void ApplyMovement(){
+			if (this.movement.magnitude > 0.001f){
+				this.gobj.transform.position += this.movement;
+				this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 5 );
+				if ( this.movement.magnitude < 0.001f ){
+					this.movement = Vector3.zero;
+				}
+			}
+		}
+		
 		public void Update()
 		{
+			this.ApplyMovement();
 			this.moveGraph.CurrentState.update(moveGraph, this);
 			//Debug.Log(this.moveGraph.CurrentState.Name);
 		}
@@ -205,10 +229,14 @@ namespace FightGame
 			globalFowardVector.x *= -1;
 		}
 		
-		public void TakeDamage(float damage, HurtBox hurtbox){
+		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction){
 			if (this.moveGraph.CurrentState.Name != "block"){
+				this.movement = direction * 0.1f;
 				this.hurtLocation = hurtbox.location;
 				this.moveGraph.dispatch( "takeDamage", this );
+			}
+			else{
+				this.movement = direction * 0.01f;
 			}
 			Debug.Log(this.name + " - Damage Taken: " + damage);
 		}
@@ -247,7 +275,7 @@ namespace FightGame
 			
 			S_block.addTransition(T_idle, "idle");
 			S_block.addTransition(T_walk, "walk");
-			S_block.addTransition(T_takeDamage,"takeDamage");
+			//S_block.addTransition(T_takeDamage,"takeDamage");
 			
 			this.moveGraph = FSM.FSM.createFSMInstance(S_idle, new Action_None(), this);
 		}

@@ -12,11 +12,11 @@ namespace FightGame
 			this.instructions.Add(new JointHitBoxInstruction(
 				"l_elbow_jnt", 					// joint
 				attackOwner, 					// fighter
-				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
 				3.0f, 							// radius
 				5.0f,							// damage
 				0.35f, 							// startTime
-				1.8f  							// endTime
+				1.8f,  							// endTime
+				new Vector3(0.0f, 0.0f, 0.0f) 	// offset
 				));
 		}
 	}
