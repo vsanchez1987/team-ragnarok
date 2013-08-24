@@ -13,7 +13,7 @@ namespace FightGame
 				"l_wrist_jnt", 					// joint
 				attackOwner, 					// fighter
 				3.0f, 							// radius
-				20.0f,							// damage
+				2.0f,							// damage
 				0.08f, 							// startTime
 				0.5f,  							// endTime
 				Vector3.zero,					// offset
@@ -23,9 +23,9 @@ namespace FightGame
 				"r_wrist_jnt", 					// joint
 				attackOwner, 					// fighter
 				3.0f, 							// radius
-				20.0f,							// damage
+				2.0f,							// damage
 				1.0f, 							// startTime
-				1.6f,  							// endTime
+				1.4f,  							// endTime
 				Vector3.zero,					// offset
 				new Vector3( 0.1f, 0.0f, 0.0f )// movement
 				));

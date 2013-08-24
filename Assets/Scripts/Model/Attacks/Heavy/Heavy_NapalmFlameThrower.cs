@@ -11,15 +11,56 @@ namespace FightGame
 		{
 			this.instructions.Add(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 					// projectile name
-				"r_shoulder_jnt", 					// starting joint
-				new Vector3(1.0f, 0.35f, 0.0f), 	// direction
-				10.0f, 								// speed
+				"l_wrist_jnt", 						// starting joint
+				new Vector3(1.0f, 0.0f, 0.0f), 		// direction
+				0.5f, 								// speed
+				attackOwner, 						// A_fighter
+				1.0f, 								// radius
+				1.0f, 								// damage
+				0.4f, 								// startTime
+				1.6f,  								// endTime
+				new Vector3(-1.2f, 0.0f, 0.0f),		// offset
+				new Vector3(0.0f, 0.0f, 0.0f)		// movement
+				));
+			this.instructions.Add(new ProjectileHitBoxInstruction(
+				"Projectile_Cube", 					// projectile name
+				"l_wrist_jnt", 						// starting joint
+				new Vector3(1.0f, 0.0f, 0.0f), 		// direction
+				0.5f, 								// speed
+				attackOwner, 						// A_fighter
+				1.0f, 								// radius
+				1.0f, 								// damage
+				0.4f, 								// startTime
+				1.6f,  								// endTime
+				new Vector3(-1.8f, 0.4f, 0.0f),		// offset
+				new Vector3(0.0f, 0.0f, 0.0f)		// movement
+				));
+			this.instructions.Add(new ProjectileHitBoxInstruction(
+				"Projectile_Cube", 					// projectile name
+				"l_wrist_jnt", 						// starting joint
+				new Vector3(1.0f, 0.0f, 0.0f), 		// direction
+				0.5f, 								// speed
+				attackOwner, 						// A_fighter
+				1.0f, 								// radius
+				1.0f, 								// damage
+				0.5f, 								// startTime
+				1.6f,  								// endTime
+				new Vector3(-2.4f, 0.0f, 0.0f),		// offset
+				new Vector3(0.0f, 0.0f, 0.0f)		// movement
+				));
+			this.instructions.Add(new ProjectileHitBoxInstruction(
+				"Projectile_Cube", 					// projectile name
+				"l_wrist_jnt", 						// starting joint
+				new Vector3(1.0f, -0.4f, 0.0f), 	// direction
+				0.5f, 								// speed
 				attackOwner, 						// A_fighter
 				2.0f, 								// radius
-				3.0f, 								// damage
-				0.7f, 								// startTime
-				5.0f ) 								// endTime
-				);
+				1.0f, 								// damage
+				0.5f, 								// startTime
+				1.6f,  								// endTime
+				new Vector3(-3.0f, 0.6f, 0.0f),		// offset
+				new Vector3(0.0f, 0.0f, 0.0f)		// movement
+				));
 		}
 	}
 }

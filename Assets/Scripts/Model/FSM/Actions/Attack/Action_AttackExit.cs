@@ -9,9 +9,10 @@ namespace FSM
 	public class Action_AttackExit:FSMAction
 	{
 		public override void execute(FSMContext c, object o){
-			A_Fighter fighter = (A_Fighter)o;
+			A_Fighter fighter = (A_Fighter)o;			
+			Debug.Log(fighter.currentAttack);
 			
-			fighter.currentAttack = null;
+			fighter.currentAttack = null;			
 		}
 	}
 }
