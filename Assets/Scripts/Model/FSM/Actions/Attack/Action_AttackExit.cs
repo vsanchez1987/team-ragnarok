@@ -10,7 +10,9 @@ namespace FSM
 	{
 		public override void execute(FSMContext c, object o){
 			A_Fighter fighter = (A_Fighter)o;
+			GameObject gobj = fighter.gobj;
 			
+			gobj.animation.Stop();
 			fighter.currentAttack = null;
 		}
 	}
