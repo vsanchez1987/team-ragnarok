@@ -41,6 +41,11 @@ namespace FightGame{
 			get { return instance.gModel.rightBoundary; }
 		}
 		
+		public static void Restart(){
+			instance.gModel.p1.RestartFighter();
+			instance.gModel.p2.RestartFighter();
+		}
+		
 		public static void ProcessInput(){
 			foreach (Player p in instance.gModel.players){
 				//Debug.Log("Player " + p.PlayerNumber);

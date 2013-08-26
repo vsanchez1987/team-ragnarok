@@ -30,7 +30,7 @@ namespace FightGame{
 			this.XAxis 			= "HorizontalP" + playerNumber;
 			this.YAxis 			= "VerticalP" + playerNumber;
 			this.AssignKeysByPlayerNumber(playerNumber);
-			Debug.Log(player.PlayerNumber.ToString() + " - XAxis: " + XAxis + " YAxis: " + YAxis);
+			//Debug.Log(player.PlayerNumber.ToString() + " - XAxis: " + XAxis + " YAxis: " + YAxis);
 			
 			if (Application.platform.ToString().Substring(0, 3) == "OSX"){
 				this.keys["RegularJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button18");

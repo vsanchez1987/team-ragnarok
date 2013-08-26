@@ -40,6 +40,7 @@ namespace FightGame
 			this.animationNameMap	= input.animationNameMap;
 			this.radius				= input.radius;
 			this.moveSpeed			= input.moveSpeed;
+			this.name				= input.name;
 			
 			this.gobj 				= gobj;
 			this.playerNumber		= playerNumber;
@@ -214,12 +215,12 @@ namespace FightGame
 		}
 		
 		public void AddMovement( Vector3 movement ){
-			this.movement += new Vector3( movement.x * this.globalFowardVector.x, movement.y, movement.z );
+			this.movement += movement;
 		}
 		
 		private void ApplyMovement(){
 			if (this.movement.magnitude > 0.001f){
-				if ( this.movement.x < 0 ){
+				if ( this.movement.x * this.globalFowardVector.x < 0 ){
 					if ( GameManager.CheckCanMoveBackward(this) ){
 						this.gobj.transform.position += this.movement;
 						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 5 );
@@ -229,7 +230,7 @@ namespace FightGame
 						}
 					}
 				}
-				else{
+				else if (this.movement.x * this.globalFowardVector.x > 0){
 					if ( GameManager.CheckCanMoveForward(this) ){
 						this.gobj.transform.position += this.movement;
 						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 5 );
@@ -259,25 +260,30 @@ namespace FightGame
 		}
 		
 		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction){
-			if (this.cur_hp <= 0){
-				this.cur_hp = 0.0f;
-				this.moveGraph.dispatch("death", this);
-			}
-			else{
-				if (this.moveGraph.CurrentState.Name != "block"){
-					this.cur_hp -= damage;
-					this.cur_meter += 5.0f;
+			if (this.moveGraph.CurrentState.Name != "block"){
+				this.cur_hp -= damage;
+				if (this.cur_hp <= 0){
+					this.cur_hp = 0.0f;
+					this.moveGraph.dispatch("death", this);
+				}
+				else{
 					this.movement = direction * 0.1f;
 					this.hurtLocation = hurtbox.location;
 					this.moveGraph.dispatch( "takeDamage", this );
 				}
+			}
+			else{
+				this.cur_hp -= damage * 0.1f;
+				if (this.cur_hp <= 0){
+					this.cur_hp = 0.0f;
+					this.moveGraph.dispatch("death", this);
+				}
 				else{
-					this.cur_hp -= damage * 0.1f;
+					this.cur_meter += 5.0f;
 					this.movement = direction * 0.05f;
 				}
 			}
-			Debug.Log(this.name + "\n" +
-				"Damage Taken: " + damage + " Current HP: " + this.cur_hp);
+			//Debug.Log(this.name + "\n" + "Damage Taken: " + damage + " Current HP: " + this.cur_hp);
 		}
 		
 		private void InitStateMachine()
