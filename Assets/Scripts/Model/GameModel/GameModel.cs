@@ -7,6 +7,7 @@ using FSM;
 namespace FightGame{
 	public class GameModel {
 		public FightCamera camera;
+		public UI_Script ui;
 		public Player p1;
 		public Player p2;
 		public Player[] players;
@@ -19,8 +20,9 @@ namespace FightGame{
 			this.p2 = new Player(2);
 			this.players = new Player[] { p1, p2 };
 			this.camera = new FightCamera( p1, p2 );
-			this.leftBoundary = -15.0f;
-			this.rightBoundary = 15.0f;
+			this.ui = GameObject.Find("UI").GetComponent<UI_Script>();
+			this.leftBoundary = camera.input.leftBoundary;
+			this.rightBoundary = camera.input.rightBoundary;
 	    }
 	}
 }

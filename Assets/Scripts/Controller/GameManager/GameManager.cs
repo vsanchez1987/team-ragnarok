@@ -29,6 +29,10 @@ namespace FightGame{
 			get { return instance.gModel.camera; }
 		}
 		
+		public static UI_Script UI{
+			get { return instance.gModel.ui; }
+		}
+		
 		public static float LeftBoundary {
 			get { return instance.gModel.leftBoundary; }
 		}
@@ -60,8 +64,25 @@ namespace FightGame{
 			if (instance.gModel.camera != null){
 				instance.gModel.camera.Update();
 			}
+			
+			if (instance.gModel.ui.hurtboxOn){
+				GameObject[] hurtboxes = GameObject.FindGameObjectsWithTag("HurtBox");
+				foreach (GameObject hurtbox in hurtboxes){
+					if (!hurtbox.renderer.enabled){
+						hurtbox.renderer.enabled = true;
+					}
+				}
+			}
+			else{
+				GameObject[] hurtboxes = GameObject.FindGameObjectsWithTag("HurtBox");
+				foreach (GameObject hurtbox in hurtboxes){
+					if (hurtbox.renderer.enabled){
+						hurtbox.renderer.enabled = false;
+					}
+				}
+			}
 		}
-
+		
 		public static void CreateFighter(string fighter, int playerNum)
 		{
 			Player player = instance.gModel.players[playerNum - 1];
@@ -77,12 +98,12 @@ namespace FightGame{
 		public static bool CheckCanMoveForward(A_Fighter fighter){
 			if ( GameManager.P1.Fighter != null && GameManager.P2.Fighter != null ){
 				if (GameManager.GetPlayersDistance() > GameManager.P1.Fighter.radius + GameManager.P2.Fighter.radius){
-					if (fighter.ForwardVector.x == 1){
+					if (fighter.GlobalForwardVector.x == 1){
 						if (GameManager.CheckWithinRightBoundary(fighter)){
 							return true;
 						}
 					}
-					else if (fighter.ForwardVector.x == -1){
+					else if (fighter.GlobalForwardVector.x == -1){
 						if (GameManager.CheckWithinLeftBoundary(fighter)){
 							return true;
 						}
@@ -95,12 +116,12 @@ namespace FightGame{
 		public static bool CheckCanMoveBackward(A_Fighter fighter){
 			if ( GameManager.P1.Fighter != null && GameManager.P2.Fighter != null ){
 				if (GameManager.GetPlayersDistance() < GameManager.Camera.maxDistance){
-					if (fighter.ForwardVector.x == 1){
+					if (fighter.GlobalForwardVector.x == 1){
 						if (GameManager.CheckWithinLeftBoundary(fighter)){
 							return true;
 						}
 					}
-					else if (fighter.ForwardVector.x == -1){
+					else if (fighter.GlobalForwardVector.x == -1){
 						if (GameManager.CheckWithinRightBoundary(fighter)){
 							return true;
 						}

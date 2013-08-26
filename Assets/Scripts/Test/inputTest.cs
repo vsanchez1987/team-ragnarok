@@ -33,7 +33,7 @@ public class inputTest : MonoBehaviour {
 		{
 			//pcontroller direction
 			printMsg = "controller direction: " + GameManager.P2.Fighter.controllerDirection +"\n" +
-						"forward vector: " + GameManager.P2.Fighter.ForwardVector +"\n ";
+						"forward vector: " + GameManager.P2.Fighter.GlobalForwardVector +"\n ";
 			
 			//button press
 			printMsg+="buttons pressed: " + "\n";
@@ -98,11 +98,11 @@ public class inputTest : MonoBehaviour {
 	        GUI.TextArea(new Rect(location.x, location.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
-		  	if (GUI.Button(new Rect(location.x, location.y+110, 150, 30), "Switch ForwardVector"))
+		  	if (GUI.Button(new Rect(location.x, location.y+110, 150, 30), "Switch GlobalForwardVector"))
 	        GUI.TextArea(new Rect(locationP2.x, locationP1.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
-		  	if (GUI.Button(new Rect(10, locationP2.y+110, 150, 30), "Switch ForwardVector"))
+		  	if (GUI.Button(new Rect(10, locationP2.y+110, 150, 30), "Switch GlobalForwardVector"))
 			{
 	            GameManager.P2.Fighter.SwitchForwardVector();
 			}
@@ -118,7 +118,7 @@ public class inputTest : MonoBehaviour {
 		{
 			//pcontroller direction
 			printMsg = "controller direction: " + GameManager.P1.Fighter.controllerDirection +"\n" +
-						"forward vector: " + GameManager.P1.Fighter.ForwardVector +"\n ";
+						"forward vector: " + GameManager.P1.Fighter.GlobalForwardVector +"\n ";
 			
 			//button press
 			printMsg+="buttons pressed: " + "\n";
@@ -183,11 +183,11 @@ public class inputTest : MonoBehaviour {
 	        GUI.TextArea(new Rect(location.x, location.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
-		  	if (GUI.Button(new Rect(location.x, location.y+110, 150, 30), "Switch ForwardVector"))
+		  	if (GUI.Button(new Rect(location.x, location.y+110, 150, 30), "Switch GlobalForwardVector"))
 	        GUI.TextArea(new Rect(locationP1.x, locationP1.y, 200, 100), printMsg, 200);
 			
 			//swap forward vector button
-		  	if (GUI.Button(new Rect(locationP1.x, locationP1.y+110, 150, 30), "Switch ForwardVector"))
+		  	if (GUI.Button(new Rect(locationP1.x, locationP1.y+110, 150, 30), "Switch GlobalForwardVector"))
 			{
 	            GameManager.P1.Fighter.SwitchForwardVector();
 			}

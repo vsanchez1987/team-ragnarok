@@ -16,8 +16,7 @@ namespace FightGame
 				20.0f,							// damage
 				0.08f, 							// startTime
 				0.5f,  							// endTime
-				Vector3.zero,					// offset
-				new Vector3( 0.1f, 0.0f, 0.0f )// movement
+				Vector3.zero					// offset
 				));			
 			this.instructions.Add(new JointHitBoxInstruction(
 				"r_wrist_jnt", 					// joint
@@ -26,8 +25,7 @@ namespace FightGame
 				20.0f,							// damage
 				1.0f, 							// startTime
 				1.6f,  							// endTime
-				Vector3.zero,					// offset
-				new Vector3( 0.1f, 0.0f, 0.0f )// movement
+				Vector3.zero					// offset
 				));
 
 		}

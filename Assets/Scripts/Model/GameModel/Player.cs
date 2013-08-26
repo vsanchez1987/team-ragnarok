@@ -38,15 +38,6 @@ namespace FightGame
 				this.fighter.Update();
 			}
 		}
-		/*
-		public List<HitBoxCollisionInfo> HitBoxCollisions{
-			get { return this.fighter.HitBoxCollisions; }
-		}
-		*/
-		public bool GotHit{
-			get { return this.fighter.gothit; }
-			set { this.fighter.gothit = value; }
-		}
 		
 		public int PlayerNumber{
 			get { return this.playerNumber; }
