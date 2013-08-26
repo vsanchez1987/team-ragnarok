@@ -24,7 +24,7 @@ namespace FightGame{
 			GameObject projectile = (GameObject)GameObject.Instantiate( Resources.Load("Projectiles/" + this.projectileName, typeof(GameObject)),
 				this.startJoint.position + this.startJoint.TransformDirection(this.offset), Quaternion.identity );
 			ProjectileInput pInput = projectile.GetComponent<ProjectileInput>();
-			pInput.direction = new Vector3(this.increment.x * fighter.ForwardVector.x, this.increment.y, this.increment.z);
+			pInput.direction = new Vector3(this.increment.x * fighter.GlobalForwardVector.x, this.increment.y, this.increment.z);
 			pInput.hitbox = new HitBox( this.fighter, pInput.hitboxObject, true );
 			this.hitbox = pInput.hitbox;
 			

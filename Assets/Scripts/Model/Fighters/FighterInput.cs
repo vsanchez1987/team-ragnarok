@@ -42,7 +42,9 @@ public enum FighterAnimation { WALK_FORWARD, WALK_BACKWARD, IDLE, BLOCK, DEATH, 
 
 public class FighterInput : MonoBehaviour
 {
-	public string name;
+	public string 			name;
+	public float 			radius;
+	public float 			moveSpeed;
 	public List<GameObject> hurtboxObjects;
 	public List<GameObject> hitboxObjects;
 	public List<Transform>	jointTransforms;

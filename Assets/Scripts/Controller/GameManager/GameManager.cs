@@ -98,12 +98,12 @@ namespace FightGame{
 		public static bool CheckCanMoveForward(A_Fighter fighter){
 			if ( GameManager.P1.Fighter != null && GameManager.P2.Fighter != null ){
 				if (GameManager.GetPlayersDistance() > GameManager.P1.Fighter.radius + GameManager.P2.Fighter.radius){
-					if (fighter.ForwardVector.x == 1){
+					if (fighter.GlobalForwardVector.x == 1){
 						if (GameManager.CheckWithinRightBoundary(fighter)){
 							return true;
 						}
 					}
-					else if (fighter.ForwardVector.x == -1){
+					else if (fighter.GlobalForwardVector.x == -1){
 						if (GameManager.CheckWithinLeftBoundary(fighter)){
 							return true;
 						}
@@ -116,12 +116,12 @@ namespace FightGame{
 		public static bool CheckCanMoveBackward(A_Fighter fighter){
 			if ( GameManager.P1.Fighter != null && GameManager.P2.Fighter != null ){
 				if (GameManager.GetPlayersDistance() < GameManager.Camera.maxDistance){
-					if (fighter.ForwardVector.x == 1){
+					if (fighter.GlobalForwardVector.x == 1){
 						if (GameManager.CheckWithinLeftBoundary(fighter)){
 							return true;
 						}
 					}
-					else if (fighter.ForwardVector.x == -1){
+					else if (fighter.GlobalForwardVector.x == -1){
 						if (GameManager.CheckWithinRightBoundary(fighter)){
 							return true;
 						}

@@ -47,7 +47,7 @@ namespace FightGame{
 		// Get a movement command when there has been an input
 		public MoveCommand GetMoveCommand(){
 			Vector2 inputDirection = this.GetInputDirection(this.XAxis, this.YAxis);
-			return this.GetControllerDirection(inputDirection, this.player.Fighter.ForwardVector);
+			return this.GetControllerDirection(inputDirection, this.player.Fighter.GlobalForwardVector);
 		}
 		
 		

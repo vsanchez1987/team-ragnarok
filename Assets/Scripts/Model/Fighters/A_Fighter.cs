@@ -17,7 +17,6 @@ namespace FightGame
 		public 	Dictionary<string, Transform> 	joints;
 		public 	Dictionary<string, HurtBox> 	hurtBoxes;
 		public 	Dictionary<string, HitBox> 		hitBoxes;
-		public	bool							gothit;
 		public	int								playerNumber;
 		public	float							cur_hp, max_hp;
 		public	float							moveSpeed;
@@ -30,12 +29,17 @@ namespace FightGame
 		public ActionCommand 					currentAction;
 		public MoveCommand						currentMovement;
 		public A_Attack							currentAttack;
+		public List<string>						commandLog;
 		public Dictionary<ActionCommand, A_Attack> 	actionsCommandMap;
 		public Dictionary<FighterAnimation, string> animationNameMap;
 		
 		public A_Fighter(GameObject gobj, int playerNumber)
 		{
 			FighterInput input		= gobj.GetComponent<FighterInput>();
+			this.animationNameMap	= input.animationNameMap;
+			this.radius				= input.radius;
+			this.moveSpeed			= input.moveSpeed;
+			
 			this.gobj 				= gobj;
 			this.playerNumber		= playerNumber;
 			this.currentAction 		= ActionCommand.NONE;
@@ -44,11 +48,10 @@ namespace FightGame
 			this.cur_hp				= 100.0f;
 			this.max_hp				= 100.0f;
 			this.status				= new Status_None();
-			this.animationNameMap	= input.animationNameMap;
 			this.hurtLocation		= Location.NONE;
 			this.globalActionTimer	= 0.0f;
 			this.movement			= Vector3.zero;
-			this.radius				= 0.0f;
+			this.commandLog			= new List<string>();
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;
@@ -176,7 +179,7 @@ namespace FightGame
 		}
 		
 		//describes player forward direction
-		public Vector2 ForwardVector {
+		public Vector2 GlobalForwardVector {
 			get {return globalFowardVector;}
 			set {this.globalFowardVector=value;}
 		}
@@ -213,7 +216,7 @@ namespace FightGame
 		
 		private void ApplyMovement(){
 			if (this.movement.magnitude > 0.001f){
-				if ( this.movement.x * globalFowardVector.x < 0 ){
+				if ( this.movement.x < 0 ){
 					if ( GameManager.CheckCanMoveBackward(this) ){
 						this.gobj.transform.position += this.movement;
 						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 5 );
@@ -223,13 +226,14 @@ namespace FightGame
 						}
 					}
 				}
-				//if ( GameManager.CheckCanMoveForward(this) && GameManager.CheckCanMoveBackward(this) ){
 				else{
-					this.gobj.transform.position += this.movement;
-					this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 5 );
-					
-					if ( this.movement.magnitude < 0.001f ){
-						this.movement = Vector3.zero;
+					if ( GameManager.CheckCanMoveForward(this) ){
+						this.gobj.transform.position += this.movement;
+						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 5 );
+						
+						if ( this.movement.magnitude < 0.001f ){
+							this.movement = Vector3.zero;
+						}
 					}
 				}
 			}
@@ -240,6 +244,10 @@ namespace FightGame
 			this.ApplyMovement();
 			this.moveGraph.CurrentState.update(moveGraph, this);
 			//Debug.Log(this.moveGraph.CurrentState.Name);
+		}
+		
+		public void LogLastCommand(){
+			
 		}
 		
 		public void SwitchForwardVector()

@@ -12,7 +12,7 @@ public class HitBoxInput : MonoBehaviour
 		if (other.tag == "HurtBox"){
 			HurtBox hurtbox = other.GetComponent<HurtBoxInput>().hurtbox;
 			if (hurtbox.owner.playerNumber != this.hitbox.owner.playerNumber){
-				hurtbox.owner.TakeDamage(this.hitbox.damage, hurtbox, this.hitbox.owner.ForwardVector);
+				hurtbox.owner.TakeDamage(this.hitbox.damage, hurtbox, this.hitbox.owner.GlobalForwardVector);
 				this.hitbox.Disable();
 				
 				if (this.hitbox.isProjectile){

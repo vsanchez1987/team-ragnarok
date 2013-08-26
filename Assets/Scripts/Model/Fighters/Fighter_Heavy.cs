@@ -9,11 +9,7 @@ namespace FightGame
 	public class Fighter_Heavy : A_Fighter
 	{
 		public Fighter_Heavy (GameObject gobj, int playerNumber) : base (gobj, playerNumber)
-		{
-			this.name = "Heavy";
-			this.moveSpeed = 5.0f;
-			this.radius = 3.0f;
-			
+		{			
 			this.gobj.animation[this.animationNameMap[FighterAnimation.WALK_FORWARD]].speed = 1.5f;
 			this.gobj.animation[this.animationNameMap[FighterAnimation.WALK_BACKWARD]].speed = 1.5f;
 			

@@ -22,23 +22,12 @@ namespace FSM
 			else if (fighter.hurtLocation == Location.LOW){
 				animation = FighterAnimation.FLINCH_DOWN;
 			}
-			
-			//check animation's duration, exit to idle state when animation done
-			//"mega_punch" animation just for testing
-			
+
 			if(fighter.globalActionTimer > gobj.animation[fighter.animationNameMap[animation]].length)
 			{
 				c.dispatch("idle", o);
 			}
 			
-			//if during animation, got hit again, go back to got hit state
-			/*
-			if(fighter.gothit)
-			{
-				time = 0f;
-				c.dispatch("takeDamage", this);
-			}
-			*/
 			fighter.globalActionTimer += UnityEngine.Time.deltaTime;
 			gobj.animation.Play(fighter.animationNameMap[animation]);
 				
