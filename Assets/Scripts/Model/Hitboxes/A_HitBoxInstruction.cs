@@ -28,7 +28,7 @@ namespace FightGame{
 		
 		public void Init(){
 			this.hitbox = fighter.FindFreeHitBox();
-			Debug.Log(this.hitbox.gobj.name);
+			//Debug.Log(this.hitbox.gobj.name);
 			//Debug.Break();
 		}
 		

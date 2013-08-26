@@ -20,7 +20,7 @@ public class UI_Script : MonoBehaviour
 					cur_p1meter,
 					cur_p2meter;
 	public GUIStyle health_style, meter_style;
-	
+	public Texture2D controls;
 	
 	float 	p1_CorX, p1_CorY,
 					p2_CorX, p2_CorY,
@@ -32,7 +32,7 @@ public class UI_Script : MonoBehaviour
 					p2_GUIstartY;
 	
 	[HideInInspector]
-	public bool	hitboxOn, hurtboxOn = false;
+	public bool	hitboxOn, hurtboxOn, controlsOn = false;
 	
 	//tom
 	
@@ -49,7 +49,8 @@ public class UI_Script : MonoBehaviour
 	
 	void Start()
 	{
-		
+		GameManager.CreateFighter("Fighter_Heavy",1);
+		GameManager.CreateFighter("Fighter_Heavy",2);
 		
 		p1_GUIstartX = 25f;
 		p1_GUIstartY = 25f;
@@ -125,7 +126,7 @@ public class UI_Script : MonoBehaviour
 				UI_healthGreen.height * texToScreenRatioH);
 		GUI.DrawTexture(location
 			,UI_healthRed,ScaleMode.StretchToFill,true,0);
-		Debug.Log(location);
+		//Debug.Log(location);
 				
 		//p1 health bar
 		GUI.DrawTexture(
@@ -165,6 +166,7 @@ public class UI_Script : MonoBehaviour
 	}
 	
     void OnGUI() {
+		/*
 		if (!created){
 	        if (GUI.Button(new Rect(Screen.width/2, Screen.height/2, 50, 30), "Start")){
 				GameManager.CreateFighter("Fighter_Heavy",1);
@@ -179,26 +181,38 @@ public class UI_Script : MonoBehaviour
 				this.hurtboxOn = GUI.Toggle(new Rect(20, 110, 130, 20), hurtboxOn, "Show HurtBoxes");
 			}
 		}
-		
+		*/
 		if(GameManager.P1.Fighter != null && GameManager.P2.Fighter != null)
 		{
+			if (GameManager.P1.Fighter.cur_hp <= 0 || GameManager.P2.Fighter.cur_hp <= 0){
+				if (GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2 - 50, 200, 100), "Restart")){
+					GameManager.Restart();
+				}
+			}
+			
+			this.hitboxOn = GUI.Toggle(new Rect(20, Screen.height - 20, 130, 20), hitboxOn, "Show HitBoxes");
+			this.hurtboxOn = GUI.Toggle(new Rect(20, Screen.height - 40, 130, 20), hurtboxOn, "Show HurtBoxes");
+			this.controlsOn = GUI.Toggle(new Rect(20, Screen.height - 60, 130, 20), controlsOn, "Show Controls");
+			
 			TomGUI();
 			
 			//draw empty bars
 			//GUI.Box(new Rect(p1_GUIstartX,p1_GUIstartY,length_default,height_default),"");
 			//GUI.Box(new Rect(p2_GUIstartX,p2_GUIstartY,length_default,height_default),"");
+			
 			GUI.Box(new Rect(p1_GUIstartX,p1_GUIstartY+meterPosY,length_default,height_default),"");
 			GUI.Box(new Rect(p2_GUIstartX,p2_GUIstartY+meterPosY,length_default,height_default),"");
 			
 			//draw health bars and meter bars over
 			//GUI.Box(new Rect(p1_GUIstartX,p1_GUIstartY,length_p1health,height_default),"",health_style);
 			//GUI.Box(new Rect(p2_GUIstartX,p2_GUIstartY,length_p2health,height_default),"",health_style);
+			
 			GUI.Box(new Rect(p1_GUIstartX,p1_GUIstartY+meterPosY,length_p1meter,height_default),"",meter_style);
 			GUI.Box(new Rect(p2_GUIstartX,p2_GUIstartY+meterPosY,length_p2meter,height_default),"",meter_style);
 			
-			
-		
-			
+			if (this.controlsOn){
+				GUI.DrawTexture( new Rect( 0, 0, Screen.width, Screen.height ), this.controls, ScaleMode.ScaleToFit, true, 0 );
+			}
 		}
 		/*
 		else{

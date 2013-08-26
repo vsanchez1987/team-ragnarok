@@ -11,37 +11,43 @@ namespace FightGame
 		{
 			this.instructions.Add(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 				// projectile name
-				"l_shoulder_jnt",				// starting joint
+				"head_jnt",						// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed
 				attackOwner, 					// A_fighter
 				1.0f, 							// radius
 				1.0f, 							// damage
 				0.1f, 							// startTime
-				5.0f ) 							// endTime
-				);
+				5.0f,							// endTime
+				new Vector3(2.0f, 0.0f, 0.0f),	// offset
+				new Vector3(0.0f, 0.0f, 0.0f)	// movement
+				));				
 			this.instructions.Add(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 				// projectile name
-				"r_shoulder_jnt",				// starting joint
+				"head_jnt",						// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed
 				attackOwner, 					// A_fighter
 				1.0f, 							// radius
 				1.0f, 							// damage
-				0.5f, 							// startTime
-				5.0f ) 							// endTime
-				);
+				0.4f, 							// startTime
+				5.0f,							// endTime
+				new Vector3(2.0f, 0.0f, 0.0f),	// offset
+				new Vector3(0.0f, 0.0f, 0.0f)	// movement
+				));				
 			this.instructions.Add(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 				// projectile name
-				"r_shoulder_jnt",				// starting joint
+				"head_jnt",						// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed
 				attackOwner, 					// A_fighter
-				1.0f, 							// radius
-				1.0f, 							// damage
-				1.0f, 							// startTime
-				5.0f ) 							// endTime
-				);
+				1.5f, 							// radius
+				3.0f, 							// damage
+				0.6f, 							// startTime
+				5.0f,							// endTime
+				new Vector3(2.0f, 0.5f, 0.0f),	// offset
+				new Vector3(0.0f, 0.0f, 0.0f)	// movement
+				));				
 		}
 	}
 }

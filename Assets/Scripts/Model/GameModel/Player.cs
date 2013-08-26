@@ -67,8 +67,14 @@ namespace FightGame
 			}
 		}
 		
-		public void SelectFighter( A_Fighter fighter ){
+		public void SelectFighter( A_Fighter fighter ){}
+		
+		public void RestartFighter(){
+			string fighterName = "Fighter_" + this.Fighter.name;
+			GameObject.Destroy( this.fighter.gobj );
+			this.fighter = null;
 			
+			GameManager.CreateFighter( fighterName, this.playerNumber );
 		}
 	}
 }
