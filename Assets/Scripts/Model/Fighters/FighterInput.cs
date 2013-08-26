@@ -10,6 +10,7 @@ public class Animations{
 	public AnimationClip WalkBackward;
 	public AnimationClip Idle;
 	public AnimationClip Block;
+	public AnimationClip Death;
 	public AnimationClip FlinchUp;
 	public AnimationClip FlinchDown;
 	
@@ -33,7 +34,7 @@ public class Animations{
 	
 }
 
-public enum FighterAnimation { WALK_FORWARD, WALK_BACKWARD, IDLE, BLOCK, FLINCH_UP, FLINCH_DOWN,
+public enum FighterAnimation { WALK_FORWARD, WALK_BACKWARD, IDLE, BLOCK, DEATH, FLINCH_UP, FLINCH_DOWN,
 	REGULAR_ATTACK, REGULAR_FORWARD_ATTACK, REGULAR_BACK_ATTACK, REGULAR_UP_ATTACK, REGULAR_DOWN_ATTACK, 
 	UNIQUE_ATTACK, UNIQUE_FORWARD_ATTACK, UNIQUE_BACK_ATTACK, UNIQUE_UP_ATTACK, UNIQUE_DOWN_ATTACK, 
 	SPECIAL_ATTACK, SPECIAL_FORWARD_ATTACK, SPECIAL_BACK_ATTACK, SPECIAL_UP_ATTACK, SPECIAL_DOWN_ATTACK, 
@@ -57,6 +58,7 @@ public class FighterInput : MonoBehaviour
 		this.animationNameMap[FighterAnimation.WALK_BACKWARD] 			= this.animations.WalkBackward.name;
 		this.animationNameMap[FighterAnimation.IDLE] 					= this.animations.Idle.name;
 		this.animationNameMap[FighterAnimation.BLOCK]		 			= this.animations.Block.name;
+		this.animationNameMap[FighterAnimation.DEATH]		 			= this.animations.Death.name;
 		this.animationNameMap[FighterAnimation.FLINCH_UP]		 		= this.animations.FlinchUp.name;
 		this.animationNameMap[FighterAnimation.FLINCH_DOWN]		 		= this.animations.FlinchDown.name;
 		

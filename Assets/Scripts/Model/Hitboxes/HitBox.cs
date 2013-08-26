@@ -27,7 +27,10 @@ namespace FightGame
 		public void Enable(){
 			this.inUse = true;
 			this.TurnOnCollider();
-			this.TurnOnVisibility();
+			
+			if (GameManager.UI.hitboxOn){
+				this.TurnOnVisibility();
+			}
 		}
 		
 		public void Disable(){

@@ -13,6 +13,7 @@ namespace FSM
 			GameObject gobj = fighter.gobj;
 			
 			gobj.animation.Stop();
+			fighter.movement = Vector3.zero;
 			fighter.currentAttack = null;
 		}
 	}

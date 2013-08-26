@@ -29,6 +29,10 @@ namespace FightGame{
 			get { return instance.gModel.camera; }
 		}
 		
+		public static UI_Script UI{
+			get { return instance.gModel.ui; }
+		}
+		
 		public static float LeftBoundary {
 			get { return instance.gModel.leftBoundary; }
 		}
@@ -60,8 +64,25 @@ namespace FightGame{
 			if (instance.gModel.camera != null){
 				instance.gModel.camera.Update();
 			}
+			
+			if (instance.gModel.ui.hurtboxOn){
+				GameObject[] hurtboxes = GameObject.FindGameObjectsWithTag("HurtBox");
+				foreach (GameObject hurtbox in hurtboxes){
+					if (!hurtbox.renderer.enabled){
+						hurtbox.renderer.enabled = true;
+					}
+				}
+			}
+			else{
+				GameObject[] hurtboxes = GameObject.FindGameObjectsWithTag("HurtBox");
+				foreach (GameObject hurtbox in hurtboxes){
+					if (hurtbox.renderer.enabled){
+						hurtbox.renderer.enabled = false;
+					}
+				}
+			}
 		}
-
+		
 		public static void CreateFighter(string fighter, int playerNum)
 		{
 			Player player = instance.gModel.players[playerNum - 1];
