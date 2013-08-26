@@ -220,7 +220,7 @@ namespace FightGame
 		
 		private void ApplyMovement(){
 			if (this.movement.magnitude > 0.001f){
-				if ( this.movement.x * this.globalFowardVector.x < 0 ){
+				if ( this.movement.x < 0 ){
 					if ( GameManager.CheckCanMoveBackward(this) ){
 						this.gobj.transform.position += new Vector3(this.movement.x * this.globalFowardVector.x,
 							this.movement.y, this.movement.z);
@@ -231,7 +231,7 @@ namespace FightGame
 						}
 					}
 				}
-				else if (this.movement.x * this.globalFowardVector.x > 0){
+				else if (this.movement.x > 0){
 					if ( GameManager.CheckCanMoveForward(this) ){
 						this.gobj.transform.position += new Vector3(this.movement.x * this.globalFowardVector.x,
 							this.movement.y, this.movement.z);
