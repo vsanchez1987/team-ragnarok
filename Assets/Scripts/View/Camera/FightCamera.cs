@@ -33,11 +33,16 @@ namespace FightGame
 			this.p2Position = (p2.Fighter != null) ? this.p2.Fighter.gobj.transform.position : camera.transform.position;
 			
 			this.cameraZ = -(p1Position - p2Position).magnitude - 5.0f;
-			
+			/*
 			Vector3 cameraPosition = 
 				new Vector3( (this.p1Position.x + this.p2Position.x)/2.0f, 
 				camera.transform.position.y, 
 				Mathf.Clamp(this.cameraZ, maxZDistance, minZDistance) );
+			*/
+			Vector3 cameraPosition = 
+				new Vector3( (this.p1Position.x + this.p2Position.x)/2.0f, 
+				camera.transform.position.y, 
+				camera.transform.position.z);
 			
 			if (cameraPosition.x > GameManager.LeftBoundary && cameraPosition.x < GameManager.RightBoundary){
 				this.camera.transform.position = cameraPosition;

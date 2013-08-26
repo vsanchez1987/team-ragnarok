@@ -17,7 +17,6 @@ namespace FightGame{
 		
 		protected A_HitBoxInstruction(A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 movement = default(Vector3)){
 			this.fighter		= fighter;
-			//this.hitbox 		= fighter.FindFreeHitBox();
 			this.startTime 		= startTime;
 			this.endTime 		= endTime;
 			this.radius			= radius;
@@ -28,8 +27,6 @@ namespace FightGame{
 		
 		public void Init(){
 			this.hitbox = fighter.FindFreeHitBox();
-			//Debug.Log(this.hitbox.gobj.name);
-			//Debug.Break();
 		}
 		
 		public virtual void Start(){

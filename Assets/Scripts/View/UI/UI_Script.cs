@@ -190,9 +190,9 @@ public class UI_Script : MonoBehaviour
 				}
 			}
 			
-			this.hitboxOn = GUI.Toggle(new Rect(20, Screen.height - 20, 130, 20), hitboxOn, "Show HitBoxes");
-			this.hurtboxOn = GUI.Toggle(new Rect(20, Screen.height - 40, 130, 20), hurtboxOn, "Show HurtBoxes");
-			this.controlsOn = GUI.Toggle(new Rect(20, Screen.height - 60, 130, 20), controlsOn, "Show Controls");
+			this.hitboxOn = GUI.Toggle(new Rect(Screen.width * 0.05f, Screen.height * 0.25f, 130, 20), hitboxOn, "Show HitBoxes");
+			this.hurtboxOn = GUI.Toggle(new Rect(Screen.width * 0.05f, Screen.height * 0.25f + 20, 130, 20), hurtboxOn, "Show HurtBoxes");
+			this.controlsOn = GUI.Toggle(new Rect(Screen.width * 0.05f, Screen.height * 0.25f + 40, 130, 20), controlsOn, "Show Controls");
 			
 			TomGUI();
 			
