@@ -222,7 +222,8 @@ namespace FightGame
 			if (this.movement.magnitude > 0.001f){
 				if ( this.movement.x * this.globalFowardVector.x < 0 ){
 					if ( GameManager.CheckCanMoveBackward(this) ){
-						this.gobj.transform.position += this.movement;
+						this.gobj.transform.position += new Vector3(this.movement.x * this.globalFowardVector.x,
+							this.movement.y, this.movement.z);
 						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 5 );
 						
 						if ( this.movement.magnitude < 0.001f ){
@@ -232,7 +233,8 @@ namespace FightGame
 				}
 				else if (this.movement.x * this.globalFowardVector.x > 0){
 					if ( GameManager.CheckCanMoveForward(this) ){
-						this.gobj.transform.position += this.movement;
+						this.gobj.transform.position += new Vector3(this.movement.x * this.globalFowardVector.x,
+							this.movement.y, this.movement.z);
 						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 5 );
 						
 						if ( this.movement.magnitude < 0.001f ){
