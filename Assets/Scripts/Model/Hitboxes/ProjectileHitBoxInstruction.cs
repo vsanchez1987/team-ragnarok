@@ -10,8 +10,16 @@ namespace FightGame{
 		private Transform	startJoint;
 		private Vector3		increment;
 		private Vector3		offset;
-		
+		/*
 		public ProjectileHitBoxInstruction( string projectileName, string startJoint, Vector3 direction, float speed, A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 offset = default(Vector3), Vector3 movement = default(Vector3)) : base(fighter, radius, damage, startTime, endTime, movement){
+			float timePeriod	= (endTime - startTime);
+			this.projectileName = projectileName;
+			this.startJoint		= fighter.joints[startJoint];
+			this.increment		= direction.normalized * speed * (Time.deltaTime);
+			this.offset			= offset;
+		}*/
+		
+		public ProjectileHitBoxInstruction( string projectileName, string startJoint, Vector3 direction, float speed, A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 offset, Vector3 movement) : base(fighter, radius, damage, startTime, endTime, movement){
 			float timePeriod	= (endTime - startTime);
 			this.projectileName = projectileName;
 			this.startJoint		= fighter.joints[startJoint];

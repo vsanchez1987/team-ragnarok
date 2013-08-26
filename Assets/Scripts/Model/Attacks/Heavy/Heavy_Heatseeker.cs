@@ -18,8 +18,10 @@ namespace FightGame
 				2.0f, 								// radius
 				3.0f, 								// damage
 				0.7f, 								// startTime
-				5.0f ) 								// endTime
-				);
+				5.0f,								// endTime
+				new Vector3(0.0f, 0.0f, 0.0f),		// offset
+				new Vector3(0.0f, 0.0f, 0.0f)		// movement
+				));				
 		}
 	}
 }
