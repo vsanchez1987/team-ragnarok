@@ -48,7 +48,7 @@ namespace FightGame
 			this.currentAttack		= null;
 			this.cur_hp				= 100.0f;
 			this.max_hp				= 100.0f;
-			this.cur_meter			= 100.0f;
+			this.cur_meter			= 0.0f;
 			this.max_meter			= 100.0f;
 			this.status				= new Status_None();
 			this.hurtLocation		= Location.NONE;
@@ -259,18 +259,20 @@ namespace FightGame
 		}
 		
 		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction){
-			this.cur_hp -= damage;
 			if (this.cur_hp <= 0){
 				this.cur_hp = 0.0f;
 				this.moveGraph.dispatch("death", this);
 			}
 			else{
 				if (this.moveGraph.CurrentState.Name != "block"){
+					this.cur_hp -= damage;
+					this.cur_meter += 5.0f;
 					this.movement = direction * 0.1f;
 					this.hurtLocation = hurtbox.location;
 					this.moveGraph.dispatch( "takeDamage", this );
 				}
 				else{
+					this.cur_hp -= damage * 0.1f;
 					this.movement = direction * 0.05f;
 				}
 			}
