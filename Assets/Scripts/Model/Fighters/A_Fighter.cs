@@ -19,6 +19,7 @@ namespace FightGame
 		public 	Dictionary<string, HitBox> 		hitBoxes;
 		public	int								playerNumber;
 		public	float							cur_hp, max_hp;
+		public	float							cur_meter, max_meter;
 		public	float							moveSpeed;
 		public	Location						hurtLocation;
 		public	float							globalActionTimer;
@@ -47,6 +48,8 @@ namespace FightGame
 			this.currentAttack		= null;
 			this.cur_hp				= 100.0f;
 			this.max_hp				= 100.0f;
+			this.cur_meter			= 100.0f;
+			this.max_meter			= 100.0f;
 			this.status				= new Status_None();
 			this.hurtLocation		= Location.NONE;
 			this.globalActionTimer	= 0.0f;
