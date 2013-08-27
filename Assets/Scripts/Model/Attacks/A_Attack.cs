@@ -43,6 +43,11 @@ namespace FightGame
 		public void SetSpeed( float speed ){
 			this.animationSpeed = speed;
 		}
+		
+		//Hieu add
+		public virtual void SpecialExecute(){
+			
+		}
 	}
 }
 

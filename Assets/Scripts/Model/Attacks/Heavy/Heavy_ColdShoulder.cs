@@ -19,5 +19,12 @@ namespace FightGame
 				new Vector3(0.0f, 0.0f, 0.0f) 	// offset
 				));
 		}
+		
+		public override void  SpecialExecute(){
+			if(this.timer > 0.6f && this.timer < 0.8f)
+			{
+				this.attackOwner.gobj.transform.Translate(this.attackOwner.localForwardVector* 20f * Time.deltaTime);
+			}
+		}
 	}
 }

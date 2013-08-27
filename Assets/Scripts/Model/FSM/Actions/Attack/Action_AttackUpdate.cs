@@ -34,6 +34,7 @@ namespace FSM
 			
 			fighter.gobj.animation.CrossFade(attack.animationName);
 			attack.Execute();
+			attack.SpecialExecute();
 		}
 	}
 }
