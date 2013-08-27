@@ -78,5 +78,14 @@ namespace FightGame
 				this.gobj.renderer.enabled = false;
 			}
 		}
+		
+		public A_Fighter GetTarget()
+		{
+			if(this.owner.playerNumber == 1)
+			{
+				return GameManager.P2.Fighter;
+			}
+			else return GameManager.P1.Fighter;
+		}
 	}
 }

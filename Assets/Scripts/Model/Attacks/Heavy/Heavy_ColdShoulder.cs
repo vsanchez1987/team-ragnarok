@@ -21,7 +21,7 @@ namespace FightGame
 		}
 		
 		public override void  SpecialExecute(){
-			if(this.timer > 0.6f && this.timer < 0.8f)
+			if(this.timer > 0.6f && this.timer < 0.8f && GameManager.CheckCanMoveForward(this.attackOwner))
 			{
 				this.attackOwner.gobj.transform.Translate(this.attackOwner.localForwardVector* 20f * Time.deltaTime);
 			}

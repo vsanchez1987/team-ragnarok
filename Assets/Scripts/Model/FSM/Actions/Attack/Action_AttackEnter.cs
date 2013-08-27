@@ -14,14 +14,22 @@ namespace FSM
 
 			if (fighter.currentAction != ActionCommand.NONE){
 				fighter.currentAttack = fighter.actionsCommandMap[fighter.currentAction];
+			}
+			
+			//check if meter is full before execute Spe
+			/*
+			if(fighter.currentAction == ActionCommand.SPECIAL && fighter.cur_meter < 100)
+			{
+				c.dispatch("idle",fighter);
+			}
+			else{
+			*/
+				fighter.gobj.animation[fighter.currentAttack.animationName].speed = fighter.currentAttack.animationSpeed;
 				
-			}
-			
-			fighter.gobj.animation[fighter.currentAttack.animationName].speed = fighter.currentAttack.animationSpeed;
-			
-			foreach (A_HitBoxInstruction hbi in fighter.currentAttack.instructions){
-				hbi.Init();
-			}
+				foreach (A_HitBoxInstruction hbi in fighter.currentAttack.instructions){
+					hbi.Init();
+				}
+			//}
 			
 			//fighter.gobj.animation.CrossFade(attack.animationName);
 			/*

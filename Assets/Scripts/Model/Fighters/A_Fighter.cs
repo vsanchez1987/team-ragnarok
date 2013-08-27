@@ -102,22 +102,26 @@ namespace FightGame
 						}
 						break;
 					case ActionCommand.SPECIAL:
-						switch ( this.currentMovement ){
-						case MoveCommand.FORWARD:
-							this.currentAction = ActionCommand.SPECIAL_FORWARD;
-							break;
-						case MoveCommand.BACK:
-							this.currentAction = ActionCommand.SPECIAL_BACK;
-							break;
-						case MoveCommand.UP:
-							this.currentAction = ActionCommand.SPECIAL_UP;
-							break;
-						case MoveCommand.DOWN:
-							this.currentAction = ActionCommand.SPECIAL_DOWN;
-							break;
-						default:
-							break;
+						if(this.cur_meter >= 100){
+							switch ( this.currentMovement ){
+							case MoveCommand.FORWARD:
+								this.currentAction = ActionCommand.SPECIAL_FORWARD;
+								break;
+							case MoveCommand.BACK:
+								this.currentAction = ActionCommand.SPECIAL_BACK;
+								break;
+							case MoveCommand.UP:
+								this.currentAction = ActionCommand.SPECIAL_UP;
+								break;
+							case MoveCommand.DOWN:
+								this.currentAction = ActionCommand.SPECIAL_DOWN;
+								break;
+							default:
+								break;
+							}
 						}
+						else
+							this.currentAction = ActionCommand.NONE;
 						break;
 					case ActionCommand.UNIQUE:
 						switch ( this.currentMovement ){
@@ -142,7 +146,8 @@ namespace FightGame
 					}
 					//Debug.Log(this.currentAction.ToString());
 					//Debug.Break();
-					this.moveGraph.dispatch("attack", this);
+					if (this.currentAction != ActionCommand.NONE)
+						this.moveGraph.dispatch("attack", this);
 				}
 			}
 		}
@@ -249,6 +254,7 @@ namespace FightGame
 		{
 			this.ApplyMovement();
 			this.moveGraph.CurrentState.update(moveGraph, this);
+			if (this.cur_meter >= 100f) this.cur_meter = 100f;
 			//Debug.Log(this.moveGraph.CurrentState.Name);
 		}
 		
@@ -276,14 +282,28 @@ namespace FightGame
 			}
 			else{
 				this.cur_hp -= damage * 0.1f;
+				//The meter will increase when player's attack is block;
+				if (this.playerNumber == 1) 
+				{
+					if(GameManager.P2.Fighter.cur_meter < 100)
+						GameManager.P2.Fighter.cur_meter += 5.0f;
+				}
+				else 
+				{	if(GameManager.P1.Fighter.cur_meter < 100)
+						GameManager.P1.Fighter.cur_meter += 5.0f;
+				}
+				this.movement = direction * 0.05f;
 				if (this.cur_hp <= 0){
 					this.cur_hp = 0.0f;
 					this.moveGraph.dispatch("death", this);
 				}
+				/*
 				else{
 					this.cur_meter += 5.0f;
+					Debug.Log("Player "+this.playerNumber+"current meter "+this.cur_meter);
 					this.movement = direction * 0.05f;
 				}
+				*/
 			}
 			//Debug.Log(this.name + "\n" + "Damage Taken: " + damage + " Current HP: " + this.cur_hp);
 		}

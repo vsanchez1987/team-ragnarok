@@ -14,10 +14,10 @@ namespace FightGame
 				attackOwner, 					// fighter
 				3.0f, 							// radius
 				3.0f,							// damage
-				1.5f, 							// startTime
+				1.0f, 							// startTime
 				1.9f, 							// endTime
-				new Vector3(2.0f, 0.0f, 0.0f), 	// offset
-				new Vector3(0.2f, 0.0f, 0.0f)	// extraMovement
+				new Vector3(0.0f, 0.0f, 0.0f),	// offset
+				new Vector3(0.0f, 0.0f, 0.0f)	// extraMovement
 				));
 		}
 	}

@@ -49,6 +49,9 @@ namespace FightGame
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement							
 				));
 		}
+		public override void SpecialExecute(){
+			this.attackOwner.cur_meter = 0f;
+		}
 	}
 }
 
