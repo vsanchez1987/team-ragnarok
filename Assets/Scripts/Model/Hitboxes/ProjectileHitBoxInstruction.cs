@@ -10,6 +10,7 @@ namespace FightGame{
 		private Transform	startJoint;
 		private Vector3		increment;
 		private Vector3		offset;
+		private float		speed;
 		/*
 		public ProjectileHitBoxInstruction( string projectileName, string startJoint, Vector3 direction, float speed, A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 offset = default(Vector3), Vector3 movement = default(Vector3)) : base(fighter, radius, damage, startTime, endTime, movement){
 			float timePeriod	= (endTime - startTime);
@@ -25,6 +26,7 @@ namespace FightGame{
 			this.startJoint		= fighter.joints[startJoint];
 			this.increment		= direction.normalized * speed * (Time.deltaTime);
 			this.offset			= offset;
+			this.speed			= speed;
 		}
 		
 		public override void Start(){
@@ -34,6 +36,7 @@ namespace FightGame{
 			ProjectileInput pInput = projectile.GetComponent<ProjectileInput>();
 			pInput.direction = new Vector3(this.increment.x * fighter.GlobalForwardVector.x, this.increment.y, this.increment.z);
 			pInput.hitbox = new HitBox( this.fighter, pInput.hitboxObject, true );
+			pInput.speed = this.speed;
 			this.hitbox = pInput.hitbox;
 			
 			HitBoxInput hInput = pInput.hitboxObject.GetComponent<HitBoxInput>();
