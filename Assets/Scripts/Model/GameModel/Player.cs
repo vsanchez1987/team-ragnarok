@@ -62,6 +62,9 @@ namespace FightGame
 			case "Fighter_Heavy":
 				this.fighter = new Fighter_Heavy(character, this.playerNumber);
 				break;
+			case "Fighter_Amaterasu":
+				this.fighter = new Fighter_Amaterasu(character,this.playerNumber);
+				break;
 			default:
 				break;
 			}

@@ -32,6 +32,7 @@ namespace FightGame
 			this.actionsCommandMap[ActionCommand.SPECIAL_BACK] 		= new Heavy_Railgun(this.animationNameMap[FighterAnimation.SPECIAL_BACK_ATTACK], this, 2.0f);
 			this.actionsCommandMap[ActionCommand.SPECIAL_UP] 		= new Heavy_Railgun(this.animationNameMap[FighterAnimation.SPECIAL_UP_ATTACK], this, 2.0f);
 			this.actionsCommandMap[ActionCommand.SPECIAL_DOWN] 		= new Heavy_Railgun(this.animationNameMap[FighterAnimation.SPECIAL_DOWN_ATTACK], this, 2.0f);
+			
 			//this.actionsCommandMap[ActionCommand.BLOCK] = new Heavy_MegatonPunch(this.animationNameMap[FighterAnimation.BLOCK], this);
 		}
 	}

@@ -349,6 +349,7 @@ namespace FightGame
 			S_block.addTransition(T_idle, "idle");
 			S_block.addTransition(T_walk, "walk");
 			S_block.addTransition(T_death, "death");
+			S_block.addTransition(T_block,"block");
 			//S_block.addTransition(T_takeDamage,"takeDamage");
 			
 			this.moveGraph = FSM.FSM.createFSMInstance(S_idle, new Action_None(), this);
