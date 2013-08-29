@@ -117,8 +117,8 @@ ModelImporter:
       transformMask: []
     - name: char_amaterasu_Fury
       takeName: Take 001
-      firstFrame: 137
-      lastFrame: 180
+      firstFrame: 139
+      lastFrame: 192
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -138,8 +138,8 @@ ModelImporter:
       transformMask: []
     - name: char_amaterasu_LightFlash
       takeName: Take 001
-      firstFrame: 181
-      lastFrame: 210
+      firstFrame: 193
+      lastFrame: 223
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -159,8 +159,8 @@ ModelImporter:
       transformMask: []
     - name: char_amaterasu_RisingSun
       takeName: Take 001
-      firstFrame: 211
-      lastFrame: 275
+      firstFrame: 223
+      lastFrame: 360
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
