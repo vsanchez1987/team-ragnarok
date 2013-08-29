@@ -24,7 +24,7 @@ public class HitBoxInput : MonoBehaviour
 		else if (other.tag == "HitBox"){
 			HitBox otherHitbox = other.GetComponent<HitBoxInput>().hitbox;
 			if (otherHitbox.owner.playerNumber != this.hitbox.owner.playerNumber){
-				if (this.hitbox.isProjectile && (this.tag != "SuperHitBox")){
+				if (this.hitbox.isProjectile && (this.tag != "SuperHitBox") && otherHitbox.isProjectile){
 					GameObject.Destroy(this.transform.parent.gameObject);
 				}
 			}

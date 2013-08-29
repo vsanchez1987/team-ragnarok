@@ -12,19 +12,21 @@ namespace FightGame
 			this.instructions.Add(new JointHitBoxInstruction(
 				"l_elbow_jnt", 					// joint
 				attackOwner, 					// fighter
-				3.0f, 							// radius
+				5.0f, 							// radius
 				4.0f,							// damage
-				0.35f, 							// startTime
+				0.7f, 							// startTime
 				1.6f,  							// endTime
-				new Vector3(0.0f, 0.0f, 0.0f) 	// offset
+				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
+				new Vector3(0.4f, 0.0f, 0.0f)
 				));
 		}
-		
+		/*
 		public override void  SpecialExecute(){
 			if(this.timer > 0.6f && this.timer < 0.8f && GameManager.CheckCanMoveForward(this.attackOwner))
 			{
 				this.attackOwner.gobj.transform.Translate(this.attackOwner.localForwardVector* 20f * Time.deltaTime);
 			}
 		}
+		*/
 	}
 }

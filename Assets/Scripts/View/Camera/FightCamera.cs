@@ -15,7 +15,9 @@ namespace FightGame
 		public Vector3 p2Position;
 		public float maxDistance;
 		
-		private const float minZDistance = -15.0f;
+		private float cameraY;
+		
+		private const float minZDistance = -20.0f;
 		private const float maxZDistance = -30.0f;
 		private float cameraZ;
 		
@@ -32,20 +34,21 @@ namespace FightGame
 			this.p1Position = (p1.Fighter != null) ? this.p1.Fighter.gobj.transform.position : camera.transform.position;
 			this.p2Position = (p2.Fighter != null) ? this.p2.Fighter.gobj.transform.position : camera.transform.position;
 			
+			this.cameraY = (p1Position.y - p2Position.y)/2.0f;
 			this.cameraZ = -(p1Position - p2Position).magnitude - 5.0f;
+			
+			Vector3 cameraPosition = 
+				new Vector3( (this.p1Position.x + this.p2Position.x)/2.0f, 
+				this.cameraY + Mathf.Abs(Mathf.Clamp(this.cameraZ, maxZDistance, minZDistance)) * 0.1f, 
+				Mathf.Clamp(this.cameraZ, maxZDistance, minZDistance) );
 			/*
 			Vector3 cameraPosition = 
 				new Vector3( (this.p1Position.x + this.p2Position.x)/2.0f, 
 				camera.transform.position.y, 
-				Mathf.Clamp(this.cameraZ, maxZDistance, minZDistance) );
-			*/
-			Vector3 cameraPosition = 
-				new Vector3( (this.p1Position.x + this.p2Position.x)/2.0f, 
-				camera.transform.position.y, 
 				camera.transform.position.z);
-			
+			*/
 			if (cameraPosition.x > GameManager.LeftBoundary && cameraPosition.x < GameManager.RightBoundary){
-				this.camera.transform.position = cameraPosition;
+				this.camera.transform.position = Vector3.Lerp(this.camera.transform.position, cameraPosition, Time.deltaTime * 3.0f);
 			}
 		}
 	}

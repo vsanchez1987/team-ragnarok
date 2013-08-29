@@ -12,6 +12,8 @@ namespace FightGame
 		{			
 			this.gobj.animation[this.animationNameMap[FighterAnimation.WALK_FORWARD]].speed = 1.5f;
 			this.gobj.animation[this.animationNameMap[FighterAnimation.WALK_BACKWARD]].speed = 1.5f;
+			this.gobj.animation[this.animationNameMap[FighterAnimation.FLINCH_DOWN]].speed = 1.5f;
+			this.gobj.animation[this.animationNameMap[FighterAnimation.FLINCH_UP]].speed = 1.5f;
 			
 			this.actionsCommandMap = new Dictionary<ActionCommand, A_Attack>();
 			

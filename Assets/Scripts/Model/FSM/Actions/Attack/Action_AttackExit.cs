@@ -14,6 +14,9 @@ namespace FSM
 			
 			gobj.animation.Stop();
 			fighter.movement = Vector3.zero;
+			
+			fighter.currentAttack.timer = 0.0f;
+			fighter.currentAttack.Reset();
 			fighter.currentAttack = null;
 		}
 	}

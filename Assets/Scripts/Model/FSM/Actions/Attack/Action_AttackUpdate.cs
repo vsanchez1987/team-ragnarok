@@ -27,8 +27,6 @@ namespace FSM
 			//Debug.Log(attack.timer.ToString() + " > " + attack.attackLength.ToString());
 			if(attack.timer >= attack.attackLength / attack.animationSpeed)
 			{
-				attack.timer = 0.0f;
-				attack.Reset();
 				c.dispatch("idle", o);
 			}
 			

@@ -16,44 +16,13 @@ namespace FSM
 				fighter.currentAttack = fighter.actionsCommandMap[fighter.currentAction];
 			}
 			
-			//check if meter is full before execute Spe
-			/*
-			if(fighter.currentAction == ActionCommand.SPECIAL && fighter.cur_meter < 100)
-			{
-				c.dispatch("idle",fighter);
-			}
-			else{
-			*/
-				fighter.gobj.animation[fighter.currentAttack.animationName].speed = fighter.currentAttack.animationSpeed;
-				
-				foreach (A_HitBoxInstruction hbi in fighter.currentAttack.instructions){
-					hbi.Init();
-				}
-			//}
+			fighter.gobj.animation[fighter.currentAttack.animationName].speed = fighter.currentAttack.animationSpeed;
 			
-			//fighter.gobj.animation.CrossFade(attack.animationName);
-			/*
-			A_Attack currentAttack = fighter.currentAction;
-			//Set an attack from dictionary to a public variable currentAction
-			//fighter.SetCurrentAttack();
-			//assign attack name
-			//string attackName = currentAction.attack_name;
-			
-			if(currentAction == ActionCommand.NONE)
-			{
-				//if there's no attack go back to idle state
-				c.dispatch("idle");
+			foreach (A_HitBoxInstruction hbi in fighter.currentAttack.instructions){
+				hbi.Init();
 			}
 			
-			else
-			{
-				//if yes,run the animation
-				gobj.animation.CrossFade(currentAction.animationName);
-				//store animation length, it will be used it in Action_AttackUpdate 
-				currentAction.attackLength = gobj.animation[currentAction.animationName].length;		
-				currentAction.Execute();
-			}
-			*/
+			fighter.gobj.animation.Stop();
 		}
 	}
 }

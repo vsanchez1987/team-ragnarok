@@ -23,7 +23,8 @@ namespace FSM
 				animation = FighterAnimation.FLINCH_DOWN;
 			}
 
-			if(fighter.globalActionTimer > gobj.animation[fighter.animationNameMap[animation]].length)
+			if(fighter.globalActionTimer > 
+				(gobj.animation[fighter.animationNameMap[animation]].length / gobj.animation[fighter.animationNameMap[animation]].speed))
 			{
 				c.dispatch("idle", o);
 			}
