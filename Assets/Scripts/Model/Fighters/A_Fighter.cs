@@ -10,7 +10,7 @@ namespace FightGame
 	{
 		protected A_Status 						status;
 		protected FSMContext 					moveGraph;
-		protected Vector3 						globalFowardVector;
+		protected Vector3 						globalForwardVector;
 		
 		public	string							name;
 		public 	GameObject 						gobj;
@@ -49,9 +49,9 @@ namespace FightGame
 			this.currentAttack		= null;
 			this.cur_hp				= 100.0f;
 			this.max_hp				= 100.0f;
-			this.cur_meter			= 0.0f;
+			this.cur_meter			= 100.0f;
 			this.max_meter			= 100.0f;
-			this.status				= new Status_None();
+			this.status				= null;
 			this.hurtLocation		= Location.NONE;
 			this.globalActionTimer	= 0.0f;
 			this.movement			= Vector3.zero;
@@ -189,13 +189,13 @@ namespace FightGame
 		
 		//describes player forward direction
 		public Vector2 GlobalForwardVector {
-			get {return globalFowardVector;}
-			set {this.globalFowardVector=value;}
+			get {return globalForwardVector;}
+			set {this.globalForwardVector=value;}
 		}
 		
 		private void InitForwardVector(int player)
 		{
-			globalFowardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
+			globalForwardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
 			this.localForwardVector = new Vector3 (0, 0, 1);
 		}
 		
@@ -209,7 +209,7 @@ namespace FightGame
 				count++;
 			}
 			
-			GameObject gobj = (GameObject)GameObject.Instantiate( Resources.Load( "Prefabs/Hitbox", typeof(GameObject) ), this.gobj.transform.position, Quaternion.identity );
+			GameObject gobj = (GameObject)GameObject.Instantiate( Resources.Load( "Boxes/Hitbox", typeof(GameObject) ), this.gobj.transform.position, Quaternion.identity );
 			gobj.transform.parent = this.gobj.transform;
 			
 			HitBox hitbox = new HitBox( this, gobj, false );
@@ -223,12 +223,23 @@ namespace FightGame
 			this.movement += movement;
 		}
 		
+		private void AddGravity(){
+			if (this.gobj.transform.position.y > 0){
+				this.movement.y += Physics.gravity.y * Time.deltaTime * 0.1f;
+				Debug.Log(this.movement.y);
+			}
+			else{
+				this.gobj.transform.position = new Vector3(this.gobj.transform.position.x, 0.0f, this.gobj.transform.position.z);
+				this.movement.y = 0.0f;
+			}
+		}
+		
 		private void ApplyMovement(){
 			if (this.movement.magnitude > 0.001f){
 				if ( this.movement.x < 0 ){
 					if ( GameManager.CheckCanMoveBackward(this) ){
-						this.gobj.transform.position += new Vector3(this.movement.x * this.globalFowardVector.x,
-							this.movement.y, this.movement.z);
+						this.gobj.transform.position += new Vector3(this.movement.x * this.globalForwardVector.x,
+							0.0f, 0.0f);
 						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 3 );
 						
 						if ( this.movement.magnitude < 0.001f ){
@@ -238,8 +249,8 @@ namespace FightGame
 				}
 				else if (this.movement.x > 0){
 					if ( GameManager.CheckCanMoveForward(this) ){
-						this.gobj.transform.position += new Vector3(this.movement.x * this.globalFowardVector.x,
-							this.movement.y, this.movement.z);
+						this.gobj.transform.position += new Vector3(this.movement.x * this.globalForwardVector.x,
+							0.0f, 0.0f);
 						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 3 );
 						
 						if ( this.movement.magnitude < 0.001f ){
@@ -247,15 +258,22 @@ namespace FightGame
 						}
 					}
 				}
+				this.gobj.transform.position += new Vector3(0.0f, this.movement.y, 0.0f);
 			}
+		}
+		
+		private void ReCenter(){
+			if (this.gobj.transform.position.z != 0.0f) 
+				this.gobj.transform.position = new Vector3(this.gobj.transform.position.x, this.gobj.transform.position.y, 0.0f);
 		}
 		
 		public void Update()
 		{
+			this.AddGravity();
 			this.ApplyMovement();
 			this.moveGraph.CurrentState.update(moveGraph, this);
 			if (this.cur_meter >= 100f) this.cur_meter = 100f;
-			//Debug.Log(this.moveGraph.CurrentState.Name);
+			this.ReCenter();
 		}
 		
 		public void LogLastCommand(){
@@ -264,7 +282,7 @@ namespace FightGame
 		
 		public void SwitchForwardVector()
 		{
-			globalFowardVector.x *= -1;
+			globalForwardVector.x *= -1;
 		}
 		
 		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction){

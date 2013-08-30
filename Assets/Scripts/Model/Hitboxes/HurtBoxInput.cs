@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections;
 using FightGame;
 
-public enum Location { HIGH, LOW, NONE };
-
 public class HurtBoxInput : MonoBehaviour
 {
 	[HideInInspector]

@@ -21,8 +21,8 @@ namespace FightGame{
 			this.players = new Player[] { p1, p2 };
 			this.camera = new FightCamera( p1, p2 );
 			this.ui = GameObject.Find("UI").GetComponent<UI_Script>();
-			this.leftBoundary = camera.input.leftBoundary;
-			this.rightBoundary = camera.input.rightBoundary;
+			this.leftBoundary = camera.leftBoundary;
+			this.rightBoundary = camera.rightBoundary;
 	    }
 	}
 }

@@ -8,14 +8,14 @@ namespace FightGame
 {
 	public class Fighter_Odin : A_Fighter
 	{
-		public Fighter_Odin (GameObject gobj, int playerNumber)
-			:base (gobj, playerNumber)
+		public Fighter_Odin (GameObject gobj, int playerNumber) : base (gobj, playerNumber)
 		{
+			/*
 			this.name = "Odin";
 			this.gobj = gobj;
 			this.status = new Status_None();
 			this.actionsCommandMap = new Dictionary<ActionCommand, A_Attack>();
-			
+			*/
 			//this.actionsCommandMap[ActionCommand.REGULAR] = new Sweeping_Spear("Sweeping_Spear", this);
 			//this.actionsCommandMap[ActionCommand.SPECIAL] = new Sweeping_Spear("Sweeping_Spear", this);
 			//this.actionsCommandMap[ActionCommand.UNIQUE] = new Sweeping_Spear("Sweeping_Spear", this);
