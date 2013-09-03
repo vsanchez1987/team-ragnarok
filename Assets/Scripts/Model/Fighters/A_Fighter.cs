@@ -273,6 +273,7 @@ namespace FightGame
 			this.ApplyMovement();
 			this.moveGraph.CurrentState.update(moveGraph, this);
 			if (this.cur_meter >= 100f) this.cur_meter = 100f;
+			if (this.cur_meter <= 0f) this.cur_meter = 0f;
 			this.ReCenter();
 		}
 		

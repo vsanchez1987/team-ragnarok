@@ -49,8 +49,9 @@ public class UI_Script : MonoBehaviour
 	
 	void Start()
 	{
-		GameManager.CreateFighter("Fighter_Heavy",1);
+		//GameManager.CreateFighter("Fighter_Heavy",1);
 		//GameManager.CreateFighter("Fighter_Heavy",2);
+		GameManager.CreateFighter("Fighter_Amaterasu",1);
 		GameManager.CreateFighter("Fighter_Amaterasu",2);
 		p1_GUIstartX = 25f;
 		p1_GUIstartY = 25f;
