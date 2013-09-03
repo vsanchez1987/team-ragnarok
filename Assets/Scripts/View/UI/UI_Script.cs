@@ -4,7 +4,8 @@ using FightGame;
 
 public class UI_Script : MonoBehaviour
 {	
-	private bool created = false;
+	private bool created , p1Pick = false;
+	private bool p2Pick = false;
 	GameObject player;
 	float length_default, height_default;
 	float	length_p1health,
@@ -51,8 +52,8 @@ public class UI_Script : MonoBehaviour
 	{
 		//GameManager.CreateFighter("Fighter_Heavy",1);
 		//GameManager.CreateFighter("Fighter_Heavy",2);
-		GameManager.CreateFighter("Fighter_Amaterasu",1);
-		GameManager.CreateFighter("Fighter_Amaterasu",2);
+		//GameManager.CreateFighter("Fighter_Amaterasu",1);
+		//GameManager.CreateFighter("Fighter_Amaterasu",2);
 		p1_GUIstartX = 25f;
 		p1_GUIstartY = 25f;
 	
@@ -76,6 +77,8 @@ public class UI_Script : MonoBehaviour
 
 	void Update ()
 	{
+		
+		
 		length_default = Screen.width/4;
 		p2_GUIstartX = Screen.width - (length_default + p1_GUIstartX);
 		p2_GUIstartY = p1_GUIstartY;
@@ -167,27 +170,17 @@ public class UI_Script : MonoBehaviour
 	}
 	
     void OnGUI() {
-		/*
-		if (!created){
-	        if (GUI.Button(new Rect(Screen.width/2, Screen.height/2, 50, 30), "Start")){
-				GameManager.CreateFighter("Fighter_Heavy",1);
-				GameManager.CreateFighter("Fighter_Heavy",2);
-	            created = true;
-			}
-		}
-		else{
-			if(GameManager.P1.Fighter != null && GameManager.P2.Fighter != null)
-			{
-				this.hitboxOn = GUI.Toggle(new Rect(20, 90, 130, 20), hitboxOn, "Show HitBoxes");
-				this.hurtboxOn = GUI.Toggle(new Rect(20, 110, 130, 20), hurtboxOn, "Show HurtBoxes");
-			}
-		}
-		*/
+		//Hieu add
+		PickFighter();
+		
 		if(GameManager.P1.Fighter != null && GameManager.P2.Fighter != null)
 		{
 			if (GameManager.P1.Fighter.cur_hp <= 0 || GameManager.P2.Fighter.cur_hp <= 0){
 				if (GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2 - 50, 200, 100), "Restart")){
 					GameManager.Restart();
+					created = false;
+					p1Pick = false;
+					p2Pick = false;
 				}
 			}
 			
@@ -228,4 +221,41 @@ public class UI_Script : MonoBehaviour
 		}
 		*/
     }
+	
+	//Hieu add
+	void PickFighter()
+	{
+		if (!created){
+			if(!p1Pick){
+				GUI.Box(new Rect(Screen.width/2,Screen.height*1/4,100,30),"Player 1 turn");
+				//add more fighter selection for P1 here
+				P1_Pick("Heavy",Screen.width/4,Screen.height/2);
+		        P1_Pick("Amaterasu",Screen.width*3/4, Screen.height/2);
+			}
+			if(p2Pick){
+				GUI.Box(new Rect(Screen.width/2,Screen.height*1/4,100,30),"Player 2 turn");
+				//add more fighter selection for P2 here
+			  	P2_Pick("Heavy",Screen.width/4,Screen.height/2);
+		        P2_Pick("Amaterasu",Screen.width*3/4, Screen.height/2);
+			}
+		}
+	}
+	
+	void P1_Pick(string fighterName, float positionX, float positionY, float width=100, float height=30)
+	{
+		if (GUI.Button(new Rect(positionX, positionY, width, height), fighterName)){
+			GameManager.CreateFighter("Fighter_"+fighterName,1);
+			p1Pick = true;
+			p2Pick = true;
+		}
+	}
+	
+	void P2_Pick(string fighterName, float positionX, float positionY, float width=100, float height=30)
+	{
+		if (GUI.Button(new Rect(positionX, positionY, width, height), fighterName)){
+			GameManager.CreateFighter("Fighter_"+fighterName,2);
+			p2Pick = true;
+			created = true;
+		}
+	}
 }
