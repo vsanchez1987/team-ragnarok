@@ -300,7 +300,7 @@ namespace FightGame
 				}
 			}
 			else{
-				this.cur_hp -= damage * 0.1f;
+				this.cur_hp -= damage * 0.25f;
 				//The meter will increase when player's attack is block;
 				if (this.playerNumber == 1) 
 				{

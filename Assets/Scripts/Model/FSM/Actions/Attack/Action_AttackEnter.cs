@@ -11,7 +11,9 @@ namespace FSM
 		public override void execute(FSMContext c, object o)
 		{
 			A_Fighter fighter = (A_Fighter)o;			
-
+			
+			
+			
 			if (fighter.currentAction != ActionCommand.NONE){
 				fighter.currentAttack = fighter.actionsCommandMap[fighter.currentAction];
 			}
@@ -21,7 +23,7 @@ namespace FSM
 			foreach (A_HitBoxInstruction hbi in fighter.currentAttack.instructions){
 				hbi.Init();
 			}
-			
+			Debug.Log("attack " + fighter.currentAttack.animationName);
 			fighter.gobj.animation.Stop();
 		}
 	}
