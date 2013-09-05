@@ -15,7 +15,7 @@ namespace FSM
 			
 			foreach (A_HitBoxInstruction hbi in attack.instructions){
 				if (attack.timer < hbi.startTime / attack.animationSpeed){
-					//hbi.hitbox.Disable();
+					hbi.hitbox.Disable();
 				}
 				else if ((attack.timer >= hbi.startTime / attack.animationSpeed) && (attack.timer <= hbi.endTime / attack.animationSpeed)){
 					hbi.Execute();

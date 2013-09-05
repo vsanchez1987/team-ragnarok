@@ -50,8 +50,8 @@ namespace FightGame{
 			foreach (Player p in instance.gModel.players){
 				//Debug.Log("Player " + p.PlayerNumber);
 				if (p.Fighter != null){
-					MoveCommand moveCommand = p.controls.GetMoveCommand();
-					ActionCommand actionCommand = p.controls.GetActionCommand();
+					int moveCommand = p.controls.GetMoveCommand();
+					int actionCommand = p.controls.GetActionCommand();
 					
 					p.DoMoveCommand(moveCommand);
 					p.DoActionCommand(actionCommand);

@@ -27,11 +27,11 @@ namespace FightGame
 		public	float							radius;
 		public	Vector3							localForwardVector;
 		
-		public ActionCommand 					currentAction;
-		public MoveCommand						currentMovement;
+		public int			 					currentAction;
+		public int								currentMovement;
 		public A_Attack							currentAttack;
 		public List<string>						commandLog;
-		public Dictionary<ActionCommand, A_Attack> 	actionsCommandMap;
+		public Dictionary<int, A_Attack> 		actionsCommandMap;
 		public Dictionary<FighterAnimation, string> animationNameMap;
 		
 		public A_Fighter(GameObject gobj, int playerNumber)
@@ -71,7 +71,7 @@ namespace FightGame
 			this.InitStateMachine();
 		}
 		
-		public void DoActionCommand( ActionCommand ac ){
+		public void DoActionCommand( int ac ){
 			//Debug.Log(this.name + " Action: " + ac.ToString());
 			
 			this.currentAction = ac;
@@ -152,7 +152,7 @@ namespace FightGame
 			}
 		}
 		
-		public void DoMoveCommand( MoveCommand mc ){
+		public void DoMoveCommand( int mc ){
 			//Debug.Log(this.name + " Move: " + mc.ToString());
 			this.currentMovement = mc;
 			if (mc != MoveCommand.NONE){

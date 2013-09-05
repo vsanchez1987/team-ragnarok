@@ -13,7 +13,7 @@ namespace FightGame
 			this.gobj.animation[this.animationNameMap[FighterAnimation.WALK_FORWARD]].speed = 2.0f;
 			this.gobj.animation[this.animationNameMap[FighterAnimation.WALK_BACKWARD]].speed = 2.0f;
 			
-			this.actionsCommandMap = new Dictionary<ActionCommand, A_Attack>();
+			this.actionsCommandMap = new Dictionary<int, A_Attack>();
 			
 			this.actionsCommandMap[ActionCommand.REGULAR] 			= new Amaterasu_SolarRoundhouse(this.animationNameMap[FighterAnimation.REGULAR_ATTACK], this, 1.0f);
 			this.actionsCommandMap[ActionCommand.REGULAR_FORWARD] 	= new Amaterasu_DawnFirstLight(this.animationNameMap[FighterAnimation.REGULAR_FORWARD_ATTACK], this, 1.0f);

@@ -15,7 +15,7 @@ namespace FightGame
 			this.gobj.animation[this.animationNameMap[FighterAnimation.FLINCH_DOWN]].speed = 1.5f;
 			this.gobj.animation[this.animationNameMap[FighterAnimation.FLINCH_UP]].speed = 1.5f;
 			
-			this.actionsCommandMap = new Dictionary<ActionCommand, A_Attack>();
+			this.actionsCommandMap = new Dictionary<int, A_Attack>();
 			
 			this.actionsCommandMap[ActionCommand.REGULAR] 			= new Heavy_FireCarpet(this.animationNameMap[FighterAnimation.REGULAR_ATTACK], this, 2.0f);
 			this.actionsCommandMap[ActionCommand.REGULAR_FORWARD] 	= new Heavy_ColdShoulder(this.animationNameMap[FighterAnimation.REGULAR_FORWARD_ATTACK], this, 1.3f);

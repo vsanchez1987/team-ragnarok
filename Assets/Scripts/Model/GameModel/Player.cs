@@ -19,14 +19,14 @@ namespace FightGame
 			this.fighter 		= null;
 		}
 		
-		public void DoActionCommand( ActionCommand actionCommand ){
+		public void DoActionCommand( int actionCommand ){
 			if (this.fighter != null){
 				//Debug.Log("Attack Command: " + actionCommand.ToString());
 				this.fighter.DoActionCommand( actionCommand );
 			}
 		}
 		
-		public void DoMoveCommand( MoveCommand moveCommand ){
+		public void DoMoveCommand( int moveCommand ){
 			if (this.fighter != null){
 				//Debug.Log("Move Command: " + moveCommand.ToString());
 				this.fighter.DoMoveCommand( moveCommand );

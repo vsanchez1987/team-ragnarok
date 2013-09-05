@@ -7,8 +7,8 @@ using FightGame;
 namespace FightGame{
 	public class GamePad{
 		private Dictionary<string, KeyCode> keys;
-		private MoveCommand[]				moveCommands;
-		private ActionCommand[]				actionCommands;
+		private int[]						moveCommands;
+		private int[]						actionCommands;
 		private string 						XAxis;
 		private string						YAxis;
 		private const float 				halfCircle 		= 3.1415f;
@@ -32,22 +32,22 @@ namespace FightGame{
 				this.keys["BlockJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button16");
 			}
 			
-			this.moveCommands = new MoveCommand[] { MoveCommand.FORWARD, MoveCommand.FORWARD_DOWN, MoveCommand.FORWARD_UP, MoveCommand.BACK, MoveCommand.BACK_DOWN, MoveCommand.BACK_UP, MoveCommand.UP, MoveCommand.DOWN, MoveCommand.NONE };
-			this.actionCommands = new ActionCommand[] { ActionCommand.REGULAR, ActionCommand.UNIQUE, ActionCommand.SPECIAL, ActionCommand.BLOCK, ActionCommand.NONE };
+			this.moveCommands = new int[] { MoveCommand.FORWARD, MoveCommand.FORWARD_DOWN, MoveCommand.FORWARD_UP, MoveCommand.BACK, MoveCommand.BACK_DOWN, MoveCommand.BACK_UP, MoveCommand.UP, MoveCommand.DOWN, MoveCommand.NONE };
+			this.actionCommands = new int[] { ActionCommand.REGULAR, ActionCommand.UNIQUE, ActionCommand.SPECIAL, ActionCommand.BLOCK, ActionCommand.NONE };
 		}
 		
 		
 		// Get a movement command when there has been an input
-		public MoveCommand GetMoveCommand(){
+		public int GetMoveCommand(){
 			Vector2 inputDirection = this.GetInputDirection(this.XAxis, this.YAxis);
 			return this.GetControllerDirection(inputDirection, this.player.Fighter.GlobalForwardVector);
 		}
 		
 		
 		// Get a list of attack commands when there has been an input
-		public List<ActionCommand> GetActionCommands(){
-			List<ActionCommand> commands = new List<ActionCommand>();
-			foreach (ActionCommand ac in this.actionCommands){
+		public List<int> GetActionCommands(){
+			List<int> commands = new List<int>();
+			foreach (int ac in this.actionCommands){
 				if ( this.IsCorrectCommand(ac) ){
 					commands.Add(ac);
 				}
@@ -56,8 +56,8 @@ namespace FightGame{
 		}
 		
 		// Get single action commands when there has been an input
-		public ActionCommand GetActionCommand(){
-			foreach (ActionCommand ac in this.actionCommands){
+		public int GetActionCommand(){
+			foreach (int ac in this.actionCommands){
 				if ( this.IsCorrectCommand(ac) ){
 					return ac;
 				}
@@ -131,7 +131,7 @@ namespace FightGame{
 			return new Vector2(direction.x + direction.y + direction.z,0);
 		}
 		
-		private MoveCommand GetControllerDirection(Vector2 inputDirection, Vector3 forwardDirection)
+		private int GetControllerDirection(Vector2 inputDirection, Vector3 forwardDirection)
 		{
 			if (inputDirection.x == 0 && inputDirection.y == 0)
 			{
@@ -204,20 +204,16 @@ namespace FightGame{
 			return ( Input.GetAxisRaw(axis) );
 		}
 		
-		private bool IsCorrectCommand( ActionCommand command ){
+		private bool IsCorrectCommand( int command ){
 			switch (command){
 			case ActionCommand.BLOCK:
 				return (this.GetKey("BlockJoystick") || this.GetKey("BlockKey"));
-				break;
 			case ActionCommand.REGULAR:
 				return (this.GetKeyDown("RegularJoystick") || this.GetKeyDown("RegularKey"));
-				break;
 			case ActionCommand.SPECIAL:
 				return (this.GetKeyDown("SpecialJoystick") || this.GetKeyDown("SpecialKey"));
-				break;
 			case ActionCommand.UNIQUE:
 				return (this.GetKeyDown("UniqueJoystick") || this.GetKeyDown("UniqueKey"));
-				break;
 			default:
 				break;
 			}
