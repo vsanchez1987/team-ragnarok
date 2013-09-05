@@ -51,7 +51,7 @@ namespace FightGame
 		}
 		
 		public override void SpecialExecute(){
-			this.attackOwner.cur_meter = 0f;
+			this.attackOwner.cur_meter --;
 		}
 	}
 }

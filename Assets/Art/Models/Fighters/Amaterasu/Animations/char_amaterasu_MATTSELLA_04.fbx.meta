@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 42214b1caf33b0245be2cf482cecd6fe
+guid: 6570b40200da63845a5d42e85067f9a3
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -53,11 +53,11 @@ ModelImporter:
     400044: root_amaterasu_jnt
     400046: spine1_jnt
     400048: spine2_jnt
-    7400000: char_amaterasu_SolarRoundhouse_old
-    7400002: char_amaterasu_Backdraft_old
-    7400004: char_amaterasu_Fury_old
-    7400006: char_amaterasu_LightFlash_old
-    7400008: char_amaterasu_RisingSun_old
+    7400000: char_amaterasu_SolarRoundhouse
+    7400002: char_amaterasu_Backdraft
+    7400004: char_amaterasu_Fury
+    7400006: char_amaterasu_LightFlash
+    7400008: char_amaterasu_RisingSun
     9500000: //RootNode
     11100000: //RootNode
   materials:
@@ -73,7 +73,7 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     clipAnimations:
-    - name: char_amaterasu_SolarRoundhouse_old
+    - name: char_amaterasu_SolarRoundhouse
       takeName: Take 001
       firstFrame: 2
       lastFrame: 70
@@ -94,10 +94,10 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: char_amaterasu_Backdraft_old
+    - name: char_amaterasu_Backdraft
       takeName: Take 001
       firstFrame: 71
-      lastFrame: 120
+      lastFrame: 125
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -115,7 +115,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: char_amaterasu_Fury_old
+    - name: char_amaterasu_Fury
       takeName: Take 001
       firstFrame: 139
       lastFrame: 192
@@ -136,7 +136,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: char_amaterasu_LightFlash_old
+    - name: char_amaterasu_LightFlash
       takeName: Take 001
       firstFrame: 193
       lastFrame: 223
@@ -157,7 +157,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       transformMask: []
-    - name: char_amaterasu_RisingSun_old
+    - name: char_amaterasu_RisingSun
       takeName: Take 001
       firstFrame: 223
       lastFrame: 360

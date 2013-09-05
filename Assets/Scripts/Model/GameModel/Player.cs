@@ -77,7 +77,8 @@ namespace FightGame
 			GameObject.Destroy( this.fighter.gobj );
 			this.fighter = null;
 			
-			GameManager.CreateFighter( fighterName, this.playerNumber );
+			//Hieu commented out, so when players hit restart, they can reselect fighter
+			//GameManager.CreateFighter( fighterName, this.playerNumber );
 		}
 	}
 }

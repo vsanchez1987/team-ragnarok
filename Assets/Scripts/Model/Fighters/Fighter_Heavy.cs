@@ -25,7 +25,7 @@ namespace FightGame
 			
 			this.actionsCommandMap[ActionCommand.UNIQUE] 			= new Heavy_HeatSeeker(this.animationNameMap[FighterAnimation.UNIQUE_ATTACK], this, 2.0f);
 			this.actionsCommandMap[ActionCommand.UNIQUE_FORWARD] 	= new Heavy_NapalmFlameThrower(this.animationNameMap[FighterAnimation.UNIQUE_FORWARD_ATTACK], this, 1.5f);
-			this.actionsCommandMap[ActionCommand.UNIQUE_BACK] 		= new Heavy_123Fire(this.animationNameMap[FighterAnimation.UNIQUE_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.UNIQUE_BACK] 		= new Heavy_123Fire(this.animationNameMap[FighterAnimation.UNIQUE_BACK_ATTACK], this, 2.0f);
 			this.actionsCommandMap[ActionCommand.UNIQUE_UP] 		= new Heavy_HeatSeeker(this.animationNameMap[FighterAnimation.UNIQUE_UP_ATTACK], this, 2.0f);
 			this.actionsCommandMap[ActionCommand.UNIQUE_DOWN] 		= new Heavy_NapalmFlameThrower(this.animationNameMap[FighterAnimation.UNIQUE_DOWN_ATTACK], this, 1.5f);
 			

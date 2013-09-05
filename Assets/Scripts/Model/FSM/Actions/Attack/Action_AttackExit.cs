@@ -15,6 +15,14 @@ namespace FSM
 			gobj.animation.Stop();
 			fighter.movement = Vector3.zero;
 			
+			if (fighter.currentAttack.animationName != "char_amaterasu_Fury"){
+				if (fighter.extraDamage != 1){
+					fighter.extraDamage = 1.0f;
+					fighter.extraDamageTimer = 0.0f;
+					Debug.Log(fighter.extraDamage);
+				}
+			}
+			
 			fighter.currentAttack.timer = 0.0f;
 			fighter.currentAttack.Reset();
 			fighter.currentAttack = null;

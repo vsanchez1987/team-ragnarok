@@ -26,6 +26,8 @@ namespace FightGame
 		public	Vector3							movement;
 		public	float							radius;
 		public	Vector3							localForwardVector;
+		public	float							extraDamage;
+		public	float							extraDamageTimer;
 		
 		public int			 					currentAction;
 		public int								currentMovement;
@@ -56,6 +58,8 @@ namespace FightGame
 			this.globalActionTimer	= 0.0f;
 			this.movement			= Vector3.zero;
 			this.commandLog			= new List<string>();
+			this.extraDamage		= 1.0f;
+			this.extraDamageTimer	= 0.0f;
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;
@@ -267,12 +271,25 @@ namespace FightGame
 				this.gobj.transform.position = new Vector3(this.gobj.transform.position.x, this.gobj.transform.position.y, 0.0f);
 		}
 		
+		private void CheckExtraDamage(){
+			if (this.extraDamage != 1){
+				this.extraDamageTimer += Time.deltaTime;
+				if (this.extraDamageTimer >= 5.0f){
+					this.extraDamage = 1.0f;
+					this.extraDamageTimer = 0.0f;
+					Debug.Log(this.extraDamage);
+				}
+			}
+		}
+		
 		public void Update()
 		{
 			this.AddGravity();
 			this.ApplyMovement();
 			this.moveGraph.CurrentState.update(moveGraph, this);
+			this.CheckExtraDamage();
 			if (this.cur_meter >= 100f) this.cur_meter = 100f;
+			if (this.cur_meter <= 0f) this.cur_meter = 0f;
 			this.ReCenter();
 		}
 		
