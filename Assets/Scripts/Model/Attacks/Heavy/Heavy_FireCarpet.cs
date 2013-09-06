@@ -18,16 +18,15 @@ namespace FightGame
 				"Projectile_Cube", 				// projectile name
 				"r_wrist_jnt", 					// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
-				5.0f, 							// speed
+				10.0f, 							// speed
 				attackOwner, 					// A_fighter
 				2.0f, 							// radius
 				3.0f, 							// damage
 				0.8f, 							// startTime
 				5.0f,							// endTime
 				new Vector3(2.0f, 0.0f, 0.0f),	// offset
-				new Vector3(0.0f, 0.0f, 0.0f)	// movement
+				new Vector3(-0.15f, 0.0f, 0.0f)	// movement
 				));
-
 		}
 	}
 }

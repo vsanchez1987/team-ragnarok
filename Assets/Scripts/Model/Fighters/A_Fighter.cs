@@ -310,7 +310,7 @@ namespace FightGame
 					this.moveGraph.dispatch("death", this);
 				}
 				else{
-					this.movement = direction * 0.1f;
+					this.movement = direction * 0.05f;
 					this.hurtLocation = hurtbox.location;
 					this.moveGraph.dispatch( "takeDamage", this );
 				}
@@ -327,7 +327,7 @@ namespace FightGame
 				{	if(GameManager.P1.Fighter.cur_meter < 100)
 						GameManager.P1.Fighter.cur_meter += 5.0f;
 				}
-				this.movement = direction * 0.05f;
+				this.movement = direction * 0.01f;
 				if (this.cur_hp <= 0){
 					this.cur_hp = 0.0f;
 					this.moveGraph.dispatch("death", this);

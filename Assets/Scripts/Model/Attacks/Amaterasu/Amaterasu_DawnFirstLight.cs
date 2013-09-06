@@ -7,6 +7,7 @@ namespace FightGame
 {
 	public class Amaterasu_DawnFirstLight: A_Attack
 	{	
+		//knee kick 
 		public Amaterasu_DawnFirstLight(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
 			
@@ -18,7 +19,7 @@ namespace FightGame
 				0.3f, 							// startTime
 				1.0f,  							// endTime
 				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
-				new Vector3(0.0f, 0.0f, 0.0f)
+				new Vector3(0.05f, 0.0f, 0.0f)
 				));
 		}
 	}

@@ -16,7 +16,7 @@ namespace FightGame
 				2.0f,							// damage
 				0.4f, 							// startTime
 				0.8f,  							// endTime
-				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
+				new Vector3(1.0f, 0.0f, 0.0f), 	// offset
 				new Vector3(0.1f, 0.0f, 0.0f)
 				));		
 			
@@ -27,7 +27,7 @@ namespace FightGame
 				2.0f,							// damage
 				0.9f, 							// startTime
 				1.5f,  							// endTime
-				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
+				new Vector3(1.0f, 0.0f, 0.0f), 	// offset
 				new Vector3(0.15f, 0.0f, 0.0f)
 				));
 			
@@ -38,7 +38,7 @@ namespace FightGame
 				3.0f,							// damage
 				2.2f, 							// startTime
 				3.0f,  							// endTime
-				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
+				new Vector3(1.0f, 0.0f, 0.0f), 	// offset
 				new Vector3(0.0f, 0.0f, 0.0f)
 				));
 			
@@ -49,10 +49,13 @@ namespace FightGame
 				5.0f,							// damage
 				2.2f, 							// startTime
 				3.0f,  							// endTime
-				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
+				new Vector3(1.0f, 0.0f, 0.0f), 	// offset
 				new Vector3(0.5f, 0.0f, 0.0f)
 				));
-			
+		}
+		
+		public override void SpecialExecute(){
+			this.attackOwner.cur_meter --;	
 		}
 	}
 }

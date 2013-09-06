@@ -12,8 +12,8 @@ namespace FightGame
 			this.instructions.Add(new ProjectileHitBoxInstruction(
 				"Projectile_Seek", 					// projectile name
 				"r_shoulder_jnt", 					// starting joint
-				new Vector3(0.7f, 1f, 0.0f), 	// direction
-				10.0f, 								// speed
+				new Vector3(0.75f, .75f, 0.0f), 	// direction
+				7.0f, 								// speed
 				attackOwner, 						// A_fighter
 				2.0f, 								// radius
 				3.0f, 								// damage

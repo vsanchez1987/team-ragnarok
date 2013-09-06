@@ -30,7 +30,7 @@ namespace FightGame
 				attackOwner, 					// A_fighter
 				1.0f, 							// radius
 				1.0f, 							// damage
-				0.4f, 							// startTime
+				0.8f, 							// startTime
 				5.0f,							// endTime
 				new Vector3(2.0f, 0.0f, 0.0f),	// offset
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement
@@ -43,11 +43,18 @@ namespace FightGame
 				attackOwner, 					// A_fighter
 				1.5f, 							// radius
 				3.0f, 							// damage
-				0.6f, 							// startTime
+				1.6f, 							// startTime
 				5.0f,							// endTime
 				new Vector3(2.0f, 0.5f, 0.0f),	// offset
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement
-				));				
+				));
+			//move back on each shot fired for short duration 
+			this.instructions.Add(new JointHitBoxInstruction("head_jnt", attackOwner,
+				0.0f, 0.0f, 0.1f, 0.4f, Vector3.zero, new Vector3(-0.01f,0.0f,0.0f)));
+			this.instructions.Add(new JointHitBoxInstruction("head_jnt", attackOwner,
+				0.0f, 0.0f, 0.8f, 1.2f, Vector3.zero, new Vector3(-0.01f,0.0f,0.0f)));
+			this.instructions.Add(new JointHitBoxInstruction("head_jnt", attackOwner,
+				0.0f, 0.0f, 1.8f, 2.0f, Vector3.zero, new Vector3(-0.2f,0.0f,0.0f)));
 		}
 	}
 }

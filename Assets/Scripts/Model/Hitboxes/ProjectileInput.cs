@@ -28,10 +28,11 @@ public class ProjectileInput : MonoBehaviour
 		
 		//Debug.Log(this.name);
 		
-		if(timer > 0.7f)
+		if(timer > 0.5f)
 		{
 			if(this.name == "Projectile_Seek(Clone)")
 			{
+				speed = 25.0f;
 				if ( this.newDirection == Vector3.zero){
 					this.newDirection = target - this.transform.position;
 				}

@@ -7,6 +7,7 @@ namespace FightGame
 {
 	public class Amaterasu_SettingSun: A_Attack
 	{	
+		//diagonal head to ground stomp kick like
 		public Amaterasu_SettingSun(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
 			this.instructions.Add(new JointHitBoxInstruction(
