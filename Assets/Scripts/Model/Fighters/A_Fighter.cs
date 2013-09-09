@@ -14,6 +14,7 @@ namespace FightGame
 		
 		public	string							name;
 		public 	GameObject 						gobj;
+		public  GameObject 						particleHolder1,particleHolder2;
 		public 	Dictionary<string, Transform> 	joints;
 		public 	Dictionary<string, HurtBox> 	hurtBoxes;
 		public 	Dictionary<string, HitBox> 		hitBoxes;
@@ -28,6 +29,7 @@ namespace FightGame
 		public	Vector3							localForwardVector;
 		public	float							extraDamage;
 		public	float							extraDamageTimer;
+		public	bool							isKnockDown;
 		
 		public ActionCommand 					currentAction;
 		public MoveCommand						currentMovement;
@@ -60,6 +62,7 @@ namespace FightGame
 			this.commandLog			= new List<string>();
 			this.extraDamage		= 1.0f;
 			this.extraDamageTimer	= 0.0f;
+			this.isKnockDown		= false;
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;
@@ -277,6 +280,8 @@ namespace FightGame
 				if (this.extraDamageTimer >= 5.0f){
 					this.extraDamage = 1.0f;
 					this.extraDamageTimer = 0.0f;
+					GameObject.Destroy(this.particleHolder1);
+					GameObject.Destroy(this.particleHolder2);
 					Debug.Log(this.extraDamage);
 				}
 			}
@@ -308,6 +313,10 @@ namespace FightGame
 				if (this.cur_hp <= 0){
 					this.cur_hp = 0.0f;
 					this.moveGraph.dispatch("death", this);
+				}
+				else if(this.isKnockDown)
+				{
+					this.moveGraph.dispatch("knockDown",this);
 				}
 				else{
 					this.movement = direction * 0.1f;
@@ -351,6 +360,7 @@ namespace FightGame
 			State S_takeDamage 	= new State("takeDamage",new Action_TakeDamageEnter(), new Action_TakeDamageUpdate(),new Action_TakeDamageExit());
 			State S_block		= new State("block",new Action_BlockEnter(), new Action_BlockUpdate(),new Action_BlockExit());
 			State S_death		= new State("death" , new Action_DeathEnter(), new Action_DeathUpdate(),new Action_DeathExit());
+			State S_knockDown	= new State("knockDown", new Action_KnockDownEnter(),new Action_KnockDownUpdate(), new Action_KnockDownExit());
 			
 			Transition T_idle 		= new Transition(S_idle, new Action_None());
 			Transition T_walk 		= new Transition(S_walk, new Action_None());
@@ -358,6 +368,7 @@ namespace FightGame
 			Transition T_takeDamage = new Transition(S_takeDamage, new Action_None());
 			Transition T_block 		= new Transition(S_block, new Action_None());
 			Transition T_death		= new Transition(S_death, new Action_None());
+			Transition T_knockDown	= new Transition(S_knockDown, new Action_None());
 			
 			S_idle.addTransition(T_walk, "walk");
 			S_idle.addTransition(T_attack,"attack");
@@ -365,6 +376,7 @@ namespace FightGame
 			S_idle.addTransition(T_idle,"idle");
 			S_idle.addTransition(T_block, "block");
 			S_idle.addTransition(T_death, "death");
+			S_idle.addTransition(T_knockDown,"knockDown");
 			
 			S_walk.addTransition(T_idle, "idle");
 			S_walk.addTransition(T_walk,"walk");
@@ -372,14 +384,17 @@ namespace FightGame
 			S_walk.addTransition(T_attack,"attack");
 			S_walk.addTransition(T_block, "block");
 			S_walk.addTransition(T_death, "death");
+			S_walk.addTransition(T_knockDown,"knockDown");
 			
 			S_attack.addTransition(T_idle,"idle");
 			S_attack.addTransition(T_takeDamage,"takeDamage");
 			S_attack.addTransition(T_death, "death");
+			S_attack.addTransition(T_knockDown,"knockDown");
 			
 			S_takeDamage.addTransition(T_idle,"idle");
 			S_takeDamage.addTransition(T_takeDamage,"takeDamage");
 			S_takeDamage.addTransition(T_death, "death");
+			S_takeDamage.addTransition(T_knockDown,"knockDown");
 			
 			S_block.addTransition(T_idle, "idle");
 			S_block.addTransition(T_walk, "walk");
@@ -387,7 +402,16 @@ namespace FightGame
 			S_block.addTransition(T_block,"block");
 			//S_block.addTransition(T_takeDamage,"takeDamage");
 			
+			S_knockDown.addTransition(T_idle,"idle");
+			S_knockDown.addTransition(T_knockDown,"knockDown");
+			
 			this.moveGraph = FSM.FSM.createFSMInstance(S_idle, new Action_None(), this);
+		}
+		
+		public void CreateParticle(string jointName, string particleName,out GameObject particleHolder){
+			particleHolder = (GameObject)	GameObject.Instantiate(Resources.Load("Projectiles/" + particleName, typeof(GameObject)),
+											this.joints[jointName].position,Quaternion.identity);
+			particleHolder.transform.parent = this.gobj.transform;
 		}
 	}
 }

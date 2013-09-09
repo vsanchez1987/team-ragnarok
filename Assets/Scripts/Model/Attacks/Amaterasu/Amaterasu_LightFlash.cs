@@ -14,7 +14,7 @@ namespace FightGame
 			this.instructions.Add(new JointHitBoxInstruction("r_ball_jnt",attackOwner,2.0f,5.0f,0.2f,3f,Vector3.zero,Vector3.zero));
 			
 			this.instructions.Add(new ProjectileHitBoxInstruction(
-				"Projectile_Cube", 				// projectile name
+				"Amaterasu_projectile", 				// projectile name
 				"r_ball_jnt",				
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed

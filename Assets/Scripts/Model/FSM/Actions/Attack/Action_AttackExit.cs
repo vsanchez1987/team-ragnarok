@@ -19,6 +19,8 @@ namespace FSM
 				if (fighter.extraDamage != 1){
 					fighter.extraDamage = 1.0f;
 					fighter.extraDamageTimer = 0.0f;
+					GameObject.Destroy(fighter.particleHolder1);
+					GameObject.Destroy(fighter.particleHolder2);
 					Debug.Log(fighter.extraDamage);
 				}
 			}

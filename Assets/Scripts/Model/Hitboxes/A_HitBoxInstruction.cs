@@ -14,8 +14,9 @@ namespace FightGame{
 		public float		damage;
 		public bool			started;
 		public Vector3		movement;
+		public bool			canKnockDown;
 		
-		protected A_HitBoxInstruction(A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 movement = default(Vector3)){
+		protected A_HitBoxInstruction(A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 movement = default(Vector3), bool canKnockDown = false){
 			this.fighter		= fighter;
 			this.startTime 		= startTime;
 			this.endTime 		= endTime;
@@ -23,6 +24,7 @@ namespace FightGame{
 			this.damage			= damage;
 			this.started		= false;
 			this.movement		= movement;
+			this.canKnockDown	= canKnockDown;
 		}
 		
 		public void Init(){
@@ -33,6 +35,7 @@ namespace FightGame{
 			this.hitbox.Enable();
 			this.hitbox.SetRadius(radius);
 			if (this.hitbox.damage != this.damage){ this.hitbox.damage = this.damage; }
+			this.hitbox.canKnockDown = this.canKnockDown;
 			this.fighter.AddMovement( this.movement );
 			this.started = true;
 		}

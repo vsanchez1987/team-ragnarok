@@ -140,7 +140,7 @@ ModelImporter:
     - name: char_amaterasu_KnockOffFeet
       takeName: Take 001
       firstFrame: 99
-      lastFrame: 124
+      lastFrame: 132
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -17,7 +17,8 @@ namespace FightGame
 				0.1f, 							// startTime
 				0.8f,  							// endTime
 				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
-				new Vector3(0.0f, 0.0f, 0.0f)
+				new Vector3(0.0f, 0.0f, 0.0f),
+				true
 				));	
 			
 			this.instructions.Add(new JointHitBoxInstruction(
@@ -28,7 +29,8 @@ namespace FightGame
 				0.85f, 							// startTime
 				1.2f,  							// endTime
 				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
-				new Vector3(0.0f, 0.0f, 0.0f)
+				new Vector3(0.0f, 0.0f, 0.0f),
+				true
 				));	
 		}
 	}

@@ -12,6 +12,7 @@ namespace FightGame
 		public bool			isProjectile;
 		public bool			inUse;
 		public float		damage;
+		public bool			canKnockDown;
 		
 		public HitBox(A_Fighter owner, GameObject gobj, bool isProjectile)
 		{
@@ -20,7 +21,7 @@ namespace FightGame
 			this.isProjectile 	= isProjectile;
 			this.inUse			= false;
 			this.damage			= 0.0f;
-			
+			this.canKnockDown	= false;
 			this.Reset();
 		}
 		
