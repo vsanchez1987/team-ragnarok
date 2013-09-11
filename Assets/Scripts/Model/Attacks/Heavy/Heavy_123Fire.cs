@@ -5,12 +5,12 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Heavy_123Fire: Attack_Projectile
+	public class Heavy_123Fire: A_Attack
 	{	
 		public Heavy_123Fire(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
-			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"Projectile_Cube", 				// projectile name
+			this.instructions.Add(new ProjectileHitBoxInstruction(
+				"Heavy_projectile", 				// projectile name
 				"head_jnt",						// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed
@@ -22,8 +22,8 @@ namespace FightGame
 				new Vector3(2.0f, 0.0f, 0.0f),	// offset
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement
 				));				
-			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"Projectile_Cube", 				// projectile name
+			this.instructions.Add(new ProjectileHitBoxInstruction(
+				"Heavy_projectile", 				// projectile name
 				"head_jnt",						// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed
@@ -35,8 +35,8 @@ namespace FightGame
 				new Vector3(2.0f, 0.0f, 0.0f),	// offset
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement
 				));				
-			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"Projectile_Cube", 				// projectile name
+			this.instructions.Add(new ProjectileHitBoxInstruction(
+				"Heavy_projectile", 				// projectile name
 				"head_jnt",						// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed

@@ -12,8 +12,11 @@ namespace FightGame
 		public bool			isProjectile;
 		public bool			inUse;
 		public float		damage;
+<<<<<<< HEAD
 		public Vector3		knockback;
+=======
 		public bool			canKnockDown;
+>>>>>>> Hieu_1
 		
 		public HitBox(A_Fighter owner, GameObject gobj, bool isProjectile)
 		{
@@ -22,9 +25,12 @@ namespace FightGame
 			this.isProjectile 	= isProjectile;
 			this.inUse			= false;
 			this.damage			= 0.0f;
+<<<<<<< HEAD
 			this.knockback		= Vector3.left;
 			
+=======
 			this.canKnockDown	= false;
+>>>>>>> Hieu_1
 			this.Reset();
 		}
 		

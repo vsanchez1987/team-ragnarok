@@ -28,9 +28,12 @@ namespace FightGame
 		public	float							radius;
 		public	Vector3							localForwardVector;
 		public	float							extraDamage;
+<<<<<<< HEAD
+=======
 		public	float							extraDamageTimer;
 		public	bool							isKnockDown;
 		public	bool							specialEffect;
+>>>>>>> Hieu_1
 		
 		private	int								onHitTimer;
 		private bool 							onHitStarted;
@@ -67,12 +70,15 @@ namespace FightGame
 			this.commandLog			= new List<string>();
 			this.buffs				= new List<A_Buff>();
 			this.extraDamage		= 1.0f;
-			this.extraDamageTimer	= 0.0f;
-			this.isKnockDown		= false;
-			this.specialEffect		= false;
+<<<<<<< HEAD
 			
 			this.onHitTimer			= 0;
 			this.onHitStarted		= false;
+=======
+			this.extraDamageTimer	= 0.0f;
+			this.isKnockDown		= false;
+			this.specialEffect		= false;
+>>>>>>> Hieu_1
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;

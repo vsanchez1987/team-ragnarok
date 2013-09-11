@@ -13,6 +13,7 @@ public class Animations{
 	public AnimationClip Death;
 	public AnimationClip FlinchUp;
 	public AnimationClip FlinchDown;
+	public AnimationClip KnockDown;
 	
 	public AnimationClip RegularAttack;
 	public AnimationClip RegularForwardAttack;
@@ -57,6 +58,7 @@ public class FighterInput : MonoBehaviour
 		this.animationNameMap[FighterAnimation.DEATH]		 			= this.animations.Death.name;
 		this.animationNameMap[FighterAnimation.FLINCH_UP]		 		= this.animations.FlinchUp.name;
 		this.animationNameMap[FighterAnimation.FLINCH_DOWN]		 		= this.animations.FlinchDown.name;
+		this.animationNameMap[FighterAnimation.KNOCKDOWN]				= this.animations.KnockDown.name;
 		
 		this.animationNameMap[FighterAnimation.REGULAR_ATTACK] 			= this.animations.RegularAttack.name;
 		this.animationNameMap[FighterAnimation.REGULAR_FORWARD_ATTACK] 	= this.animations.RegularForwardAttack.name;

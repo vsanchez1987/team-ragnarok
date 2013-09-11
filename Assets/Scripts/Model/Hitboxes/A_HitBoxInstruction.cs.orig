@@ -6,6 +6,7 @@ using FightGame;
 namespace FightGame{
 	public abstract class A_HitBoxInstruction
 	{
+<<<<<<< HEAD
 		protected A_Fighter	fighter;
 		protected float		startTime;
 		protected float		endTime;
@@ -14,6 +15,17 @@ namespace FightGame{
 		protected Vector3	movement;
 		protected float		radius;
 		protected Vector3	knockback;
+=======
+		public A_Fighter	fighter;
+		public HitBox 		hitbox;
+		public float		startTime;
+		public float		endTime;
+		public float		radius;
+		public float		damage;
+		public bool			started;
+		public Vector3		movement;
+		public bool			canKnockDown;
+>>>>>>> Hieu_1
 		
 		protected A_HitBoxInstruction(A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 movement = default(Vector3), bool canKnockDown = false){
 			this.fighter		= fighter;
@@ -30,6 +42,13 @@ namespace FightGame{
 		public abstract void Disable();
 		
 		public virtual void Start(){
+<<<<<<< HEAD
+=======
+			this.hitbox.Enable();
+			this.hitbox.SetRadius(radius);
+			if (this.hitbox.damage != this.damage){ this.hitbox.damage = this.damage; }
+			this.hitbox.canKnockDown = this.canKnockDown;
+>>>>>>> Hieu_1
 			this.fighter.AddMovement( this.movement );
 			this.started = true;
 		}

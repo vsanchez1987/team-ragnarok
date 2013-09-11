@@ -21,8 +21,13 @@ namespace FightGame
 				Vector3.zero,
 				Vector3.zero));
 			
+<<<<<<< HEAD
+			this.AddInstruction(new ProjectileHitBoxInstruction(
+				"Projectile_Cube", 				// projectile name
+=======
 			this.instructions.Add(new ProjectileHitBoxInstruction(
 				"Amaterasu_projectile", 				// projectile name
+>>>>>>> Hieu_1
 				"r_ball_jnt",				
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed

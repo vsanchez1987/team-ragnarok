@@ -17,8 +17,18 @@ namespace FightGame
 				0.7f, 							// startTime
 				1.6f,  							// endTime
 				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
-				new Vector3(0.4f, 0.0f, 0.0f)
+				new Vector3(0.4f, 0.0f, 0.0f),
+				true
 				));
 		}
+		
+		public override void SpecialExecute(){
+			if(!attackOwner.specialEffect && attackOwner.currentAttack!= null){
+				attackOwner.CreateParticle("l_ball_jnt 2","heavy_coldshoulder_effect",out attackOwner.particleHolder1,Vector3.zero,Quaternion.AngleAxis(-90,Vector3.up));
+				attackOwner.CreateParticle("r_balr_jnt 2","heavy_coldshoulder_effect",out attackOwner.particleHolder2,Vector3.zero,Quaternion.AngleAxis(-90,Vector3.up));
+				attackOwner.specialEffect = true;
+			}
+		}
+		
 	}
 }
