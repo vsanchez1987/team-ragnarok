@@ -14,8 +14,8 @@ public class HurtBoxInput : MonoBehaviour
 		//Debug.Log(hitbox.gobj.name + " is Colliding with " + other.gameObject.name);
 		if (other.tag == "HitBox"){
 			HurtBox hurtbox = other.GetComponent<HurtBoxInput>().hurtbox;
-			if (hurtbox.owner.playerNumber != hitbox.owner.playerNumber){
-				hurtbox.owner.TakeDamage(hitbox.damage);
+			if (hurtbox.attackOwner.playerNumber != hitbox.attackOwner.playerNumber){
+				hurtbox.attackOwner.TakeDamage(hitbox.damage);
 				hitbox.Disable();
 				
 				if (hitbox.isProjectile){

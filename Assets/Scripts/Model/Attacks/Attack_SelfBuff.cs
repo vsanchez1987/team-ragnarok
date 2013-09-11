@@ -17,7 +17,7 @@ namespace FightGame
 		
 		public override void Execute(){
 			if (!this.activated){
-				this.owner.AddBuff(this.buff);
+				this.attackOwner.AddBuff(this.buff);
 				this.activated = true;
 			}
 			this.timer += Time.deltaTime;

@@ -7,13 +7,13 @@ namespace FightGame
 {
 	public class HurtBox
 	{
-		public A_Fighter 	owner;
+		public A_Fighter 	attackOwner;
 		public GameObject 	gobj;
 		public Location		location;
 		
-		public HurtBox(A_Fighter owner, GameObject gobj)
+		public HurtBox(A_Fighter attackOwner, GameObject gobj)
 		{
-			this.owner = owner;
+			this.attackOwner = attackOwner;
 			this.gobj = gobj;
 			this.location = gobj.GetComponent<HurtBoxInput>().location;
 		}

@@ -25,7 +25,7 @@ namespace FightGame
 			//empty hitbox to cause slide back at start of animation, rather than projectile at spawn.
 			this.AddInstruction(new JointHitBoxInstruction(
 				"r_ball_jnt", 
-				owner,
+				attackOwner,
 				0.0f, 
 				0.0f, 
 				0.0f, 

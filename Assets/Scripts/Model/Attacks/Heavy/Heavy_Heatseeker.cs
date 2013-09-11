@@ -10,7 +10,7 @@ namespace FightGame
 		public Heavy_HeatSeeker(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
 			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"Projectile_Seek", 					// projectile name
+				"Heavy_projectile_seek", 			// projectile name
 				"r_shoulder_jnt", 					// starting joint
 				new Vector3(0.75f, .75f, 0.0f), 	// direction
 				7.0f, 								// speed

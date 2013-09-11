@@ -11,15 +11,15 @@ namespace FightGame
 		private 	float 		timer;
 		private 	float 		duration;
 		private 	bool		activated;
-		protected 	A_Fighter 	owner;
+		protected 	A_Fighter 	attackOwner;
 		protected	float		chargeTime;
 		
-		public A_Buff ( float duration, A_Fighter owner, string name, float chargeTime )
+		public A_Buff ( float duration, A_Fighter attackOwner, string name, float chargeTime )
 		{
 			this.timer 		= 0.0f;
 			this.duration 	= duration;
 			this.activated 	= false;
-			this.owner 		= owner;
+			this.attackOwner 		= attackOwner;
 			this.name		= name;
 			this.chargeTime = chargeTime;
 		}

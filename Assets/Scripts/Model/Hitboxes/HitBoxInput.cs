@@ -11,8 +11,8 @@ public class HitBoxInput : MonoBehaviour
 		//Debug.Log(hitbox.gobj.name + " is Colliding with " + other.gameObject.name);
 		if (other.tag == "HurtBox"){
 			HurtBox hurtbox = other.GetComponent<HurtBoxInput>().hurtbox;
-			if (hurtbox.owner.playerNumber != this.hitbox.owner.playerNumber){
-				hurtbox.owner.TakeDamage(this.hitbox.damage * this.hitbox.owner.extraDamage, hurtbox, this.hitbox.knockback, this.hitbox.canKnockDown);
+			if (hurtbox.attackOwner.playerNumber != this.hitbox.attackOwner.playerNumber){
+				hurtbox.attackOwner.TakeDamage(this.hitbox.damage * this.hitbox.attackOwner.extraDamage, hurtbox, this.hitbox.knockback, this.hitbox.canKnockDown);
 				this.hitbox.Disable();
 				
 				if (this.hitbox.isProjectile){
@@ -23,7 +23,7 @@ public class HitBoxInput : MonoBehaviour
 		
 		else if (other.tag == "HitBox"){
 			HitBox otherHitbox = other.GetComponent<HitBoxInput>().hitbox;
-			if (otherHitbox.owner.playerNumber != this.hitbox.owner.playerNumber){
+			if (otherHitbox.attackOwner.playerNumber != this.hitbox.attackOwner.playerNumber){
 				if (this.hitbox.isProjectile && (this.tag != "SuperHitBox") && otherHitbox.isProjectile){
 					GameObject.Destroy(this.transform.parent.gameObject);
 				}
@@ -32,7 +32,7 @@ public class HitBoxInput : MonoBehaviour
 		
 		else if (other.tag == "SuperHitBox"){
 			HitBox otherHitbox = other.GetComponent<HitBoxInput>().hitbox;
-			if (otherHitbox.owner.playerNumber != this.hitbox.owner.playerNumber){
+			if (otherHitbox.attackOwner.playerNumber != this.hitbox.attackOwner.playerNumber){
 				if (this.hitbox.isProjectile){
 					GameObject.Destroy(this.transform.parent.gameObject);
 				}

@@ -8,16 +8,16 @@ namespace FightGame
 	public class HitBox
 	{
 		public GameObject 	gobj;
-		public A_Fighter	owner;
+		public A_Fighter	attackOwner;
 		public bool			isProjectile;
 		public bool			inUse;
 		public float		damage;
 		public Vector3		knockback;
 		public bool			canKnockDown;
 		
-		public HitBox(A_Fighter owner, GameObject gobj, bool isProjectile)
+		public HitBox(A_Fighter attackOwner, GameObject gobj, bool isProjectile)
 		{
-			this.owner			= owner;
+			this.attackOwner			= attackOwner;
 			this.gobj			= gobj;
 			this.isProjectile 	= isProjectile;
 			this.inUse			= false;
@@ -88,7 +88,7 @@ namespace FightGame
 		
 		public A_Fighter GetTarget()
 		{
-			if(this.owner.playerNumber == 1)
+			if(this.attackOwner.playerNumber == 1)
 			{
 				return GameManager.P2.Fighter;
 			}

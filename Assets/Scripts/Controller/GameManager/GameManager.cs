@@ -96,7 +96,7 @@ namespace FightGame{
 			player.InstantiateFighter(fighter, locator.transform.position, locator.transform.rotation);
 		}
 		
-		private static float GetPlayersDistance(){
+		public static float GetPlayersDistance(){
 			return Mathf.Abs(instance.gModel.p1.Fighter.gobj.transform.position.x - instance.gModel.p2.Fighter.gobj.transform.position.x);
 		}
 		
@@ -134,6 +134,10 @@ namespace FightGame{
 				}
 			}
 			return false;
+		}
+		
+		public static Player GetOpponentPlayer(int playerNumber){
+			return playerNumber == 1 ? instance.gModel.p2 : instance.gModel.p1;
 		}
 		
 		private static bool CheckWithinLeftBoundary(A_Fighter fighter){

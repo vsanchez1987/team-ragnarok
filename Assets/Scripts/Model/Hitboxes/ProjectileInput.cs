@@ -23,7 +23,14 @@ public class ProjectileInput : MonoBehaviour
 	}
 	
 	protected virtual void Execute(){
+		this.ReCenter();
 		this.transform.Translate( direction * speed * 10.0f * Time.deltaTime );
+	}
+	
+	protected void ReCenter(){
+		if (this.transform.position.z != 0.0f) {
+			this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, 0.0f);
+		}
 	}
 }
 

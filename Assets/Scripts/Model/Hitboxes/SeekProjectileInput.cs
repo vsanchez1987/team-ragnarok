@@ -17,6 +17,7 @@ public class SeekProjectileInput : ProjectileInput
 	}
 	
 	protected override void Execute(){
+		this.ReCenter();
 		if(timer > 0.7f)
 		{
 			if ( this.newDirection == Vector3.zero){

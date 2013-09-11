@@ -33,6 +33,7 @@ namespace FightGame{
 			pInput.speed = this.speed;
 			pInput.hitbox.SetKnockback(this.knockback);
 			pInput.hitbox.SetRadius( this.radius );
+			pInput.hitbox.damage = this.damage;
 			//this.hitbox = pInput.hitbox;
 			
 			HitBoxInput hInput = pInput.hitboxObject.GetComponent<HitBoxInput>();

@@ -7,11 +7,11 @@ namespace FightGame{
 	public abstract class A_Status {
 		public string name;
 		public string particleName;
-		private A_Fighter owner;
+		private A_Fighter attackOwner;
 		
-		public A_Status(string name, A_Fighter owner, string particleName){
+		public A_Status(string name, A_Fighter attackOwner, string particleName){
 			this.name = name;
-			this.owner = owner;
+			this.attackOwner = attackOwner;
 			this.particleName = particleName;
 		}
 		

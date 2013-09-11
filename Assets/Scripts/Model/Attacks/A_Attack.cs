@@ -8,23 +8,23 @@ namespace FightGame
 	public abstract class A_Attack
 	{
 		public		float		speed;
-		protected 	A_Fighter	owner;
+		protected 	A_Fighter	attackOwner;
 		protected	float		timer;
 		protected	float		length;
 		protected	string		animationName;
 		
 		private	List<A_HitBoxInstruction> instructions;
 		
-		protected A_Attack( string animationName, float speed, A_Fighter owner)
+		protected A_Attack( string animationName, float speed, A_Fighter attackOwner)
 		{
 			this.speed			= speed;
-			this.owner 			= owner;
+			this.attackOwner 			= attackOwner;
 			this.timer 			= 0.0f;
 			this.animationName 	= animationName;
 			this.instructions 	= new List<A_HitBoxInstruction>();
 			
-			if (owner.gobj.animation.GetClip(animationName) != null){
-				this.length = owner.gobj.animation[animationName].clip.length;
+			if (attackOwner.gobj.animation.GetClip(animationName) != null){
+				this.length = attackOwner.gobj.animation[animationName].clip.length;
 			}
 		}
 		

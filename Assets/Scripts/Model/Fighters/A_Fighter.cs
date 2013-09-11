@@ -14,7 +14,7 @@ namespace FightGame
 		
 		public	string							name;
 		public 	GameObject 						gobj;
-		public  GameObject 						particleHolder1,particleHolder2;
+		//public  GameObject 						particleHolder1,particleHolder2;
 		public 	Dictionary<string, Transform> 	joints;
 		public 	Dictionary<string, HurtBox> 	hurtBoxes;
 		public 	Dictionary<string, HitBox> 		hitBoxes;
@@ -28,7 +28,7 @@ namespace FightGame
 		public	float							radius;
 		public	Vector3							localForwardVector;
 		public	float							extraDamage;
-		public	bool							specialEffect;
+		//public	bool							specialEffect;
 		
 		private	int								onHitTimer;
 		private bool 							onHitStarted;
@@ -65,7 +65,7 @@ namespace FightGame
 			this.commandLog			= new List<string>();
 			this.buffs				= new List<A_Buff>();
 			this.extraDamage		= 1.0f;
-			this.specialEffect		= false;
+			//this.specialEffect		= false;
 			
 			this.onHitTimer			= 0;
 			this.onHitStarted		= false;
@@ -379,15 +379,17 @@ namespace FightGame
 				}
 				*/
 			}
-			if (this.playerNumber == 1) 
-			{
-				if(GameManager.P2.Fighter.cur_meter < 100)
-					GameManager.P2.Fighter.cur_meter += 10.0f;
+			
+			if (!GameManager.CheckCanMoveBackward( this ) && 
+				(GameManager.GetPlayersDistance() < (GameManager.P1.Fighter.radius + GameManager.P2.Fighter.radius) * 1.2f)){
+				
+				GameManager.GetOpponentPlayer(this.playerNumber).Fighter.AddMovement( new Vector3(-0.02f, 0.0f, 0.0f) );
+				
 			}
-			else 
-			{	if(GameManager.P1.Fighter.cur_meter < 100)
-					GameManager.P1.Fighter.cur_meter += 10.0f;
-			}
+			
+			A_Fighter enemy = GameManager.GetOpponentPlayer(this.playerNumber).Fighter;
+			enemy.cur_meter = Mathf.Clamp(enemy.cur_meter + 10.0f, 0, 100);
+			
 			//Debug.Log(this.name + "\n" + "Damage Taken: " + damage + " Current HP: " + this.cur_hp);
 		}
 		
@@ -446,11 +448,12 @@ namespace FightGame
 			
 			this.moveGraph = FSM.FSM.createFSMInstance(S_idle, new Action_None(), this);
 		}
-		
+		/*
 		public void CreateParticle(string jointName, string particleName,out GameObject particleHolder,Vector3 offset,Quaternion rotateOffset){
 			particleHolder = (GameObject)	GameObject.Instantiate(Resources.Load("Effect/" + particleName, typeof(GameObject)),
 											this.joints[jointName].position+offset,rotateOffset);
 			particleHolder.transform.parent = this.gobj.transform;
 		}
+		*/
 	}
 }

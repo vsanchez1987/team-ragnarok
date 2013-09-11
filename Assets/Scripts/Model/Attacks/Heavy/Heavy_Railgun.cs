@@ -10,7 +10,7 @@ namespace FightGame
 		public Heavy_Railgun(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
 			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"Projectile_Cube", 				// projectile name
+				"Heavy_projectile", 			// projectile name
 				"head_jnt", 					// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				20.0f, 							// speed
@@ -23,7 +23,7 @@ namespace FightGame
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement							
 				));
 			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"Projectile_Cube", 				// projectile name
+				"Heavy_projectile", 			// projectile name
 				"head_jnt", 					// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				20.0f, 							// speed
@@ -36,7 +36,7 @@ namespace FightGame
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement							
 				));
 			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"Projectile_Cube", 				// projectile name
+				"Heavy_projectile", 			// projectile name
 				"head_jnt", 					// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				20.0f, 							// speed
@@ -51,7 +51,7 @@ namespace FightGame
 		}
 		
 		public override void SpecialExecute(){
-			this.owner.cur_meter--;
+			this.attackOwner.cur_meter--;
 		}
 	}
 }
