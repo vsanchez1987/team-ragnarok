@@ -35,6 +35,7 @@ namespace FightGame
 		public List<string>						commandLog;
 		public Dictionary<ActionCommand, A_Attack> 	actionsCommandMap;
 		public Dictionary<FighterAnimation, string> animationNameMap;
+
 		
 		public A_Fighter(GameObject gobj, int playerNumber)
 		{
