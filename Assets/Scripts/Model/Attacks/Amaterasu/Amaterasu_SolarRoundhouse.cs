@@ -5,11 +5,11 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Amaterasu_SolarRoundhouse: A_Attack
+	public class Amaterasu_SolarRoundhouse: Attack_Melee
 	{	
 		public Amaterasu_SolarRoundhouse(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
-				this.instructions.Add(new JointHitBoxInstruction(
+				this.AddInstruction(new JointHitBoxInstruction(
 				"r_ball_jnt", 				
 				attackOwner, 					// fighter
 				3.0f, 							// radius

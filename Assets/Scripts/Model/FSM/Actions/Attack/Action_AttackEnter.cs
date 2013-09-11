@@ -16,12 +16,8 @@ namespace FSM
 				fighter.currentAttack = fighter.actionsCommandMap[fighter.currentAction];
 			}
 			
-			fighter.gobj.animation[fighter.currentAttack.animationName].speed = fighter.currentAttack.animationSpeed;
-			
-			foreach (A_HitBoxInstruction hbi in fighter.currentAttack.instructions){
-				hbi.Init();
-			}
-			
+			fighter.currentAttack.Init();
+			fighter.gobj.animation[fighter.currentAttack.AnimationName].speed = fighter.currentAttack.speed;
 			fighter.gobj.animation.Stop();
 		}
 	}

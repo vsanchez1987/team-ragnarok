@@ -7,46 +7,62 @@ namespace FightGame
 {
 	public abstract class A_Attack
 	{
-		public		float						timer;
-		public		float						attackLength;
-		public 		string 						animationName;
-		public	 	List<A_HitBoxInstruction>	instructions;
-		public		float						animationSpeed;
-		protected 	A_Fighter 					attackOwner;
+		public		float		speed;
+		protected 	A_Fighter	owner;
+		protected	float		timer;
+		protected	float		length;
+		protected	string		animationName;
+		protected	List<A_HitBoxInstruction> instructions;
 		
-		protected A_Attack( string animationName, float animationSpeed, A_Fighter attackOwner)
+		protected A_Attack( string animationName, float speed, A_Fighter owner)
 		{
-			this.timer				= timer;
-			this.instructions 		= new List<A_HitBoxInstruction>();
-			this.attackOwner		= attackOwner;
-			this.animationName 		= animationName;
-			this.animationSpeed		= animationSpeed;
+			this.speed			= speed;
+			this.owner 			= owner;
+			this.timer 			= 0.0f;
+			this.animationName 	= animationName;
+			this.instructions 	= new List<A_HitBoxInstruction>();
 			
-			//Debug.Log("Animation: " + this.animationName + " Speed: " + this.attackOwner.gobj.animation[animationName].speed.ToString());
-			
-			if (attackOwner.gobj.animation.GetClip(animationName) != null){
-				//attackOwner.gobj.animation[animationName].speed = animationSpeed;
-				this.attackLength = attackOwner.gobj.animation[animationName].clip.length;
+			if (owner.gobj.animation.GetClip(animationName) != null){
+				this.length = owner.gobj.animation[animationName].clip.length;
 			}
+		}
+		
+		public virtual void Init(){
+			this.timer = 0.0f;
 		}
 		
 		public virtual void Execute(){
+			foreach (A_HitBoxInstruction hbi in this.instructions){
+				if (this.timer < hbi.StartTime / this.speed){
+					hbi.Disable();
+				}
+				else if ((this.timer >= hbi.StartTime / this.speed) && (this.timer <= hbi.EndTime / this.speed)){
+					hbi.Execute();
+				}
+				else if (this.timer >= hbi.EndTime / this.speed){
+					hbi.Reset();
+				}
+			}
 			this.timer += Time.deltaTime;
 		}
 		
-		public void Reset(){
+		
+		public virtual void Reset(){
 			foreach (A_HitBoxInstruction hbi in this.instructions){
 				hbi.Reset();
 			}
-		}
-		
-		public void SetSpeed( float speed ){
-			this.animationSpeed = speed;
+			this.timer = 0.0f;
 		}
 		
 		//Hieu add
-		public virtual void SpecialExecute(){
-			
+		public virtual void SpecialExecute(){ }
+		
+		public bool CheckComplete(){
+			return (this.timer >= (this.length / this.speed));
+		}
+		
+		public string AnimationName{
+			get { return this.animationName;}
 		}
 	}
 }

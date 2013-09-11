@@ -5,12 +5,12 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Amaterasu_QuakeWithFear: A_Attack
+	public class Amaterasu_QuakeWithFear: Attack_Projectile
 	{	
 		public Amaterasu_QuakeWithFear(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
 			
-			this.instructions.Add(new ProjectileHitBoxInstruction(
+			this.AddInstruction(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 				// projectile name
 				"l_ball_jnt",					
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
@@ -23,7 +23,7 @@ namespace FightGame
 				new Vector3(0.0f, 0.0f, 0.0f),	// offset
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement
 				));				
-			this.instructions.Add(new ProjectileHitBoxInstruction(
+			this.AddInstruction(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 				// projectile name
 				"l_ball_jnt",					
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction

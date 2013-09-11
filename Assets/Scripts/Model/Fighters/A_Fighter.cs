@@ -27,12 +27,15 @@ namespace FightGame
 		public	float							radius;
 		public	Vector3							localForwardVector;
 		public	float							extraDamage;
-		public	float							extraDamageTimer;
+		
+		private	int								onHitTimer;
+		private bool 							onHitStarted;
 		
 		public int			 					currentAction;
 		public int								currentMovement;
 		public A_Attack							currentAttack;
 		public List<string>						commandLog;
+		public List<A_Buff>						buffs;
 		public Dictionary<int, A_Attack> 		actionsCommandMap;
 		public Dictionary<FighterAnimation, string> animationNameMap;
 		
@@ -58,8 +61,11 @@ namespace FightGame
 			this.globalActionTimer	= 0.0f;
 			this.movement			= Vector3.zero;
 			this.commandLog			= new List<string>();
+			this.buffs				= new List<A_Buff>();
 			this.extraDamage		= 1.0f;
-			this.extraDamageTimer	= 0.0f;
+			
+			this.onHitTimer			= 0;
+			this.onHitStarted		= false;
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;
@@ -166,6 +172,12 @@ namespace FightGame
 			}
 		}
 		
+		//describes player forward direction
+		public Vector2 GlobalForwardVector {
+			get {return globalForwardVector;}
+			set {this.globalForwardVector=value;}
+		}
+		
 		private void InitJoints( List<Transform> joints ){
 			foreach (Transform t in joints){
 				this.joints[t.name] = t;
@@ -189,12 +201,6 @@ namespace FightGame
 				gobj.GetComponent<HurtBoxInput>().hurtbox = hurtbox;
 				this.hurtBoxes[gobj.name] = hurtbox;
 			}
-		}
-		
-		//describes player forward direction
-		public Vector2 GlobalForwardVector {
-			get {return globalForwardVector;}
-			set {this.globalForwardVector=value;}
 		}
 		
 		private void InitForwardVector(int player)
@@ -242,7 +248,7 @@ namespace FightGame
 			if (this.movement.magnitude > 0.001f){
 				if ( this.movement.x < 0 ){
 					if ( GameManager.CheckCanMoveBackward(this) ){
-						this.gobj.transform.position += new Vector3(this.movement.x * this.globalForwardVector.x,
+						this.gobj.transform.position += new Vector3(this.movement.x * this.globalForwardVector.x * Time.deltaTime * 100.0f,
 							0.0f, 0.0f);
 						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 3 );
 						
@@ -253,7 +259,7 @@ namespace FightGame
 				}
 				else if (this.movement.x > 0){
 					if ( GameManager.CheckCanMoveForward(this) ){
-						this.gobj.transform.position += new Vector3(this.movement.x * this.globalForwardVector.x,
+						this.gobj.transform.position += new Vector3(this.movement.x * this.globalForwardVector.x * Time.deltaTime * 100.0f,
 							0.0f, 0.0f);
 						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 3 );
 						
@@ -262,15 +268,17 @@ namespace FightGame
 						}
 					}
 				}
-				this.gobj.transform.position += new Vector3(0.0f, this.movement.y, 0.0f);
+				this.gobj.transform.position += new Vector3(0.0f, this.movement.y * Time.deltaTime * 100.0f, 0.0f);
 			}
 		}
 		
 		private void ReCenter(){
-			if (this.gobj.transform.position.z != 0.0f) 
+			if (this.gobj.transform.position.z != 0.0f) {
 				this.gobj.transform.position = new Vector3(this.gobj.transform.position.x, this.gobj.transform.position.y, 0.0f);
+			}
 		}
 		
+		/*
 		private void CheckExtraDamage(){
 			if (this.extraDamage != 1){
 				this.extraDamageTimer += Time.deltaTime;
@@ -281,13 +289,42 @@ namespace FightGame
 				}
 			}
 		}
+		*/
+		
+		private void UpdateBuffs(){
+			foreach (A_Buff buff in this.buffs){
+				if (buff.CheckFinished()){
+					buff.DeActivate();
+					this.buffs.Remove(buff);
+					break;
+				}
+				else{
+					buff.Update();
+				}
+			}
+		}
+		
+		private void ApplyOnHitDelay(){
+			if ( this.onHitStarted ){
+				this.onHitTimer++;
+				if ( this.onHitTimer <= 6 ){
+					Time.timeScale = 0.1f;
+				}
+				else{
+					Time.timeScale = 1.0f;
+					this.onHitTimer = 0;
+					this.onHitStarted = false;
+				}
+			}
+		}
 		
 		public void Update()
 		{
+			this.ApplyOnHitDelay();
 			this.AddGravity();
 			this.ApplyMovement();
 			this.moveGraph.CurrentState.update(moveGraph, this);
-			this.CheckExtraDamage();
+			this.UpdateBuffs();
 			if (this.cur_meter >= 100f) this.cur_meter = 100f;
 			if (this.cur_meter <= 0f) this.cur_meter = 0f;
 			this.ReCenter();
@@ -295,6 +332,12 @@ namespace FightGame
 		
 		public void LogLastCommand(){
 			
+		}
+		
+		public void AddBuff( A_Buff buff ){
+			if (!this.buffs.Contains(buff)){
+				this.buffs.Add(buff);
+			}
 		}
 		
 		public void SwitchForwardVector()
@@ -310,24 +353,26 @@ namespace FightGame
 					this.moveGraph.dispatch("death", this);
 				}
 				else{
-					this.movement = direction * 0.1f;
+					GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Explosion", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
+					GameObject.Destroy(explosion, 2.0f);
+					
+					this.onHitTimer = 0;
+					this.onHitStarted = true;
+					this.movement = direction * 0.05f;
 					this.hurtLocation = hurtbox.location;
 					this.moveGraph.dispatch( "takeDamage", this );
 				}
 			}
 			else{
-				this.cur_hp -= damage * 0.1f;
+				GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Block", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
+				GameObject.Destroy(explosion, 2.0f);
+				
+				this.cur_hp -= damage * 0.25f;
 				//The meter will increase when player's attack is block;
-				if (this.playerNumber == 1) 
-				{
-					if(GameManager.P2.Fighter.cur_meter < 100)
-						GameManager.P2.Fighter.cur_meter += 5.0f;
-				}
-				else 
-				{	if(GameManager.P1.Fighter.cur_meter < 100)
-						GameManager.P1.Fighter.cur_meter += 5.0f;
-				}
-				this.movement = direction * 0.05f;
+				if (this.cur_meter < 100)
+					this.cur_meter = Mathf.Clamp( this.cur_meter + 5, 0, 100 );
+				
+				this.movement = direction * 0.025f;
 				if (this.cur_hp <= 0){
 					this.cur_hp = 0.0f;
 					this.moveGraph.dispatch("death", this);
@@ -339,6 +384,15 @@ namespace FightGame
 					this.movement = direction * 0.05f;
 				}
 				*/
+			}
+			if (this.playerNumber == 1) 
+			{
+				if(GameManager.P2.Fighter.cur_meter < 100)
+					GameManager.P2.Fighter.cur_meter += 10.0f;
+			}
+			else 
+			{	if(GameManager.P1.Fighter.cur_meter < 100)
+					GameManager.P1.Fighter.cur_meter += 10.0f;
 			}
 			//Debug.Log(this.name + "\n" + "Damage Taken: " + damage + " Current HP: " + this.cur_hp);
 		}

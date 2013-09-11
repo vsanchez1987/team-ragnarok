@@ -5,16 +5,15 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Amaterasu_Fury: A_Attack
+	public class Amaterasu_Fury: Attack_SelfBuff
 	{	
-		bool check;
 		public Amaterasu_Fury(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
-			check = false;
+			this.buff = new Buff_Fury( 5.0f, attackOwner, "Fury" );
 			//increase damage for the next attack
 			//increase more fire effect on her feet
 		}
-		
+		/*
 		public override void SpecialExecute(){
 			
 			if(attackOwner.extraDamage == 1)
@@ -23,10 +22,11 @@ namespace FightGame
 				Debug.Log(attackOwner.extraDamage);
 				
 			}
-			/*else{
+			else{
 				attackOwner.extraDamageTimer = 0.0f;
-			}*/
+			}
 		}
+		*/
 	}
 }
 

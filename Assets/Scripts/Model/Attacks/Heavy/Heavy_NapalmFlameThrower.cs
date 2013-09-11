@@ -5,11 +5,11 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Heavy_NapalmFlameThrower: A_Attack
+	public class Heavy_NapalmFlameThrower: Attack_Projectile
 	{	
 		public Heavy_NapalmFlameThrower(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
-			this.instructions.Add(new ProjectileHitBoxInstruction(
+			this.AddInstruction(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 					// projectile name
 				"l_wrist_jnt", 						// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 		// direction
@@ -22,7 +22,7 @@ namespace FightGame
 				new Vector3(-1.2f, 0.0f, 0.0f),		// offset
 				new Vector3(0.0f, 0.0f, 0.0f)		// movement
 				));
-			this.instructions.Add(new ProjectileHitBoxInstruction(
+			this.AddInstruction(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 					// projectile name
 				"l_wrist_jnt", 						// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 		// direction
@@ -35,7 +35,7 @@ namespace FightGame
 				new Vector3(-1.8f, 0.4f, 0.0f),		// offset
 				new Vector3(0.0f, 0.0f, 0.0f)		// movement
 				));
-			this.instructions.Add(new ProjectileHitBoxInstruction(
+			this.AddInstruction(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 					// projectile name
 				"l_wrist_jnt", 						// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 		// direction
@@ -48,7 +48,7 @@ namespace FightGame
 				new Vector3(-2.4f, 0.0f, 0.0f),		// offset
 				new Vector3(0.0f, 0.0f, 0.0f)		// movement
 				));
-			this.instructions.Add(new ProjectileHitBoxInstruction(
+			this.AddInstruction(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 					// projectile name
 				"l_wrist_jnt", 						// starting joint
 				new Vector3(1.0f, -0.4f, 0.0f), 	// direction

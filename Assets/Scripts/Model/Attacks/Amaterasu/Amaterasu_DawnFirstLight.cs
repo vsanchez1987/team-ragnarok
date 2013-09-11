@@ -5,12 +5,12 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Amaterasu_DawnFirstLight: A_Attack
+	public class Amaterasu_DawnFirstLight: Attack_Melee
 	{	
 		public Amaterasu_DawnFirstLight(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
 			
-			this.instructions.Add(new JointHitBoxInstruction(
+			this.AddInstruction(new JointHitBoxInstruction(
 				"r_knee_jnt", 				
 				attackOwner, 					// fighter
 				1.5f, 							// radius

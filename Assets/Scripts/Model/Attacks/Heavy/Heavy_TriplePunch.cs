@@ -5,11 +5,11 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Heavy_TriplePunch: A_Attack
+	public class Heavy_TriplePunch: Attack_Melee
 	{	
 		public Heavy_TriplePunch(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
-			this.instructions.Add(new JointHitBoxInstruction(
+			this.AddInstruction(new JointHitBoxInstruction(
 				"l_wrist_jnt", 					// joint
 				attackOwner, 					// fighter
 				3.0f, 							// radius
@@ -19,7 +19,7 @@ namespace FightGame
 				Vector3.zero,					// offset
 				new Vector3( 0.0f, 0.0f, 0.0f )// movement
 				));			
-			this.instructions.Add(new JointHitBoxInstruction(
+			this.AddInstruction(new JointHitBoxInstruction(
 				"r_wrist_jnt", 					// joint
 				attackOwner, 					// fighter
 				3.0f, 							// radius

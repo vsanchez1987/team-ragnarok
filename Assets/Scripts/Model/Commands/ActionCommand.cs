@@ -27,10 +27,6 @@ namespace FightGame{
 		public const int SPECIAL_BACK		= 14;
 		public const int SPECIAL_UP			= 15;
 		public const int SPECIAL_DOWN		= 16;
-		
-		public ActionCommand () : base()
-		{
-		}
 	}
 }
 

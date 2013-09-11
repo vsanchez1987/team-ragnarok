@@ -5,15 +5,23 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Amaterasu_LightFlash: A_Attack
+	public class Amaterasu_LightFlash: Attack_Mixed
 	{	
 		public Amaterasu_LightFlash(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
 			//JointHitBoxInstruction(joint,attackowner,radius,damage,starttime,endtime,offset,movement)
 			//ProjectileHitBoxInstruction(projectilename,starting joint,direction,speed,attackowner,radius,damage,starttime,endtime,offset,movement
-			this.instructions.Add(new JointHitBoxInstruction("r_ball_jnt",attackOwner,2.0f,5.0f,0.2f,3f,Vector3.zero,Vector3.zero));
+			this.AddInstruction(new JointHitBoxInstruction(
+				"r_ball_jnt",
+				attackOwner,
+				2.0f,
+				5.0f,
+				0.2f,
+				3f,
+				Vector3.zero,
+				Vector3.zero));
 			
-			this.instructions.Add(new ProjectileHitBoxInstruction(
+			this.AddInstruction(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 				// projectile name
 				"r_ball_jnt",				
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction

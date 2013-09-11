@@ -6,14 +6,14 @@ using FightGame;
 namespace FightGame{
 	public abstract class A_HitBoxInstruction
 	{
-		public A_Fighter	fighter;
-		public HitBox 		hitbox;
-		public float		startTime;
-		public float		endTime;
-		public float		radius;
-		public float		damage;
-		public bool			started;
-		public Vector3		movement;
+		protected A_Fighter	fighter;
+		protected float		startTime;
+		protected float		endTime;
+		protected float		damage;
+		protected bool		started;
+		protected Vector3	movement;
+		protected float		radius;
+		protected Vector3	knockback;
 		
 		protected A_HitBoxInstruction(A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 movement = default(Vector3)){
 			this.fighter		= fighter;
@@ -25,14 +25,10 @@ namespace FightGame{
 			this.movement		= movement;
 		}
 		
-		public void Init(){
-			this.hitbox = fighter.FindFreeHitBox();
-		}
+		public abstract void Init();
+		public abstract void Disable();
 		
 		public virtual void Start(){
-			this.hitbox.Enable();
-			this.hitbox.SetRadius(radius);
-			if (this.hitbox.damage != this.damage){ this.hitbox.damage = this.damage; }
 			this.fighter.AddMovement( this.movement );
 			this.started = true;
 		}
@@ -43,9 +39,16 @@ namespace FightGame{
 			}
 		}
 		
-		public void Reset(){
+		public virtual void Reset(){
 			this.started = false;
-			this.hitbox.Reset();
+		}
+		
+		public float StartTime{
+			get { return this.startTime; }
+		}
+		
+		public float EndTime{
+			get { return this.endTime; }
 		}
 	}
 }

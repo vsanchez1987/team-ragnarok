@@ -5,11 +5,11 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Heavy_HeatSeeker: A_Attack
+	public class Heavy_HeatSeeker: Attack_Projectile
 	{	
 		public Heavy_HeatSeeker(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
-			this.instructions.Add(new ProjectileHitBoxInstruction(
+			this.AddInstruction(new ProjectileHitBoxInstruction(
 				"Projectile_Seek", 					// projectile name
 				"r_shoulder_jnt", 					// starting joint
 				new Vector3(0.7f, 1f, 0.0f), 	// direction

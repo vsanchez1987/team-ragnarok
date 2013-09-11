@@ -5,11 +5,11 @@ using FightGame;
 
 namespace FightGame
 {
-	public class Amaterasu_RisingSun: A_Attack
+	public class Amaterasu_RisingSun: Attack_Melee
 	{	
 		public Amaterasu_RisingSun(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
-			this.instructions.Add(new JointHitBoxInstruction(
+			this.AddInstruction(new JointHitBoxInstruction(
 				"r_ball_jnt", 				
 				attackOwner, 					// fighter
 				1.50f, 							// radius
@@ -20,7 +20,7 @@ namespace FightGame
 				new Vector3(0.1f, 0.0f, 0.0f)
 				));		
 			
-			this.instructions.Add(new JointHitBoxInstruction(
+			this.AddInstruction(new JointHitBoxInstruction(
 				"l_ball_jnt", 				
 				attackOwner, 					// fighter
 				1.50f, 							// radius
@@ -31,7 +31,7 @@ namespace FightGame
 				new Vector3(0.15f, 0.0f, 0.0f)
 				));
 			
-			this.instructions.Add(new JointHitBoxInstruction(
+			this.AddInstruction(new JointHitBoxInstruction(
 				"l_ball_jnt", 				
 				attackOwner, 					// fighter
 				1.50f, 							// radius
@@ -42,7 +42,7 @@ namespace FightGame
 				new Vector3(0.0f, 0.0f, 0.0f)
 				));
 			
-			this.instructions.Add(new JointHitBoxInstruction(
+			this.AddInstruction(new JointHitBoxInstruction(
 				"r_ball_jnt", 				
 				attackOwner, 					// fighter
 				1.50f, 							// radius

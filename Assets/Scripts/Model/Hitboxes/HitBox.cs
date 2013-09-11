@@ -12,6 +12,7 @@ namespace FightGame
 		public bool			isProjectile;
 		public bool			inUse;
 		public float		damage;
+		public Vector3		knockback;
 		
 		public HitBox(A_Fighter owner, GameObject gobj, bool isProjectile)
 		{
@@ -20,6 +21,7 @@ namespace FightGame
 			this.isProjectile 	= isProjectile;
 			this.inUse			= false;
 			this.damage			= 0.0f;
+			this.knockback		= Vector3.left;
 			
 			this.Reset();
 		}
@@ -43,6 +45,10 @@ namespace FightGame
 		
 		public void SetRadius(float radius){
 			this.gobj.transform.localScale = new Vector3(radius, radius, radius);
+		}
+		
+		public void SetKnockback(Vector3 knockback){
+			this.knockback = knockback;
 		}
 		
 		public void Reset(){
