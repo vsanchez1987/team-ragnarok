@@ -324,6 +324,10 @@ namespace FightGame
 			
 		}
 		
+		public string CurrentState{
+			get { return this.moveGraph.CurrentState.Name; }
+		}
+		
 		public void AddBuff( A_Buff buff ){
 			if (!this.buffs.Contains(buff)){
 				this.buffs.Add(buff);
@@ -342,10 +346,6 @@ namespace FightGame
 					this.cur_hp = 0.0f;
 					this.moveGraph.dispatch("death", this);
 				}
-				else if(knockdown)
-				{
-					this.moveGraph.dispatch("knockDown",this);
-				}
 				else{
 					GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Explosion", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
 					GameObject.Destroy(explosion, 2.0f);
@@ -354,7 +354,11 @@ namespace FightGame
 					this.onHitStarted = true;
 					this.movement = direction * 0.05f;
 					this.hurtLocation = hurtbox.location;
-					this.moveGraph.dispatch( "takeDamage", this );
+					
+					if(knockdown)
+						this.moveGraph.dispatch( "knockDown", this );
+					else
+						this.moveGraph.dispatch( "takeDamage", this );
 				}
 			}
 			else{
@@ -444,7 +448,7 @@ namespace FightGame
 			//S_block.addTransition(T_takeDamage,"takeDamage");
 			
 			S_knockDown.addTransition(T_idle,"idle");
-			S_knockDown.addTransition(T_knockDown,"knockDown");
+			//S_knockDown.addTransition(T_knockDown,"knockDown");
 			
 			this.moveGraph = FSM.FSM.createFSMInstance(S_idle, new Action_None(), this);
 		}

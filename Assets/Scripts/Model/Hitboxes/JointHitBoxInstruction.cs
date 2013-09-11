@@ -23,9 +23,8 @@ namespace FightGame{
 		public override void Start(){
 			this.hitbox.Enable();
 			this.hitbox.SetRadius(this.radius);
-			if (this.hitbox.damage != this.damage){ 
-				this.hitbox.damage = this.damage; 
-			}
+			if (this.hitbox.damage != this.damage){ this.hitbox.damage = this.damage; }
+			this.hitbox.canKnockDown = this.canKnockDown;
 			base.Start();
 		}
 		

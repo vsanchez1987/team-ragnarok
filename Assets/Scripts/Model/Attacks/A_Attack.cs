@@ -18,7 +18,7 @@ namespace FightGame
 		protected A_Attack( string animationName, float speed, A_Fighter attackOwner)
 		{
 			this.speed			= speed;
-			this.attackOwner 			= attackOwner;
+			this.attackOwner 	= attackOwner;
 			this.timer 			= 0.0f;
 			this.animationName 	= animationName;
 			this.instructions 	= new List<A_HitBoxInstruction>();
