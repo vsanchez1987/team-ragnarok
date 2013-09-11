@@ -19,7 +19,7 @@ namespace FSM
 			if(fighter.globalActionTimer > 
 				(gobj.animation[fighter.animationNameMap[animation]].length / gobj.animation[fighter.animationNameMap[animation]].speed))
 			{
-				fighter.isKnockDown = false;
+				//fighter.isKnockDown = false;
 				c.dispatch("idle", o);
 			}
 			

@@ -14,6 +14,7 @@ namespace FightGame{
 		protected Vector3	movement;
 		protected float		radius;
 		protected Vector3	knockback;
+		protected bool		canKnockDown;
 		
 		protected A_HitBoxInstruction(A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 movement = default(Vector3), bool canKnockDown = false){
 			this.fighter		= fighter;

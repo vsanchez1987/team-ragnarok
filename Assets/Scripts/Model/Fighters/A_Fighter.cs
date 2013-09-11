@@ -28,8 +28,6 @@ namespace FightGame
 		public	float							radius;
 		public	Vector3							localForwardVector;
 		public	float							extraDamage;
-		public	float							extraDamageTimer;
-		public	bool							isKnockDown;
 		public	bool							specialEffect;
 		
 		private	int								onHitTimer;
@@ -67,8 +65,6 @@ namespace FightGame
 			this.commandLog			= new List<string>();
 			this.buffs				= new List<A_Buff>();
 			this.extraDamage		= 1.0f;
-			this.extraDamageTimer	= 0.0f;
-			this.isKnockDown		= false;
 			this.specialEffect		= false;
 			
 			this.onHitTimer			= 0;
@@ -285,21 +281,6 @@ namespace FightGame
 			}
 		}
 		
-		/*
-		private void CheckExtraDamage(){
-			if (this.extraDamage != 1){
-				this.extraDamageTimer += Time.deltaTime;
-				if (this.extraDamageTimer >= 5.0f){
-					this.extraDamage = 1.0f;
-					this.extraDamageTimer = 0.0f;
-					GameObject.Destroy(this.particleHolder1);
-					GameObject.Destroy(this.particleHolder2);
-					Debug.Log(this.extraDamage);
-				}
-			}
-		}
-		*/
-		
 		private void UpdateBuffs(){
 			foreach (A_Buff buff in this.buffs){
 				if (buff.CheckFinished()){
@@ -354,14 +335,14 @@ namespace FightGame
 			globalForwardVector.x *= -1;
 		}
 		
-		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction){
+		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction, bool knockdown){
 			if (this.moveGraph.CurrentState.Name != "block"){
 				this.cur_hp -= damage;
 				if (this.cur_hp <= 0){
 					this.cur_hp = 0.0f;
 					this.moveGraph.dispatch("death", this);
 				}
-				else if(this.isKnockDown)
+				else if(knockdown)
 				{
 					this.moveGraph.dispatch("knockDown",this);
 				}

@@ -23,10 +23,10 @@ namespace FightGame
 		}
 		
 		public override void SpecialExecute(){
-			if(!attackOwner.specialEffect && attackOwner.currentAttack!= null){
-				attackOwner.CreateParticle("l_ball_jnt 2","heavy_coldshoulder_effect",out attackOwner.particleHolder1,Vector3.zero,Quaternion.AngleAxis(-90,Vector3.up));
-				attackOwner.CreateParticle("r_balr_jnt 2","heavy_coldshoulder_effect",out attackOwner.particleHolder2,Vector3.zero,Quaternion.AngleAxis(-90,Vector3.up));
-				attackOwner.specialEffect = true;
+			if(!owner.specialEffect && owner.currentAttack!= null){
+				owner.CreateParticle("l_ball_jnt 2","heavy_coldshoulder_effect",out owner.particleHolder1,Vector3.zero,Quaternion.AngleAxis(-90,Vector3.up));
+				owner.CreateParticle("r_balr_jnt 2","heavy_coldshoulder_effect",out owner.particleHolder2,Vector3.zero,Quaternion.AngleAxis(-90,Vector3.up));
+				owner.specialEffect = true;
 			}
 		}
 		

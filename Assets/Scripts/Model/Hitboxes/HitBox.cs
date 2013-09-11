@@ -23,7 +23,6 @@ namespace FightGame
 			this.inUse			= false;
 			this.damage			= 0.0f;
 			this.knockback		= Vector3.left;
-			
 			this.canKnockDown	= false;
 			this.Reset();
 		}

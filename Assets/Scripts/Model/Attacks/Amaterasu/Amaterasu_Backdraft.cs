@@ -11,7 +11,7 @@ namespace FightGame
 		{
 			//range attack, range 1.5, speed med, size med, damage small
 			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"Projectile_Cube",
+				"Amaterasu_projectile",
 				"l_ball_jnt",
 				new Vector3(1,0,0),
 				7.0f,
