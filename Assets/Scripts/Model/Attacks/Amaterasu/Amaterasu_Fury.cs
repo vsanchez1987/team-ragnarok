@@ -19,8 +19,8 @@ namespace FightGame
 			
 			if(attackOwner.extraDamage == 1)
 			{
-				attackOwner.CreateParticle("l_elbow_jnt","FireBall",out attackOwner.particleHolder1);
-				attackOwner.CreateParticle("r_elbow_jnt","FireBall",out attackOwner.particleHolder2);
+				attackOwner.CreateParticle("l_elbow_jnt","FireBall",out attackOwner.particleHolder1,Vector3.zero,Quaternion.identity);
+				attackOwner.CreateParticle("r_elbow_jnt","FireBall",out attackOwner.particleHolder2,Vector3.zero,Quaternion.identity);
 				attackOwner.extraDamage = 5f;
 				Debug.Log(attackOwner.extraDamage);
 				

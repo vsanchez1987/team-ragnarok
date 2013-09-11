@@ -30,6 +30,7 @@ namespace FightGame
 		public	float							extraDamage;
 		public	float							extraDamageTimer;
 		public	bool							isKnockDown;
+		public	bool							specialEffect;
 		
 		public ActionCommand 					currentAction;
 		public MoveCommand						currentMovement;
@@ -63,6 +64,7 @@ namespace FightGame
 			this.extraDamage		= 1.0f;
 			this.extraDamageTimer	= 0.0f;
 			this.isKnockDown		= false;
+			this.specialEffect		= false;
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;
@@ -408,9 +410,9 @@ namespace FightGame
 			this.moveGraph = FSM.FSM.createFSMInstance(S_idle, new Action_None(), this);
 		}
 		
-		public void CreateParticle(string jointName, string particleName,out GameObject particleHolder){
-			particleHolder = (GameObject)	GameObject.Instantiate(Resources.Load("Projectiles/" + particleName, typeof(GameObject)),
-											this.joints[jointName].position,Quaternion.identity);
+		public void CreateParticle(string jointName, string particleName,out GameObject particleHolder,Vector3 offset,Quaternion rotateOffset){
+			particleHolder = (GameObject)	GameObject.Instantiate(Resources.Load("Effect/" + particleName, typeof(GameObject)),
+											this.joints[jointName].position+offset,rotateOffset);
 			particleHolder.transform.parent = this.gobj.transform;
 		}
 	}

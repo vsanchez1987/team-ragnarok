@@ -15,7 +15,7 @@ namespace FightGame
 			//this.instructions.Add(new ProjectileHitBoxInstruction( "Projectile_Cube", "r_wrist_jnt", new Vector3(1.0f, 0.0f, 0.0f), 10.0f, attackOwner, 2.0f, 10.0f, 1.1f, 2.4f ));
 
 			this.instructions.Add(new ProjectileHitBoxInstruction(
-				"Projectile_Cube", 				// projectile name
+				"Heavy_projectile", 				// projectile name
 				"r_wrist_jnt", 					// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				5.0f, 							// speed

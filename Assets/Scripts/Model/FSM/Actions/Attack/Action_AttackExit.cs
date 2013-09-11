@@ -24,6 +24,13 @@ namespace FSM
 					Debug.Log(fighter.extraDamage);
 				}
 			}
+			if (fighter.currentAttack.animationName == "char_heavy_cold_shoulder"){
+				GameObject.Destroy(fighter.particleHolder1);
+				GameObject.Destroy(fighter.particleHolder2);
+				fighter.specialEffect=false;
+				
+			}
+			
 			
 			fighter.currentAttack.timer = 0.0f;
 			fighter.currentAttack.Reset();
