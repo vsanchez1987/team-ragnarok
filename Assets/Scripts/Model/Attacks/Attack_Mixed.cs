@@ -9,15 +9,8 @@ namespace FightGame
 	{
 		public Attack_Mixed (string animationName, float animationSpeed, A_Fighter attackOwner) : base (animationName, animationSpeed, attackOwner) { }
 		
-		public override void Init(){
-			foreach (A_HitBoxInstruction hbi in this.instructions){
-				hbi.Init();
-			}
-			base.Init();
-		}
-		
-		public void AddInstruction ( A_HitBoxInstruction hbi ){
-			this.instructions.Add( hbi );
+		public override void AddInstruction ( A_HitBoxInstruction hbi ){
+			base.AddInstruction( hbi );
 		}
 	}
 }

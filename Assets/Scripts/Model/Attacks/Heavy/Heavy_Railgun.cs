@@ -35,7 +35,7 @@ namespace FightGame
 				new Vector3(-3.0f, 0.0f, 0.0f),	// offset
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement							
 				));
-			this.instructions.Add(new ProjectileHitBoxInstruction(
+			this.AddInstruction(new ProjectileHitBoxInstruction(
 				"Projectile_Cube", 				// projectile name
 				"head_jnt", 					// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction

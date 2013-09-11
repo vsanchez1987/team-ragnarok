@@ -12,7 +12,7 @@ namespace FightGame
 		{
 			//JointHitBoxInstruction(joint,attackowner,radius,damage,starttime,endtime,offset,movement)
 			//ProjectileHitBoxInstruction(projectilename,starting joint,direction,speed,attackowner,radius,damage,starttime,endtime,offset,movement
-			this.instructions.Add(new JointHitBoxInstruction(
+			this.AddInstruction(new JointHitBoxInstruction(
 				"r_ball_jnt", 		//joint
 				attackOwner, 		//fighter
 				2.0f, 				//radius
@@ -23,8 +23,8 @@ namespace FightGame
 				Vector3.zero 		//movement
 				));
 
-			this.instructions.Add(new ProjectileHitBoxInstruction(
-				"Projectile_Cube", 				// projectile name
+			this.AddInstruction(new ProjectileHitBoxInstruction(
+				"Amaterasu_projectile", 		// projectile name
 				"spine1_jnt",				
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed

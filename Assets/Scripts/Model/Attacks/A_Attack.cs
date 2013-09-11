@@ -12,7 +12,8 @@ namespace FightGame
 		protected	float		timer;
 		protected	float		length;
 		protected	string		animationName;
-		protected	List<A_HitBoxInstruction> instructions;
+		
+		private	List<A_HitBoxInstruction> instructions;
 		
 		protected A_Attack( string animationName, float speed, A_Fighter owner)
 		{
@@ -28,6 +29,9 @@ namespace FightGame
 		}
 		
 		public virtual void Init(){
+			foreach (A_HitBoxInstruction hbi in this.instructions){
+				hbi.Init();
+			}
 			this.timer = 0.0f;
 		}
 		
@@ -63,6 +67,10 @@ namespace FightGame
 		
 		public string AnimationName{
 			get { return this.animationName;}
+		}
+		
+		public virtual void AddInstruction( A_HitBoxInstruction hbi ){
+			this.instructions.Add( hbi );
 		}
 	}
 }

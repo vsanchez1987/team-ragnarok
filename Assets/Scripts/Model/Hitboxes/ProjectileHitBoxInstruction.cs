@@ -32,10 +32,15 @@ namespace FightGame{
 			pInput.hitbox = new HitBox( this.fighter, pInput.hitboxObject, true );
 			pInput.speed = this.speed;
 			pInput.hitbox.SetKnockback(this.knockback);
+			pInput.hitbox.SetRadius( this.radius );
 			//this.hitbox = pInput.hitbox;
 			
 			HitBoxInput hInput = pInput.hitboxObject.GetComponent<HitBoxInput>();
 			hInput.hitbox = pInput.hitbox;
+			
+			if (GameManager.UI.hitboxOn){
+				hInput.hitbox.TurnOnVisibility();
+			}
 			
 			base.Start();
 			
