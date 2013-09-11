@@ -1,0 +1,36 @@
+using System;
+using System.Collections.Generic;
+using FightGame;
+using FSM;
+using UnityEngine;
+
+namespace FSM
+{
+	public class Action_AttackEnter:FSMAction
+	{
+		public override void execute(FSMContext c, object o)
+		{
+			A_Fighter fighter = (A_Fighter)o;			
+			
+			
+			
+			if (fighter.currentAction != ActionCommand.NONE){
+				fighter.currentAttack = fighter.actionsCommandMap[fighter.currentAction];
+			}
+			
+<<<<<<< HEAD
+			fighter.currentAttack.Init();
+			fighter.gobj.animation[fighter.currentAttack.AnimationName].speed = fighter.currentAttack.speed;
+=======
+			fighter.gobj.animation[fighter.currentAttack.animationName].speed = fighter.currentAttack.animationSpeed;
+			
+			foreach (A_HitBoxInstruction hbi in fighter.currentAttack.instructions){
+				hbi.Init();
+			}
+			Debug.Log("attack " + fighter.currentAttack.animationName);
+>>>>>>> Seth
+			fighter.gobj.animation.Stop();
+		}
+	}
+}
+

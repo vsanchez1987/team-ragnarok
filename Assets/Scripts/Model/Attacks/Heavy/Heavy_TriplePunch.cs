@@ -14,10 +14,10 @@ namespace FightGame
 				attackOwner, 					// fighter
 				3.0f, 							// radius
 				2.0f,							// damage
-				0.08f, 							// startTime
+				0.1f, 							// startTime
 				0.5f,  							// endTime
 				Vector3.zero,					// offset
-				new Vector3( 0.0f, 0.0f, 0.0f )// movement
+				new Vector3( 0.005f, 0, 0 )		// movement
 				));			
 			this.AddInstruction(new JointHitBoxInstruction(
 				"r_wrist_jnt", 					// joint
@@ -27,9 +27,8 @@ namespace FightGame
 				1.0f, 							// startTime
 				1.4f,  							// endTime
 				Vector3.zero,					// offset
-				new Vector3( 0.0f, 0.0f, 0.0f )// movement
+				new Vector3( 0.005f, 0, 0 )		// movement
 				));
-
 		}
 	}
 }

@@ -1,0 +1,52 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using FightGame;
+
+public class ProjectileInput : MonoBehaviour
+{
+	public GameObject 	hitboxObject;
+	
+	[HideInInspector]
+	public Vector3		direction;
+	[HideInInspector]
+	public HitBox 		hitbox;
+	[HideInInspector]
+	public float 		speed = 1.0f;
+	
+	void Update(){
+		this.Execute();
+		
+<<<<<<< HEAD
+=======
+		//Debug.Log(this.name);
+		
+		if(timer > 0.5f)
+		{
+			if(this.name == "Projectile_Seek(Clone)")
+			{
+				speed = 25.0f;
+				if ( this.newDirection == Vector3.zero){
+					this.newDirection = target - this.transform.position;
+				}
+				this.transform.position += newDirection.normalized * speed * Time.deltaTime;
+				//this.transform.Translate(newDirection*5*Time.deltaTime);
+			}
+			else{
+				this.transform.position += direction;
+			}
+		}
+		else{
+			this.transform.position += direction;
+		}
+>>>>>>> Seth
+		if(this.transform.position.y < 0){
+			GameObject.Destroy(this.gameObject);
+		}
+	}
+	
+	protected virtual void Execute(){
+		this.transform.Translate( direction * speed * 10.0f * Time.deltaTime );
+	}
+}
+

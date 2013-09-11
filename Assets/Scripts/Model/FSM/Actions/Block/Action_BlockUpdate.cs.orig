@@ -14,7 +14,11 @@ namespace FSM
 			fighter = (A_Fighter)o;
 			
 			fighter.gobj.animation[ fighter.animationNameMap[FighterAnimation.BLOCK] ].wrapMode = UnityEngine.WrapMode.ClampForever;
+<<<<<<< HEAD
+			fighter.gobj.animation.CrossFade(fighter.animationNameMap[FighterAnimation.BLOCK], 0.1f);
+=======
 			fighter.gobj.animation.CrossFade(fighter.animationNameMap[FighterAnimation.BLOCK], 0.03f);
+>>>>>>> Seth
 			
 			
 			// Get knocked back when you are hit

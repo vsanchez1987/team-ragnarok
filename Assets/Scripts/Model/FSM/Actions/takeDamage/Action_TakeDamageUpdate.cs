@@ -30,6 +30,7 @@ namespace FSM
 			}
 			
 			fighter.globalActionTimer += UnityEngine.Time.deltaTime;
+			
 			gobj.animation.Play(fighter.animationNameMap[animation]);
 				
 		}

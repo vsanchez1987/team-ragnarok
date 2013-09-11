@@ -28,12 +28,7 @@ namespace FightGame
 		public	float							radius;
 		public	Vector3							localForwardVector;
 		public	float							extraDamage;
-<<<<<<< HEAD
-=======
-		public	float							extraDamageTimer;
-		public	bool							isKnockDown;
 		public	bool							specialEffect;
->>>>>>> Hieu_1
 		
 		private	int								onHitTimer;
 		private bool 							onHitStarted;
@@ -70,15 +65,10 @@ namespace FightGame
 			this.commandLog			= new List<string>();
 			this.buffs				= new List<A_Buff>();
 			this.extraDamage		= 1.0f;
-<<<<<<< HEAD
+			this.specialEffect		= false;
 			
 			this.onHitTimer			= 0;
 			this.onHitStarted		= false;
-=======
-			this.extraDamageTimer	= 0.0f;
-			this.isKnockDown		= false;
-			this.specialEffect		= false;
->>>>>>> Hieu_1
 			
 			List<GameObject> hurtboxObjects = input.hurtboxObjects;
 			List<GameObject> hitboxObjects	= input.hitboxObjects;
@@ -291,21 +281,6 @@ namespace FightGame
 			}
 		}
 		
-		/*
-		private void CheckExtraDamage(){
-			if (this.extraDamage != 1){
-				this.extraDamageTimer += Time.deltaTime;
-				if (this.extraDamageTimer >= 5.0f){
-					this.extraDamage = 1.0f;
-					this.extraDamageTimer = 0.0f;
-					GameObject.Destroy(this.particleHolder1);
-					GameObject.Destroy(this.particleHolder2);
-					Debug.Log(this.extraDamage);
-				}
-			}
-		}
-		*/
-		
 		private void UpdateBuffs(){
 			foreach (A_Buff buff in this.buffs){
 				if (buff.CheckFinished()){
@@ -360,29 +335,33 @@ namespace FightGame
 			globalForwardVector.x *= -1;
 		}
 		
-		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction){
+		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction, bool knockdown){
 			if (this.moveGraph.CurrentState.Name != "block"){
 				this.cur_hp -= damage;
 				if (this.cur_hp <= 0){
 					this.cur_hp = 0.0f;
 					this.moveGraph.dispatch("death", this);
 				}
-				else if(this.isKnockDown)
+				else if(knockdown)
 				{
 					this.moveGraph.dispatch("knockDown",this);
 				}
 				else{
+<<<<<<< HEAD
 					GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Explosion", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
 					GameObject.Destroy(explosion, 2.0f);
 					
 					this.onHitTimer = 0;
 					this.onHitStarted = true;
+=======
+>>>>>>> Seth
 					this.movement = direction * 0.05f;
 					this.hurtLocation = hurtbox.location;
 					this.moveGraph.dispatch( "takeDamage", this );
 				}
 			}
 			else{
+<<<<<<< HEAD
 				GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Block", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
 				GameObject.Destroy(explosion, 2.0f);
 				
@@ -392,6 +371,20 @@ namespace FightGame
 					this.cur_meter = Mathf.Clamp( this.cur_meter + 5, 0, 100 );
 				
 				this.movement = direction * 0.025f;
+=======
+				this.cur_hp -= damage * 0.25f;
+				//The meter will increase when player's attack is block;
+				if (this.playerNumber == 1) 
+				{
+					if(GameManager.P2.Fighter.cur_meter < 100)
+						GameManager.P2.Fighter.cur_meter += 5.0f;
+				}
+				else 
+				{	if(GameManager.P1.Fighter.cur_meter < 100)
+						GameManager.P1.Fighter.cur_meter += 5.0f;
+				}
+				this.movement = direction * 0.01f;
+>>>>>>> Seth
 				if (this.cur_hp <= 0){
 					this.cur_hp = 0.0f;
 					this.moveGraph.dispatch("death", this);
