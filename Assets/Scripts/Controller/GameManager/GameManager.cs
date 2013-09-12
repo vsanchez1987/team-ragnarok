@@ -174,5 +174,7 @@ namespace FightGame{
 			return Mathf.Abs(p.gob.transform.position.x - locEdge.transform.position.x) < 3;	
 		}
 		//end add
+		
+
 	}
 }
