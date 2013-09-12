@@ -40,6 +40,7 @@ namespace FightGame
 		public List<A_Buff>						buffs;
 		public Dictionary<int, A_Attack> 		actionsCommandMap;
 		public Dictionary<FighterAnimation, string> animationNameMap;
+
 		
 		public A_Fighter(GameObject gobj, int playerNumber)
 		{
