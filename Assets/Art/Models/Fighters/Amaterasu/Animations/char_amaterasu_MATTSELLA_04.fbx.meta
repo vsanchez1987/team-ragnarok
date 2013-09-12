@@ -139,7 +139,7 @@ ModelImporter:
     - name: char_amaterasu_LightFlash
       takeName: Take 001
       firstFrame: 193
-      lastFrame: 223
+      lastFrame: 225
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

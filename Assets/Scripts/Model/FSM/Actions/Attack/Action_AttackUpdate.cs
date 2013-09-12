@@ -17,7 +17,8 @@ namespace FSM
 			attack.SpecialExecute();
 			
 			if( attack.CheckComplete() ) { c.dispatch("idle", o); }
-			fighter.gobj.animation.CrossFade(attack.AnimationName);
+			fighter.gobj.animation.Play(attack.AnimationName);
+			//fighter.gobj.animation.CrossFade(attack.AnimationName);
 		}
 	}
 }
