@@ -37,7 +37,9 @@ public class UI_Script : MonoBehaviour
 	public bool	hitboxOn, hurtboxOn, controlsOn = false;
 	
 	//tom for gui
-	
+	public int maxRounds = 5;
+	public int p1_roundsWon = 0;
+	public int p2_roundsWon = 0;
 	float aspectW = Screen.width/1024.0f;
 	float aspectH = Screen.height/768.0f;
 	
@@ -46,9 +48,11 @@ public class UI_Script : MonoBehaviour
 	public Texture2D UI_healthGreenp2;
 	public Texture2D UI_healthRed;
 	public Texture2D UI_staminaBlue;
-	public Texture2D P1_portrait, P2_portrait;
+	public Texture2D UI_roundsMax;
+	public Texture2D UI_roundsWon;
+	Texture2D P1_portrait, P2_portrait;
 	
-	public float dmgRedBarSpeed = 0.005f;
+	public float dmgRedBarSpeed = 0.002f;
 	float dmgBarHealth_P1,dmgBarHealth_P2;
 	
 	// end tom
@@ -237,6 +241,58 @@ public class UI_Script : MonoBehaviour
 		GUI.DrawTexture(new Rect(0, 0, Screen.width , aspectH * texture.height),texture,ScaleMode.StretchToFill,true,0);
 	}
 	
+	void drawRoundsWon(int playerNum, int roundsWon,float aspectW, float aspectH, Texture2D texture)
+	{
+		drawMaxRounds(playerNum, roundsWon,aspectW,aspectH,texture);
+	}
+	
+	void drawMaxRounds(int playerNum, int maxRounds,float aspectW, float aspectH, Texture2D texture)
+	{
+		float round_padding = 10*aspectW;
+		if (playerNum==1)
+		{
+			const int P1_ROUND_OFFSET_X = 420;
+			const int P1_ROUND_OFFSET_Y = 120;
+			float roundWidth 			= (texture.width*aspectW);
+			float roundHeight 			= (texture.height*aspectH);
+			
+			for(int i = 0; i < maxRounds;i++)
+			{
+			
+			GUI.DrawTexture(
+				new Rect(
+					(P1_ROUND_OFFSET_X *aspectW)  + (i* -roundWidth)+ (i*-round_padding) ,
+					P1_ROUND_OFFSET_Y  *aspectH  ,
+					roundWidth,
+					roundHeight),
+				texture,ScaleMode.StretchToFill,true,0);
+			}
+			
+		}
+		
+		if (playerNum==2)
+		{
+			const int P1_ROUND_OFFSET_X = 582;
+			const int P1_ROUND_OFFSET_Y = 120;
+			float roundWidth 			= (texture.width*aspectW);
+			float roundHeight 			= (texture.height*aspectH);
+			
+			for(int i = 0; i < maxRounds;i++)
+			{
+			
+			GUI.DrawTexture(
+				new Rect(
+					(P1_ROUND_OFFSET_X *aspectW)  + (i* roundWidth)+ (i*round_padding) ,
+					P1_ROUND_OFFSET_Y  *aspectH  ,
+					roundWidth,
+					roundHeight),
+				texture,ScaleMode.StretchToFill,true,0);
+			}
+			
+		}
+		
+	}
+	
 	void drawPortrait(int playerNum, float aspectH, float aspectW, Texture2D texture)
 	{
 		if (playerNum==1)
@@ -304,6 +360,12 @@ public class UI_Script : MonoBehaviour
 			
 			drawPortrait(1,aspectH,aspectW,P1_portrait);
 			drawPortrait(2,aspectH,aspectW,P2_portrait);
+			
+			drawMaxRounds(1,maxRounds,aspectW,aspectH,UI_roundsMax);
+			drawMaxRounds(2,maxRounds,aspectW,aspectH,UI_roundsMax);
+			
+			drawRoundsWon(1,p1_roundsWon,aspectW,aspectH,UI_roundsWon);
+			drawRoundsWon(2,p2_roundsWon,aspectW,aspectH,UI_roundsWon);
 			
 			drawUIOverlay(aspectH,UI_base);
 		
