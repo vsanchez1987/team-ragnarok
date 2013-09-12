@@ -11,12 +11,14 @@ namespace FightGame
 		public  GamePad			controls;
 		private int				playerNumber;
 		private A_Fighter		fighter;
+		public int				roundsWon;
 		
 		public Player (int playerNumber)
 		{
 			this.playerNumber 	= playerNumber;
 			this.controls     	= new GamePad(this);
 			this.fighter 		= null;
+			this.roundsWon 		= 0;
 		}
 		
 		public void DoActionCommand( ActionCommand actionCommand ){

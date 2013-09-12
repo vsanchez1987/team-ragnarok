@@ -38,8 +38,6 @@ public class UI_Script : MonoBehaviour
 	
 	//tom for gui
 	public int maxRounds = 5;
-	public int p1_roundsWon = 0;
-	public int p2_roundsWon = 0;
 	float aspectW = Screen.width/1024.0f;
 	float aspectH = Screen.height/768.0f;
 	
@@ -50,11 +48,14 @@ public class UI_Script : MonoBehaviour
 	public Texture2D UI_staminaBlue;
 	public Texture2D UI_roundsMax;
 	public Texture2D UI_roundsWon;
+	public int x,y=20;
 	Texture2D P1_portrait, P2_portrait;
 	
 	public float dmgRedBarSpeed = 0.002f;
 	float dmgBarHealth_P1,dmgBarHealth_P2;
-	
+	public GUIStyle playerName_GuiStyle_p1;
+	GUIStyle p2GS;
+	int initFontSize;
 	// end tom
 	
 	void Start()
@@ -66,6 +67,11 @@ public class UI_Script : MonoBehaviour
 		//p1_GUIstartX = 25f;
 		//p1_GUIstartY = 25f;
 		
+		// chracternames
+		p2GS = new GUIStyle(playerName_GuiStyle_p1);
+		p2GS.alignment = TextAnchor.UpperRight;
+		initFontSize = playerName_GuiStyle_p1.fontSize;
+		// end chracterNames
 		
 		aspectW = Screen.width/1024.0f;
 		aspectH = Screen.height/768.0f;
@@ -241,8 +247,9 @@ public class UI_Script : MonoBehaviour
 		GUI.DrawTexture(new Rect(0, 0, Screen.width , aspectH * texture.height),texture,ScaleMode.StretchToFill,true,0);
 	}
 	
-	void drawRoundsWon(int playerNum, int roundsWon,float aspectW, float aspectH, Texture2D texture)
+	void drawRoundsWon(int playerNum, int roundsWon,float aspectW, float aspectH, Texture2D texture,int maxRounds)
 	{
+		if(roundsWon > maxRounds) roundsWon = maxRounds;
 		drawMaxRounds(playerNum, roundsWon,aspectW,aspectH,texture);
 	}
 	
@@ -331,6 +338,38 @@ public class UI_Script : MonoBehaviour
 		
 	}
 	
+	
+	void drawPlayerName(string name, int playerNum, float aspectW, float aspectH,GUIStyle GS,int initFontSize)
+	{
+		const int NAME_WDTH = 224;
+		const int NAME_HGHT = 27;
+		if (playerNum==1)
+		{
+			const int P1_NAME_OFFSET_X = 48;
+			const int P1_NAME_OFFSET_Y = 133;
+			GS.fontSize = (int)(initFontSize * aspectH);
+			GUI.Label(new Rect( P1_NAME_OFFSET_X*aspectW,
+								P1_NAME_OFFSET_Y*aspectH,
+								NAME_WDTH*aspectW,
+								NAME_HGHT*aspectH)
+					  ,name,GS);
+		}
+		
+		if (playerNum==2)
+		{
+			const int P2_NAME_OFFSET_X = 977;
+			const int P2_NAME_OFFSET_Y = 133;
+			GS.fontSize = (int)(initFontSize * aspectH);
+			GUI.Label(new Rect( (P2_NAME_OFFSET_X - NAME_WDTH)*aspectW ,
+								P2_NAME_OFFSET_Y*aspectH,
+								NAME_WDTH*aspectW,
+								NAME_HGHT*aspectH)
+					  ,name,GS);
+		}
+		
+	}
+	
+	
 	//****************************************	
 	// TOM GUI FUNCTIONS END
 	
@@ -364,11 +403,13 @@ public class UI_Script : MonoBehaviour
 			drawMaxRounds(1,maxRounds,aspectW,aspectH,UI_roundsMax);
 			drawMaxRounds(2,maxRounds,aspectW,aspectH,UI_roundsMax);
 			
-			drawRoundsWon(1,p1_roundsWon,aspectW,aspectH,UI_roundsWon);
-			drawRoundsWon(2,p2_roundsWon,aspectW,aspectH,UI_roundsWon);
+			drawRoundsWon(1,GameManager.P1.roundsWon,aspectW,aspectH,UI_roundsWon,maxRounds);
+			drawRoundsWon(2,GameManager.P2.roundsWon,aspectW,aspectH,UI_roundsWon,maxRounds);
 			
 			drawUIOverlay(aspectH,UI_base);
-		
+			
+			drawPlayerName(GameManager.P1.Fighter.name,1,aspectW,aspectH,playerName_GuiStyle_p1,initFontSize);
+			drawPlayerName(GameManager.P2.Fighter.name,2,aspectW,aspectH,p2GS,initFontSize);
 			//end THOMAS NEW GUI
 			
 			

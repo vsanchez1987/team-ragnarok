@@ -309,6 +309,7 @@ namespace FightGame
 				if (this.cur_hp <= 0){
 					this.cur_hp = 0.0f;
 					this.moveGraph.dispatch("death", this);
+					
 				}
 				else{
 					this.movement = direction * 0.1f;
