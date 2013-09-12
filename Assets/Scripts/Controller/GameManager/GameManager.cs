@@ -9,7 +9,6 @@ namespace FightGame{
 		private static GameManager instance = new GameManager();
 		private GameModel gModel;
 		
-	    // make sure the constructor is private, so it can only be instantiated here
 	    private GameManager() {
 			this.gModel = new GameModel();
 	    }
@@ -18,23 +17,19 @@ namespace FightGame{
 	        get { return instance; }
 	    }
 		
-		public static A_Fighter P1{
-			get { return instance.gModel.P1; }
-			set { instance.gModel.P1 = value; }
+		public static Player P1{
+			get { return instance.gModel.p1; }
 		}
 		
-		public static A_Fighter P2{
-			get { return instance.gModel.P2; }
-			set { instance.gModel.P2 = value; }
+		public static Player P2{
+			get { return instance.gModel.p2; }
 		}
 		
-		public static void Print(){
-			string p1Name = instance.gModel.P1 != null ? instance.gModel.P1.Name : "No Player 1";
-			string p2Name = instance.gModel.P2 != null ? instance.gModel.P2.Name : "No Player 2";
-			//Debug.Log("Player 1: " + p1Name);
-			//Debug.Log("Player 2: " + p2Name);
+		public static FightCamera Camera{
+			get { return instance.gModel.camera; }
 		}
 		
+<<<<<<< HEAD
 		public static void Update(){
 			
 			Print();
@@ -59,22 +54,70 @@ namespace FightGame{
 					
 					//p2 defeat animation
 					GameManager.Defeat(GameManager.P2);
+=======
+		public static UI_Script UI{
+			get { return instance.gModel.ui; }
+		}
+		
+		public static float LeftBoundary {
+			get { return instance.gModel.leftBoundary; }
+		}
+		
+		public static float RightBoundary {
+			get { return instance.gModel.rightBoundary; }
+		}
+		
+		public static void Restart(){
+			instance.gModel.p1.RestartFighter();
+			instance.gModel.p2.RestartFighter();
+		}
+		
+		public static void ProcessInput(){
+			foreach (Player p in instance.gModel.players){
+				//Debug.Log("Player " + p.PlayerNumber);
+				if (p.Fighter != null){
+					int moveCommand = p.controls.GetMoveCommand();
+					int actionCommand = p.controls.GetActionCommand();
+					
+					p.DoMoveCommand(moveCommand);
+					p.DoActionCommand(actionCommand);
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 				}
-				
-			}
-			
-			if (instance.gModel.P1 != null){
-				instance.gModel.P1.Update();
-				
-			}
-			if (instance.gModel.P2 != null){
-				instance.gModel.P2.Update();
 			}
 		}
 		
-		public static void processCollisions()
-		// an example of how to get info with current hitbox system
+		public static void Update(){
+			if (instance.gModel.p1 != null){
+				instance.gModel.p1.Update();
+			}
+			if (instance.gModel.p2 != null){
+				instance.gModel.p2.Update();
+			}
+			if (instance.gModel.camera != null){
+				instance.gModel.camera.Update();
+			}
+			
+			if (instance.gModel.ui.hurtboxOn){
+				GameObject[] hurtboxes = GameObject.FindGameObjectsWithTag("HurtBox");
+				foreach (GameObject hurtbox in hurtboxes){
+					if (!hurtbox.renderer.enabled){
+						hurtbox.renderer.enabled = true;
+					}
+				}
+			}
+			else{
+				GameObject[] hurtboxes = GameObject.FindGameObjectsWithTag("HurtBox");
+				foreach (GameObject hurtbox in hurtboxes){
+					if (hurtbox.renderer.enabled){
+						hurtbox.renderer.enabled = false;
+					}
+				}
+			}
+		}
+		
+		public static void CreateFighter(string fighter, int playerNum)
 		{
+<<<<<<< HEAD
 			if (instance.gModel.P1 != null)
 			{
 				foreach(HitBoxCollisionInfo hbi in GameManager.P1.HitBoxCollisions)
@@ -112,31 +155,64 @@ namespace FightGame{
 					{	
 						hbi.hitPlayer.takeDamage = true;
 						hbi.hitPlayer.cur_hp -= hbi.damage;
+=======
+			Player player = instance.gModel.players[playerNum - 1];
+			GameObject locator = GameObject.FindGameObjectWithTag("LocatorP" + playerNum.ToString());
+			
+			player.InstantiateFighter(fighter, locator.transform.position, locator.transform.rotation);
+		}
+		
+		public static float GetPlayersDistance(){
+			return Mathf.Abs(instance.gModel.p1.Fighter.gobj.transform.position.x - instance.gModel.p2.Fighter.gobj.transform.position.x);
+		}
+		
+		public static bool CheckCanMoveForward(A_Fighter fighter){
+			if ( GameManager.P1.Fighter != null && GameManager.P2.Fighter != null ){
+				if (GameManager.GetPlayersDistance() > GameManager.P1.Fighter.radius + GameManager.P2.Fighter.radius){
+					if (fighter.GlobalForwardVector.x == 1){
+						if (GameManager.CheckWithinRightBoundary(fighter)){
+							return true;
+						}
 					}
-					//////////
-					//Debug.Log("hit player: " +hbi.hitPlayer.playerNumber + " for " +hbi.damage + " damage at " + hbi.location);
+					else if (fighter.GlobalForwardVector.x == -1){
+						if (GameManager.CheckWithinLeftBoundary(fighter)){
+							return true;
+						}
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
+					}
 				}
-				GameManager.P2.HitBoxCollisions.Clear();
 			}
-			
-			
+			return false;
 		}
 		
-		public static A_Effect GetEffect(string effect){
-			return instance.gModel.GetEffect(effect);
+		public static bool CheckCanMoveBackward(A_Fighter fighter){
+			if ( GameManager.P1.Fighter != null && GameManager.P2.Fighter != null ){
+				if (GameManager.GetPlayersDistance() < GameManager.Camera.maxDistance){
+					if (fighter.GlobalForwardVector.x == 1){
+						if (GameManager.CheckWithinLeftBoundary(fighter)){
+							return true;
+						}
+					}
+					else if (fighter.GlobalForwardVector.x == -1){
+						if (GameManager.CheckWithinRightBoundary(fighter)){
+							return true;
+						}
+					}
+				}
+			}
+			return false;
 		}
 		
-		public static A_Attack GetAttack(string attack){
-			return instance.gModel.GetAttack(attack);
+		public static Player GetOpponentPlayer(int playerNumber){
+			return playerNumber == 1 ? instance.gModel.p2 : instance.gModel.p1;
 		}
 		
-		public static void CreateFighter(string fighter){
-			instance.gModel.CreateFighter(fighter);
+		private static bool CheckWithinLeftBoundary(A_Fighter fighter){
+			return fighter.gobj.transform.position.x > GameManager.LeftBoundary;
 		}
 		
-		//Hieu added. Test 2 players. Must have a better way to do this
-		public static void CreateFighter(string fighter,int playernum){
-			instance.gModel.CreateFighter(fighter,playernum);
+		private static bool CheckWithinRightBoundary(A_Fighter fighter){
+			return fighter.gobj.transform.position.x < GameManager.RightBoundary;
 		}
 		
 		//Hieu add. Dispatch to defeat function

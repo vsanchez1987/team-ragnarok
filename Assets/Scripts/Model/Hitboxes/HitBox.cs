@@ -7,249 +7,92 @@ namespace FightGame
 {
 	public class HitBox
 	{
-		GameObject gob;
-		HB_Instruction currentInstruction;
-		A_Fighter owner;
-		public bool active;
-		Color initialColor;
-		Color collideColor = Color.red;
-		bool checkCollision;
-		float radius;
-		float activeTime;
-		public bool displayWhenNotActive;
-		public bool displayWhenActive;
-		public bool isProjectile;
-		Projectile linkedProjectile= null;
+		public GameObject 	gobj;
+		public A_Fighter	attackOwner;
+		public bool			isProjectile;
+		public bool			inUse;
+		public float		damage;
+		public Vector3		knockback;
+		public bool			canKnockDown;
 		
-		
-		public HitBox(A_Fighter owner, GameObject gob, bool isProjectile)
+		public HitBox(A_Fighter attackOwner, GameObject gobj, bool isProjectile)
 		{
-			this.gob = gob;
-			this.owner = owner;
-			this.active = this.displayWhenNotActive = this.displayWhenActive = false;
-			this.currentInstruction = null;
-			this.radius = this.activeTime = 0.1f;
-			this.isProjectile = isProjectile;
-			this.checkCollision = false;
-			this.initialColor = gob.renderer.material.color;
+			this.attackOwner			= attackOwner;
+			this.gobj			= gobj;
+			this.isProjectile 	= isProjectile;
+			this.inUse			= false;
+			this.damage			= 0.0f;
+			this.knockback		= Vector3.left;
+			this.canKnockDown	= false;
+			this.Reset();
 		}
 		
-		public void Update()
-		{
-			UpdateActiveTime();
-			ProcessCurrentInstruction();
-			DeactivateExpired();
-			DrawBoxes();
-			FollowLinkedProjectile();
-			CheckAndProcessCollision();
+		public void Enable(){
+			this.inUse = true;
+			this.TurnOnCollider();
 			
-			
-		}
-		
-		void FollowLinkedProjectile()
-		{
-			if(linkedProjectile!=null)
-			{
-				this.gob.transform.position = linkedProjectile.gob.transform.position;
+			if (GameManager.UI.hitboxOn){
+				this.TurnOnVisibility();
 			}
 		}
-				
 		
-		LayerMask CreateLayerMask()
-		{
-			LayerMask m = 1 << 
-				(this.owner.playerNumber == 1 ? A_Fighter.P2_HURT_BOX_LAYER_NUMBER: A_Fighter.P1_HURT_BOX_LAYER_NUMBER);
-			
-			return m;
-		}
-		
-		void UpdateActiveTime()
-		{
-			if(active)
-			{
-				activeTime+=Time.deltaTime;
+		public void Disable(){
+			this.inUse = false;
+			if (this.gobj != null){
+				this.TurnOffCollider();
+				this.TurnOffVisibility();
 			}
-			else
-				activeTime = 0;
 		}
 		
-		public string GetName()
-		{
-			return gob.name;
+		public void SetRadius(float radius){
+			this.gobj.transform.localScale = new Vector3(radius, radius, radius);
 		}
 		
-		void DeactivateExpired()
-		{
-			
-			// deactivate if after last valid keyframe
-			if(this.currentInstruction != null)
-			{
-				
-				int expired = 0;
-				int count = currentInstruction.onOffTimes.Count;
-				
-				for (int i = 0; i < count ; i++)
-				{
-					
-					if(currentInstruction.onOffTimes[i].expired)
-					{
-						//Debug.Log(currentInstruction.onOffTimes[i].expired);
-						expired+=1;
-					}
+		public void SetKnockback(Vector3 knockback){
+			this.knockback = knockback;
+		}
+		
+		public void Reset(){
+			if (!this.isProjectile){
+				if (this.gobj != null){
+					this.gobj.transform.localPosition = Vector3.zero;
+					this.gobj.transform.localScale = Vector3.one;
 				}
-				
-				if (expired>=count)
-				{
-					Debug.Log("Deactivating " + this.gob.name);
-					DeActivate();
-				}
+				this.Disable();
 			}
-			
 		}
 		
-		void Activate()
-		{
-			SetRadius(currentInstruction.radius);
-			active = true;
-			activeTime = 0.0f;
-			this.checkCollision=false;
+		public void TurnOnCollider(){
+			if (!this.gobj.collider.enabled){
+				this.gobj.collider.enabled = true;
+			}
 		}
 		
-		public void DeActivate()
+		public void TurnOffCollider(){
+			if (this.gobj.collider.enabled){
+				this.gobj.collider.enabled = false;
+			}
+		}
+		
+		public void TurnOnVisibility(){
+			if (!this.gobj.renderer.enabled){
+				this.gobj.renderer.enabled = true;
+			}
+		}
+		
+		public void TurnOffVisibility(){
+			if (this.gobj.renderer.enabled){
+				this.gobj.renderer.enabled = false;
+			}
+		}
+		
+		public A_Fighter GetTarget()
 		{
-			radius = 0.1f;
-			this.checkCollision=false;
-			//ResetHBKeyFrames();
-			active= false;
-			this.currentInstruction= null;
-			//Remove Projectile
-			if(this.linkedProjectile!=null)
+			if(this.attackOwner.playerNumber == 1)
 			{
-				linkedProjectile.Delete();//removes game object
-				this.owner.projectiles.Remove(linkedProjectile); //removes from players projectile list
+				return GameManager.P2.Fighter;
 			}
-			this.linkedProjectile=null;
-			
+			else return GameManager.P1.Fighter;
 		}
-		
-		HitBoxCollisionInfo GenerateCollisionInfo(Collider c)
-		{
-			A_Fighter hitPlayer = (this.owner.playerNumber == 1 ? GameManager.P2 : GameManager.P1);
-			return new HitBoxCollisionInfo(c.transform.position, this.currentInstruction.damage,hitPlayer );
-		}
-		
-		void GiveCollisionInfoToGameManager(Collider c)
-		{
-			this.owner.HitBoxCollisions.Add(GenerateCollisionInfo(c));
-		}
-		
-		void DrawBoxes()
-		{
-			gob.renderer.enabled =  (active && displayWhenActive  ||  !active && displayWhenNotActive);
-			//if(gob.renderer.enabled) //set scale if active{}
-			if (checkCollision) // make collide color if checking collision
-			{
-				gob.transform.localScale = new Vector3(radius,radius,radius);
-				gob.renderer.material.color = collideColor;
-			}
-			else  // make disabled color if checking collision & smaller
-			{
-				gob.renderer.material.color = initialColor;
-				gob.transform.localScale = new Vector3(radius/2,radius/2,radius/2);
-			}
-		}
-		
-		void CheckAndProcessCollision()
-		{
-			if(checkCollision)
-			{
-				//Physics.CheckSphere(gob.transform.position, radius/2.0f) <-- simple 
-				 Collider[] hitColliders = Physics.OverlapSphere(gob.transform.position,radius/2.0f,CreateLayerMask());
-	        
-				foreach(Collider c in hitColliders)  
-				{
-					Debug.Log(this.gob.name + " colliding with " + c.gameObject.name + " at time:" +Time.time);
-					GiveCollisionInfoToGameManager(c);
-					
-					DeActivate(); // this needs to deactiate keyframe only
-					return;
-				}
-			}
-		}
-		
-		void ResetHBKeyFrames()
-		{
-			if(this.currentInstruction!=null)
-			{
-				for (int i = 0; i < currentInstruction.onOffTimes.Count ; i++)
-				{
-					HB_KeyFrame key =  currentInstruction.onOffTimes[i];
-					key.expired = false;
-					currentInstruction.onOffTimes[i]=key;
-				}
-			}
-		}
-		
-		void ProcessCurrentInstruction()
-		{
-			//check all keyframes for activation and flag collission if needed
-			if(this.currentInstruction!=null)
-			{
-				for (int i = 0; i < currentInstruction.onOffTimes.Count ; i++)
-				{
-					HB_KeyFrame key =  currentInstruction.onOffTimes[i];
-					
-					if (this.activeTime > key.onTime && this.activeTime < key.offTime)
-					{
-						this.checkCollision = true;
-					}
-					else if(this.activeTime > key.offTime && key.expired == false)
-					{
-						this.checkCollision = false;
-						key.expired = true;
-						currentInstruction.onOffTimes[i]=key;
-					}
-				}
-				/*foreach(HB_KeyFrame key in currentInstruction.onOffTimes)
-				{
-					if (this.activeTime > key.onTime && this.activeTime < key.offTime)
-					{
-						this.checkCollision = true;
-					}
-					else if(this.activeTime > key.offTime && key.expired == false)
-					{
-						this.checkCollision = false;
-						key.expired = true;
-					}
-				}
-				*/
-			}
-		}
-		
-		void SetRadius(float r)
-		{
-			this.radius = r;
-			this.gob.transform.localScale = new Vector3(r,r,r);
-		}
-		
-		public void SendInstruction(HB_Instruction hb_instruction)
-		{
-			if(this.currentInstruction!=null) DeActivate();
-			
-			this.currentInstruction = hb_instruction.DuplicateHBInstructions(hb_instruction);
-			//Debug.Log(currentInstruction);
-			Debug.Log(this.gob.name);
-			Activate();
-		}
-		
-		
-		
-		public void ParentToProjectile(Projectile projectile)
-		{
-			
-			linkedProjectile = projectile;
-		}
-	
-		
 	}
 }

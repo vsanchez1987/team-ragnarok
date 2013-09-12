@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using FightGame;
 using FSM;
 
@@ -7,6 +8,7 @@ namespace FightGame
 {
 	public class Fighter_Heavy : A_Fighter
 	{
+<<<<<<< HEAD
 		public Fighter_Heavy (GameObject gobj, int playerNumber)
 			:base (playerNumber,gobj)
 		{
@@ -16,25 +18,37 @@ namespace FightGame
 			this.movespeed = 5;
 			this.slide = 20;
 			this.radius = 2.2f;
+=======
+		public Fighter_Heavy (GameObject gobj, int playerNumber) : base (gobj, playerNumber)
+		{			
+			this.gobj.animation[this.animationNameMap[FighterAnimation.WALK_FORWARD]].speed = 1.5f;
+			this.gobj.animation[this.animationNameMap[FighterAnimation.WALK_BACKWARD]].speed = 1.5f;
+			this.gobj.animation[this.animationNameMap[FighterAnimation.FLINCH_DOWN]].speed = 1.5f;
+			this.gobj.animation[this.animationNameMap[FighterAnimation.FLINCH_UP]].speed = 1.5f;
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 			
-								
-			//this.attacklist.Add("1back",new Attack_SweepingSpear(this,0,0,0)); 
-			this.attacklist.Add("RegAttack_none",new Attack_MegatonPunch(this,0,0,0));						
-			this.attacklist.Add("UniqueAttack_none",new Attack_Punch01(this,0,0,0));
-			this.attacklist.Add("RegAttack_forward",new Attack_Punch02(this,0,0,0));
-			this.attacklist.Add("RegAttack_back",new Attack_coldShoulder(this,0,0,0));
-			this.attacklist.Add("RegAttack_up",new Attack_Shot02(this,0,0,0));
-			this.attacklist.Add("RegAttack_down",new Attack_Shot03(this,0,0,0));
-			this.attacklist.Add("UniqueAttack_forward",new Attack_Shot04(this,0,0,0));
-			this.attacklist.Add("UniqueAttack_back",new Attack_napalm_flame_thrower(this,0,0,0));
+			this.actionsCommandMap = new Dictionary<int, A_Attack>();
 			
-			//this.attacklist.Add("1none",new Attack_MegatonPunch(this,0,0,0));
-			//this.attacklist.Add("1none",new Attack_MegatonPunch(this,0,0,0));												
+			this.actionsCommandMap[ActionCommand.REGULAR] 			= new Heavy_FireCarpet(this.animationNameMap[FighterAnimation.REGULAR_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.REGULAR_FORWARD] 	= new Heavy_ColdShoulder(this.animationNameMap[FighterAnimation.REGULAR_FORWARD_ATTACK], this, 1.3f);
+			this.actionsCommandMap[ActionCommand.REGULAR_BACK] 		= new Heavy_TriplePunch(this.animationNameMap[FighterAnimation.REGULAR_BACK_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.REGULAR_UP] 		= new Heavy_MegatonPunch(this.animationNameMap[FighterAnimation.REGULAR_UP_ATTACK], this, 1.5f);
+			this.actionsCommandMap[ActionCommand.REGULAR_DOWN] 		= new Heavy_FireCarpet(this.animationNameMap[FighterAnimation.REGULAR_DOWN_ATTACK], this, 2.0f);
 			
+			this.actionsCommandMap[ActionCommand.UNIQUE] 			= new Heavy_HeatSeeker(this.animationNameMap[FighterAnimation.UNIQUE_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.UNIQUE_FORWARD] 	= new Heavy_NapalmFlameThrower(this.animationNameMap[FighterAnimation.UNIQUE_FORWARD_ATTACK], this, 1.5f);
+			this.actionsCommandMap[ActionCommand.UNIQUE_BACK] 		= new Heavy_123Fire(this.animationNameMap[FighterAnimation.UNIQUE_BACK_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.UNIQUE_UP] 		= new Heavy_HeatSeeker(this.animationNameMap[FighterAnimation.UNIQUE_UP_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.UNIQUE_DOWN] 		= new Heavy_NapalmFlameThrower(this.animationNameMap[FighterAnimation.UNIQUE_DOWN_ATTACK], this, 1.5f);
+			
+			this.actionsCommandMap[ActionCommand.SPECIAL] 			= new Heavy_Railgun(this.animationNameMap[FighterAnimation.SPECIAL_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.SPECIAL_FORWARD] 	= new Heavy_Railgun(this.animationNameMap[FighterAnimation.SPECIAL_FORWARD_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.SPECIAL_BACK] 		= new Heavy_Railgun(this.animationNameMap[FighterAnimation.SPECIAL_BACK_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.SPECIAL_UP] 		= new Heavy_Railgun(this.animationNameMap[FighterAnimation.SPECIAL_UP_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.SPECIAL_DOWN] 		= new Heavy_Railgun(this.animationNameMap[FighterAnimation.SPECIAL_DOWN_ATTACK], this, 2.0f);
+			
+			//this.actionsCommandMap[ActionCommand.BLOCK] = new Heavy_MegatonPunch(this.animationNameMap[FighterAnimation.BLOCK], this);
 		}
-		
-		
-
 	}
 }
 

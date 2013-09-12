@@ -7,7 +7,7 @@ namespace FSM
 {
 	public class Action_WalkExit:FSMAction
 	{
-		public override void execute(FSMContext c, Object o){
+		public override void execute(FSMContext c, object o){
 			
 		}
 	}

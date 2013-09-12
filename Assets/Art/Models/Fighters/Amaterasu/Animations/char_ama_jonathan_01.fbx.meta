@@ -1,0 +1,241 @@
+fileFormatVersion: 2
+guid: 54ce6ed309ea40446aa2ce3dc4d84561
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: chest_jnt
+    100004: head_jnt
+    100006: hips_jnt
+    100008: l_ankle_jnt
+    100010: l_ball_jnt
+    100012: l_clavicle_jnt
+    100014: l_elbow_jnt
+    100016: l_knee_jnt
+    100018: l_shoulder_jnt
+    100020: l_thigh_jnt
+    100022: l_wrist_jnt
+    100024: master_amaterasu_ctr
+    100026: neck_jnt
+    100028: r_ankle_jnt
+    100030: r_ball_jnt
+    100032: r_clavicle_jnt
+    100034: r_elbow_jnt
+    100036: r_knee_jnt
+    100038: r_shoulder_jnt
+    100040: r_thigh_jnt
+    100042: r_wrist_jnt
+    100044: root_amaterasu_jnt
+    100046: spine1_jnt
+    100048: spine2_jnt
+    400000: //RootNode
+    400002: chest_jnt
+    400004: head_jnt
+    400006: hips_jnt
+    400008: l_ankle_jnt
+    400010: l_ball_jnt
+    400012: l_clavicle_jnt
+    400014: l_elbow_jnt
+    400016: l_knee_jnt
+    400018: l_shoulder_jnt
+    400020: l_thigh_jnt
+    400022: l_wrist_jnt
+    400024: master_amaterasu_ctr
+    400026: neck_jnt
+    400028: r_ankle_jnt
+    400030: r_ball_jnt
+    400032: r_clavicle_jnt
+    400034: r_elbow_jnt
+    400036: r_knee_jnt
+    400038: r_shoulder_jnt
+    400040: r_thigh_jnt
+    400042: r_wrist_jnt
+    400044: root_amaterasu_jnt
+    400046: spine1_jnt
+    400048: spine2_jnt
+    7400000: char_amaterasu_idle
+    7400002: char_amaterasu_FlinchUp
+    7400004: char_amaterasu_FlinchDown
+    7400006: char_amaterasu_KnockOffFeet
+    7400008: char_amaterasu_WalkForward
+    7400010: char_amaterasu_WalkBack
+    9500000: //RootNode
+    11100000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations:
+    - name: char_amaterasu_idle
+      takeName: Take 001
+      firstFrame: 2
+      lastFrame: 60
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      transformMask: []
+    - name: char_amaterasu_FlinchUp
+      takeName: Take 001
+      firstFrame: 63
+      lastFrame: 75
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      transformMask: []
+    - name: char_amaterasu_FlinchDown
+      takeName: Take 001
+      firstFrame: 81
+      lastFrame: 96
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      transformMask: []
+    - name: char_amaterasu_KnockOffFeet
+      takeName: Take 001
+      firstFrame: 99
+      lastFrame: 132
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      transformMask: []
+    - name: char_amaterasu_WalkForward
+      takeName: Take 001
+      firstFrame: 133
+      lastFrame: 163
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      transformMask: []
+    - name: char_amaterasu_WalkBack
+      takeName: Take 001
+      firstFrame: 166
+      lastFrame: 196
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      transformMask: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 1
+  userData: 

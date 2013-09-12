@@ -13,16 +13,23 @@ namespace FSM
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
 			
+			fighter.gobj.animation[ fighter.animationNameMap[FighterAnimation.BLOCK] ].wrapMode = UnityEngine.WrapMode.ClampForever;
+			fighter.gobj.animation.CrossFade(fighter.animationNameMap[FighterAnimation.BLOCK], 0.03f);
+			
+			
+			// Get knocked back when you are hit
+			/*
 			if(fighter.gotHit)
 			{
 				Debug.Log("slide back");
 				fighter.gob.transform.Translate(fighter.localForwardVector*-1*fighter.slide* Time.deltaTime);
-			}			
-			
-			if(!fighter.blockPressed)
-			{
-				fighter.Dispatch("idle");
 			}
+			*/
+			
+			if (fighter.currentAction == ActionCommand.NONE){
+				c.dispatch("idle", o);
+			}
+			
 			/*
 			if(fighter.controllerDirection == "forward" || fighter.controllerDirection == "back")
 			{

@@ -8,7 +8,11 @@ namespace FSM
 	public class Action_WalkUpdate:FSMAction
 	{
 		public override void execute(FSMContext c, object o){
+			A_Fighter fighter = (A_Fighter)o;				
+			GameObject gobj = fighter.gobj;
+			float moveSpeed = fighter.moveSpeed;
 			
+<<<<<<< HEAD
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;				
 			GameObject gobj = fighter.GetGOB();
@@ -30,29 +34,36 @@ namespace FSM
 			}		
 			
 			if(fighter.takeDamage)
+=======
+			if(fighter.currentMovement == MoveCommand.FORWARD || fighter.currentMovement == MoveCommand.FORWARD_UP)
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 			{
-				fighter.Dispatch("takeDamage");			
+				if ( GameManager.CheckCanMoveForward(fighter) ){
+					gobj.transform.Translate(fighter.localForwardVector * moveSpeed * Time.deltaTime);
+				}
+				gobj.animation.CrossFade(fighter.animationNameMap[FighterAnimation.WALK_FORWARD]);
+			}
+			else if(fighter.currentMovement == MoveCommand.BACK || fighter.currentMovement == MoveCommand.BACK_UP)
+			{
+				if ( GameManager.CheckCanMoveBackward(fighter) ){
+					gobj.transform.Translate(fighter.localForwardVector * -1 * moveSpeed * Time.deltaTime);
+				}
+				gobj.animation.CrossFade(fighter.animationNameMap[FighterAnimation.WALK_BACKWARD]);
 			}
 			
-			else if(fighter.blockPressed)
-			{
-				fighter.Dispatch("block");
-			}
 			
-			else if(fighter.attackPressed || fighter.uniquePressed )
-			{				
-				fighter.Dispatch("attack");
-			}
-			
-			else if( fighter.controllerDirection == "forward" || fighter.controllerDirection == "back")
+			if( fighter.currentMovement == MoveCommand.NONE)
 			{
-				fighter.Dispatch("walk");
+				c.dispatch("idle", o);
 			}
+<<<<<<< HEAD
 			 
 			else if( fighter.controllerDirection != "forward" || fighter.controllerDirection != "back"  )
 			{
 				fighter.Dispatch("idle");
 			}
+=======
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 		}
 	}
 }

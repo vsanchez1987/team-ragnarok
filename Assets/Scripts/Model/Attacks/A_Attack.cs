@@ -7,40 +7,72 @@ namespace FightGame
 {
 	public abstract class A_Attack
 	{
-		protected float preAttackPeriod;
-		protected float attackPeriod;
-		protected float postAttackPeriod;
-		protected float animationDuration;
-		protected A_Fighter attackOwner;
+		public		float		speed;
+		protected 	A_Fighter	attackOwner;
+		protected	float		timer;
+		protected	float		length;
+		protected	string		animationName;
 		
-		// NEW HITBOX CODE 7/23
-		public List<HB_Instruction> hb_instructions;
-		// ***
+		private	List<A_HitBoxInstruction> instructions;
 		
-		public string attack_name;
-		
-		public float attackLength;
-		
-		public A_Attack(float attackLength,A_Fighter attackOwner)
+		protected A_Attack( string animationName, float speed, A_Fighter attackOwner)
 		{
+			this.speed			= speed;
+			this.attackOwner 	= attackOwner;
+			this.timer 			= 0.0f;
+			this.animationName 	= animationName;
+			this.instructions 	= new List<A_HitBoxInstruction>();
 			
-			this.attackLength=attackLength;
-			this.attackOwner = attackOwner;
-			
-			hb_instructions = new List<HB_Instruction>();
-			
+			if (attackOwner.gobj.animation.GetClip(animationName) != null){
+				this.length = attackOwner.gobj.animation[animationName].clip.length;
+			}
+		}
+		
+		public virtual void Init(){
+			foreach (A_HitBoxInstruction hbi in this.instructions){
+				hbi.Init();
+			}
+			this.timer = 0.0f;
+		}
+		
+		public virtual void Execute(){
+			foreach (A_HitBoxInstruction hbi in this.instructions){
+				if (this.timer < hbi.StartTime / this.speed){
+					hbi.Disable();
+				}
+				else if ((this.timer >= hbi.StartTime / this.speed) && (this.timer <= hbi.EndTime / this.speed)){
+					hbi.Execute();
+				}
+				else if (this.timer >= hbi.EndTime / this.speed){
+					hbi.Reset();
+				}
+			}
+			this.timer += Time.deltaTime;
 		}
 		
 		
-		public virtual void Execute()
-		{
-			//UnityEngine.Debug.Log("hit attack");
-			attackOwner.SendHitBoxInstructions(this);
-			//attackOwner.GetHitBox("HB_Fist_L").SendInstruction(hb_instructions[0]);
-			//attackOwner.GetHitBox("HB_Foot_L").SendInstruction(hb_instructions[0]);
-			//attackOwner.GetHitBox("HB_Projectile_0").SendInstruction(hb_instructions[0]);
-			//attackOwner.SendHitBoxInstructions(this);
+		public virtual void Reset(){
+			foreach (A_HitBoxInstruction hbi in this.instructions){
+				hbi.Reset();
+			}
+			this.timer = 0.0f;
 		}
+		
+		//Hieu add
+		public virtual void SpecialExecute(){ }
+		
+		public bool CheckComplete(){
+			return (this.timer >= (this.length / this.speed));
+		}
+		
+		public string AnimationName{
+			get { return this.animationName;}
+		}
+		
+		public virtual void AddInstruction( A_HitBoxInstruction hbi ){
+			this.instructions.Add( hbi );
+		}
+<<<<<<< HEAD
 		
 	
 		public virtual void SpecialExecute(float time)
@@ -48,6 +80,8 @@ namespace FightGame
 			//use for some special attack, involve in update time
 			//For instance, move player forward etc
 		}
+=======
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 	}
 }
 

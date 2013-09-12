@@ -1,51 +1,47 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 using FightGame;
 using FSM;
-
-using System;
-
-using System.Linq;//for string split
-
-
 
 namespace FightGame
 {
 	public abstract class A_Fighter
 	{
-		public static Vector3 projectileOffset = new Vector3(0,1,0);
+		protected A_Status 						status;
+		protected FSMContext 					moveGraph;
+		protected Vector3 						globalForwardVector;
 		
+		public	string							name;
+		public 	GameObject 						gobj;
+		//public  GameObject 						particleHolder1,particleHolder2;
+		public 	Dictionary<string, Transform> 	joints;
+		public 	Dictionary<string, HurtBox> 	hurtBoxes;
+		public 	Dictionary<string, HitBox> 		hitBoxes;
+		public	int								playerNumber;
+		public	float							cur_hp, max_hp;
+		public	float							cur_meter, max_meter;
+		public	float							moveSpeed;
+		public	Location						hurtLocation;
+		public	float							globalActionTimer;
+		public	Vector3							movement;
+		public	float							radius;
+		public	Vector3							localForwardVector;
+		public	float							extraDamage;
+		//public	bool							specialEffect;
 		
-		//layer names
-		public const int P1_HIT_BOX_LAYER_NUMBER	= 8;
-		public const int P2_HIT_BOX_LAYER_NUMBER 	= 9;
-		public const int P1_HURT_BOX_LAYER_NUMBER 	= 10;
-		public const int P2_HURT_BOX_LAYER_NUMBER 	= 11;
+		private	int								onHitTimer;
+		private bool 							onHitStarted;
 		
-		//hitbox names
-		public const string HB_FIST_L	= "HB_L_Fist";
-		public const string HB_FIST_R	= "HB_R_Fist";
-		public const string HB_GLOBAL01	= "HB_Global01";
-		
-		//input buttons-axes
-		public const string P1_AXIS_HORIZONTAL 	= "HorizontalP1";
-		public const string P1_AXIS_VERTICAL	= "VerticalP1";
-		public const string P1_BTN_REG_ATTACK 	= "RegularAttackP1";
-		public const string P1_BTN_UNQ_ATTACK 	= "UniqueAttackP1";
-		public const string P1_BTN_SPC_ATTACK 	= "SpecialAttackP1";
-		public const string P1_BTN_BLOCK 		= "BlockP1";
-		
-		public const string P2_AXIS_HORIZONTAL 	= "HorizontalP2";
-		public const string P2_AXIS_VERTICAL	= "VerticalP2";
-		public const string P2_BTN_REG_ATTACK 	= "RegularAttackP2";
-		public const string P2_BTN_UNQ_ATTACK 	= "UniqueAttackP2";
-		public const string P2_BTN_SPC_ATTACK 	= "SpecialAttackP2";
-		public const string P2_BTN_BLOCK 		= "BlockP2";
-/*
-			<<<<<<< HEAD
+		public int			 					currentAction;
+		public int								currentMovement;
+		public A_Attack							currentAttack;
+		public List<string>						commandLog;
+		public List<A_Buff>						buffs;
+		public Dictionary<int, A_Attack> 		actionsCommandMap;
+		public Dictionary<FighterAnimation, string> animationNameMap;
 
+<<<<<<< HEAD
 =======
 		
 >>>>>>> wolfe
@@ -83,19 +79,12 @@ namespace FightGame
 		Dictionary<string,HitBox> hitBoxes; //<gobName,hitBox>
 		List<GameObject> hurtBoxes;
 		public List<HitBoxCollisionInfo> HitBoxCollisions;
+=======
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 		
-		public List<Projectile> projectiles; //activeProjectiles
-		List<string> joints;
-		int numProjectilesMax;
-		// ***
-		
-		public Dictionary<string,A_Attack> attacklist;	//hieu add, tom modify to add <string,A_attack>
-		public A_Attack currentAttack;
-		
-		
-		//Hieu add movespeed to constructor
-		protected A_Fighter(int playerNumber, GameObject gobj)
+		public A_Fighter(GameObject gobj, int playerNumber)
 		{
+<<<<<<< HEAD
 			this.playerNumber = playerNumber;
 			this.hAxis = (playerNumber == 1 ? P1_AXIS_HORIZONTAL : P2_AXIS_HORIZONTAL);
 			this.vAxis = (playerNumber == 1 ? P1_AXIS_VERTICAL : P2_AXIS_VERTICAL);
@@ -127,117 +116,153 @@ namespace FightGame
 			AssignJoints();
 			InitHitBoxes();
 			InitStateMachine();
+=======
+			FighterInput input		= gobj.GetComponent<FighterInput>();
+			this.animationNameMap	= input.animationNameMap;
+			this.radius				= input.radius;
+			this.moveSpeed			= input.moveSpeed;
+			this.name				= input.name;
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 			
+			this.gobj 				= gobj;
+			this.playerNumber		= playerNumber;
+			this.currentAction 		= ActionCommand.NONE;
+			this.currentMovement	= MoveCommand.NONE;
+			this.currentAttack		= null;
+			this.cur_hp				= 100.0f;
+			this.max_hp				= 100.0f;
+			this.cur_meter			= 100.0f;
+			this.max_meter			= 100.0f;
+			this.status				= null;
+			this.hurtLocation		= Location.NONE;
+			this.globalActionTimer	= 0.0f;
+			this.movement			= Vector3.zero;
+			this.commandLog			= new List<string>();
+			this.buffs				= new List<A_Buff>();
+			this.extraDamage		= 1.0f;
+			//this.specialEffect		= false;
 			
+			this.onHitTimer			= 0;
+			this.onHitStarted		= false;
 			
-			ShowInActiveHitBoxes(true); //should be taken out, used to see hitboxes
-			ShowActiveHitBoxes(true);
-			// ***
+			List<GameObject> hurtboxObjects = input.hurtboxObjects;
+			List<GameObject> hitboxObjects	= input.hitboxObjects;
+			List<Transform> jointTransforms = input.jointTransforms;
+			this.joints = new Dictionary<string, Transform>();
+			this.hurtBoxes = new Dictionary<string, HurtBox>();
+			this.hitBoxes = new Dictionary<string, HitBox>();
 			
-			attacklist = new Dictionary<string, A_Attack>();
+			this.InitForwardVector(playerNumber);
+			this.InitHitBoxes(hitboxObjects);
+			this.InitHurtBoxes(hurtboxObjects);
+			this.InitJoints(jointTransforms);
+			this.InitStateMachine();
 		}
 		
-		#region accessors
-		public string Name
-		{
-			get{ return this.name; }
-			set{ this.name = value; }
-		}
-		
-		public GameObject GetGOB()	//hieu add
-		{
-			return this.gobj;
-		}
-		
-		// NEW HITBOX CODE 7/23
-		void AssignJoints()
-		{
-			// *** NAMING CONVENTION FOR HITBOXES
-			//  ================================================
-			//  HERE WE ESTABLISH NAMING CONVENTIONS FOR JOINTS/HITBOXES
-			//  THESE MUST MATCH PREFAB HITBOXES ON CHARACTERS
-			//  PROJECTILE HITBOXES MUST BE NAMED "HB_Projectile_"X  where X is the number 0 through max
-			//  ==============================================
-			joints.Add("HB_Fist_L");
-			joints.Add("HB_Fist_R");
-			joints.Add("HB_Foot_L");
-			joints.Add("HB_Foot_R");
-			numProjectilesMax = 2;
-		}
-		// ***
-		
-		void AssignHurtBoxes(GameObject gob)
-		{
-		
-			foreach (Transform t in gob.transform)
-			{
+		public void DoActionCommand( int ac ){
+			//Debug.Log(this.name + " Action: " + ac.ToString());
 			
-				if (t.name == "HurtBox")
-				{
-					hurtBoxes.Add(t.gameObject);
-					t.gameObject.layer = (this.playerNumber == 1 ? A_Fighter.P1_HURT_BOX_LAYER_NUMBER: A_Fighter.P2_HURT_BOX_LAYER_NUMBER);
-					return;
+			this.currentAction = ac;
+			
+			if ( ac != ActionCommand.NONE ){
+				if ( ac == ActionCommand.BLOCK ){
+					this.currentAction = ac;
+					this.moveGraph.dispatch("block", this);
 				}
-				AssignHurtBoxes(t.gameObject);// <--recursively go through child tree
-				
+				else{
+					switch ( ac ){
+					case ActionCommand.REGULAR:
+						switch ( this.currentMovement ){
+						case MoveCommand.FORWARD:
+							this.currentAction = ActionCommand.REGULAR_FORWARD;
+							break;
+						case MoveCommand.BACK:
+							this.currentAction = ActionCommand.REGULAR_BACK;
+							break;
+						case MoveCommand.UP:
+							this.currentAction = ActionCommand.REGULAR_UP;
+							break;
+						case MoveCommand.DOWN:
+							this.currentAction = ActionCommand.REGULAR_DOWN;
+							break;
+						default:
+							break;
+						}
+						break;
+					case ActionCommand.SPECIAL:
+						if(this.cur_meter >= 100){
+							switch ( this.currentMovement ){
+							case MoveCommand.FORWARD:
+								this.currentAction = ActionCommand.SPECIAL_FORWARD;
+								break;
+							case MoveCommand.BACK:
+								this.currentAction = ActionCommand.SPECIAL_BACK;
+								break;
+							case MoveCommand.UP:
+								this.currentAction = ActionCommand.SPECIAL_UP;
+								break;
+							case MoveCommand.DOWN:
+								this.currentAction = ActionCommand.SPECIAL_DOWN;
+								break;
+							default:
+								break;
+							}
+						}
+						else
+							this.currentAction = ActionCommand.NONE;
+						break;
+					case ActionCommand.UNIQUE:
+						switch ( this.currentMovement ){
+						case MoveCommand.FORWARD:
+							this.currentAction = ActionCommand.UNIQUE_FORWARD;
+							break;
+						case MoveCommand.BACK:
+							this.currentAction = ActionCommand.UNIQUE_BACK;
+							break;
+						case MoveCommand.UP:
+							this.currentAction = ActionCommand.UNIQUE_UP;
+							break;
+						case MoveCommand.DOWN:
+							this.currentAction = ActionCommand.UNIQUE_DOWN;
+							break;
+						default:
+							break;
+						}
+						break;
+					default:
+						break;
+					}
+					//Debug.Log(this.currentAction.ToString());
+					//Debug.Break();
+					if (this.currentAction != ActionCommand.NONE)
+						this.moveGraph.dispatch("attack", this);
+				}
 			}
 		}
 		
-		public void SetCurrentAttack()
-		//This function will set the current Attack, base on the input from controller
-		//It will look up in the dictionary, attacklist, which is created in each Fighter class(ex: Fighter_Odin.cs)
-		//Note: _this function shouldn't be called under Update()
-		//		because the controllerDirection variable will change during Update time.
-		//		_During Update(), you can access the variable currentAttack.
-		{
-			string attackType=controllerDirection;
-			//if(attackPressed) attackType ="1"+controllerDirection; //define the key base on attack type
-			if(attackPressed) attackType ="RegAttack_"+controllerDirection;	
-			if(uniquePressed) attackType ="UniqueAttack_"+controllerDirection;
-			if(specialPressed) attackType ="SpecialAttack_"+controllerDirection;
-			//if(blockPressed) attackType ="Block_"+controllerDirection;
-			if(this.attacklist.ContainsKey(attackType))
-			{
-				this.currentAttack = this.attacklist[attackType];
+		public void DoMoveCommand( int mc ){
+			//Debug.Log(this.name + " Move: " + mc.ToString());
+			this.currentMovement = mc;
+			if (mc != MoveCommand.NONE){
+				if (mc == MoveCommand.FORWARD || mc == MoveCommand.BACK){
+					this.moveGraph.dispatch("walk", this);
+				}
 			}
-			else this.currentAttack = new Attack_None(this,0,0,0);
 		}
-		
 		
 		//describes player forward direction
-		public Vector3 ForwardVector
-		{
-			get {return globalFowardVector;}
-			set {this.globalFowardVector=value;}
-		}
-		#endregion
-		
-		#region input related Data
-		public bool attackPressed, uniquePressed, specialPressed, blockPressed;
-		// true if player is pressing button
-		
-		public Vector2 inputDirection;
-		// Direction pressed on analog stick in vector format
-		
-		public string controllerDirection;
-		// Direction pressed on analog stick in 8-directional string format
-		// returns  "forward","forwardUp", "up",backUp","back","backDown","down",forwardDown" or "invalid"
-		
-		public string hAxis, vAxis;
-		// Vertical and Horizontal controller axes declared in Unity's input preferences
-		
-		public string atkBtn, unqBtn,spcBtn,blckBtn;
-		// attack button & unique attack button declared in Unity's input preferences
-		#endregion
-		
-		private void InitForwardVector(int player)
-		{
-			//DEFINE PLAYER FORWARD VECTORS HERE (1,0,0) FOR X AND (0,0,1) FOR Z
-			globalFowardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
-			localForwardVector = new Vector3(0,0,1);
-			//localForwardVector = (player==1 ? new Vector3(0,0,1) : new Vector3(0,0,-1));
+		public Vector2 GlobalForwardVector {
+			get {return globalForwardVector;}
+			set {this.globalForwardVector=value;}
 		}
 		
+		private void InitJoints( List<Transform> joints ){
+			foreach (Transform t in joints){
+				this.joints[t.name] = t;
+			}
+		}
+		
+<<<<<<< HEAD
 		public void Update()
 		{
 			moveGraph.CurrentState.update(moveGraph, this);
@@ -253,25 +278,34 @@ namespace FightGame
 			
 			// ***
 
+=======
+		private void InitHitBoxes( List<GameObject> hitboxObjects ){
+			foreach (GameObject gobj in hitboxObjects){
+				HitBox hitbox = new HitBox(this, gobj, false);
+				hitbox.TurnOffVisibility();
+				hitbox.TurnOffCollider();
+				gobj.GetComponent<HitBoxInput>().hitbox = hitbox;
+				this.hitBoxes[gobj.name] = hitbox;
+			}
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 		}
 		
-		// NEW HITBOX CODE 7/23
-		public void ShowActiveHitBoxes(bool setting)
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				kvp.Value.displayWhenActive = setting;
+		private void InitHurtBoxes( List<GameObject> hurtboxObjects ){
+			foreach (GameObject gobj in hurtboxObjects){
+				HurtBox hurtbox = new HurtBox(this, gobj);
+				//hurtbox.TurnOffVisibility();
+				gobj.GetComponent<HurtBoxInput>().hurtbox = hurtbox;
+				this.hurtBoxes[gobj.name] = hurtbox;
 			}
 		}
 		
-		public void ShowInActiveHitBoxes(bool setting)
+		private void InitForwardVector(int player)
 		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				kvp.Value.displayWhenNotActive = setting;
-			}
+			globalForwardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
+			this.localForwardVector = new Vector3 (0, 0, 1);
 		}
 		
+<<<<<<< HEAD
 		public void SendHitBoxInstructions(A_Attack attack)
 		{
 			foreach(HB_Instruction hbi in attack.hb_instructions)
@@ -291,102 +325,117 @@ namespace FightGame
 					hb.ParentToProjectile(p);
 					hb.SendInstruction(hbi);
 					
+=======
+		public HitBox FindFreeHitBox(){
+			int count = 1;
+			foreach ( HitBox h in this.hitBoxes.Values ){
+				if ( !h.inUse ){
+					h.inUse = true;
+					return h;
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 				}
-			}
-		}
-		
-	
-		
-		public HitBox GetHitBox(string name)
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				if(kvp.Value.GetName() == name)
-					return kvp.Value;
-			}
-			return null;
-		}
-		
-		void InitHitBoxes()
-		{
-			//Joints
-			foreach(string joint in joints)
-			{
-				//hitBoxes.Add(joint,new HitBox(this,gob.transform.Find("HitBoxes").transform.Find(joint).gameObject,false));
-				AddHitBoxesGroupedInPrefab(gob, joint,false);
+				count++;
 			}
 			
-			//Projectiles
-			for (int i=0 ; i < numProjectilesMax ; i++)
-			{
-				string name = "HB_Projectile_"+i;
-				
-				hitBoxes.Add(name , new HitBox(this,gob.transform.Find("ProjectileHitBoxes").transform.Find(name).gameObject, true));
-				gob.transform.Find("ProjectileHitBoxes").transform.Find(name).parent=null;
-			}
-		}
-		
-		
-		private void AddHitBoxesGroupedInPrefab(GameObject gob, string joint, bool isProjectile)
-		{
-			foreach (Transform t in gob.transform)
-			{
-				if (t.name == joint)
-				{
-					//AssignHitBoxLayer(t);
-					hitBoxes.Add(joint,new HitBox(this,t.gameObject,isProjectile));
-					return;
-				}
-				AddHitBoxesGroupedInPrefab(t.gameObject,joint,isProjectile);// <--recursively go through child tree
-			}
-		}
-		
-		
-		void UpdateHitBoxes()
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				kvp.Value.Update();
-			}
-		}
-		
-		void StopActiveHitBoxes()
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				if(kvp.Value.active)
-				{
-					kvp.Value.DeActivate();
-				}
-			}
-		}
-		
-		HitBox GetFreeProjectileHitBox()
-		{
-			foreach (KeyValuePair<string,HitBox> kvp in hitBoxes)
-			{
-				if(kvp.Value.isProjectile && !kvp.Value.active)
-				{
-					return kvp.Value;
-				}
-			}
-			Debug.Log("Need More Projectiles!");
-			return null;
-		}
-		
-		// ***
-		
-		// PROJECTILE FUNCTIONS
-		void UpdateProjectiles()
-		{
-			foreach(Projectile p in projectiles)
-			{
-				p.Update();
-			}
+			GameObject gobj = (GameObject)GameObject.Instantiate( Resources.Load( "Boxes/Hitbox", typeof(GameObject) ), this.gobj.transform.position, Quaternion.identity );
+			gobj.transform.parent = this.gobj.transform;
 			
+			HitBox hitbox = new HitBox( this, gobj, false );
+			this.hitBoxes["Hitbox" + count.ToString()] = hitbox;
+			gobj.GetComponent<HitBoxInput>().hitbox = hitbox;
+			
+			return hitbox;
 		}
-	
 		
+		public void AddMovement( Vector3 movement ){
+			this.movement += movement;
+		}
+		
+		private void AddGravity(){
+			if (this.gobj.transform.position.y > 0){
+				this.movement.y += Physics.gravity.y * Time.deltaTime * 0.1f;
+				Debug.Log(this.movement.y);
+			}
+			else{
+				this.gobj.transform.position = new Vector3(this.gobj.transform.position.x, 0.0f, this.gobj.transform.position.z);
+				this.movement.y = 0.0f;
+			}
+		}
+		
+		private void ApplyMovement(){
+			if (this.movement.magnitude > 0.001f){
+				if ( this.movement.x < 0 ){
+					if ( GameManager.CheckCanMoveBackward(this) ){
+						this.gobj.transform.position += new Vector3(this.movement.x * this.globalForwardVector.x * Time.deltaTime * 100.0f,
+							0.0f, 0.0f);
+						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 3 );
+						
+						if ( this.movement.magnitude < 0.001f ){
+							this.movement = Vector3.zero;
+						}
+					}
+				}
+				else if (this.movement.x > 0){
+					if ( GameManager.CheckCanMoveForward(this) ){
+						this.gobj.transform.position += new Vector3(this.movement.x * this.globalForwardVector.x * Time.deltaTime * 100.0f,
+							0.0f, 0.0f);
+						this.movement = Vector3.Lerp( this.movement, Vector3.zero, Time.deltaTime * 3 );
+						
+						if ( this.movement.magnitude < 0.001f ){
+							this.movement = Vector3.zero;
+						}
+					}
+				}
+				this.gobj.transform.position += new Vector3(0.0f, this.movement.y * Time.deltaTime * 100.0f, 0.0f);
+			}
+		}
+		
+		private void ReCenter(){
+			if (this.gobj.transform.position.z != 0.0f) {
+				this.gobj.transform.position = new Vector3(this.gobj.transform.position.x, this.gobj.transform.position.y, 0.0f);
+			}
+		}
+		
+		private void UpdateBuffs(){
+			foreach (A_Buff buff in this.buffs){
+				if (buff.CheckFinished()){
+					buff.DeActivate();
+					this.buffs.Remove(buff);
+					break;
+				}
+				else{
+					buff.Update();
+				}
+			}
+		}
+		
+		private void ApplyOnHitDelay(){
+			if ( this.onHitStarted ){
+				this.onHitTimer++;
+				if ( this.onHitTimer <= 6 ){
+					Time.timeScale = 0.1f;
+				}
+				else{
+					Time.timeScale = 1.0f;
+					this.onHitTimer = 0;
+					this.onHitStarted = false;
+				}
+			}
+		}
+		
+		public void Update()
+		{
+			this.ApplyOnHitDelay();
+			this.AddGravity();
+			this.ApplyMovement();
+			this.moveGraph.CurrentState.update(moveGraph, this);
+			this.UpdateBuffs();
+			if (this.cur_meter >= 100f) this.cur_meter = 100f;
+			if (this.cur_meter <= 0f) this.cur_meter = 0f;
+			this.ReCenter();
+		}
+		
+<<<<<<< HEAD
 		Projectile CreateProjectile(string prefabName,float speed, Vector3 direction, Vector3 startLocation,float startTime)
 		{
 			UnityEngine.Object ob = Resources.Load("Prefabs/" + prefabName, typeof(GameObject));
@@ -403,28 +452,88 @@ namespace FightGame
 				return p;
 				
 			}
+=======
+		public void LogLastCommand(){
+			
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 		}
 		
-		// END PROJECTILE FUNCTIONS
+		public string CurrentState{
+			get { return this.moveGraph.CurrentState.Name; }
+		}
 		
-		public void Dispatch(string eventName){
-			moveGraph.dispatch(eventName, this);
+		public void AddBuff( A_Buff buff ){
+			if (!this.buffs.Contains(buff)){
+				this.buffs.Add(buff);
+			}
 		}
 		
 		public void SwitchForwardVector()
 		{
-			globalFowardVector *= -1;
-			localForwardVector *= -1;
+			globalForwardVector.x *= -1;
 		}
 		
-		public bool CanAttack()
-		{
-			return lastAttackTimer>moveCoolDown;
+		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction, bool knockdown){
+			if (this.moveGraph.CurrentState.Name != "block"){
+				this.cur_hp -= damage;
+				if (this.cur_hp <= 0){
+					this.cur_hp = 0.0f;
+					this.moveGraph.dispatch("death", this);
+				}
+				else{
+					GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Explosion", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
+					GameObject.Destroy(explosion, 2.0f);
+					
+					this.onHitTimer = 0;
+					this.onHitStarted = true;
+					this.movement = direction * 0.05f;
+					this.hurtLocation = hurtbox.location;
+					
+					if(knockdown)
+						this.moveGraph.dispatch( "knockDown", this );
+					else
+						this.moveGraph.dispatch( "takeDamage", this );
+				}
+			}
+			else{
+				GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Block", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
+				GameObject.Destroy(explosion, 2.0f);
+				
+				this.cur_hp -= damage * 0.25f;
+				//The meter will increase when player's attack is block;
+				if (this.cur_meter < 100)
+					this.cur_meter = Mathf.Clamp( this.cur_meter + 5, 0, 100 );
+				
+				this.movement = direction * 0.025f;
+				if (this.cur_hp <= 0){
+					this.cur_hp = 0.0f;
+					this.moveGraph.dispatch("death", this);
+				}
+				/*
+				else{
+					this.cur_meter += 5.0f;
+					Debug.Log("Player "+this.playerNumber+"current meter "+this.cur_meter);
+					this.movement = direction * 0.05f;
+				}
+				*/
+			}
+			
+			if (!GameManager.CheckCanMoveBackward( this ) && 
+				(GameManager.GetPlayersDistance() < (GameManager.P1.Fighter.radius + GameManager.P2.Fighter.radius) * 1.2f)){
+				
+				GameManager.GetOpponentPlayer(this.playerNumber).Fighter.AddMovement( new Vector3(-0.02f, 0.0f, 0.0f) );
+				
+			}
+			
+			A_Fighter enemy = GameManager.GetOpponentPlayer(this.playerNumber).Fighter;
+			enemy.cur_meter = Mathf.Clamp(enemy.cur_meter + 10.0f, 0, 100);
+			
+			//Debug.Log(this.name + "\n" + "Damage Taken: " + damage + " Current HP: " + this.cur_hp);
 		}
 		
-		
-		void InitStateMachine()
+		private void InitStateMachine()
 		{
+<<<<<<< HEAD
 			State S_idle = new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
 			State S_walk = new State("walk", new Action_WalkEnter(), new Action_WalkUpdate(), new Action_WalkExit());
 			State S_attack = new State("attack",new Action_AttackEnter(), new Action_AttackUpdate(), new Action_AttackExit());
@@ -432,120 +541,91 @@ namespace FightGame
 			State S_block = new State("block", new Action_BlockEnter(),new Action_BlockUpdate(), new Action_BlockExit());
 			State S_defeat = new State("defeat",new Action_None(),new Action_None(),new Action_None());
 			//State S_unique = new State("unique",new Action_UniqueEnter(), new Action_UniqueUpdate(), new Action_UniqueExit());
+=======
+			State S_idle 		= new State("idle", new Action_IdleEnter(), new Action_IdleUpdate(), new Action_IdleExit());
+			State S_walk 		= new State("walk", new Action_WalkEnter(), new Action_WalkUpdate(), new Action_WalkExit());
+			State S_attack 		= new State("attack",new Action_AttackEnter(), new Action_AttackUpdate(), new Action_AttackExit());
+			State S_takeDamage 	= new State("takeDamage",new Action_TakeDamageEnter(), new Action_TakeDamageUpdate(),new Action_TakeDamageExit());
+			State S_block		= new State("block",new Action_BlockEnter(), new Action_BlockUpdate(),new Action_BlockExit());
+			State S_death		= new State("death" , new Action_DeathEnter(), new Action_DeathUpdate(),new Action_DeathExit());
+			State S_knockDown	= new State("knockDown", new Action_KnockDownEnter(),new Action_KnockDownUpdate(), new Action_KnockDownExit());
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 			
-			Transition T_idle = new Transition(S_idle, new Action_None());
-			Transition T_walk = new Transition(S_walk, new Action_None());
-			Transition T_attack = new Transition(S_attack, new Action_None());
+			Transition T_idle 		= new Transition(S_idle, new Action_None());
+			Transition T_walk 		= new Transition(S_walk, new Action_None());
+			Transition T_attack 	= new Transition(S_attack, new Action_None());
 			Transition T_takeDamage = new Transition(S_takeDamage, new Action_None());
+<<<<<<< HEAD
 			Transition T_block = new Transition(S_block, new Action_None());
 			Transition T_defeat = new Transition(S_defeat,new Action_None());
 			//Transition T_unique = new Transition(S_unique,new Action_None());
+=======
+			Transition T_block 		= new Transition(S_block, new Action_None());
+			Transition T_death		= new Transition(S_death, new Action_None());
+			Transition T_knockDown	= new Transition(S_knockDown, new Action_None());
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 			
 			S_idle.addTransition(T_walk, "walk");
 			S_idle.addTransition(T_attack,"attack");
 			S_idle.addTransition(T_takeDamage,"takeDamage");
-			S_idle.addTransition(T_block,"block");
 			S_idle.addTransition(T_idle,"idle");
+<<<<<<< HEAD
 			S_idle.addTransition(T_defeat,"defeat");
+=======
+			S_idle.addTransition(T_block, "block");
+			S_idle.addTransition(T_death, "death");
+			S_idle.addTransition(T_knockDown,"knockDown");
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 			
 			S_walk.addTransition(T_idle, "idle");
 			S_walk.addTransition(T_walk,"walk");
 			S_walk.addTransition(T_takeDamage,"takeDamage");
 			S_walk.addTransition(T_attack,"attack");
+<<<<<<< HEAD
 			S_walk.addTransition(T_block,"block");
 			S_walk.addTransition(T_defeat,"defeat");
+=======
+			S_walk.addTransition(T_block, "block");
+			S_walk.addTransition(T_death, "death");
+			S_walk.addTransition(T_knockDown,"knockDown");
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 			
 			S_attack.addTransition(T_idle,"idle");
-			S_attack.addTransition(T_walk,"walk");
 			S_attack.addTransition(T_takeDamage,"takeDamage");
+<<<<<<< HEAD
 			S_attack.addTransition(T_defeat,"defeat");
 			
 			S_takeDamage.addTransition(T_idle,"idle");
 			S_takeDamage.addTransition(T_walk,"walk");	
 			S_takeDamage.addTransition(T_defeat,"defeat");
 			//S_gothit.addTransition(T_gothit,"takeDamage");
+=======
+			S_attack.addTransition(T_death, "death");
+			S_attack.addTransition(T_knockDown,"knockDown");
 			
-			S_block.addTransition(T_idle,"idle");
-			S_block.addTransition(T_walk,"walk");
+			S_takeDamage.addTransition(T_idle,"idle");
+			S_takeDamage.addTransition(T_takeDamage,"takeDamage");
+			S_takeDamage.addTransition(T_death, "death");
+			S_takeDamage.addTransition(T_knockDown,"knockDown");
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 			
-			//S_attack.addTransition(T_walkForward,"walkForward");
+			S_block.addTransition(T_idle, "idle");
+			S_block.addTransition(T_walk, "walk");
+			S_block.addTransition(T_death, "death");
+			S_block.addTransition(T_block,"block");
+			//S_block.addTransition(T_takeDamage,"takeDamage");
 			
-			//S_unique.addTransition(T_idle,"idle");
-			this.moveGraph = new FSMContext(S_idle, new Action_None(),this);
+			S_knockDown.addTransition(T_idle,"idle");
+			//S_knockDown.addTransition(T_knockDown,"knockDown");
+			
+			this.moveGraph = FSM.FSM.createFSMInstance(S_idle, new Action_None(), this);
 		}
-		
-		
-		public string GetAnimationName(A_Fighter fighter,string animationName)
-		{
-			return "char_"+fighter.Name+"_"+animationName;
-		}
-		
-		
-		#region HitBox Functions
 		/*
-		public void AssignHitBoxCollisions()
-		// adds collision info to hitBoxCollisionsToBeProcessed
-		{
-			foreach (HitBox hb in hitBoxes)
-			{
-				if(hb.getHitBoxInfo()!=null)
-				{
-					hitBoxCollisionsToBeProcessed.Add(hb.getHitBoxInfo());
-					Debug.Log(hb.getHitBoxInfo().location);
-					hb.removeHitBoxInfo();
-					
-				}
-			}
+		public void CreateParticle(string jointName, string particleName,out GameObject particleHolder,Vector3 offset,Quaternion rotateOffset){
+			particleHolder = (GameObject)	GameObject.Instantiate(Resources.Load("Effect/" + particleName, typeof(GameObject)),
+											this.joints[jointName].position+offset,rotateOffset);
+			particleHolder.transform.parent = this.gobj.transform;
 		}
 		*/
-		
-		/*
-		private void AddHitBoxesGroupedInPrefab(GameObject gobj)
-		{
-			// add hitboxes with "HB_" prefix that are children of A_figher prefab
-			foreach (Transform t in gobj.transform)
-			{
-				AddHitBoxesGroupedInPrefab(t.gameObject); // <--recursively go through child tree
-				int length = t.name.Length;
-				int num = 0;
-				int match = 0;
-				foreach (char c in t.name)
-				{
-					if ( c == 'H' && num==0)
-					{
-						match+=1;
-					}
-					if (c=='B' && num==1)
-					{
-						match+=1;
-					}
-					if (c=='_' && num==2 && match==2)
-					{
-						AssignHitBoxLayer(t);
-						hitBoxes.Add(new HitBox(t.name));
-					}
-					num++;
-				}
-			}
-		}
-		*/
-		
-		/*
-		private void AssignHitBoxLayer(Transform t)
-		{
-			if(playerNumber==1)
-			{
-				t.gameObject.layer=P1_HIT_BOX_LAYER_NUMBER;
-			}
-			else if(playerNumber==2)
-			{
-				t.gameObject.layer=P2_HIT_BOX_LAYER_NUMBER;
-			}
-		}
-		*/
-		
-		
-		#endregion
-			
 	}
 }

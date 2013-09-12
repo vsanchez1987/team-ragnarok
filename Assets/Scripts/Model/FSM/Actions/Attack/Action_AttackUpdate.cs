@@ -8,16 +8,15 @@ namespace FSM
 {
 	public class Action_AttackUpdate:FSMAction
 	{
-		float time =0f;
 		public override void execute(FSMContext c, object o)
 		{
-			A_Fighter fighter;
-			fighter = (A_Fighter)o;
+			A_Fighter 	fighter = (A_Fighter)o;
+			A_Attack 	attack 	= fighter.currentAttack;
 			
-			//when this execute() run, time will increase
-			//if time is greater than attackLength, which is animation length from Action_AttackEnter
-			//then it will send to idle state.
+			attack.Execute();
+			attack.SpecialExecute();
 			
+<<<<<<< HEAD
 			fighter.currentAttack.SpecialExecute(time);
 			if(fighter.takeDamage)
 			{
@@ -32,7 +31,10 @@ namespace FSM
 				fighter.Dispatch("idle");
 			}	
 			time+=Time.deltaTime;
+=======
+			if( attack.CheckComplete() ) { c.dispatch("idle", o); }
+			fighter.gobj.animation.CrossFade(attack.AnimationName);
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 		}
 	}
 }
-

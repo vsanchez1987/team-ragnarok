@@ -7,6 +7,7 @@ namespace FightGame
 {
 	public class Projectile
 	{
+<<<<<<< HEAD
 		public GameObject gob;
 		Vector3 direction;
 		Vector3 startLocation; //relative to player's transform
@@ -35,11 +36,15 @@ namespace FightGame
 			}
 			time+=Time.deltaTime;
 		}
+=======
+		public GameObject 	gobj;
+		public A_Fighter	attackOwner;
+		public string		projectileName;
+>>>>>>> fd2511965e41334cb3fce993bcedcd531205f267
 		
-		public void Delete()
-		{
-			GameObject.Destroy(gob);
+		public Projectile(string ProjectileName, A_Fighter attackOwner){
+			this.gobj = gobj;
+			this.attackOwner = attackOwner;
 		}
-		
 	}
 }

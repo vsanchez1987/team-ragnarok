@@ -1,3 +1,4 @@
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using FightGame;
@@ -8,11 +9,6 @@ namespace FSM
 	public class Action_IdleEnter:FSMAction
 	{
 		public override void execute(FSMContext c, object o){
-			A_Fighter fighter;
-			fighter = (A_Fighter)o;
-			
-			string animationName = fighter.GetAnimationName(fighter,"idle");
-			fighter.GetGOB().animation.CrossFade(animationName);
 		}
 	}
 }
