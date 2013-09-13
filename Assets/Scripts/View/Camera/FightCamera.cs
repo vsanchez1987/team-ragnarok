@@ -43,8 +43,10 @@ namespace FightGame
 		}
 		
 		public void Update(){
-			this.p1Position = (p1.Fighter != null) ? this.p1.Fighter.gobj.transform.position : camera.transform.position;
-			this.p2Position = (p2.Fighter != null) ? this.p2.Fighter.gobj.transform.position : camera.transform.position;
+			//this.p1Position = (p1.Fighter != null) ? this.p1.Fighter.gobj.transform.position : GameObject.Find("LocatorP1").transform.position;
+			//this.p2Position = (p2.Fighter != null) ? this.p2.Fighter.gobj.transform.position : GameObject.Find("LocatorP2").transform.position;
+			this.p1Position = (p1.Fighter != null) ? this.p1.Fighter.gobj.transform.position : this.camera.transform.position;
+			this.p2Position = (p2.Fighter != null) ? this.p2.Fighter.gobj.transform.position : this.camera.transform.position;
 			this.centerPosition = Vector3.Lerp(this.centerPosition, p1Position + ((p2Position - p1Position) * 0.5f), Time.deltaTime * 5.0f);
 			float yOffset = (Mathf.Abs(Mathf.Clamp(this.cameraZ, maxZDistance, minZDistance) - minZDistance)) * 0.5f + this.yPositionOffset;
 			
