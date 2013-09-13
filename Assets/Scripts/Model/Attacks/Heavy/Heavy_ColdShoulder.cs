@@ -16,7 +16,7 @@ namespace FightGame
 				"l_elbow_jnt", 					// joint
 				attackOwner, 					// fighter
 				5.0f, 							// radius
-				4.0f,							// damage
+				100.0f,							// damage
 				0.7f, 							// startTime
 				1.6f,  							// endTime
 				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
