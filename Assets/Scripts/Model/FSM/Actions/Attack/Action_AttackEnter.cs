@@ -18,7 +18,7 @@ namespace FSM
 			
 			fighter.currentAttack.Init();
 			fighter.gobj.animation[fighter.currentAttack.AnimationName].speed = fighter.currentAttack.speed;
-			fighter.gobj.animation.Stop();
+			//fighter.gobj.animation.Stop();
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace FSM
 			A_Fighter fighter = (A_Fighter)o;
 			GameObject gobj = fighter.gobj;
 			
-			gobj.animation.Stop();
+			//gobj.animation.Stop();
 			fighter.movement = Vector3.zero;
 			/*
 			if (fighter.currentAttack.animationName != "char_amaterasu_Fury"){
