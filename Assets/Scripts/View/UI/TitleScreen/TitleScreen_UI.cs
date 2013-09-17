@@ -6,9 +6,10 @@ public class TitleScreen_UI : MonoBehaviour {
 	public Texture2D GameTitle_Texture;
 	public Texture2D StartBG_Texture;
 	public Texture2D Black_Texture;
-	public int offX, offY;
-	public int start_offX, start_offY;
-	public GUIStyle start_style;
+	public int title_offX = 310, title_offY =200;
+	public int start_offX = 337 , start_offY =353;
+	public GUIStyle menuItem_GUIstyle;
+	public float blackfadeTime = 0.5f;
 	enum titleState {START,MENU};
 	titleState state;
 
@@ -30,22 +31,22 @@ public class TitleScreen_UI : MonoBehaviour {
 		float aspectH = Screen.height/768.0f;
 		
 		
-		drawTitle(aspectH,aspectW,GameTitle_Texture,offX,offY);
+		DrawTitle(aspectH,aspectW,GameTitle_Texture,title_offX,title_offY);
 		switch (state)
 		{
 			case titleState.START:
 				
-				if(drawStart(aspectH,aspectW,start_offX,start_offY,start_style))//|| Input.anyKey)
+				if(DrawStart(aspectH,aspectW,start_offX,start_offY,menuItem_GUIstyle))//|| Input.anyKey)
 				{
-					loadMenu();
+					LoadMenu();
 				}
-				blackOverlay( aspectH, aspectW, Black_Texture);
+				DrawBlackOverlay( aspectH, aspectW, Black_Texture,blackfadeTime);
 				break;
 			case titleState.MENU:
-			 	int selection = drawMenu(aspectH,aspectW,start_offX,start_offY,start_style);
+			 	int selection = DrawMenu(aspectH,aspectW,start_offX,start_offY,menuItem_GUIstyle);
 				if(selection>0)
 				{
-					loadGame(selection);
+					LoadGame(selection);
 				}
 				break;
 			default:
@@ -58,7 +59,7 @@ public class TitleScreen_UI : MonoBehaviour {
 		
 	}
 	
-	void loadGame(int selection)
+	void LoadGame(int selection)
 	{
 		switch (selection) {
 		case 1:
@@ -79,7 +80,7 @@ public class TitleScreen_UI : MonoBehaviour {
 		
 	}
 	
-	void loadMenu()
+	void LoadMenu()
 	{
 		Debug.Log("Load Main Menu");
 		state = titleState.MENU;
@@ -88,7 +89,7 @@ public class TitleScreen_UI : MonoBehaviour {
 	
 	//void drawMenu(int selectNum,
 	
-	void drawTitle(float aspectH, float aspectW, Texture2D texture,int offX,int offY)
+	void DrawTitle(float aspectH, float aspectW, Texture2D texture,int offX,int offY)
 	{
 		const int imageW = 620;
 		const int imageH = 270;
@@ -105,9 +106,9 @@ public class TitleScreen_UI : MonoBehaviour {
 			texture,ScaleMode.StretchToFill,true,0);
 	}
 	
-	void blackOverlay(float aspectH, float aspect,Texture2D texture)
+	void DrawBlackOverlay(float aspectH, float aspect,Texture2D texture,float blackfadeTime)
 	{
-		GUI.color = new Color(0,0,0,Mathf.Lerp(1,0,Time.time * 0.5f));
+		GUI.color = new Color(0,0,0,Mathf.Lerp(1,0,Time.time * blackfadeTime));
 		GUI.DrawTexture(
 			new Rect(
 				0,
@@ -118,7 +119,7 @@ public class TitleScreen_UI : MonoBehaviour {
 		GUI.color = new Color(0,0,0,1);
 	}
 	
-	bool drawStart(float aspectH, float aspectW, int offX,int offY,GUIStyle style,bool toggleVal=false)
+	bool DrawStart(float aspectH, float aspectW, int offX,int offY,GUIStyle style,bool toggleVal=false)
 	{
 		const int imageW = 313;
 		const int imageH = 81;
@@ -140,7 +141,7 @@ public class TitleScreen_UI : MonoBehaviour {
 	}
 	
 	
-	int drawMenu(float aspectH, float aspectW, int offX,int offY,GUIStyle style,bool toggleVal=false)
+	int DrawMenu(float aspectH, float aspectW, int offX,int offY,GUIStyle style,bool toggleVal=false)
 	{
 		const int imageW = 313;
 		const int imageH = 81;
