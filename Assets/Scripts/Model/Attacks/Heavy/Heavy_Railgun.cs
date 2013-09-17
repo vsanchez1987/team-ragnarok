@@ -25,7 +25,7 @@ namespace FightGame
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement							
 				));
 			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"Heavy_projectile", 			// projectile name
+				"Heavy_projectile_railgun", 			// projectile name
 				"head_jnt", 					// starting joint
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				20.0f, 							// speed
