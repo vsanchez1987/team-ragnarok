@@ -102,9 +102,10 @@ public class UI_Script : MonoBehaviour
 		playerOptionsGob = GameObject.Find("PlayerSelection").GetComponent<PlayerSelectOptions>();
 		if(playerOptionsGob!=null)
 		{
-		GameManager.CreateFighter("Fighter_"+playerOptionsGob.p1Name,1);
+			GameManager.CreateFighter("Fighter_"+playerOptionsGob.p1Name,1);
 			GameManager.CreateFighter("Fighter_"+playerOptionsGob.p2Name,2);
 			created = p1Pick =p2Pick = true;
+			roundTimer = ROUNDTIME;
 		}
 	}
 
