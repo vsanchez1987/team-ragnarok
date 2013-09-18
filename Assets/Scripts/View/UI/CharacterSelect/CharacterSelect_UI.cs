@@ -18,15 +18,22 @@ public class CharacterSelect_UI : MonoBehaviour {
 	
 	public List<Texture2D> Portraits;
 	public Vector2 p1SelectLocation,p2SelectLocation;
-	
+	float timer = 0;
 	private bool  p1MovingH,p2MovingH,p2MovingV,p1MovingV;
 	
 	private string p1SelectedChar=null, p2SelectedChar=null;
 	public int paddingX, paddingY;
 	string[,] characters;
 	
+	private GameObject p1Gob=null,p2Gob=null;
+	public Vector3 p1ModelPosition,p2ModelPosition;
+	public float timerMax = 1.5f;
+	
+	PlayerSelectOptions playerOptions;
+	
 	void Start ()
 	{
+		playerOptions = GameObject.Find("PlayerSelection").GetComponent<PlayerSelectOptions>();
 		characterPortraits = new Dictionary<string, Texture2D>();
 		characters = new string[3,3]{
 						 {"Heavy","Amaterasu", "Amaterasu"},
@@ -49,130 +56,167 @@ public class CharacterSelect_UI : MonoBehaviour {
 
 	void Update ()
 	{
-		//process input
+		//move models to position when instantiated
+		if(p1Gob!=null)
+			p1Gob.transform.position = p1ModelPosition;
+		if(p2Gob!=null)
+			p2Gob.transform.position = p2ModelPosition;
+		
+		// add to timer when characters are selected to prevent skipping to level too soon
+		// load next level when hitting any key
+		if(p2Gob && p1Gob != null && timer<=timerMax)
+		{
+			timer+= Time.deltaTime;
+		}
+		else if(timer>timerMax && Input.anyKey)
+		{
+			Debug.Log("load level with p1" +p1SelectedChar + "p2" + p2SelectedChar + " level:");
+			playerOptions.p1Name = p1SelectedChar;
+			playerOptions.p2Name = p2SelectedChar;
+			playerOptions.levelSelect = "GodLevel";
+			Application.LoadLevel(playerOptions.levelSelect);
+			//GameManager.AssignCharacterSelectInfo(p1SelectedChar,p2SelectedChar,"GodLevel");
+		}
+		
+		//process input for character selection when selectedmodels are null
 		//P1 MOVING VERT
-		if (!p1MovingH)
+		if(p1Gob == null)
 		{
-			if(Input.GetAxis("HorizontalP1") > 0.2f || Input.GetKeyDown(KeyCode.D))
+			if (!p1MovingH)
 			{
-				Debug.Log("pushing right");
-				if(p1SelectLocation.x < 2)
-					p1SelectLocation+=Vector2.right;
+				if(Input.GetAxis("HorizontalP1") > 0.2f || Input.GetKeyDown(KeyCode.D))
+				{
+					Debug.Log("pushing right");
+					if(p1SelectLocation.x < 2)
+						p1SelectLocation+=Vector2.right;
+				}
+				if(Input.GetAxis("HorizontalP1") < -0.2f || Input.GetKeyDown(KeyCode.A))
+				{
+					Debug.Log("pushing  left");
+					if(p1SelectLocation.x > 0)
+						p1SelectLocation-=Vector2.right;
+				}
 			}
-			if(Input.GetAxis("HorizontalP1") < -0.2f || Input.GetKeyDown(KeyCode.A))
+			
+			// P1 MOVING RIGHT AND LEFT
+			if (!p1MovingV)
 			{
-				Debug.Log("pushing  left");
-				if(p1SelectLocation.x > 0)
-					p1SelectLocation-=Vector2.right;
+				if(Input.GetAxis("VerticalP1") > 0.2f || Input.GetKeyDown(KeyCode.S))
+				{
+					Debug.Log("pushing down");
+					if(p1SelectLocation.y < 2)
+						p1SelectLocation+=Vector2.up;
+				}
+				if(Input.GetAxis("VerticalP1") < -0.2f || Input.GetKeyDown(KeyCode.W))
+				{
+					
+					Debug.Log("pushing  up");
+					if(p1SelectLocation.y > 0)
+						p1SelectLocation-=Vector2.up;
+				}
 			}
+			
+			// P1 KEEP TRACK OF JOYSTICK SENSITIVITY
+			if (Mathf.Abs( Input.GetAxis("HorizontalP1")) > 0.2f)
+			{
+				p1MovingH = true;
+			}
+			else
+			{
+				p1MovingH = false;
+			}
+			
+			if (Mathf.Abs( Input.GetAxis("VerticalP1")) > 0.2f)
+			{
+				p1MovingV = true;
+			}
+			else
+			{
+				p1MovingV = false;
+			}
+			
+			/// P1 SELECT PLAYER
+			if(Input.GetKeyDown(KeyCode.Joystick1Button0) ||  Input.GetKeyDown(KeyCode.C))
+			{
+				p1SelectedChar = 	characters[(int)p1SelectLocation.y,(int)p1SelectLocation.x];
+				if(p1Gob==null)
+				{
+					p1Gob =  GameObject.Instantiate( Resources.Load("Fighters/CharacterSelect_" + p1SelectedChar, typeof(GameObject)),Vector3.up*20, Quaternion.Euler(0,90,0) ) as GameObject;
+				}
+				Debug.Log("pressing button at " + p1SelectedChar);	
+			}
+			
+			///////
 		}
-		
-		// P1 MOVING RIGHT AND LEFT
-		if (!p1MovingV)
-		{
-			if(Input.GetAxis("VerticalP1") > 0.2f || Input.GetKeyDown(KeyCode.S))
+		if(p2Gob == null)
+		{	
+			// Player 2
+			//P2 MOVING VERT
+			if (!p2MovingH)
 			{
-				Debug.Log("pushing down");
-				if(p1SelectLocation.y < 2)
-					p1SelectLocation+=Vector2.up;
+				if(Input.GetAxis("HorizontalP2") > 0.2f || Input.GetKeyDown(KeyCode.RightArrow))
+				{
+					Debug.Log("pushing right");
+					if(p2SelectLocation.x < 2)
+						p2SelectLocation+=Vector2.right;
+				}
+				if(Input.GetAxis("HorizontalP2") < -0.2f || Input.GetKeyDown(KeyCode.LeftArrow))
+				{
+					Debug.Log("pushing  left");
+					if(p2SelectLocation.x > 0)
+						p2SelectLocation-=Vector2.right;
+				}
 			}
-			if(Input.GetAxis("VerticalP1") < -0.2f || Input.GetKeyDown(KeyCode.W))
+			
+			// P2 MOVING RIGHT AND LEFT
+			if (!p2MovingV)
 			{
+				if(Input.GetAxis("VerticalP2") > 0.2f || Input.GetKeyDown(KeyCode.DownArrow))
+				{
+					Debug.Log("pushing down");
+					if(p2SelectLocation.y < 2)
+						p2SelectLocation+=Vector2.up;
+				}
+				if(Input.GetAxis("VerticalP2") < -0.2f || Input.GetKeyDown(KeyCode.UpArrow))
+				{
+					
+					Debug.Log("pushing  up");
+					if(p2SelectLocation.y > 0)
+						p2SelectLocation-=Vector2.up;
+				}
+			}
+			
+			// P2 KEEP TRACK OF JOYSTICK SENSITIVITY
+			if (Mathf.Abs( Input.GetAxis("HorizontalP2")) > 0.2f)
+			{
+				p2MovingH = true;
+			}
+			else
+			{
+				p2MovingH = false;
+			}
+			
+			if (Mathf.Abs( Input.GetAxis("VerticalP2")) > 0.2f)
+			{
+				p2MovingV = true;
+			}
+			else
+			{
+				p2MovingV = false;
+			}
+			
+			/// P2 SELECT PLAYER
+			if(Input.GetKeyDown(KeyCode.Joystick2Button0) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.Return))
+			{
+				p2SelectedChar = 	characters[(int)p2SelectLocation.y,(int)p2SelectLocation.x];
+				Debug.Log("pressing button at " + p2SelectedChar);
 				
-				Debug.Log("pushing  up");
-				if(p1SelectLocation.y > 0)
-					p1SelectLocation-=Vector2.up;
-			}
-		}
-		
-		// P1 KEEP TRACK OF JOYSTICK SENSITIVITY
-		if (Mathf.Abs( Input.GetAxis("HorizontalP1")) > 0.2f)
-		{
-			p1MovingH = true;
-		}
-		else
-		{
-			p1MovingH = false;
-		}
-		
-		if (Mathf.Abs( Input.GetAxis("VerticalP1")) > 0.2f)
-		{
-			p1MovingV = true;
-		}
-		else
-		{
-			p1MovingV = false;
-		}
-		
-		/// P1 SELECT PLAYER
-		if(Input.GetKeyDown(KeyCode.Joystick1Button0) ||  Input.GetKeyDown(KeyCode.C))
-		{
-			p1SelectedChar = 	characters[(int)p1SelectLocation.y,(int)p1SelectLocation.x];
-			Debug.Log("pressing button at " + p1SelectedChar);	
-		}
-		
-		///////
-		
-		// Player 2
-		//P2 MOVING VERT
-		if (!p2MovingH)
-		{
-			if(Input.GetAxis("HorizontalP2") > 0.2f || Input.GetKeyDown(KeyCode.RightArrow))
-			{
-				Debug.Log("pushing right");
-				if(p2SelectLocation.x < 2)
-					p2SelectLocation+=Vector2.right;
-			}
-			if(Input.GetAxis("HorizontalP2") < -0.2f || Input.GetKeyDown(KeyCode.LeftArrow))
-			{
-				Debug.Log("pushing  left");
-				if(p2SelectLocation.x > 0)
-					p2SelectLocation-=Vector2.right;
-			}
-		}
-		
-		// P2 MOVING RIGHT AND LEFT
-		if (!p2MovingV)
-		{
-			if(Input.GetAxis("VerticalP2") > 0.2f || Input.GetKeyDown(KeyCode.DownArrow))
-			{
-				Debug.Log("pushing down");
-				if(p2SelectLocation.y < 2)
-					p2SelectLocation+=Vector2.up;
-			}
-			if(Input.GetAxis("VerticalP2") < -0.2f || Input.GetKeyDown(KeyCode.UpArrow))
-			{
+				if(p2Gob==null)
+				{
+					p2Gob =  GameObject.Instantiate( Resources.Load("Fighters/CharacterSelect_" + p2SelectedChar, typeof(GameObject)),Vector3.up*20, Quaternion.Euler(0,-90,0) ) as GameObject;
+				}
 				
-				Debug.Log("pushing  up");
-				if(p2SelectLocation.y > 0)
-					p2SelectLocation-=Vector2.up;
 			}
-		}
-		
-		// P2 KEEP TRACK OF JOYSTICK SENSITIVITY
-		if (Mathf.Abs( Input.GetAxis("HorizontalP2")) > 0.2f)
-		{
-			p2MovingH = true;
-		}
-		else
-		{
-			p2MovingH = false;
-		}
-		
-		if (Mathf.Abs( Input.GetAxis("VerticalP2")) > 0.2f)
-		{
-			p2MovingV = true;
-		}
-		else
-		{
-			p2MovingV = false;
-		}
-		
-		/// P2 SELECT PLAYER
-		if(Input.GetKeyDown(KeyCode.Joystick2Button0) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.Return))
-		{
-			p2SelectedChar = 	characters[(int)p2SelectLocation.y,(int)p2SelectLocation.x];
-			Debug.Log("pressing button at " + p2SelectedChar);	
 		}
 
 		

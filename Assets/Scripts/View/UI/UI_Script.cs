@@ -56,6 +56,7 @@ public class UI_Script : MonoBehaviour
 	public GUIStyle playerName_GuiStyle_p1;
 	GUIStyle p2GS;
 	int initFontSize;
+	PlayerSelectOptions playerOptionsGob;
 	// end tom
 	
 	void Start()
@@ -94,6 +95,14 @@ public class UI_Script : MonoBehaviour
 		//tom
 		
 		//end tom
+		
+		playerOptionsGob = GameObject.Find("PlayerSelection").GetComponent<PlayerSelectOptions>();
+		if(playerOptionsGob!=null)
+		{
+		GameManager.CreateFighter("Fighter_"+playerOptionsGob.p1Name,1);
+			GameManager.CreateFighter("Fighter_"+playerOptionsGob.p2Name,2);
+			created = p1Pick =p2Pick = true;
+		}
 	}
 
 	void Update ()
@@ -380,6 +389,7 @@ public class UI_Script : MonoBehaviour
 
 		
 		//Hieu add
+		
 		PickFighter();
 		
 		if(GameManager.P1.Fighter != null && GameManager.P2.Fighter != null)
@@ -420,6 +430,8 @@ public class UI_Script : MonoBehaviour
 					created = false;
 					p1Pick = false;
 					p2Pick = false;
+					//GameObject.Destroy(GameObject.Find("PlayerSelection"));
+					//Application.LoadLevel("TitleScreen");
 				}
 			}
 			

@@ -143,9 +143,9 @@ namespace FightGame{
 		
 		public static void AssignCharacterSelectInfo(string p1Fighter, string p2Fighter, string level)
 		{
-			instance.gModel.p1.chosenFighter = p1Fighter;
-			instance.gModel.p2.chosenFighter = p2Fighter;
-			instance.gModel.chosenLevel = level;
+			Instance.gModel.p1.chosenFighter = p1Fighter;
+			Instance.gModel.p2.chosenFighter = p2Fighter;
+			Instance.gModel.chosenLevel = level;
 			
 		}
 		
