@@ -118,6 +118,7 @@ namespace FightGame{
 			return false;
 		}
 		
+		
 		public static bool CheckCanMoveBackward(A_Fighter fighter){
 			if ( GameManager.P1.Fighter != null && GameManager.P2.Fighter != null ){
 				if (GameManager.GetPlayersDistance() < GameManager.Camera.maxDistance){
@@ -140,6 +141,14 @@ namespace FightGame{
 			return playerNumber == 1 ? instance.gModel.p2 : instance.gModel.p1;
 		}
 		
+		public static void AssignCharacterSelectInfo(string p1Fighter, string p2Fighter, string level)
+		{
+			instance.gModel.p1.chosenFighter = p1Fighter;
+			instance.gModel.p2.chosenFighter = p2Fighter;
+			instance.gModel.chosenLevel = level;
+			
+		}
+		
 		private static bool CheckWithinLeftBoundary(A_Fighter fighter){
 			return fighter.gobj.transform.position.x > GameManager.LeftBoundary;
 		}
@@ -147,5 +156,7 @@ namespace FightGame{
 		private static bool CheckWithinRightBoundary(A_Fighter fighter){
 			return fighter.gobj.transform.position.x < GameManager.RightBoundary;
 		}
+		
+		
 	}
 }

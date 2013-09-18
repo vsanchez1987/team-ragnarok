@@ -11,6 +11,7 @@ namespace FightGame
 		public  GamePad			controls;
 		private int				playerNumber;
 		private A_Fighter		fighter;
+		public string 			chosenFighter;
 		public int				roundsWon;
 		
 		public Player (int playerNumber)
@@ -19,6 +20,7 @@ namespace FightGame
 			this.controls     	= new GamePad(this);
 			this.fighter 		= null;
 			this.roundsWon 		= 0;
+			this.chosenFighter 	= null;
 		}
 		
 		public void DoActionCommand( int actionCommand ){

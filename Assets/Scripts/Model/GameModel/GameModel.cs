@@ -13,6 +13,7 @@ namespace FightGame{
 		public Player[] players;
 		public float leftBoundary;
 		public float rightBoundary;
+		public string chosenLevel;
 
 	    // make sure the constructor is private, so it can only be instantiated here
 	    public GameModel() {
@@ -23,6 +24,7 @@ namespace FightGame{
 			this.ui = GameObject.Find("UI").GetComponent<UI_Script>();
 			this.leftBoundary = camera.leftBoundary;
 			this.rightBoundary = camera.rightBoundary;
+			this.chosenLevel = null;
 	    }
 	}
 }
