@@ -4,7 +4,7 @@ using FightGame;
 
 public class UI_Script : MonoBehaviour
 {	
-
+	public int ROUNDTIME = 60;
 	private bool created , p1Pick = false;
 	private bool p2Pick = false;
 	GameObject player;
@@ -54,8 +54,10 @@ public class UI_Script : MonoBehaviour
 	public float dmgRedBarSpeed = 0.002f;
 	float dmgBarHealth_P1,dmgBarHealth_P2;
 	public GUIStyle playerName_GuiStyle_p1;
+	public GUIStyle timerGS;
 	GUIStyle p2GS;
-	int initFontSize;
+	int initFontSize,timerInitFontSize;
+	float roundTimer;
 	PlayerSelectOptions playerOptionsGob;
 	// end tom
 	
@@ -72,6 +74,7 @@ public class UI_Script : MonoBehaviour
 		p2GS = new GUIStyle(playerName_GuiStyle_p1);
 		p2GS.alignment = TextAnchor.UpperRight;
 		initFontSize = playerName_GuiStyle_p1.fontSize;
+		timerInitFontSize = timerGS.fontSize;
 		// end chracterNames
 		
 		aspectW = Screen.width/1024.0f;
@@ -107,7 +110,12 @@ public class UI_Script : MonoBehaviour
 
 	void Update ()
 	{
-
+		if(created)
+		{
+			roundTimer-= Time.deltaTime;
+			if(roundTimer<0)
+				roundTimer=0;
+		}
 		
 		length_default = Screen.width/4;
 		//p2_GUIstartX = Screen.width - (length_default + p1_GUIstartX);
@@ -171,6 +179,20 @@ public class UI_Script : MonoBehaviour
 	
 	//****************************************
 	// TOM GUI FUNCTIONS BEGIN
+	
+	void drawTimer(float aspectW, float aspectH,GUIStyle GS,int initFontSize,int time)
+	{
+		const int OFFSET_X 	= 465;
+		const int OFFSET_Y 	= 35;
+		const float T_W 		= 90;
+		const float T_H 	= 90;
+		GS.fontSize = (int)(initFontSize * aspectH);
+		GUI.Label(new Rect( OFFSET_X*aspectW,
+							OFFSET_Y*aspectH,
+							T_W*aspectW,
+							T_H*aspectH),time.ToString(),GS);
+		
+	}
 	
 	void drawStaminaBar(int playerNum, float stam, float maxStam, float aspectW, float aspectH, Texture2D texture)
 	{
@@ -420,6 +442,9 @@ public class UI_Script : MonoBehaviour
 			
 			drawPlayerName(GameManager.P1.Fighter.name,1,aspectW,aspectH,playerName_GuiStyle_p1,initFontSize);
 			drawPlayerName(GameManager.P2.Fighter.name,2,aspectW,aspectH,p2GS,initFontSize);
+			
+			drawTimer(aspectW, aspectH,timerGS,timerInitFontSize,(int)roundTimer);
+			
 			//end THOMAS NEW GUI
 			
 			
@@ -508,6 +533,7 @@ public class UI_Script : MonoBehaviour
 			GameManager.CreateFighter("Fighter_"+fighterName,2);
 			p2Pick = true;
 			created = true;
+			roundTimer = ROUNDTIME;
 		}
 	}
 }
