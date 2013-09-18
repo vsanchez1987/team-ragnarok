@@ -21,7 +21,7 @@ public class SeekProjectileInput : ProjectileInput
 	protected override void Execute(){
 		this.transform.LookAt(this.target);
 		this.ReCenter();
-		if(timer > 0.2f && timer < 0.6f)
+		if(timer > 0.3f && timer < 0.6f)
 		{
 			this.transform.position += new Vector3(1.0f * this.hitbox.attackOwner.GlobalForwardVector.x, 0, 0).normalized * speed * Time.deltaTime;	
 		}

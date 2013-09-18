@@ -10,10 +10,10 @@ namespace FightGame
 		public Heavy_HeatSeeker(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
 			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"heavy_missile", 			// projectile name
+				"heavy_missile", 					// projectile name
 				"r_shoulder_jnt", 					// starting joint
-				new Vector3(.65f, .80f, 0.0f), 	// direction
-				12.0f, 								// speed
+				new Vector3(.45f, .80f, 0.0f), 		// direction
+				15.0f, 								// speed
 				attackOwner, 						// A_fighter
 				2.0f, 								// radius
 				3.0f, 								// damage
