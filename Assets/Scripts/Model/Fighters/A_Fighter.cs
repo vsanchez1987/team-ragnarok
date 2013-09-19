@@ -346,6 +346,7 @@ namespace FightGame
 				if (this.cur_hp <= 0){
 					this.cur_hp = 0.0f;
 					this.moveGraph.dispatch("death", this);
+					
 				}
 				else{
 					GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Explosion", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;

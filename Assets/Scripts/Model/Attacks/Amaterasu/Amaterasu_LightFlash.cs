@@ -25,7 +25,7 @@ namespace FightGame
 
 			this.AddInstruction(new ProjectileHitBoxInstruction(
 				"Amaterasu_projectile", 		// projectile name
-				"spine1_jnt",				
+				"r_ball_jnt",				
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed
 				attackOwner, 					// A_fighter
@@ -33,7 +33,7 @@ namespace FightGame
 				1.0f, 							// damage
 				0.2f, 							// startTime
 				0.8f,							// endTime
-				new Vector3(-2.0f, -2.0f, 0.0f),// offset
+				new Vector3(0.0f, 0.0f, 0.0f),// offset
 				new Vector3(0.0f, 0.0f, 0.0f)	// movement
 				));		
 		}

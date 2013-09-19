@@ -30,6 +30,7 @@ namespace FightGame{
 				this.keys["UniqueJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button19");
 				this.keys["SpecialJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button17");
 				this.keys["BlockJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button16");
+				this.keys["StartJoystick"] = (KeyCode) Enum.Parse(typeof(KeyCode), "Joystick" + playerNumber + "Button9");
 			}
 			
 			this.moveCommands = new int[] { MoveCommand.FORWARD, MoveCommand.FORWARD_DOWN, MoveCommand.FORWARD_UP, MoveCommand.BACK, MoveCommand.BACK_DOWN, MoveCommand.BACK_UP, MoveCommand.UP, MoveCommand.DOWN, MoveCommand.NONE };
@@ -65,6 +66,16 @@ namespace FightGame{
 			return ActionCommand.NONE;
 		}
 		
+		public bool IsKeyPressed( InputButton button ){
+			return (Input.GetKey(this.keys[button.ToString() + "Key"]) ||
+				Input.GetKey(this.keys[button.ToString() + "Joystick"]));
+		}
+		/*
+		public bool IsDirectionPressed( InputButton button ){
+			return (Input.GetKey(this.keys[button.ToString() + "Key"]) ||
+				Input.GetKey(this.keys[button.ToString() + "Joystick"]));
+		}
+		*/
 		// Private Helper Functions
 		private void AssignKeysByPlayerNumber(int number){
 			PlayerControls controls 		= GameObject.Find("GlobalInputListener").GetComponent<GlobalInputListener>().GetControls(number);
@@ -76,10 +87,12 @@ namespace FightGame{
 			this.keys["UniqueKey"] 			= controls.Unique;
 			this.keys["SpecialKey"]			= controls.Special;
 			this.keys["BlockKey"]	  		= controls.Block;
+			this.keys["StartKey"]			= controls.Start;
 			this.keys["RegularJoystick"] 	= controls.RegularJoystick;
 			this.keys["UniqueJoystick"] 	= controls.UniqueJoystick;
 			this.keys["SpecialJoystick"]	= controls.SpecialJoystick;
 			this.keys["BlockJoystick"]	  	= controls.BlockJoystick;
+			this.keys["StartJoystick"]	  	= controls.StartJoystick;
 		}
 		
 		

@@ -4,7 +4,7 @@ using FightGame;
 
 public class UI_Script : MonoBehaviour
 {	
-
+	public int ROUNDTIME = 60;
 	private bool created , p1Pick = false;
 	private bool p2Pick = false;
 	GameObject player;
@@ -37,7 +37,7 @@ public class UI_Script : MonoBehaviour
 	public bool	hitboxOn, hurtboxOn, controlsOn = false;
 	
 	//tom for gui
-	
+	public int maxRounds = 5;
 	float aspectW = Screen.width/1024.0f;
 	float aspectH = Screen.height/768.0f;
 	
@@ -46,11 +46,19 @@ public class UI_Script : MonoBehaviour
 	public Texture2D UI_healthGreenp2;
 	public Texture2D UI_healthRed;
 	public Texture2D UI_staminaBlue;
-	public Texture2D P1_portrait, P2_portrait;
+	public Texture2D UI_roundsMax;
+	public Texture2D UI_roundsWon;
+	public int x,y=20;
+	Texture2D P1_portrait, P2_portrait;
 	
-	public float dmgRedBarSpeed = 0.005f;
+	public float dmgRedBarSpeed = 0.002f;
 	float dmgBarHealth_P1,dmgBarHealth_P2;
-	
+	public GUIStyle playerName_GuiStyle_p1;
+	public GUIStyle timerGS;
+	GUIStyle p2GS;
+	int initFontSize,timerInitFontSize;
+	float roundTimer;
+	PlayerSelectOptions playerOptionsGob;
 	// end tom
 	
 	void Start()
@@ -61,7 +69,14 @@ public class UI_Script : MonoBehaviour
 		//GameManager.CreateFighter("Fighter_Amaterasu",2);
 		//p1_GUIstartX = 25f;
 		//p1_GUIstartY = 25f;
-		
+		GameManager.CreateFightCamera();
+		GameManager.CreateFightUI();
+		// chracternames
+		p2GS = new GUIStyle(playerName_GuiStyle_p1);
+		p2GS.alignment = TextAnchor.UpperRight;
+		initFontSize = playerName_GuiStyle_p1.fontSize;
+		timerInitFontSize = timerGS.fontSize;
+		// end chracterNames
 		
 		aspectW = Screen.width/1024.0f;
 		aspectH = Screen.height/768.0f;
@@ -84,11 +99,25 @@ public class UI_Script : MonoBehaviour
 		//tom
 		
 		//end tom
+		
+		playerOptionsGob = GameObject.Find("PlayerSelection").GetComponent<PlayerSelectOptions>();
+		if(playerOptionsGob!=null)
+		{
+			GameManager.CreateFighter("Fighter_"+playerOptionsGob.p1Name,1);
+			GameManager.CreateFighter("Fighter_"+playerOptionsGob.p2Name,2);
+			created = p1Pick =p2Pick = true;
+			roundTimer = ROUNDTIME;
+		}
 	}
 
 	void Update ()
 	{
-
+		if(created)
+		{
+			roundTimer-= Time.deltaTime;
+			if(roundTimer<0)
+				roundTimer=0;
+		}
 		
 		length_default = Screen.width/4;
 		//p2_GUIstartX = Screen.width - (length_default + p1_GUIstartX);
@@ -152,6 +181,20 @@ public class UI_Script : MonoBehaviour
 	
 	//****************************************
 	// TOM GUI FUNCTIONS BEGIN
+	
+	void drawTimer(float aspectW, float aspectH,GUIStyle GS,int initFontSize,int time)
+	{
+		const int OFFSET_X 	= 465;
+		const int OFFSET_Y 	= 35;
+		const float T_W 		= 90;
+		const float T_H 	= 90;
+		GS.fontSize = (int)(initFontSize * aspectH);
+		GUI.Label(new Rect( OFFSET_X*aspectW,
+							OFFSET_Y*aspectH,
+							T_W*aspectW,
+							T_H*aspectH),time.ToString(),GS);
+		
+	}
 	
 	void drawStaminaBar(int playerNum, float stam, float maxStam, float aspectW, float aspectH, Texture2D texture)
 	{
@@ -237,6 +280,59 @@ public class UI_Script : MonoBehaviour
 		GUI.DrawTexture(new Rect(0, 0, Screen.width , aspectH * texture.height),texture,ScaleMode.StretchToFill,true,0);
 	}
 	
+	void drawRoundsWon(int playerNum, int roundsWon,float aspectW, float aspectH, Texture2D texture,int maxRounds)
+	{
+		if(roundsWon > maxRounds) roundsWon = maxRounds;
+		drawMaxRounds(playerNum, roundsWon,aspectW,aspectH,texture);
+	}
+	
+	void drawMaxRounds(int playerNum, int maxRounds,float aspectW, float aspectH, Texture2D texture)
+	{
+		float round_padding = 10*aspectW;
+		if (playerNum==1)
+		{
+			const int P1_ROUND_OFFSET_X = 420;
+			const int P1_ROUND_OFFSET_Y = 120;
+			float roundWidth 			= (texture.width*aspectW);
+			float roundHeight 			= (texture.height*aspectH);
+			
+			for(int i = 0; i < maxRounds;i++)
+			{
+			
+			GUI.DrawTexture(
+				new Rect(
+					(P1_ROUND_OFFSET_X *aspectW)  + (i* -roundWidth)+ (i*-round_padding) ,
+					P1_ROUND_OFFSET_Y  *aspectH  ,
+					roundWidth,
+					roundHeight),
+				texture,ScaleMode.StretchToFill,true,0);
+			}
+			
+		}
+		
+		if (playerNum==2)
+		{
+			const int P1_ROUND_OFFSET_X = 582;
+			const int P1_ROUND_OFFSET_Y = 120;
+			float roundWidth 			= (texture.width*aspectW);
+			float roundHeight 			= (texture.height*aspectH);
+			
+			for(int i = 0; i < maxRounds;i++)
+			{
+			
+			GUI.DrawTexture(
+				new Rect(
+					(P1_ROUND_OFFSET_X *aspectW)  + (i* roundWidth)+ (i*round_padding) ,
+					P1_ROUND_OFFSET_Y  *aspectH  ,
+					roundWidth,
+					roundHeight),
+				texture,ScaleMode.StretchToFill,true,0);
+			}
+			
+		}
+		
+	}
+	
 	void drawPortrait(int playerNum, float aspectH, float aspectW, Texture2D texture)
 	{
 		if (playerNum==1)
@@ -275,6 +371,38 @@ public class UI_Script : MonoBehaviour
 		
 	}
 	
+	
+	void drawPlayerName(string name, int playerNum, float aspectW, float aspectH,GUIStyle GS,int initFontSize)
+	{
+		const int NAME_WDTH = 224;
+		const int NAME_HGHT = 27;
+		if (playerNum==1)
+		{
+			const int P1_NAME_OFFSET_X = 48;
+			const int P1_NAME_OFFSET_Y = 133;
+			GS.fontSize = (int)(initFontSize * aspectH);
+			GUI.Label(new Rect( P1_NAME_OFFSET_X*aspectW,
+								P1_NAME_OFFSET_Y*aspectH,
+								NAME_WDTH*aspectW,
+								NAME_HGHT*aspectH)
+					  ,name,GS);
+		}
+		
+		if (playerNum==2)
+		{
+			const int P2_NAME_OFFSET_X = 977;
+			const int P2_NAME_OFFSET_Y = 133;
+			GS.fontSize = (int)(initFontSize * aspectH);
+			GUI.Label(new Rect( (P2_NAME_OFFSET_X - NAME_WDTH)*aspectW ,
+								P2_NAME_OFFSET_Y*aspectH,
+								NAME_WDTH*aspectW,
+								NAME_HGHT*aspectH)
+					  ,name,GS);
+		}
+		
+	}
+	
+	
 	//****************************************	
 	// TOM GUI FUNCTIONS END
 	
@@ -285,6 +413,7 @@ public class UI_Script : MonoBehaviour
 
 		
 		//Hieu add
+		
 		PickFighter();
 		
 		if(GameManager.P1.Fighter != null && GameManager.P2.Fighter != null)
@@ -305,8 +434,19 @@ public class UI_Script : MonoBehaviour
 			drawPortrait(1,aspectH,aspectW,P1_portrait);
 			drawPortrait(2,aspectH,aspectW,P2_portrait);
 			
+			drawMaxRounds(1,maxRounds,aspectW,aspectH,UI_roundsMax);
+			drawMaxRounds(2,maxRounds,aspectW,aspectH,UI_roundsMax);
+			
+			drawRoundsWon(1,GameManager.P1.roundsWon,aspectW,aspectH,UI_roundsWon,maxRounds);
+			drawRoundsWon(2,GameManager.P2.roundsWon,aspectW,aspectH,UI_roundsWon,maxRounds);
+			
 			drawUIOverlay(aspectH,UI_base);
-		
+			
+			drawPlayerName(GameManager.P1.Fighter.name,1,aspectW,aspectH,playerName_GuiStyle_p1,initFontSize);
+			drawPlayerName(GameManager.P2.Fighter.name,2,aspectW,aspectH,p2GS,initFontSize);
+			
+			drawTimer(aspectW, aspectH,timerGS,timerInitFontSize,(int)roundTimer);
+			
 			//end THOMAS NEW GUI
 			
 			
@@ -317,6 +457,8 @@ public class UI_Script : MonoBehaviour
 					created = false;
 					p1Pick = false;
 					p2Pick = false;
+					//GameObject.Destroy(GameObject.Find("PlayerSelection"));
+					//Application.LoadLevel("TitleScreen");
 				}
 			}
 			
@@ -393,6 +535,7 @@ public class UI_Script : MonoBehaviour
 			GameManager.CreateFighter("Fighter_"+fighterName,2);
 			p2Pick = true;
 			created = true;
+			roundTimer = ROUNDTIME;
 		}
 	}
 }
