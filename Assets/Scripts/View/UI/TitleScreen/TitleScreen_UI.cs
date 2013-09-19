@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using FightGame;
 
 public class TitleScreen_UI : MonoBehaviour {
 	
@@ -12,7 +13,7 @@ public class TitleScreen_UI : MonoBehaviour {
 	public float blackfadeTime = 0.5f;
 	enum titleState {START,MENU};
 	titleState state;
-
+	
 	// Use this for initialization
 	void Start ()
 	{
@@ -22,7 +23,19 @@ public class TitleScreen_UI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		float aspectW = Screen.width/1024.0f;
+		float aspectH = Screen.height/768.0f;
+		if (GameManager.IsPlayerKeyPressed(1, InputButton.Start) || GameManager.IsPlayerKeyPressed(2, InputButton.Start )){
+			switch (state)
+			{
+				case titleState.START:
+					LoadMenu();
+					//DrawBlackOverlay( aspectH, aspectW, Black_Texture,blackfadeTime);
+					break;
+				default:
+				break;
+			}
+		}
 	}
 	
 	void OnGUI() 
@@ -52,11 +65,6 @@ public class TitleScreen_UI : MonoBehaviour {
 			default:
 			break;
 		}
-		
-		
-		
-
-		
 	}
 	
 	void LoadGame(int selection)

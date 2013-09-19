@@ -22,3 +22,4 @@ public enum MovementProperties { RAPID_FIRE, AIR_OK, AIR_ONLY, JUMP_CANCEL, D_JU
 
 public enum HitProperties { LOW, HIGH, UNBLOCKABLE, DMG_ON_BLOCK, THROW, AIR_THROW };
 
+public enum InputButton { Regular, Unique, Special, Block, Start };

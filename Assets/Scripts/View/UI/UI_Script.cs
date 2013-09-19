@@ -69,7 +69,8 @@ public class UI_Script : MonoBehaviour
 		//GameManager.CreateFighter("Fighter_Amaterasu",2);
 		//p1_GUIstartX = 25f;
 		//p1_GUIstartY = 25f;
-		
+		GameManager.CreateFightCamera();
+		GameManager.CreateFightUI();
 		// chracternames
 		p2GS = new GUIStyle(playerName_GuiStyle_p1);
 		p2GS.alignment = TextAnchor.UpperRight;

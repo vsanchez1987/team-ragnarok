@@ -59,6 +59,12 @@ namespace FightGame{
 			}
 		}
 		
+		public static bool IsPlayerKeyPressed( int playerNumber, InputButton button ){
+			return playerNumber == 1 ? 
+				instance.gModel.p1.controls.IsKeyPressed( button ) 
+					: instance.gModel.p2.controls.IsKeyPressed( button );
+		}
+		
 		public static void Update(){
 			if (instance.gModel.p1 != null){
 				instance.gModel.p1.Update();
@@ -70,19 +76,21 @@ namespace FightGame{
 				instance.gModel.camera.Update();
 			}
 			
-			if (instance.gModel.ui.hurtboxOn){
-				GameObject[] hurtboxes = GameObject.FindGameObjectsWithTag("HurtBox");
-				foreach (GameObject hurtbox in hurtboxes){
-					if (!hurtbox.renderer.enabled){
-						hurtbox.renderer.enabled = true;
+			if (instance.gModel.ui != null){
+				if (instance.gModel.ui.hurtboxOn){
+					GameObject[] hurtboxes = GameObject.FindGameObjectsWithTag("HurtBox");
+					foreach (GameObject hurtbox in hurtboxes){
+						if (!hurtbox.renderer.enabled){
+							hurtbox.renderer.enabled = true;
+						}
 					}
 				}
-			}
-			else{
-				GameObject[] hurtboxes = GameObject.FindGameObjectsWithTag("HurtBox");
-				foreach (GameObject hurtbox in hurtboxes){
-					if (hurtbox.renderer.enabled){
-						hurtbox.renderer.enabled = false;
+				else{
+					GameObject[] hurtboxes = GameObject.FindGameObjectsWithTag("HurtBox");
+					foreach (GameObject hurtbox in hurtboxes){
+						if (hurtbox.renderer.enabled){
+							hurtbox.renderer.enabled = false;
+						}
 					}
 				}
 			}
@@ -157,6 +165,14 @@ namespace FightGame{
 			return fighter.gobj.transform.position.x < GameManager.RightBoundary;
 		}
 		
+		public static void CreateFightCamera(){
+			instance.gModel.camera = new FightCamera( instance.gModel.p1, instance.gModel.p2 );
+			instance.gModel.leftBoundary = instance.gModel.camera.leftBoundary;
+			instance.gModel.rightBoundary = instance.gModel.camera.rightBoundary;
+		}
 		
+		public static void CreateFightUI(){
+			instance.gModel.ui = GameObject.Find("UI").GetComponent<UI_Script>();
+		}
 	}
 }
