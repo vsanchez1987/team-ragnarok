@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using FightGame;
 public class CharacterSelect_UI : MonoBehaviour {
 	
-
+	public AudioSource selectSound,moveCursor;
 	public int portrait_offX = 337 , portrait_offY =353;
 	public int name_offX = 337 , name_offY =353;
 	public int selection_offX = 337 , selection_offY =353;
@@ -88,13 +88,19 @@ public class CharacterSelect_UI : MonoBehaviour {
 				{
 					Debug.Log("pushing right");
 					if(p1SelectLocation.x < 2)
+					{
 						p1SelectLocation+=Vector2.right;
+						moveCursor.Play();
+					}
 				}
 				if(Input.GetAxis("HorizontalP1") < -0.2f || Input.GetKeyDown(KeyCode.A))
 				{
 					Debug.Log("pushing  left");
 					if(p1SelectLocation.x > 0)
+					{
 						p1SelectLocation-=Vector2.right;
+						moveCursor.Play();
+					}
 				}
 			}
 			
@@ -105,14 +111,20 @@ public class CharacterSelect_UI : MonoBehaviour {
 				{
 					Debug.Log("pushing down");
 					if(p1SelectLocation.y < 2)
+					{
 						p1SelectLocation+=Vector2.up;
+						moveCursor.Play();
+					}
 				}
 				if(Input.GetAxis("VerticalP1") < -0.2f || Input.GetKeyDown(KeyCode.W))
 				{
 					
 					Debug.Log("pushing  up");
 					if(p1SelectLocation.y > 0)
+					{
 						p1SelectLocation-=Vector2.up;
+						moveCursor.Play();
+					}
 				}
 			}
 			
@@ -138,6 +150,7 @@ public class CharacterSelect_UI : MonoBehaviour {
 			/// P1 SELECT PLAYER
 			if(Input.GetKeyDown(KeyCode.Joystick1Button0) ||  Input.GetKeyDown(KeyCode.C))
 			{
+				selectSound.Play();
 				p1SelectedChar = 	characters[(int)p1SelectLocation.y,(int)p1SelectLocation.x];
 				if(p1Gob==null)
 				{
@@ -158,13 +171,19 @@ public class CharacterSelect_UI : MonoBehaviour {
 				{
 					Debug.Log("pushing right");
 					if(p2SelectLocation.x < 2)
+					{
 						p2SelectLocation+=Vector2.right;
+						moveCursor.Play();
+					}
 				}
 				if(Input.GetAxis("HorizontalP2") < -0.2f || Input.GetKeyDown(KeyCode.LeftArrow))
 				{
 					Debug.Log("pushing  left");
 					if(p2SelectLocation.x > 0)
+					{
 						p2SelectLocation-=Vector2.right;
+						moveCursor.Play();
+					}
 				}
 			}
 			
@@ -175,14 +194,20 @@ public class CharacterSelect_UI : MonoBehaviour {
 				{
 					Debug.Log("pushing down");
 					if(p2SelectLocation.y < 2)
+					{
 						p2SelectLocation+=Vector2.up;
+						moveCursor.Play();
+					}
 				}
 				if(Input.GetAxis("VerticalP2") < -0.2f || Input.GetKeyDown(KeyCode.UpArrow))
 				{
 					
 					Debug.Log("pushing  up");
 					if(p2SelectLocation.y > 0)
+					{
 						p2SelectLocation-=Vector2.up;
+						moveCursor.Play();
+					}
 				}
 			}
 			
@@ -208,6 +233,7 @@ public class CharacterSelect_UI : MonoBehaviour {
 			/// P2 SELECT PLAYER
 			if(Input.GetKeyDown(KeyCode.Joystick2Button0) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.Return))
 			{
+				selectSound.Play();
 				p2SelectedChar = 	characters[(int)p2SelectLocation.y,(int)p2SelectLocation.x];
 				Debug.Log("pressing button at " + p2SelectedChar);
 				
