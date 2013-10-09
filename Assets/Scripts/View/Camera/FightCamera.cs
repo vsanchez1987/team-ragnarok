@@ -50,6 +50,10 @@ namespace FightGame
 			this.centerPosition = Vector3.Lerp(this.centerPosition, p1Position + ((p2Position - p1Position) * 0.5f), Time.deltaTime * 5.0f);
 			float yOffset = (Mathf.Abs(Mathf.Clamp(this.cameraZ, maxZDistance, minZDistance) - minZDistance)) * 0.5f + this.yPositionOffset;
 			
+			if(GameManager.P1.Fighter.PlayingSpecialAttack() || GameManager.P2.Fighter.PlayingSpecialAttack()){
+				//adjust camera here for dramatic effect....
+			}
+			
 			this.cameraX = Mathf.Clamp(this.centerPosition.x, this.leftBoundary + 5.0f, this.rightBoundary - 5.0f);
 			this.cameraY = (p1Position.y - p2Position.y)/2.0f + yOffset;
 			this.cameraZ = Mathf.Clamp(-(p1Position - p2Position).magnitude - 5.0f, maxZDistance, minZDistance);

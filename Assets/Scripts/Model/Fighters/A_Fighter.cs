@@ -33,6 +33,7 @@ namespace FightGame
 		private	int								onHitTimer;
 		private bool 							onHitStarted;
 		
+		
 		public int			 					currentAction;
 		public int								currentMovement;
 		public A_Attack							currentAttack;
@@ -341,61 +342,62 @@ namespace FightGame
 		}
 		
 		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction, bool knockdown){
-			if (this.moveGraph.CurrentState.Name != "block"){
-				this.cur_hp -= damage;
-				if (this.cur_hp <= 0){
-					this.cur_hp = 0.0f;
-					this.moveGraph.dispatch("death", this);
-					
+			if(!this.PlayingSpecialAttack()){ //if not playing special attack, it can be hit
+				if (this.moveGraph.CurrentState.Name != "block"){
+					this.cur_hp -= damage;
+					if (this.cur_hp <= 0){
+						this.cur_hp = 0.0f;
+						this.moveGraph.dispatch("death", this);
+						
+					}
+					else{
+						GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Explosion", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
+						GameObject.Destroy(explosion, 2.0f);
+						
+						this.onHitTimer = 0;
+						this.onHitStarted = true;
+						this.movement = direction * 0.05f;
+						this.hurtLocation = hurtbox.location;
+						
+						if(knockdown)
+							this.moveGraph.dispatch( "knockDown", this );
+						else
+							this.moveGraph.dispatch( "takeDamage", this );
+					}
 				}
 				else{
-					GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Explosion", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
+					GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Block", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
 					GameObject.Destroy(explosion, 2.0f);
 					
-					this.onHitTimer = 0;
-					this.onHitStarted = true;
-					this.movement = direction * 0.05f;
-					this.hurtLocation = hurtbox.location;
+					this.cur_hp -= damage * 0.25f;
+					//The meter will increase when player's attack is block;
+					if (this.cur_meter < 100)
+						this.cur_meter = Mathf.Clamp( this.cur_meter + 5, 0, 100 );
 					
-					if(knockdown)
-						this.moveGraph.dispatch( "knockDown", this );
-					else
-						this.moveGraph.dispatch( "takeDamage", this );
+					this.movement = direction * 0.025f;
+					if (this.cur_hp <= 0){
+						this.cur_hp = 0.0f;
+						this.moveGraph.dispatch("death", this);
+					}
+					/*
+					else{
+						this.cur_meter += 5.0f;
+						Debug.Log("Player "+this.playerNumber+"current meter "+this.cur_meter);
+						this.movement = direction * 0.05f;
+					}
+					*/
 				}
-			}
-			else{
-				GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Block", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
-				GameObject.Destroy(explosion, 2.0f);
 				
-				this.cur_hp -= damage * 0.25f;
-				//The meter will increase when player's attack is block;
-				if (this.cur_meter < 100)
-					this.cur_meter = Mathf.Clamp( this.cur_meter + 5, 0, 100 );
-				
-				this.movement = direction * 0.025f;
-				if (this.cur_hp <= 0){
-					this.cur_hp = 0.0f;
-					this.moveGraph.dispatch("death", this);
+				if (!GameManager.CheckCanMoveBackward( this ) && 
+					(GameManager.GetPlayersDistance() < (GameManager.P1.Fighter.radius + GameManager.P2.Fighter.radius) * 1.2f)){
+					
+					GameManager.GetOpponentPlayer(this.playerNumber).Fighter.AddMovement( new Vector3(-0.02f, 0.0f, 0.0f) );
+					
 				}
-				/*
-				else{
-					this.cur_meter += 5.0f;
-					Debug.Log("Player "+this.playerNumber+"current meter "+this.cur_meter);
-					this.movement = direction * 0.05f;
-				}
-				*/
-			}
-			
-			if (!GameManager.CheckCanMoveBackward( this ) && 
-				(GameManager.GetPlayersDistance() < (GameManager.P1.Fighter.radius + GameManager.P2.Fighter.radius) * 1.2f)){
 				
-				GameManager.GetOpponentPlayer(this.playerNumber).Fighter.AddMovement( new Vector3(-0.02f, 0.0f, 0.0f) );
-				
+				A_Fighter enemy = GameManager.GetOpponentPlayer(this.playerNumber).Fighter;
+				enemy.cur_meter = Mathf.Clamp(enemy.cur_meter + 10.0f, 0, 100);
 			}
-			
-			A_Fighter enemy = GameManager.GetOpponentPlayer(this.playerNumber).Fighter;
-			enemy.cur_meter = Mathf.Clamp(enemy.cur_meter + 10.0f, 0, 100);
-			
 			//Debug.Log(this.name + "\n" + "Damage Taken: " + damage + " Current HP: " + this.cur_hp);
 		}
 		
@@ -408,6 +410,8 @@ namespace FightGame
 			State S_block		= new State("block",new Action_BlockEnter(), new Action_BlockUpdate(),new Action_BlockExit());
 			State S_death		= new State("death" , new Action_DeathEnter(), new Action_DeathUpdate(),new Action_DeathExit());
 			State S_knockDown	= new State("knockDown", new Action_KnockDownEnter(),new Action_KnockDownUpdate(), new Action_KnockDownExit());
+			//State S_invincible	= new State("invincible",new Action_None(),
+			
 			
 			Transition T_idle 		= new Transition(S_idle, new Action_None());
 			Transition T_walk 		= new Transition(S_walk, new Action_None());
@@ -461,5 +465,15 @@ namespace FightGame
 			particleHolder.transform.parent = this.gobj.transform;
 		}
 		*/
+		public bool PlayingSpecialAttack(){
+			//the function return true if the special attack animation is play
+			//teh function is called in TakeDamage() above.
+			return( this.gobj.animation.IsPlaying(this.animationNameMap[FighterAnimation.SPECIAL_ATTACK]) ||
+				this.gobj.animation.IsPlaying(this.animationNameMap[FighterAnimation.SPECIAL_BACK_ATTACK]) ||
+				this.gobj.animation.IsPlaying(this.animationNameMap[FighterAnimation.SPECIAL_DOWN_ATTACK]) ||
+				this.gobj.animation.IsPlaying(this.animationNameMap[FighterAnimation.SPECIAL_FORWARD_ATTACK]) ||
+				this.gobj.animation.IsPlaying(this.animationNameMap[FighterAnimation.SPECIAL_UP_ATTACK]) );
+		}
 	}
+	
 }

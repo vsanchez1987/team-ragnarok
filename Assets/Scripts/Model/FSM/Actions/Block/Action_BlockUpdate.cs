@@ -12,10 +12,10 @@ namespace FSM
 		public override void execute(FSMContext c, object o){
 			A_Fighter fighter;
 			fighter = (A_Fighter)o;
-			
 			fighter.gobj.animation[ fighter.animationNameMap[FighterAnimation.BLOCK] ].wrapMode = UnityEngine.WrapMode.ClampForever;
-			fighter.gobj.animation.CrossFade(fighter.animationNameMap[FighterAnimation.BLOCK], 0.03f);
-			
+			fighter.gobj.animation[ fighter.animationNameMap[FighterAnimation.BLOCK]].speed = 2f;
+			fighter.gobj.animation.CrossFade(fighter.animationNameMap[FighterAnimation.BLOCK],0);
+		
 			
 			// Get knocked back when you are hit
 			/*

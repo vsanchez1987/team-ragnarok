@@ -11,7 +11,7 @@ namespace FSM
 		public override void execute(FSMContext c, object o)
 		{
 			A_Fighter fighter = (A_Fighter)o;			
-
+			
 			if (fighter.currentAction != ActionCommand.NONE){
 				fighter.currentAttack = fighter.actionsCommandMap[fighter.currentAction];
 			}
