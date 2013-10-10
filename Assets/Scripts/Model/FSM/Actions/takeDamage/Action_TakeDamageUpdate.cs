@@ -17,9 +17,11 @@ namespace FSM
 			FighterAnimation animation = FighterAnimation.FLINCH_UP;
 			
 			if (fighter.hurtLocation == Location.HIGH){
+				fighter.gobj.animation[ fighter.animationNameMap[FighterAnimation.FLINCH_UP]].speed = 2.5F;
 				animation = FighterAnimation.FLINCH_UP;
 			}
 			else if (fighter.hurtLocation == Location.LOW){
+				fighter.gobj.animation[ fighter.animationNameMap[FighterAnimation.FLINCH_DOWN]].speed = 2.5F;
 				animation = FighterAnimation.FLINCH_DOWN;
 			}
 
@@ -30,9 +32,7 @@ namespace FSM
 			}
 			
 			fighter.globalActionTimer += UnityEngine.Time.deltaTime;
-			
 			gobj.animation.Play(fighter.animationNameMap[animation]);
-				
 		}
 	}
 }
