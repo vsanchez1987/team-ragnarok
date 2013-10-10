@@ -16,7 +16,7 @@ namespace FightGame{
 		protected Vector3	knockback;
 		protected bool		canKnockDown;
 		
-		protected A_HitBoxInstruction(A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 movement, bool canKnockDown = false){
+		protected A_HitBoxInstruction(A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 knockback, Vector3 movement, bool canKnockDown = false){
 			this.fighter		= fighter;
 			this.startTime 		= startTime;
 			this.endTime 		= endTime;
@@ -25,6 +25,12 @@ namespace FightGame{
 			this.started		= false;
 			this.movement		= movement;
 			this.canKnockDown	= canKnockDown;
+			
+			if (knockback == Vector3.zero){
+				this.knockback = Vector3.left;
+			}else{
+				this.knockback = knockback;
+			}
 		}
 		
 		public abstract void Init();
