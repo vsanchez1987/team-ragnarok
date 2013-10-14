@@ -82,7 +82,7 @@ namespace FightGame
 			this.fighter = null;
 			
 			//Hieu commented out, so when players hit restart, they can reselect fighter
-			//GameManager.CreateFighter( fighterName, this.playerNumber );
+			GameManager.CreateFighter( fighterName, this.playerNumber );
 		}
 	}
 }
