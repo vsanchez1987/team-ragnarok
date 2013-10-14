@@ -115,7 +115,7 @@ public class UI_Script : MonoBehaviour
 				playState = playStates.BOTHLOSE;
 
 			}
-			else if (GameManager.P1.roundsWon >= maxRounds || GameManager.P2.roundsWon >= maxRounds)
+			else if ((GameManager.P1.roundsWon >= maxRounds || GameManager.P2.roundsWon >= maxRounds) && koTimer > KOTIMER)
 			{
 					playState = playStates.CHOOSE;
 			}
@@ -154,7 +154,10 @@ public class UI_Script : MonoBehaviour
 		// ROUND TIMER
 		if(created)
 		{
-			roundTimer-= Time.deltaTime;
+			if(playState == playStates.GAME)
+			{
+				roundTimer-= Time.deltaTime;
+			}
 			if(roundTimer<0)
 			{
 				//death if timer is zero
