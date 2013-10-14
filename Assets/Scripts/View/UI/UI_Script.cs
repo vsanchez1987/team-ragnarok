@@ -98,7 +98,7 @@ public class UI_Script : MonoBehaviour
 	
 	void Update ()
 	{
-		Debug.Log(koTimer);
+		
 		//inGame State Machine
 		if(created)
 		{
