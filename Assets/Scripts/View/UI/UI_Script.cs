@@ -67,6 +67,7 @@ public class UI_Script : MonoBehaviour
 	
 	void Start()
 	{
+		GameManager.Instance.RequestNewGameModel();
 		// chracternames
 		p2GS = new GUIStyle(playerName_GuiStyle_p1);
 		p2GS.alignment = TextAnchor.UpperRight;
@@ -97,7 +98,7 @@ public class UI_Script : MonoBehaviour
 	
 	void Update ()
 	{
-		
+		Debug.Log(koTimer);
 		//inGame State Machine
 		if(created)
 		{
@@ -135,6 +136,7 @@ public class UI_Script : MonoBehaviour
 			else 
 			{
 					playState = playStates.GAME;
+					koTimer=0;
 			}
 		}
 		//end state machine
@@ -503,7 +505,18 @@ public class UI_Script : MonoBehaviour
 			// PLAYER CHOOSE SCREEN
 			if (playState == playStates.CHOOSE)
 			{
-				if (GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2 - 50, 200, 100), "Restart"))
+				if (GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2 - 60, 200, 100), "Char Select"))
+				{
+					//InitPlayers();
+					
+					
+					//GameManager.P1.roundsWon = 0;
+					//GameManager.P2.roundsWon = 0;
+					Application.LoadLevel("2P_CharSelect");
+					
+				}
+				
+				if (GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2 + 60, 200, 100), "Restart"))
 				{
 					
 					InitPlayers();
