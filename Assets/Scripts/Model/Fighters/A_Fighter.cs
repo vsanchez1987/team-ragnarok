@@ -41,8 +41,11 @@ namespace FightGame
 		public List<A_Buff>						buffs;
 		public Dictionary<int, A_Attack> 		actionsCommandMap;
 		public Dictionary<FighterAnimation, string> animationNameMap;
-
-		
+		//Hieu add for camera movement when fighter playing special
+		public GameObject						cameraTarget;
+		public Vector3							disTargettoCamera;
+		public float							zoomTime;
+		//
 		public A_Fighter(GameObject gobj, int playerNumber)
 		{
 			FighterInput input		= gobj.GetComponent<FighterInput>();
@@ -50,7 +53,11 @@ namespace FightGame
 			this.radius				= input.radius;
 			this.moveSpeed			= input.moveSpeed;
 			this.name				= input.name;
-			
+			//Hieu add for camera special movement
+			this.cameraTarget		= input.cameraTarget;
+			this.disTargettoCamera	= input.disTargettoCamera;
+			this.zoomTime			= input.zoomTime;
+			//
 			this.gobj 				= gobj;
 			this.playerNumber		= playerNumber;
 			this.currentAction 		= ActionCommand.NONE;
@@ -343,7 +350,16 @@ namespace FightGame
 		
 		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction, bool knockdown){
 			if(!this.PlayingSpecialAttack()){ //if not playing special attack, it can be hit
-				if (this.moveGraph.CurrentState.Name != "block"){
+				if (this.moveGraph.CurrentState.Name != "block" ||
+					GameManager.GetOpponentPlayer(this.playerNumber).Fighter.PlayingSpecialAttack()){
+					//these below codes  will execute when current fighter is not in a block state
+					// OR the opponent is playing special attack
+					//Meaning: if "current fighter  not block" then deal damage 
+					//OR "opponent using special" deal damage as well. 
+					//There're some side effect. When both fighters use special, no one take damage.
+					//and in the future may cause some bugs since the second condition depends on
+					//when the special animation ends. I think it's better to encode it in HitBoxInput script
+					// OnTriggerEnter(), we already have superhitbox tag, so maybe we can play around with that
 					this.cur_hp -= damage;
 					if (this.cur_hp <= 0){
 						this.cur_hp = 0.0f;
@@ -366,6 +382,7 @@ namespace FightGame
 					}
 				}
 				else{
+				//execute when this fighter not block, and opponent not use special
 					GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Block", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
 					GameObject.Destroy(explosion, 2.0f);
 					
