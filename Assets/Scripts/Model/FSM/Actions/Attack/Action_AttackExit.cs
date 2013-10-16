@@ -12,20 +12,19 @@ namespace FSM
 			A_Fighter fighter = (A_Fighter)o;
 			GameObject gobj = fighter.gobj;
 			
-			//gobj.animation.Stop();
 			fighter.movement = Vector3.zero;
-			/*
-			if (fighter.currentAttack.animationName != "char_amaterasu_Fury"){
-				if (fighter.extraDamage != 1){
-					fighter.extraDamage = 1.0f;
-					fighter.extraDamageTimer = 0.0f;
-					Debug.Log(fighter.extraDamage);
-				}
-			}
-			*/
-			
+			fighter.radius = fighter.gobj.GetComponent<FighterInput>().radius;
 			fighter.currentAttack.Reset();
 			fighter.currentAttack = null;
+			
+			if (fighter.gobj.transform.position.x > GameManager.GetOpponentPlayer(fighter.playerNumber).Fighter.gobj.transform.position.x){
+				fighter.GlobalForwardVector = new Vector3(-1,0,0);
+				fighter.gobj.transform.LookAt( fighter.gobj.transform.position + new Vector3(-1,0,0) );
+			}
+			else{
+				fighter.GlobalForwardVector = new Vector3(1,0,0);
+				fighter.gobj.transform.LookAt( fighter.gobj.transform.position + new Vector3(1,0,0) );
+			}
 		}
 	}
 }

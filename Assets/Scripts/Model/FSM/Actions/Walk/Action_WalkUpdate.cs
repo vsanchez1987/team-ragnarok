@@ -17,6 +17,13 @@ namespace FSM
 				if ( GameManager.CheckCanMoveForward(fighter) ){
 					gobj.transform.Translate(fighter.localForwardVector * moveSpeed * Time.deltaTime);
 				}
+				else{
+					A_Fighter opponent = GameManager.GetOpponentPlayer(fighter.playerNumber).Fighter;
+					if ( GameManager.CheckCanMoveBackward(opponent) ){
+						opponent.gobj.transform.Translate(fighter.localForwardVector * -1 * moveSpeed * Time.deltaTime);
+						//opponent.DoMoveCommand(MoveCommand.BACK);
+					}
+				}
 				gobj.animation.CrossFade(fighter.animationNameMap[FighterAnimation.WALK_FORWARD]);
 			}
 			else if(fighter.currentMovement == MoveCommand.BACK || fighter.currentMovement == MoveCommand.BACK_UP)

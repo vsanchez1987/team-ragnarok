@@ -209,7 +209,7 @@ namespace FightGame
 		
 		private void InitForwardVector(int player)
 		{
-			globalForwardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
+			this.globalForwardVector = (player==1 ? new Vector3(1,0,0) : new Vector3(-1,0,0));
 			this.localForwardVector = new Vector3 (0, 0, 1);
 		}
 		

@@ -33,6 +33,8 @@ namespace FightGame
 			GameObject.Destroy(this.fire1, (2.0f/this.speed));
 			GameObject.Destroy(this.fire2, (2.0f/this.speed));
 			
+			this.attackOwner.radius = -100;
+			
 			base.Init();
 		}
 		
