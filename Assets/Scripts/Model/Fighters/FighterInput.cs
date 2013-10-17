@@ -44,6 +44,10 @@ public class FighterInput : MonoBehaviour
 	public List<GameObject> hitboxObjects;
 	public List<Transform>	jointTransforms;
 	public Animations 		animations;
+	//Hieu add, drag the joint which you want the camera focus on to this placeholder
+	public GameObject		cameraTarget;
+	public Vector3			disTargettoCamera;
+	public float			zoomTime;
 	
 	[HideInInspector]
 	public Dictionary<FighterAnimation, string> animationNameMap;
