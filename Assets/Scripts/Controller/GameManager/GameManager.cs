@@ -4,15 +4,13 @@ using System;
 using FightGame;
 using FSM;
 
+public enum InputState { UI, FIGHTER };
+
 namespace FightGame{
 	public class GameManager {
 		private static GameManager instance = new GameManager();
 		private GameModel gModel;
-		
-		public void RequestNewGameModel()
-		{
-			this.gModel = new GameModel();
-		}
+		public static InputState inputState = InputState.FIGHTER;
 		
 	    private GameManager() {
 			this.gModel = new GameModel();
@@ -52,15 +50,20 @@ namespace FightGame{
 		}
 		
 		public static void ProcessInput(){
-			foreach (Player p in instance.gModel.players){
-				//Debug.Log("Player " + p.PlayerNumber);
-				if (p.Fighter != null){
-					int moveCommand = p.controls.GetMoveCommand();
-					int actionCommand = p.controls.GetActionCommand();
-					
-					p.DoMoveCommand(moveCommand);
-					p.DoActionCommand(actionCommand);
+			if (GameManager.inputState == InputState.FIGHTER){
+				foreach (Player p in instance.gModel.players){
+					//Debug.Log("Player " + p.PlayerNumber);
+					if (p.Fighter != null){
+						int moveCommand = p.controls.GetMoveCommand();
+						int actionCommand = p.controls.GetActionCommand();
+						
+						p.DoMoveCommand(moveCommand);
+						p.DoActionCommand(actionCommand);
+					}
 				}
+			}
+			else if (GameManager.inputState == InputState.UI){
+				// do UI stuff
 			}
 		}
 		

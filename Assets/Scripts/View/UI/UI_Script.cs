@@ -67,7 +67,7 @@ public class UI_Script : MonoBehaviour
 	
 	void Start()
 	{
-		GameManager.Instance.RequestNewGameModel();
+		//GameManager.Instance.RequestNewGameModel();
 		// chracternames
 		p2GS = new GUIStyle(playerName_GuiStyle_p1);
 		p2GS.alignment = TextAnchor.UpperRight;
