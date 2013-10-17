@@ -9,6 +9,11 @@ namespace FightGame{
 		private static GameManager instance = new GameManager();
 		private GameModel gModel;
 		
+		public void RequestNewGameModel()
+		{
+			this.gModel = new GameModel();
+		}
+		
 	    private GameManager() {
 			this.gModel = new GameModel();
 	    }

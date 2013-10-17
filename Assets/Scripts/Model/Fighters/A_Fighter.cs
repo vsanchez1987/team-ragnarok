@@ -340,6 +340,11 @@ namespace FightGame
 			globalForwardVector.x *= -1;
 		}
 		
+		public void ForceDeath()
+		{
+			this.moveGraph.dispatch("death", this);
+		}
+		
 		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction, bool knockdown){
 			if (this.moveGraph.CurrentState.Name != "block"){
 				this.cur_hp -= damage;

@@ -4,6 +4,8 @@ using FightGame;
 
 public class UI_Script : MonoBehaviour
 {	
+	enum playStates {GAME,WINP1,WINP2,CHOOSE,PAUSE,BOTHLOSE};
+	playStates playState = playStates.GAME;
 	public int ROUNDTIME = 60;
 	private bool created , p1Pick = false;
 	private bool p2Pick = false;
@@ -58,19 +60,14 @@ public class UI_Script : MonoBehaviour
 	GUIStyle p2GS;
 	int initFontSize,timerInitFontSize;
 	float roundTimer;
+	public const float KOTIMER = 5;
+	float koTimer;
 	PlayerSelectOptions playerOptionsGob;
 	// end tom
 	
 	void Start()
 	{
-		//GameManager.CreateFighter("Fighter_Heavy",1);
-		//GameManager.CreateFighter("Fighter_Heavy",2);
-		//GameManager.CreateFighter("Fighter_Amaterasu",1);
-		//GameManager.CreateFighter("Fighter_Amaterasu",2);
-		//p1_GUIstartX = 25f;
-		//p1_GUIstartY = 25f;
-		GameManager.CreateFightCamera();
-		GameManager.CreateFightUI();
+		GameManager.Instance.RequestNewGameModel();
 		// chracternames
 		p2GS = new GUIStyle(playerName_GuiStyle_p1);
 		p2GS.alignment = TextAnchor.UpperRight;
@@ -82,23 +79,6 @@ public class UI_Script : MonoBehaviour
 		aspectH = Screen.height/768.0f;
 		
 		dmgBarHealth_P1 = dmgBarHealth_P2 = 100.0f;
-	
-		//init both player hp
-		//max_p1hp = GameManager.P1.max_hp;
-		//max_p2hp = GameManager.P2.max_hp;
-		//since p1 and p2 are not instantiate at the beginning
-		//For testing purpose, we will hard code max hp here.
-		
-		//max_p1hp = GameManager.P1.Fighter.max_hp;
-		//max_p2hp = GameManager.P2.Fighter.max_hp;
-		//max_p1meter = GameManager.P1.Fighter.max_meter;
-		//max_p2meter = GameManager.P2.Fighter.max_meter;
-		
-		//cur_p1hp = GameManager.P1.cur_hp;
-		//cur_p2hp = GameManager.P2.cur_hp;
-		//tom
-		
-		//end tom
 		
 		playerOptionsGob = GameObject.Find("PlayerSelection").GetComponent<PlayerSelectOptions>();
 		if(playerOptionsGob!=null)
@@ -109,14 +89,86 @@ public class UI_Script : MonoBehaviour
 			roundTimer = ROUNDTIME;
 		}
 	}
-
+	
+	void InitPlayers()
+	{
+		roundTimer = ROUNDTIME;
+		GameManager.Restart();
+	}
+	
 	void Update ()
 	{
+		
+		//inGame State Machine
 		if(created)
 		{
-			roundTimer-= Time.deltaTime;
+			if ((GameManager.P2.Fighter.cur_hp ==GameManager.P1.Fighter.cur_hp) && roundTimer <=0)
+			{
+				if(playState==playStates.GAME)
+				{
+					//GameManager.P1.roundsWon+=1;
+					//GameManager.P2.roundsWon+=1;
+					GameManager.P2.Fighter.ForceDeath();
+					GameManager.P2.roundsWon-=1;
+					GameManager.P1.Fighter.ForceDeath();
+					GameManager.P1.roundsWon-=1;
+				}
+				playState = playStates.BOTHLOSE;
+
+			}
+			else if ((GameManager.P1.roundsWon >= maxRounds || GameManager.P2.roundsWon >= maxRounds) && koTimer > KOTIMER)
+			{
+					playState = playStates.CHOOSE;
+			}
+			else if (GameManager.P1.Fighter.cur_hp <= 0)
+			{
+				playState = playStates.WINP2;
+				GameManager.P1.Fighter.ForceDeath();
+				
+			}
+			else if (GameManager.P2.Fighter.cur_hp <= 0)
+			{
+				playState = playStates.WINP1;
+				GameManager.P2.Fighter.ForceDeath();
+				
+			}
+
+			else 
+			{
+					playState = playStates.GAME;
+					koTimer=0;
+			}
+		}
+		//end state machine
+		
+		//KO ANIMATION TIMER
+		if( (playState == playStates.WINP1 || playState == playStates.WINP2 || playState == playStates.BOTHLOSE) && koTimer > KOTIMER)
+		{
+			
+			koTimer = 0;
+			InitPlayers(); 
+		}
+		else if(playState == playStates.WINP2 ||playState == playStates.WINP1 || playState == playStates.BOTHLOSE )
+		{
+			koTimer+=Time.deltaTime; 
+		}
+		
+		// ROUND TIMER
+		if(created)
+		{
+			if(playState == playStates.GAME)
+			{
+				roundTimer-= Time.deltaTime;
+			}
 			if(roundTimer<0)
+			{
+				//death if timer is zero
 				roundTimer=0;
+				if(GameManager.P1.Fighter.cur_hp < GameManager.P2.Fighter.cur_hp)GameManager.P1.Fighter.cur_hp = 0;
+				else if(GameManager.P2.Fighter.cur_hp < GameManager.P1.Fighter.cur_hp)GameManager.P2.Fighter.cur_hp = 0;
+				else if(GameManager.P1.Fighter.cur_hp == GameManager.P2.Fighter.cur_hp)GameManager.P1.Fighter.cur_hp = GameManager.P2.Fighter.cur_hp = 0;
+				
+			}
 		}
 		
 		length_default = Screen.width/4;
@@ -450,13 +502,30 @@ public class UI_Script : MonoBehaviour
 			//end THOMAS NEW GUI
 			
 			
-			
-			if (GameManager.P1.Fighter.cur_hp <= 0 || GameManager.P2.Fighter.cur_hp <= 0){
-				if (GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2 - 50, 200, 100), "Restart")){
-					GameManager.Restart();
-					created = false;
-					p1Pick = false;
-					p2Pick = false;
+			// PLAYER CHOOSE SCREEN
+			if (playState == playStates.CHOOSE)
+			{
+				if (GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2 - 60, 200, 100), "Char Select"))
+				{
+					//InitPlayers();
+					
+					
+					//GameManager.P1.roundsWon = 0;
+					//GameManager.P2.roundsWon = 0;
+					Application.LoadLevel("2P_CharSelect");
+					
+				}
+				
+				if (GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2 + 60, 200, 100), "Restart"))
+				{
+					
+					InitPlayers();
+					GameManager.P1.roundsWon = 0;
+					GameManager.P2.roundsWon = 0;
+					//InitPlayers();
+					//created = false;
+					//p1Pick = false;
+					//p2Pick = false;
 					//GameObject.Destroy(GameObject.Find("PlayerSelection"));
 					//Application.LoadLevel("TitleScreen");
 				}
