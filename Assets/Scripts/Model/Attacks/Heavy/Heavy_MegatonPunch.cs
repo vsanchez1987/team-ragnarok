@@ -21,6 +21,7 @@ namespace FightGame
 				new Vector3(0.2f, 0.0f, 0.0f),	// extraMovement
 				true							// knockdown
 				));
+			this.recoilStrength = 6;
 		}
 		
 	}

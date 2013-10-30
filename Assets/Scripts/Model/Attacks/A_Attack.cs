@@ -8,6 +8,8 @@ namespace FightGame
 	public abstract class A_Attack
 	{
 		public		float		speed;
+		public 		string		attackType;
+		public 		float		recoilStrength;
 		protected 	A_Fighter	attackOwner;
 		protected	float		timer;
 		protected	float		length;
@@ -22,6 +24,7 @@ namespace FightGame
 			this.timer 			= 0.0f;
 			this.animationName 	= animationName;
 			this.instructions 	= new List<A_HitBoxInstruction>();
+			this.attackType 	= "";
 			
 			if (attackOwner.gobj.animation.GetClip(animationName) != null){
 				this.length = attackOwner.gobj.animation[animationName].clip.length;

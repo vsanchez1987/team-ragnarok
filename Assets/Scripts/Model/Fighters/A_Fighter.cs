@@ -353,7 +353,21 @@ namespace FightGame
 			this.moveGraph.dispatch("death", this);
 		}
 		
+		public void Recoil(float recoil){
+			this.movement.x = -recoil * Time.deltaTime;	
+		}
+		
 		public void TakeDamage(float damage, HurtBox hurtbox, Vector3 direction, bool knockdown){
+			A_Fighter otherFighter = GameManager.GetOpponentPlayer(this.playerNumber).Fighter;
+			
+			//recoil when target is blocking at wall
+			if (otherFighter.currentAttack != null){
+				Debug.Log(otherFighter.currentAttack.attackType);
+				if((otherFighter.currentAttack.attackType == "melee") && (GameManager.CheckCanMoveBackward(this) == false)){
+					otherFighter.Recoil(otherFighter.currentAttack.recoilStrength);
+				}
+			}
+
 			if(!this.PlayingSpecialAttack()){ //if not playing special attack, it can be hit
 				if (this.moveGraph.CurrentState.Name != "block" ||
 					GameManager.GetOpponentPlayer(this.playerNumber).Fighter.PlayingSpecialAttack()){
@@ -396,7 +410,10 @@ namespace FightGame
 					if (this.cur_meter < 100)
 						this.cur_meter = Mathf.Clamp( this.cur_meter + 5, 0, 100 );
 					
-					this.movement = direction * 0.025f;
+					else{				
+						this.movement = direction * 0.025f;
+					}
+
 					if (this.cur_hp <= 0){
 						this.cur_hp = 0.0f;
 						this.moveGraph.dispatch("death", this);

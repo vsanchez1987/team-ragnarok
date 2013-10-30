@@ -25,7 +25,7 @@ namespace FightGame
 				0.8f, 							// startTime
 				5.0f,							// endTime
 				new Vector3(2.0f, 0.0f, 0.0f),	// offset
-				new Vector3(-0.15f, 0.0f, 0.0f)	// movement
+				new Vector3(-0.05f, 0.0f, 0.0f)	// movement
 				));
 		}
 	}
