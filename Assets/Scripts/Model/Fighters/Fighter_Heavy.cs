@@ -19,7 +19,7 @@ namespace FightGame
 			
 			this.actionsCommandMap[ActionCommand.REGULAR] 			= new Heavy_FireCarpet(this.animationNameMap[FighterAnimation.REGULAR_ATTACK], this, 2.0f);
 			this.actionsCommandMap[ActionCommand.REGULAR_FORWARD] 	= new Heavy_ColdShoulder(this.animationNameMap[FighterAnimation.REGULAR_FORWARD_ATTACK], this, 1.3f);
-			this.actionsCommandMap[ActionCommand.REGULAR_BACK] 		= new Heavy_TriplePunch(this.animationNameMap[FighterAnimation.REGULAR_BACK_ATTACK], this, 2.0f);
+			this.actionsCommandMap[ActionCommand.REGULAR_BACK] 		= new Heavy_TriplePunch(this.animationNameMap[FighterAnimation.REGULAR_BACK_ATTACK], this, 1.0f);
 			this.actionsCommandMap[ActionCommand.REGULAR_UP] 		= new Heavy_MegatonPunch(this.animationNameMap[FighterAnimation.REGULAR_UP_ATTACK], this, 1.5f);
 			this.actionsCommandMap[ActionCommand.REGULAR_DOWN] 		= new Heavy_FireCarpet(this.animationNameMap[FighterAnimation.REGULAR_DOWN_ATTACK], this, 2.0f);
 			
