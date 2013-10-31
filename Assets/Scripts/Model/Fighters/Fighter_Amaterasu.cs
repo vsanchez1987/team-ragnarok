@@ -22,7 +22,7 @@ namespace FightGame
 			this.actionsCommandMap[ActionCommand.REGULAR_DOWN] 		= new Amaterasu_QuakeWithFear(this.animationNameMap[FighterAnimation.REGULAR_DOWN_ATTACK], this, 2.0f);
 			
 			this.actionsCommandMap[ActionCommand.UNIQUE] 			= new Amaterasu_LightFlash(this.animationNameMap[FighterAnimation.UNIQUE_ATTACK], this, 1.5f);
-			this.actionsCommandMap[ActionCommand.UNIQUE_FORWARD] 	= new Amaterasu_LightFlash(this.animationNameMap[FighterAnimation.UNIQUE_FORWARD_ATTACK], this, 1.5f);
+			this.actionsCommandMap[ActionCommand.UNIQUE_FORWARD] 	= new Amaterasu_AxeKick(this.animationNameMap[FighterAnimation.UNIQUE_FORWARD_ATTACK], this, 1.5f);
 			this.actionsCommandMap[ActionCommand.UNIQUE_BACK] 		= new Amaterasu_Backdraft(this.animationNameMap[FighterAnimation.UNIQUE_BACK_ATTACK], this, 2.0f);
 			this.actionsCommandMap[ActionCommand.UNIQUE_UP] 		= new Amaterasu_Fury(this.animationNameMap[FighterAnimation.UNIQUE_UP_ATTACK], this, 1.0f);
 			this.actionsCommandMap[ActionCommand.UNIQUE_DOWN] 		= new Amaterasu_LightFlash(this.animationNameMap[FighterAnimation.UNIQUE_DOWN_ATTACK], this, 1.5f);
