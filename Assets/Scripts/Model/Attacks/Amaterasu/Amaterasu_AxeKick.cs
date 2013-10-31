@@ -62,6 +62,8 @@ namespace FightGame
 				new Vector3(0.0f, 0.0f, 0.0f), 	// offset
 				new Vector3(0.0f, 0.0f, 0.0f)
 				));
+			recoilStrength = 1.0f;
+			knockbackStrength = 10.0f;
 		}
 		
 	}

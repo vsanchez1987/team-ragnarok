@@ -362,9 +362,14 @@ namespace FightGame
 			
 			//recoil when target is blocking at wall
 			if (otherFighter.currentAttack != null){
-				Debug.Log(otherFighter.currentAttack.attackType);
 				if((otherFighter.currentAttack.attackType == "melee") && (GameManager.CheckCanMoveBackward(this) == false)){
 					otherFighter.Recoil(otherFighter.currentAttack.recoilStrength);
+				}							
+			}
+			//knockback damaged enemy			
+			if(this.currentAttack != null){
+				if((this.currentAttack.attackType == "melee") && (GameManager.CheckCanMoveBackward(otherFighter) == true)){
+					otherFighter.Recoil(this.currentAttack.knockbackStrength);	
 				}
 			}
 
