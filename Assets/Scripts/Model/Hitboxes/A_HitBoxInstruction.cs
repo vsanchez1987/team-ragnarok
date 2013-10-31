@@ -16,6 +16,9 @@ namespace FightGame{
 		protected Vector3	knockback;
 		protected bool		canKnockDown;
 		
+		public AudioClip	onStartSound;
+		public AudioClip	onCollisionSound;
+		
 		protected A_HitBoxInstruction(A_Fighter fighter, float radius, float damage, float startTime, float endTime, Vector3 knockback, Vector3 movement, bool canKnockDown = false){
 			this.fighter		= fighter;
 			this.startTime 		= startTime;
@@ -37,6 +40,8 @@ namespace FightGame{
 		public abstract void Disable();
 		
 		public virtual void Start(){
+			if (this.onStartSound != null) 
+				GameManager.PlayAudio( this.onStartSound );
 			this.fighter.AddMovement( this.movement );
 			this.started = true;
 		}

@@ -44,6 +44,10 @@ namespace FightGame{
 			get { return instance.gModel.rightBoundary; }
 		}
 		
+		public static GameSounds Sounds{
+			get { return instance.gModel.sounds; }
+		}
+		
 		public static void Restart(){
 			instance.gModel.p1.RestartFighter();
 			instance.gModel.p2.RestartFighter();
@@ -181,6 +185,10 @@ namespace FightGame{
 		
 		public static void CreateFightUI(){
 			instance.gModel.ui = GameObject.Find("UI").GetComponent<UI_Script>();
+		}
+		
+		public static void PlayAudio (AudioClip sound){
+			AudioSource.PlayClipAtPoint( sound, Camera.camera.transform.position );
 		}
 	}
 }

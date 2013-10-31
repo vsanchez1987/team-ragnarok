@@ -14,10 +14,11 @@ namespace FightGame
 		public float		damage;
 		public Vector3		knockback;
 		public bool			canKnockDown;
+		public AudioClip	onCollisionSound;
 		
 		public HitBox(A_Fighter attackOwner, GameObject gobj, bool isProjectile)
 		{
-			this.attackOwner			= attackOwner;
+			this.attackOwner	= attackOwner;
 			this.gobj			= gobj;
 			this.isProjectile 	= isProjectile;
 			this.inUse			= false;

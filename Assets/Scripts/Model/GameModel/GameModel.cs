@@ -14,6 +14,7 @@ namespace FightGame{
 		public float leftBoundary;
 		public float rightBoundary;
 		public string chosenLevel;
+		public GameSounds sounds;
 
 	    // make sure the constructor is private, so it can only be instantiated here
 	    public GameModel() {
@@ -25,6 +26,7 @@ namespace FightGame{
 			this.leftBoundary = camera.leftBoundary;
 			this.rightBoundary = camera.rightBoundary;
 			this.chosenLevel = null;
+			this.sounds = GameObject.Find("GlobalInputListener").GetComponent<SoundManager>().gameSounds;
 	    }
 	}
 }

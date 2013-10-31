@@ -10,6 +10,8 @@ namespace FightGame
 		private bool activated;
 		protected A_Buff buff;
 		
+		public AudioClip onStartSound;
+		
 		public Attack_SelfBuff (string animationName, float animationSpeed, A_Fighter attackOwner) : base (animationName, animationSpeed, attackOwner)
 		{
 			this.activated = false;
@@ -17,6 +19,8 @@ namespace FightGame
 		
 		public override void Execute(){
 			if (!this.activated){
+				if (this.onStartSound != null) 
+					GameManager.PlayAudio( this.onStartSound );
 				this.attackOwner.AddBuff(this.buff);
 				this.activated = true;
 			}

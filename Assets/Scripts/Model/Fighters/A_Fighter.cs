@@ -402,6 +402,7 @@ namespace FightGame
 				}
 				else{
 				//execute when this fighter not block, and opponent not use special
+					GameManager.PlayAudio( GameManager.Sounds.Block );
 					GameObject explosion = GameObject.Instantiate(Resources.Load("Particles/Heavy_Block", typeof(GameObject)), hurtbox.gobj.transform.position, Quaternion.identity) as GameObject;
 					GameObject.Destroy(explosion, 2.0f);
 					

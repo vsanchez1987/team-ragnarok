@@ -15,7 +15,9 @@ public class HitBoxInput : MonoBehaviour
 				if (hurtbox.attackOwner.CurrentState != "knockDown"){
 					hurtbox.attackOwner.TakeDamage(this.hitbox.damage * this.hitbox.attackOwner.extraDamage, hurtbox, this.hitbox.knockback, this.hitbox.canKnockDown);
 					this.hitbox.Disable();
-					
+					if (this.hitbox.onCollisionSound != null){
+						GameManager.PlayAudio( this.hitbox.onCollisionSound );
+					}
 					if (this.hitbox.isProjectile){
 						GameObject.Destroy(this.transform.parent.gameObject);
 					}

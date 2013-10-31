@@ -9,7 +9,7 @@ namespace FightGame
 	{	
 		public Heavy_HeatSeeker(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner)
 		{
-			this.AddInstruction(new ProjectileHitBoxInstruction(
+			ProjectileHitBoxInstruction missile1 = new ProjectileHitBoxInstruction(
 				"heavy_missile", 					// projectile name
 				"r_shoulder_jnt", 					// starting joint
 				new Vector3(.45f, .80f, 0.0f), 		// direction
@@ -21,7 +21,10 @@ namespace FightGame
 				5.0f,								// endTime
 				new Vector3(0.0f, 0.0f, 0.0f),		// offset
 				new Vector3(0.0f, 0.0f, 0.0f)		// movement
-				));				
+				);
+			missile1.onCollisionSound = GameManager.Sounds.Sheep;
+			missile1.onStartSound = GameManager.Sounds.HeavyMissile;
+			this.AddInstruction(missile1);				
 		}
 	}
 }
