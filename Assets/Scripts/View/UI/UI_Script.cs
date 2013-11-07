@@ -62,12 +62,14 @@ public class UI_Script : MonoBehaviour
 	float roundTimer;
 	public const float KOTIMER = 5;
 	float koTimer;
+	
 	PlayerSelectOptions playerOptionsGob;
 	// end tom
 	
 	void Start()
 	{
-		//GameManager.Instance.RequestNewGameModel();
+
+		GameManager.ReInitGameModel();
 		// chracternames
 		p2GS = new GUIStyle(playerName_GuiStyle_p1);
 		p2GS.alignment = TextAnchor.UpperRight;
@@ -507,12 +509,16 @@ public class UI_Script : MonoBehaviour
 			{
 				if (GUI.Button(new Rect(Screen.width/2 - 100, Screen.height/2 - 60, 200, 100), "Char Select"))
 				{
+					
+	
+					//TO TO CHARACTER SELECT
+					
+					//GameManager.Instance.ReInitGameModel(GameManager.Instance);
 					//InitPlayers();
-					
-					
-					//GameManager.P1.roundsWon = 0;
-					//GameManager.P2.roundsWon = 0;
+					//GameManager.CreateFightCamera();
+			
 					Application.LoadLevel("2P_CharSelect");
+										
 					
 				}
 				

@@ -61,9 +61,11 @@ private Texture2D mechTex;
 private Rect godAreaNormalize;
 private Rect mechAreaNormalize;
 
+
 	// Use this for initialization
 	void Start () 
 	{
+		
 		godTex = godTextures[4];
 		mechTex = mechTextures[4];
 	}
