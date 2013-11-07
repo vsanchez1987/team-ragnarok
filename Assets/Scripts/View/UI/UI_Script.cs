@@ -578,13 +578,13 @@ public class UI_Script : MonoBehaviour
 				GUI.Box(new Rect(Screen.width/2,Screen.height*1/4,100,30),"Player 1 turn");
 				//add more fighter selection for P1 here
 				P1_Pick("Heavy",Screen.width/4,Screen.height/2);
-		        P1_Pick("Amaterasu",Screen.width*3/4, Screen.height/2);
+		        P1_Pick("Odin",Screen.width*3/4, Screen.height/2);
 			}
 			if(p2Pick){
 				GUI.Box(new Rect(Screen.width/2,Screen.height*1/4,100,30),"Player 2 turn");
 				//add more fighter selection for P2 here
 			  	P2_Pick("Heavy",Screen.width/4,Screen.height/2);
-		        P2_Pick("Amaterasu",Screen.width*3/4, Screen.height/2);
+		        P2_Pick("Odin",Screen.width*3/4, Screen.height/2);
 			}
 		}
 	}

@@ -24,8 +24,8 @@ namespace FightGame
 			this.actionsCommandMap[ActionCommand.UNIQUE] 			= new Odin_RavensFury(this.animationNameMap[FighterAnimation.UNIQUE_ATTACK], this, 1.0f);
 			this.actionsCommandMap[ActionCommand.UNIQUE_FORWARD] 	= new Odin_ThrustLunge(this.animationNameMap[FighterAnimation.UNIQUE_FORWARD_ATTACK], this, 1.0f);
 			this.actionsCommandMap[ActionCommand.UNIQUE_BACK] 		= new Odin_SweepingSpear(this.animationNameMap[FighterAnimation.UNIQUE_BACK_ATTACK], this, 1.0f);
-			this.actionsCommandMap[ActionCommand.UNIQUE_UP] 		= new Odin_RavenStorm(this.animationNameMap[FighterAnimation.UNIQUE_UP_ATTACK], this, 1.0f);
-			this.actionsCommandMap[ActionCommand.UNIQUE_DOWN] 		= new Odin_RavenSoulSteal(this.animationNameMap[FighterAnimation.UNIQUE_DOWN_ATTACK], this, 1.0f);
+			this.actionsCommandMap[ActionCommand.UNIQUE_UP] 		= new Odin_RavenSoulSteal(this.animationNameMap[FighterAnimation.UNIQUE_UP_ATTACK], this, 1.0f);
+			this.actionsCommandMap[ActionCommand.UNIQUE_DOWN] 		= new Odin_RavensFury(this.animationNameMap[FighterAnimation.UNIQUE_DOWN_ATTACK], this, 1.0f);
 			
 			this.actionsCommandMap[ActionCommand.SPECIAL] 			= new Odin_RavenStorm(this.animationNameMap[FighterAnimation.SPECIAL_ATTACK], this, 1.0f);
 			this.actionsCommandMap[ActionCommand.SPECIAL_FORWARD] 	= new Odin_RavenStorm(this.animationNameMap[FighterAnimation.SPECIAL_FORWARD_ATTACK], this, 1.0f);
