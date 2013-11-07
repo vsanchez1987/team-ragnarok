@@ -10,6 +10,7 @@ namespace FightGame
 		public		float		speed;
 		public 		string		attackType;
 		public 		float		recoilStrength;
+		public 		float 		knockbackStrength;
 		protected 	A_Fighter	attackOwner;
 		protected	float		timer;
 		protected	float		length;
