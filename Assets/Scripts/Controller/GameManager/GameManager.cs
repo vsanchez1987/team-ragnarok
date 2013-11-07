@@ -16,6 +16,11 @@ namespace FightGame{
 			this.gModel = new GameModel();
 	    }
 		
+		public static void ReInitGameModel()
+		{
+			instance.gModel = new GameModel();
+		}
+		
 	    public static GameManager Instance {
 	        get { return instance; }
 	    }
@@ -45,6 +50,7 @@ namespace FightGame{
 		}
 		
 		public static void Restart(){
+			
 			instance.gModel.p1.RestartFighter();
 			instance.gModel.p2.RestartFighter();
 		}

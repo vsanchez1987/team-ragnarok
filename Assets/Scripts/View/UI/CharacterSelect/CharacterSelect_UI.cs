@@ -32,9 +32,15 @@ public class CharacterSelect_UI : MonoBehaviour {
 	PlayerSelectOptions playerOptions;
 	public int playerSelectedLevel;
 	bool levelSelect;
+	public GameObject playerSelectPersistantObject;
+	
 	void Start ()
 	{
-
+		if(GameObject.Find("PlayerSelection")== null)
+		{
+			GameObject g =  GameObject.Instantiate(playerSelectPersistantObject) as GameObject;
+			g.name = "PlayerSelection";
+		}
 		playerOptions = GameObject.Find("PlayerSelection").GetComponent<PlayerSelectOptions>();
 		characterPortraits = new Dictionary<string, Texture2D>();
 		characters = new string[3,3]{
