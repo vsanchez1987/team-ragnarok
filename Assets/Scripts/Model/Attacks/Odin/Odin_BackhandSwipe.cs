@@ -9,7 +9,7 @@ namespace FightGame{
 		public Odin_BackhandSwipe(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner){
 			
 			this.AddInstruction(new JointHitBoxInstruction(
-				"r_wrist_jnt", 		//joint
+				"l_wrist_jnt", 		//joint
 				attackOwner, 		//fighter
 				2.0f, 				//radius
 				5.0f, 				//damage
