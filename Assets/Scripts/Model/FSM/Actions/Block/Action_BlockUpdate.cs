@@ -16,7 +16,15 @@ namespace FSM
 			fighter.gobj.animation[ fighter.animationNameMap[FighterAnimation.BLOCK]].speed = 2f;
 			fighter.gobj.animation.CrossFade(fighter.animationNameMap[FighterAnimation.BLOCK],0);
 		
-			
+			if (fighter.gobj.transform.position.x > GameManager.GetOpponentPlayer(fighter.playerNumber).Fighter.gobj.transform.position.x){
+				fighter.GlobalForwardVector = new Vector3(-1,0,0);
+				fighter.gobj.transform.LookAt( fighter.gobj.transform.position + new Vector3(-1,0,0) );
+			}
+			else{
+				fighter.GlobalForwardVector = new Vector3(1,0,0);
+				fighter.gobj.transform.LookAt( fighter.gobj.transform.position + new Vector3(1,0,0) );
+			}
+
 			// Get knocked back when you are hit
 			/*
 			if(fighter.gotHit)
