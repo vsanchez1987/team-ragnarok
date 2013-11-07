@@ -245,6 +245,11 @@ public class CharacterSelect_UI : MonoBehaviour {
 				if(p1Gob==null)
 				{
 					p1Gob =  GameObject.Instantiate( Resources.Load("Fighters/CharacterSelect_" + p1SelectedChar, typeof(GameObject)),Vector3.up*20, Quaternion.Euler(0,90,0) ) as GameObject;
+					if (p1SelectedChar == "Amaterasu" || p1SelectedChar == "Odin") {
+						GameObject level = GameObject.Instantiate (Resources.Load ("Levels/GodPlatform", typeof(GameObject)), p1ModelPosition, Quaternion.identity) as GameObject;
+					} else {
+						GameObject level = GameObject.Instantiate (Resources.Load ("Levels/MechPlatform", typeof(GameObject)), p1ModelPosition, Quaternion.identity) as GameObject;
+					}
 				}
 				Debug.Log("pressing button at " + p1SelectedChar);	
 			}
@@ -315,6 +320,13 @@ public class CharacterSelect_UI : MonoBehaviour {
 				if(p2Gob==null)
 				{
 					p2Gob =  GameObject.Instantiate( Resources.Load("Fighters/CharacterSelect_" + p2SelectedChar, typeof(GameObject)),Vector3.up*20, Quaternion.Euler(0,-90,0) ) as GameObject;
+					if (p2SelectedChar == "Amaterasu" || p2SelectedChar == "Odin") {
+						GameObject level = GameObject.Instantiate (Resources.Load ("Levels/GodPlatform", typeof(GameObject)), p2ModelPosition, Quaternion.identity) as GameObject;
+						level.transform.localScale = new Vector3 (-1, 1, 1);
+					} else {
+						GameObject level = GameObject.Instantiate (Resources.Load ("Levels/MechPlatform", typeof(GameObject)), p2ModelPosition, Quaternion.identity) as GameObject;
+						level.transform.localScale = new Vector3 (-1, 1, 1);
+					}
 				}
 				
 			}
