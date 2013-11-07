@@ -9,7 +9,7 @@ namespace FightGame{
 		public Odin_RavensFury(string animationName, A_Fighter attackOwner, float animationSpeed = 1.0f) : base(animationName, animationSpeed, attackOwner){			
 
 			this.AddInstruction(new ProjectileHitBoxInstruction(
-				"Amaterasu_projectile", 		// projectile name
+				"odin_ravens", 		// projectile name
 				"r_wrist_jnt",				
 				new Vector3(1.0f, 0.0f, 0.0f), 	// direction
 				10.0f, 							// speed
